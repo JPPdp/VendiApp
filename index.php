@@ -1,109 +1,112 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
-    <title>Vendi</title>
-</head>
-<body>
-    <?php
-    header("Content-Type: application/json");
-    header("Access-Control-Allow-Origin: *");
-    header("Access-Control-Allow-Methods: POST");
-    
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-    
-    // Database connection parameters
-    $host = 'localhost';
-    $dbname = 'customersdb';
-    $username = 'root';
-    $password = '';
-    try {
-        $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        echo json_encode(["success" => 1, "message" => "Welcome to Vendi"]);
-    } catch (PDOException $e) {
-        echo json_encode(["success" => 0, "message" => "Failed To Connect The Server" . $e->getMessage()]);
-        exit;
+<?php
+header('Content-Type: application/json');
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Headers: Content-Type");
+require_once 'database.php';
+
+// Database connection parameters
+$servername = "localhost";
+$username = "root";  // your database username
+$password = "";      // your database password
+$dbname = "customersdb";
+
+// Function to sanitize input
+function sanitize_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
+// Function to send JSON response
+function send_json_response($success, $message, $data = null) {
+    $response = [
+        'success' => $success,
+        'message' => $message
+    ];
+    if ($data) {
+        $response = array_merge($response, $data);
     }
+    echo json_encode($response);
+    exit();
+}
+
+try {
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Check connection
+    if ($conn->connect_error) {
+        throw new Exception('Database connection failed: ' . $conn->connect_error);
+    }
+
+    // Get and decode JSON input
+    $json_input = file_get_contents('php://input');
+    $data = json_decode($json_input, true);
+
+    // Check if JSON parsing was successful
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception('Invalid JSON format');
+    }
+
+    // Validate input
+    if (!isset($data['email']) || !isset($data['password'])) {
+        throw new Exception('Email and password are required');
+    }
+
+    // Sanitize input
+    $email = sanitize_input($data['email']);
+    $password = $data['password'];
+
+    // Validate email format
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        throw new Exception('Invalid email format');
+    }
+
+    // Prepare statement to prevent SQL injection
+    $stmt = $conn->prepare("SELECT * FROM customers WHERE email = ? LIMIT 1");
+    if (!$stmt) {
+        throw new Exception('Prepare statement failed: ' . $conn->error);
+    }
+
+    $stmt->bind_param("s", $email);
     
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $data = json_decode(file_get_contents("php://input"), true);
-    
-        if ($data === null) {
-            echo json_encode(["success" => 0, "message" => "Invalid JSON"]);
-            exit;
-        }
-    
-        $errors = [];
-    
-        // Validate inputs
-        if (empty($data['username'])) {
-            $errors[] = "Username is required";
-        }
-        if (empty($data['email'])) {
-            $errors[] = "Email is required";
-        }
-        if (empty($data['password'])) {
-            $errors[] = "Password is required";
-        }
-        if (empty($data['confirmPassword'])) {
-            $errors[] = "Confirm Password is required";
-        }
-    
-        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            $errors[] = "Invalid email address";
-        }
-    
-        if (strlen($data['password']) < 60) {
-            $errors[] = "Password must be at least 60 characters long";
-        }
-    
-        if ($data['password'] !== $data['confirmPassword']) {
-            $errors[] = "Passwords do not match";
-        }
-    
-        // Check if email already exists
-        if (empty($errors)) {
-            $stmt = $pdo->prepare("SELECT COUNT(*) FROM players WHERE email = :email");
-            $stmt->bindParam(':email', $data['email']);
-            $stmt->execute();
-            $emailCount = $stmt->fetchColumn();
-    
-            if ($emailCount > 0) {
-                $errors[] = "Email is already in use";
-            }
-        }
-    
-        // If no errors, proceed to insert the player
-        if (empty($errors)) {
-            $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
-    
-            $stmt = $pdo->prepare("INSERT INTO players (username, email, password) VALUES (:username, :email, :password)");
-            $stmt->bindParam(':username', $data['username']);
-            $stmt->bindParam(':email', $data['email']);
-            $stmt->bindParam(':password', $hashedPassword);
-    
-            // Check if the insert was successful
-            try {
-                if ($stmt->execute()) {
-                    echo json_encode(["success" => 1, "message" => "Player Created Successfully"]);
-                } else {
-                    echo json_encode(["success" => 0, "message" => "Failed to create player"]);
-                }
-            } catch (PDOException $e) {
-                // Log the error message for debugging
-                error_log("SQL Error: " . $e->getMessage());
-                echo json_encode(["success" => 0, "message" => "Error executing query: " . $e->getMessage()]);
-            }
+    // Execute the statement
+    if (!$stmt->execute()) {
+        throw new Exception('Query execution failed: ' . $stmt->error);
+    }
+
+    // Get result
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        
+        // Verify password
+        if (password_verify($password, $user['password'])) {
+            // Send success response
+            send_json_response(true, 'Login successful', [
+                'user_id' => $user['id'],
+                'username' => $user['username'],
+                'email' => $user['email'],
+            ]);
         } else {
-            echo json_encode(["success" => 0, "errors" => $errors]);
+            throw new Exception('Invalid password');
         }
     } else {
-        http_response_code(405);
-        echo json_encode(["success" => 0, "message" => "Method not allowed"]);
+        throw new Exception('Username And Password Are Incorrect');
     }
-    ?>
-</body>
-</html>
+
+} catch (Exception $e) {
+    send_json_response(false, $e->getMessage());
+} finally {
+    // Close database connection
+    if (isset($stmt)) {
+        $stmt->close();
+    }
+    if (isset($conn)) {
+        $conn->close();
+    }
+}
+?>
