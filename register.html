@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Vendi</title>
+    <link rel="icon" href="assets/images/VendiBLK2_NoBG.png" type="image/icon type">
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+
+<div class="REGISTRATION_CONTAINER">
+    <div class="LEFT_SECTION">
+        <div class="LOGO">
+            <a href="index.php" class="LOGO_NAME">Vendi</a>
+        </div>
+        <div class="BANNER">
+            <div class="BANNER_INTRODUCTION">
+                <h1>Find your <span>perfect</span> events partner.</h1>
+                <p>Unforgettable events start here. Craft your ultimate event.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="RIGHT_SECTION">
+
+        <div class="USER_SELECTION">
+            <button id="btnCLIENT" class="btnUSER active">Client</button>
+            <button id="btnVENDOR" class="btnUSER">Vendor</button>
+        </div>
+        
+        <!-- CLIENT REGISTRATION FORM -->
+        <form id="CLIENT_FORM" class="REGISTRATION_FORM active" method="get/post">
+            <h2>User Information</h2>
+            <p>Please fill out the form below with your basic information. <br>
+                (*) Please provide accurate details.
+            </p>
+
+            <label for="CLIENT_FIRSTNAME">First Name:</label>
+            <input type="text" id="CLIENT_FIRSTNAME" name="FIRST_NAME" placeholder="Enter First Name">
+
+            <label for="CLIENT_LASTNAME">Last Name:</label>
+            <input type="text" id="CLIENT_LASTNAME" name="LAST_NAME" placeholder="Enter Last Name" required>
+
+            <label for="CLIENT_NUMBER">Mobile Number:</label>
+            <input type="number" id="CLIENT-NUMBER" name="NUMBER" placeholder="Enter Mobile Number" maxlength="10" required>
+
+            <label for="CLIENT_EMAIL">Email Address:</label>
+            <input type="email" id="CLIENT_EMAIL" name="EMAIL" placeholder="Enter Email Address" required>
+
+            <label for="CLIENT_PASSWORD">Password:</label>
+            <input type="password" id="CLIENT_PASSWORD" name="PASSWORD"  placeholder="Enter Password">
+
+            <label for="CLIENT_REPEATPASSWORD">Re-Enter Password:</label>
+            <input type="password" id="CLIENT_REPEATPASSWORD" name="RE_PASSWORD" placeholder="Re-enter Password">
+
+            <button type="submit">Submit</button>
+
+            <p>Already have an account? <a href="login.html">Sign In</a></p>
+        </form>
+
+        <!-- VENDOR REGISTRATION FORM -->
+        <form id="VENDOR_FORM" class="REGISTRATION_FORM">
+            <h2>Become our Partner</h2>
+            <p>Please fill out the form below with your basic information. <br>
+                (*) Please provide accurate details.
+            </p>
+
+            <label for="VENDOR_BUSINNESS_NAME">Business Name:</label>
+            <input type="text" id="VENDOR_BUSINNESS_NAME" name="BUSINESS_NAME" required>
+
+            <!-- BUSINESS RANGE -->
+            <label for="VENDOR_BUSINNESS_RANGE">Business Range:</label>
+                <select id="VENDOR_BUSINNESS_RANGE" name="BUSINESS_RANGE">
+                    <option value="" disabled selected>Select your business range</option>
+                    <option value="SMALL">Small</option>
+                    <option value="MEDIUM">Medium</option>
+                    <option value="LARGE">Large</option>
+                </select>
+
+            <label for="VENDOR_NUMBER">Mobile Number:</label>
+            <input type="text" id="VENDOR_NUMBER" name="NUMBER" required>
+
+            <label for="VENDOR_EMAIL">Email Address:</label>
+            <input type="email" id="VENDOR_EMAIL" name="EMAIL" required>
+
+            <label for="CLIENT_PASSWORD">Password:</label>
+            <input type="password" id="CLIENT_PASSWORD" name="PASSWORD" required>
+
+            <label for="CLIENT_REPEATPASSWORD">Re-Enter Password:</label>
+            <input type="password" id="CLIENT_REPEATPASSWORD" name="RE_PASSWORD" required>
+
+            <button type="submit">Submit</button>
+
+            <p>Already have an account? <a href="login.html">Log In</a></p>
+        </form>
+    </div>
+</div>
+
+<script src='script.js'></script> <!-- Link to your JavaScript file -->
+</body>
+</html>
