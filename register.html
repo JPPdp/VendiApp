@@ -9,94 +9,136 @@
 </head>
 <body>
 
-<div class="REGISTRATION_CONTAINER">
+<div class="CONTAINER">
     <div class="LEFT_SECTION">
-        <div class="LOGO">
-            <a href="index.php" class="LOGO_NAME">Vendi</a>
-        </div>
-        <div class="BANNER">
-            <div class="BANNER_INTRODUCTION">
-                <h1>Find your <span>perfect</span> events partner.</h1>
-                <p>Unforgettable events start here. Craft your ultimate event.</p>
+
+        <header>
+            <div class="LOGO">
+                <div class="LOGO_NAME">Vendi.</div>
             </div>
-        </div>
-    </div>
-
-    <div class="RIGHT_SECTION">
-
+        </header>
+        
+        <!-- CLIENT/VENDOR SELECTION -->
         <div class="USER_SELECTION">
             <button id="btnCLIENT" class="btnUSER active">Client</button>
             <button id="btnVENDOR" class="btnUSER">Vendor</button>
         </div>
         
         <!-- CLIENT REGISTRATION FORM -->
-        <form id="CLIENT_FORM" class="REGISTRATION_FORM active" method="get/post">
-            <h2>User Information</h2>
-            <p>Please fill out the form below with your basic information. <br>
-                (*) Please provide accurate details.
-            </p>
-
-            <label for="CLIENT_FIRSTNAME">First Name:</label>
-            <input type="text" id="CLIENT_FIRSTNAME" name="FIRST_NAME" placeholder="Enter First Name">
-
-            <label for="CLIENT_LASTNAME">Last Name:</label>
+        <form id="CLIENT_FORM" class="REGISTRATION_FORM active" method="post" action="index.htm">
+            <h2>YOUR GATEWAY TO UNFORGETTABLE EVENTS</h2>
+            <p>Ready to create an extraordinary experience? Sign up now and 
+                let Vendi help you craft your ultimate event. </p>
+        
+        <div class="NAME_FIELDS">
+        <div class="NAME_FIELD">
+            <label for="CLIENT_FIRSTNAME">First Name</label>
+            <input type="text" id="CLIENT_FIRSTNAME" name="FIRST_NAME" placeholder="Enter First Name" required>
+        </div>
+        <div class="NAME_FIELD">
+            <label for="CLIENT_LASTNAME">Last Name</label>
             <input type="text" id="CLIENT_LASTNAME" name="LAST_NAME" placeholder="Enter Last Name" required>
+        </div>
+        </div>
 
-            <label for="CLIENT_NUMBER">Mobile Number:</label>
-            <input type="number" id="CLIENT-NUMBER" name="NUMBER" placeholder="Enter Mobile Number" maxlength="10" required>
-
-            <label for="CLIENT_EMAIL">Email Address:</label>
+            <label for="CLIENT_NUMBER">Mobile Number</label>
+            <input type="tel" id="CLIENT_NUMBER" name="NUMBER" placeholder="Enter Mobile Number" maxlength="10" required pattern="[0-9]{10}">
+        
+            <label for="CLIENT_EMAIL">Email</label>
             <input type="email" id="CLIENT_EMAIL" name="EMAIL" placeholder="Enter Email Address" required>
-
-            <label for="CLIENT_PASSWORD">Password:</label>
-            <input type="password" id="CLIENT_PASSWORD" name="PASSWORD"  placeholder="Enter Password">
-
-            <label for="CLIENT_REPEATPASSWORD">Re-Enter Password:</label>
-            <input type="password" id="CLIENT_REPEATPASSWORD" name="RE_PASSWORD" placeholder="Re-enter Password">
-
-            <button type="submit">Submit</button>
-
-            <p>Already have an account? <a href="login.html">Sign In</a></p>
+        
+            <label for="CLIENT_PASSWORD">Password</label>
+            <input type="password" id="CLIENT_PASSWORD" name="PASSWORD" placeholder="Enter Password" required minlength="8">
+        
+            <label for="CLIENT_REPEATPASSWORD">Confirm Password</label>
+            <input type="password" id="CLIENT_CONFRIMPASSWORD" name="CONFIRMPASSWORD" placeholder="Re-enter Password" required minlength="8">
+        
+            <div class="TERMS">
+                <label for="CLIENT_TERMS">By clicking, you agree to the 
+                    <a href="termsandconditions.html">Terms and Conditions</a> and 
+                    <a href="privacy_policy.html">Privacy Policy</a>.
+                </label>
+            </div>
+        
+            <button type="submit">SUBMIT</button>
+        
+            <span>Already have an account? <a href="login.html">Login</a></span>
         </form>
+        
 
         <!-- VENDOR REGISTRATION FORM -->
-        <form id="VENDOR_FORM" class="REGISTRATION_FORM">
-            <h2>Become our Partner</h2>
-            <p>Please fill out the form below with your basic information. <br>
-                (*) Please provide accurate details.
-            </p>
+        <form id="VENDOR_FORM" class="REGISTRATION_FORM active" method="post" action="index.htm">
+            <h2>BECOME A FEATURED VENDOR</h2>
+            <p> Ready to elevate your business? Sign up now to showcase your stalls
+                and attract event planners who are ready to make their events extraordinary! </p>
+        
+            <div class="NAME_FIELDS">
+                <div class="NAME_FIELD">
+            <label for="BUSINESS_NAME">Business Name:</label>
+            <input type="text" id="BUSINESS_NAME" name="BUSINESS_NAME" placeholder="Enter Business Name" required>
+                </div>
 
-            <label for="VENDOR_BUSINNESS_NAME">Business Name:</label>
-            <input type="text" id="VENDOR_BUSINNESS_NAME" name="BUSINESS_NAME" required>
+                <div class="NAME_FIELD">
+            <label for="BUSINESS_CATEGORY">Business Category:</label>
+                    <select id="BUSINESS_CATEGORY" name="BUSINESS_CATEGORY" required>
+                        <option value="">What does your stall primarily offer?</option>
+                        <optgroup label="Food">
+                            <option value="FAST_FOOD">Fast Food</option>
+                            <option value="VEGAN">Vegan</option>
+                            <option value="FAST_FOOD">International Cuisine</option>
+                            <option value="DESSERTS_PASTRIES">Desserts & Pastries</option>
+                        </optgroup>
+                        <optgroup label="Beverages">
+                            <option value="COFFEE_TEA">Coffee & Tea</option>
+                            <option value="COCKTAILS">Cocktails</option>
+                            <option value="NON_ALCOHOLIC">Non-Alcoholic Beverages</option>
+                        </optgroup>
+                        <optgroup label="Entertainment">
+                            <option value="ARTS_CRAFTS">Arts & Crafts</option>
+                            <option value="PHOTO_BOOTH">Photo Booth</option>
+                            <option value="GAMES_ACTIVITIES">Games & Activities</option>
+                        </optgroup>
+                    </select>
+                </div>
+        </div>
 
-            <!-- BUSINESS RANGE -->
-            <label for="VENDOR_BUSINNESS_RANGE">Business Range:</label>
-                <select id="VENDOR_BUSINNESS_RANGE" name="BUSINESS_RANGE">
-                    <option value="" disabled selected>Select your business range</option>
-                    <option value="SMALL">Small</option>
-                    <option value="MEDIUM">Medium</option>
-                    <option value="LARGE">Large</option>
-                </select>
+            <label for="BUSINESS_ADDRESS">Business Address:</label>
+            <input type="text" id="BUSINESS_ADDRESS" name="BUSINESS_ADDRESS" placeholder="Enter Business Address" required>
+        
+            <label for="CONTACT_NAME">Primary Contact Name:</label>
+            <input type="text" id="CONTACT_NAME" name="CONTACT_NAME" placeholder="Enter Contact Name">
+        
+            <label for="MOBILE_NUMBER">Mobile Number:</label>
+            <input type="tel" id="MOBILE_NUMBER" name="MOBILE_NUMBER" placeholder="Enter Mobile Number" required pattern="[0-9]{10}" maxlength="10">
+        
+            <label for="EMAIL">Email Address:</label>
+            <input type="email" id="EMAIL" name="EMAIL" placeholder="Enter Email Address" required>
+        
+            <label for="CLIENT_PASSWORD">Password</label>
+            <input type="password" id="CLIENT_PASSWORD" name="PASSWORD" placeholder="Enter Password" required minlength="8">
+        
+            <label for="CLIENT_REPEATPASSWORD">Confirm Password</label>
+            <input type="password" id="CLIENT_CONFRIMPASSWORD" name="CONFIRMPASSWORD" placeholder="Re-enter Password" required minlength="8">
+            
+            <div class="TERMS">
+                <label for="CLIENT_TERMS">By clicking, you agree to the 
+                    <a href="termsandconditions.html">Terms and Conditions</a> and 
+                    <a href="privacy_policy.html">Privacy Policy</a>.
+                </label>
+            </div>
+        
+            <button type="submit">SUBMIT</button>
 
-            <label for="VENDOR_NUMBER">Mobile Number:</label>
-            <input type="text" id="VENDOR_NUMBER" name="NUMBER" required>
+            <span>Already have an account? <a href="login.html">Login</a></span>
 
-            <label for="VENDOR_EMAIL">Email Address:</label>
-            <input type="email" id="VENDOR_EMAIL" name="EMAIL" required>
-
-            <label for="CLIENT_PASSWORD">Password:</label>
-            <input type="password" id="CLIENT_PASSWORD" name="PASSWORD" required>
-
-            <label for="CLIENT_REPEATPASSWORD">Re-Enter Password:</label>
-            <input type="password" id="CLIENT_REPEATPASSWORD" name="RE_PASSWORD" required>
-
-            <button type="submit">Submit</button>
-
-            <p>Already have an account? <a href="login.html">Log In</a></p>
         </form>
+        
+    </div>
+
+    <div class="RIGHT_SECTION">
     </div>
 </div>
 
-<script src='script.js'></script> <!-- Link to your JavaScript file -->
+<script src='script.js'></script>
 </body>
 </html>
