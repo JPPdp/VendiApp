@@ -3,13 +3,21 @@ header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type");
-require_once 'database.php';
+
+require_once 'vendor/autoload.php'; // Include JWT library
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 
 // Database connection parameters
 $servername = "localhost";
 $username = "root";  // your database username
 $password = "";      // your database password
 $dbname = "playersdb";
+
+// Secret key for JWT
+$secret_key = "your_secret_key"; // Replace with a strong, random key.  Store securely!
 
 // Function to sanitize input
 function sanitize_input($data) {
@@ -20,13 +28,16 @@ function sanitize_input($data) {
 }
 
 // Function to send JSON response
-function send_json_response($success, $message, $data = null) {
+function send_json_response($success, $message, $data = null, $token = null) {
     $response = [
         'success' => $success,
         'message' => $message
     ];
     if ($data) {
         $response = array_merge($response, $data);
+    }
+    if ($token) {
+        $response['token'] = $token;
     }
     echo json_encode($response);
     exit();
@@ -85,13 +96,30 @@ try {
         
         // Verify password
         if (password_verify($password, $user['password'])) {
-            // Send success response
+
+             // Generate JWT Token
+            $payload = array(
+                "iss" => "your_domain.com", // Replace with your domain
+                "aud" => "your_domain.com", // Replace with your domain
+                "iat" => time(),
+                "nbf" => time(),
+                "exp" => time() + (60 * 60), // Token valid for 1 hour
+                "data" => array(
+                    "user_id" => $user['id'],
+                    "username" => $user['username'],
+                    "email" => $user['email'],
+                    "scores" => $user['scores']
+                )
+            );
+
+            $jwt = JWT::encode($payload, $secret_key, 'HS256');
+            // Send success response with token
             send_json_response(true, 'Login successful', [
                 'user_id' => $user['id'],
                 'username' => $user['username'],
                 'email' => $user['email'],
                 'scores' => $user['scores']
-            ]);
+            ], $jwt);
         } else {
             throw new Exception('Invalid password');
         }

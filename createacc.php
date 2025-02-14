@@ -1,4 +1,9 @@
 <?php
+require_once 'vendor/autoload.php'; // Include JWT library
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
@@ -11,6 +16,10 @@ $host = 'localhost';
 $dbname = 'playersdb';
 $username = 'root';
 $password = '';
+
+// Secret key for JWT
+$secret_key = "5f6711f0f00161121ea8c2bbe583915fb66457493b51ef215b185372ddaf33acd450a04fd452a47a35b50a2396526c1fbecc779c6538af0ac4b7ff1155e1d6a660150425136299657bb52e631a49d865bbf074b7d7eca8b0ed2f002abfcc5419"; // Replace with a strong, random key.  Store securely!
+
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -80,7 +89,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Check if the insert was successful
         try {
             if ($stmt->execute()) {
-                echo json_encode(["success" => 1, "message" => "Player Created Successfully"]);
+
+                // Generate JWT Token
+                $payload = array(
+                    "iss" => "your_domain.com", // Replace with your domain
+                    "aud" => "your_domain.com", // Replace with your domain
+                    "iat" => time(),
+                    "nbf" => time(),
+                    "exp" => time() + (60 * 60), // Token valid for 1 hour
+                    "data" => array(
+                        "username" => $data['username'],
+                        "email" => $data['email']
+                    )
+                );
+
+                $jwt = JWT::encode($payload, $secret_key, 'HS256');
+
+                echo json_encode(["success" => 1, "message" => "Player Created Successfully", "token" => $jwt]);
             } else {
                 echo json_encode(["success" => 0, "message" => "Failed to create player"]);
             }
