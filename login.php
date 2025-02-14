@@ -17,7 +17,7 @@ $password = "";      // your database password
 $dbname = "playersdb";
 
 // Secret key for JWT
-$secret_key = "your_secret_key"; // Replace with a strong, random key.  Store securely!
+$secret_key = "5f6711f0f00161121ea8c2bbe583915fb66457493b51ef215b185372ddaf33acd450a04fd452a47a35b50a2396526c1fbecc779c6538af0ac4b7ff1155e1d6a660150425136299657bb52e631a49d865bbf074b7d7eca8b0ed2f002abfcc5419"; // Replace with a strong, random key.  Store securely!
 
 // Function to sanitize input
 function sanitize_input($data) {
