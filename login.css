@@ -1,3 +1,5 @@
+/* login.css */
+
 /* CUSTOM PALLETES */
 :root {
     --marble: #F8F8FF;
@@ -45,24 +47,26 @@
 }
 
 html, body {
-    margin: 0 auto;
+    margin: 0;
     padding: 0;
     color: black;
     background-color: white;
     overflow-x: hidden;
     scroll-behavior: smooth;
-    /*min-width: 960px;*/
-    min-width: 960px;
-    max-width: 1920px;
-    max-height: 920px;
     width: 100%;
+    min-width: 320px;
+    max-width: 1920px;
+    margin: 0 auto;
+    min-height: 100vh;
     box-sizing: border-box;
 }
 
 header {
     display: flex;
     align-items: center;
-    padding: 25px 50px;
+    padding-left: 50px;
+    padding-top: 50px;
+    padding-bottom: 25px;
     background-color: transparent;
     position: absolute;
     top: 0;
@@ -81,7 +85,7 @@ header {
 .LOGO_NAME{
     font-family: 'Machinery';
     font-size: 3rem;
-    margin-left: 25px;
+    margin-left: 55px;
     color: white;
     text-decoration: none;
 }
@@ -97,15 +101,14 @@ header {
     flex: 40%;
     min-width: 40%;
     max-width: 40%;
-    padding-top: 100px;
-    background: linear-gradient(to top, #4c315a, #000000);
+    padding-top: 125px;
+    background: linear-gradient(to top, #3d1950, #000000);
     position: relative;
     display: flex;
     flex-direction: column;
     z-index: 1;
     overflow-y: auto;
 }
-
 
 .USER_SELECTION{
     display: flex;
@@ -143,7 +146,7 @@ header {
     z-index: 1;
 }
 
-.REGISTRATION_FORM{
+.LOGIN_FORM{
     display: none;
     background-color: white;
     border-radius: 10px;
@@ -155,18 +158,18 @@ header {
     max-width: 425px;
 }
 
-.REGISTRATION_FORM.active{
+.LOGIN_FORM.active{
     display: block;
 }
 
-.REGISTRATION_FORM input[type="checkbox"] {
-    margin-right: 10px;
+.LOGIN_FORM input[type="checkbox"] {
+    margin-right: 5px;
     width: 15px;
     height: 15px;
     vertical-align: middle;
 }
 
-.REGISTRATION_FORM p {
+.LOGIN_FORM p {
     display: inline-block;
     font-family: 'CaviarDreams';
     font-size: 0.9rem;
@@ -192,7 +195,8 @@ p{
 .EXTRA{
     font-family: 'CaviarDreams';
     font-size: 0.9rem;
-    align-items: center;
+    margin-top: 10px;
+    display: block;
 }
 
 .NAME_FIELDS{
@@ -204,13 +208,13 @@ p{
     flex: 1;
 }
 
-.REGISTRATION_FORM label {
+.LOGIN_FORM label {
     margin-top: 20px;
     font-family: 'Coolvetica';
     display: block;
 }
 
-.REGISTRATION_FORM input, select {
+.LOGIN_FORM input, select {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
@@ -219,7 +223,7 @@ p{
     border: 1px solid #ccc;
 }
 
-.REGISTRATION_FORM button {
+.LOGIN_FORM button {
     background-color: black;
     font-family: 'Coolvetica';
     width: 100%;
@@ -271,3 +275,19 @@ p{
     padding: 20px;
 }
 
+
+#FORGOT_PASSWORD_FORM { /* Adjust specific styling for this form if needed */
+    /* Example: Reduce the top margin of the heading */
+}
+
+#FORGOT_PASSWORD_FORM h2 {
+    margin-top: 30px; /* Adjust if needed */
+}
+
+#FORGOT_PASSWORD_FORM p {
+    margin-bottom: 30px; /* Adjust if needed */
+}
+
+#FORGOT_PASSWORD_FORM button {
+    margin-top: 10px; /* Adjust if needed - spacing between the buttons */
+}
