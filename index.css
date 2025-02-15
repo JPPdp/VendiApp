@@ -52,7 +52,7 @@ html, body {
 header {
     display: flex;
     align-items: center;
-    padding: 5px 20px;
+    padding: 10px 20px;
     background-color: white;
     position: relative;
     z-index: 2;
@@ -176,12 +176,13 @@ header {
     align-items: center;
     justify-content: center;
     min-height: 250px;
+    max-height: 250px;
     height: auto;
     width: calc(100% - 75px);
     background: url(assets/images/banner1.jpg);
     background-size: cover;
     background-position: center;
-    background-attachment: scroll;
+    background-attachment: fixed;
     background-repeat: no-repeat;
     border-radius: 10px;
     padding: 50px 20px;
@@ -401,3 +402,62 @@ header {
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
 }
   
+  /* Responsive page styles */
+  header #toggler {
+    display: none;
+  }
+  header .fa-bars {
+    font-size: 3rem;
+    color: #333;
+    border-radius: .5rem;
+    padding: .5rem 1.5rem;
+    cursor: pointer;
+    border: .1rem solid rgb(0, 0, 0,);
+    display: none;
+  }
+
+  /* Media queries for responsive design */
+@media (max-width: 991px) {
+  /* Reduce font size and adjust padding for smaller screens */
+  html {
+    font-size: 55%;
+  }
+  header {
+    padding: 2rem;
+  }
+  section {
+    padding: 2rem;
+  }
+
+}
+
+@media (max-width: 768px) {
+  /* Display hamburger menu icon and hide navigation links */
+  header .fa-bars {
+    display: block;
+  }
+  header .MAIN-NAV {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #eee;
+    border-top: .1rem solid rgba(0, 0, 0, .1);
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+
+  /* Show navigation links when hamburger menu icon is clicked */
+  header #toggler:checked ~ .MAIN-NAV {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  /* Adjust styles for navigation links */
+  header .MAIN-NAV a {
+    margin: 1.5rem;
+    padding: 1.5rem;
+    background: white;
+    border: .1rem solid rgba(0, 0, 0, .1);
+    display: block;
+  }
+
+}
