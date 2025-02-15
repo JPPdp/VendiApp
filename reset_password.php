@@ -1,4 +1,9 @@
 <?php
+require_once 'vendor/autoload.php'; // Include JWT library
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
@@ -8,9 +13,12 @@ ini_set('display_errors', 1);
 
 // Database connection parameters
 $host = 'localhost';
-$dbname = 'playersdb';
+$dbname = 'vendi_db';
 $username = 'root';
 $password = '';
+
+// Secret key for JWT
+$secret_key = "2169b56560cdbff74b4c9050c2db773ee0747800b27a78781a4e84aceb10a4450ff8049c25bb276a077c1835c862922aaa799138c2b2bcfeec028954cb12540c8f7d654fd6d18816497884937bee07c58e07b971eccce646af12557ee488a30a"; // Replace with a strong, random key. Store securely!
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
@@ -48,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Check if the email exists in the database
-    $stmt = $pdo->prepare("SELECT id FROM players WHERE email = :email");
+    $stmt = $pdo->prepare("SELECT id FROM clients WHERE email = :email");
     $stmt->bindParam(':email', $email);
     $stmt->execute();
 
@@ -61,12 +69,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
     // Update the password in the database
-    $updateStmt = $pdo->prepare("UPDATE players SET password = :password WHERE email = :email");
+    $updateStmt = $pdo->prepare("UPDATE clients SET password = :password WHERE email = :email");
     $updateStmt->bindParam(':password', $hashedPassword);
     $updateStmt->bindParam(':email', $email);
 
     if ($updateStmt->execute()) {
-        echo json_encode(["success" => true, "message" => "Password reset successfully"]);
+        // Generate JWT Token
+        $payload = array(
+            "iss" => "your_domain.com", // Replace with your domain
+            "aud" => "your_domain.com", // Replace with your domain
+            "iat" => time(),
+            "nbf" => time(),
+            "exp" => time() + (60 * 60), // Token valid for 1 hour
+            "data" => array(
+                "email" => $email
+            )
+        );
+
+        $jwt = JWT::encode($payload, $secret_key, 'HS256');
+
+        echo json_encode(["success" => true, "message" => "Password reset successfully", "token" => $jwt]);
     } else {
         echo json_encode(["success" => false, "message" => "Failed to reset password"]);
     }
