@@ -13,7 +13,7 @@ ini_set('display_errors', 1);
 
 // Database connection parameters
 $host = 'localhost';
-$dbname = 'playersdb';
+$dbname = 'vendi_db';
 $username = 'root';
 $password = '';
 
@@ -40,8 +40,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $errors = [];
 
     // Validate inputs
-    if (empty($data['username'])) {
-        $errors[] = "Username is required";
+    if (empty($data['firstname'])) {
+        $errors[] = "firstname is required";
+    }
+    if (empty($data['lastname'])) {
+        $errors[] = "lastname is required";
+    }
+    if (empty($data['mobilenumber'])) {
+        $errors[] = "mobilenumber is required";
     }
     if (empty($data['email'])) {
         $errors[] = "Email is required";
@@ -57,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors[] = "Invalid email address";
     }
 
-    if (strlen($data['password']) < 6) {
+    if (strlen($data['password']) < 8 && strlen($data['password']) > 16) {
         $errors[] = "Password must be at least 6 characters long";
     }
 
@@ -67,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check if email already exists
     if (empty($errors)) {
-        $stmt = $pdo->prepare("SELECT COUNT(*) FROM players WHERE email = :email");
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM clients WHERE email = :email");
         $stmt->bindParam(':email', $data['email']);
         $stmt->execute();
         $emailCount = $stmt->fetchColumn();
@@ -81,8 +87,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($errors)) {
         $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
 
-        $stmt = $pdo->prepare("INSERT INTO players (username, email, password) VALUES (:username, :email, :password)");
-        $stmt->bindParam(':username', $data['username']);
+        $stmt = $pdo->prepare("INSERT INTO clients (firstname, lastname, mobilenumber, email, password) VALUES (:firstname, :lastname, :mobilenumber, :email, :password)");
+        $stmt->bindParam(':firstname', $data['firstname']);
+        $stmt->bindParam(':lastname', $data['lastname']);
+        $stmt->bindParam(':mobilenumber', $data['mobilenumber']);
         $stmt->bindParam(':email', $data['email']);
         $stmt->bindParam(':password', $hashedPassword);
 
@@ -99,6 +107,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     "exp" => time() + (60 * 60), // Token valid for 1 hour
                     "data" => array(
                         "username" => $data['username'],
+                        "firstname" => $data['firstname'],
+                        "lastname" => $data['lastname'],
                         "email" => $data['email']
                     )
                 );

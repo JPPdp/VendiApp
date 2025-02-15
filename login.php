@@ -14,7 +14,7 @@ use Firebase\JWT\Key;
 $servername = "localhost";
 $username = "root";  // your database username
 $password = "";      // your database password
-$dbname = "playersdb";
+$dbname = "vendi_db";
 
 // Secret key for JWT
 $secret_key = "2169b56560cdbff74b4c9050c2db773ee0747800b27a78781a4e84aceb10a4450ff8049c25bb276a077c1835c862922aaa799138c2b2bcfeec028954cb12540c8f7d654fd6d18816497884937bee07c58e07b971eccce646af12557ee488a30a"; // Replace with a strong, random key.  Store securely!
@@ -76,7 +76,7 @@ try {
     }
 
     // Prepare statement to prevent SQL injection
-    $stmt = $conn->prepare("SELECT * FROM players WHERE email = ? LIMIT 1");
+    $stmt = $conn->prepare("SELECT * FROM clients WHERE email = ? LIMIT 1");
     if (!$stmt) {
         throw new Exception('Prepare statement failed: ' . $conn->error);
     }
@@ -106,9 +106,11 @@ try {
                 "exp" => time() + (60 * 60), // Token valid for 1 hour
                 "data" => array(
                     "user_id" => $user['id'],
-                    "username" => $user['username'],
+                    "firstname" => $user['firstname'],
+                    "lastname" => $user['lastname'],
+                    "mobilenumber" => $user['mobilenumber'],
                     "email" => $user['email'],
-                    "scores" => $user['scores']
+                    "password" => $user['password']
                 )
             );
 
@@ -116,9 +118,11 @@ try {
             // Send success response with token
             send_json_response(true, 'Login successful', [
                 'user_id' => $user['id'],
-                'username' => $user['username'],
+                'firstname' => $user['firstname'],
+                'lastname' => $user['lastname'],
+                'mobilenumber' => $user['mobilenumber'],
                 'email' => $user['email'],
-                'scores' => $user['scores']
+                'password' => $user['password']
             ], $jwt);
         } else {
             throw new Exception('Invalid password');
