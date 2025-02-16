@@ -76,8 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($updateStmt->execute()) {
         // Generate JWT Token
         $payload = array(
-            "iss" => "your_domain.com", // Replace with your domain
-            "aud" => "your_domain.com", // Replace with your domain
+            "iss" => "localhost", // Replace with your domain
+            "aud" => "localhost", // Replace with your domain
             "iat" => time(),
             "nbf" => time(),
             "exp" => time() + (60 * 60), // Token valid for 1 hour
