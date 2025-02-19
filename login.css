@@ -124,9 +124,6 @@ html, body {
 .RIGHT_SECTION {
     flex: 50%;
     background-color: var(--white1);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -252,6 +249,7 @@ html, body {
 .LOGIN_FORM button {
     background-color: black;
     font-family: 'Coolvetica';
+    font-size: 0.9rem;
     width: 100%;
     padding: 15px;
     color: var(--white);
@@ -337,13 +335,23 @@ html, body {
 
 .LOGIN_LINK{
     text-align: center;
+    margin-top: 40px;
+    transition: transform 0.5s ease;
+}
+
+.LOGIN_LINK a{
+    color: black;
+    padding: 10px 350px;
+    border: 1px solid var(--dark5);
+    border-radius: 10px;
     text-decoration: none;
     font-weight: bold;
     font-size: 0.9rem;
 }
 
 .LOGIN_LINK:hover{
-    color: var(--dark3);
+    color: var(--dark1);
+    transform: translateY(-1px);
 }
 
 .REMEMBER_FORGOT_CONTAINER {

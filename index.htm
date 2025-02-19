@@ -1,8 +1,3 @@
-<?php
-session_start(); // Start the session at the very beginning
-$fullname = isset($_SESSION['fullname']) ? $_SESSION['fullname'] : '';
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,29 +12,31 @@ $fullname = isset($_SESSION['fullname']) ? $_SESSION['fullname'] : '';
 <body>
 
     <header>
-        <div class="LOGO">
-            <a href="index.php" class="LOGO-NAME">Vendi</a>
+
+        <input type="checkbox" name="" id="toggler">
+        <label for="toggler" class="fas fa-bars"></label>
+
+        <div class="LOGO" id="LOGO">
+            <a href="#HOME" class="LOGO-NAME">Vendi</a>
         </div>
         <nav class="MAIN-NAV">
             <div class="DROPDOWN">
-                <a href="#HOME" class="DROP-BUTTON">Home &#9662;</a>
+                <a href="#HOME" class="DROP-BUTTON">HOME &#11163;</a>
                     <div class="DROPDOWN-LIST">
-                        <a href="#FOOD-SECTION">Food</a>
-                        <a href="#BEVERAGES-SECTION">Beverages</a>
-                        <a href="#ENTERTAINMENT-SECTION">Entertainment</a>
+                        <a href="#FOOD-SECTION">FOOD</a>
+                        <a href="#BEVERAGES-SECTION">BEVERAGES</a>
+                        <a href="#ENTERTAINMENT-SECTION">ENTERTAINMENT</a>
                     </div>
             </div>
-            <a href="ABOUT.html">About</a>
-            <a href="CONTACT.html">Contact Us</a>
+                        <a href="ABOUT.html"> ABOUT</a>
+                        <a href="CONTACT.html">CONTACT US</a>
         </nav>
-
+        
         <div class="ACCOUNT">
-            <?php if ($fullname): ?>
-                <a href="profile.html" id="btnPROFILE"><?php echo htmlspecialchars($fullname); ?></a>
-            <?php else: ?>
-                <a href="dashboard.html" id="btnDASHBOARD">Dashboard</a>
-            <?php endif; ?>
+            <a href="login.html" id="btnLOGIN"> LOG IN</a>
+            <a href="register.html" id="btnGETSTARTED">GET STARTED</a>
         </div>
+
     </header>
 
     <!-- HOME SECTION // BANNER -->
@@ -54,36 +51,27 @@ $fullname = isset($_SESSION['fullname']) ? $_SESSION['fullname'] : '';
                 </div>
             </div>
         </div>
-    </main>
-
-    <!-- ABOUT SECTION 
-    <section class="ABOUT" id="ABOUT">
-        <h2 class="ABOUT-HEADER">Save Time and Effort, Book Online</h2>
-          <div class="CONTENT">
-            <p>Let us worry </p>
-  
-        </div>
-       </section>-->
+    </main>    
 
 
-<!-- 🛍️ STALLS SECTION 🛍️ -->
-<section class="FOOD-SECTION" id="FOOD-SECTION">
-    <h1 class="HEADER">Food Stalls. <span>Catering to every craving.</span></h1>
-    <div class="LIST">
 
-        <div class="CARD">
-            <a href="food.html" class="CARD-LINK">
-                <div class="CARD-IMAGE">
-                    <img src="assets/food/potatocorner/thumbnail.jpg" alt="Potato Corner">
-                </div>
-                <div class="CARD-DESCRIPTION">
-                    <div class="TITLE">Potato Corner</div>
-                    <div class="SUB-TITLE">World's Best Flavored Fries</div>
-                    <p class="CATEGORY">Fast Food</p>
-                    <p class="PRICE">Starting ₱1,450/hour</p>
-                </div>
-            </a>
-        </div>
+    <!-- 🛍️ STALLS SECTION 🛍️ -->
+    <section class="FOOD_SECTION" id="FOOD_SECTION">
+        <h1 class="HEADER">Eats. <span>Catering to every craving.</span></h1>
+        <div class="LIST">
+            <div class="CARD">
+                <a href="stall-details.html" class="CARD-LINK">
+                    <div class="CARD-IMAGE">
+                        <img src="assets/food/potatocorner/thumbnail.jpg" alt="Potato Corner Stall">
+                    </div>
+                    <div class="CARD-DESCRIPTION">
+                        <div class="TITLE">Potato Corner</div>
+                        <div class="SHORT-DESCRIPTION">Dagupan</div>
+                        <p class="CATEGORY">Fast Food</p>
+                        <p class="PRICE">₱1,450 - ₱3,000/hour</p>
+                    </div>
+                </a>
+            </div>
 
         <div class="CARD">
             <a href="food.html" class="CARD-LINK">
@@ -188,8 +176,8 @@ $fullname = isset($_SESSION['fullname']) ? $_SESSION['fullname'] : '';
 
 
 <!-- 🛍️ STALLS SECTION 🛍️ -->
-<section class="BEVERAGES-SECTION" id="BEVERAGES-SECTION">
-    <h1 class="HEADER">Beverages. <span>Pouring the perfect drink.</span></h1>
+<section class="BEVERAGES_SECTION" id="BEVERAGES_SECTION">
+    <h1 class="HEADER">Pours. <span>Pouring the perfect drink.</span></h1>
     <div class="LIST">
 
         <div class="CARD">
@@ -309,8 +297,8 @@ $fullname = isset($_SESSION['fullname']) ? $_SESSION['fullname'] : '';
 
 
 <!-- 🛍️ STALLS SECTION 🛍️ -->
-<section class="ENTERTAINMENT-SECTION" id="ENTERTAINMENT-SECTION">
-    <h1 class="HEADER">Entertainment. <span>Ignite the celebration.</span></h1>
+<section class="ENTERTAINMENT_SECTION" id="ENTERTAINMENT_SECTION">
+    <h1 class="HEADER">Vibes. <span>Ignite the celebration.</span></h1>
     <div class="LIST">
 
         <div class="CARD">
@@ -444,7 +432,7 @@ $fullname = isset($_SESSION['fullname']) ? $_SESSION['fullname'] : '';
 
     <!-- SCROLL SKIPPER -->
     <div class="skip">
-        <a href="#HOME"><i class="fas fa-arrow-up"></i></a>
+        <a href="#LOGO"><i class="fas fa-arrow-up"></i></a>
       </div>
 </body>
 </html>
