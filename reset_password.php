@@ -74,21 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $updateStmt->bindParam(':email', $email);
 
     if ($updateStmt->execute()) {
-        // Generate JWT Token
-        $payload = array(
-            "iss" => "localhost", // Replace with your domain
-            "aud" => "localhost", // Replace with your domain
-            "iat" => time(),
-            "nbf" => time(),
-            "exp" => time() + (60 * 60), // Token valid for 1 hour
-            "data" => array(
-                "email" => $email
-            )
-        );
-
-        $jwt = JWT::encode($payload, $secret_key, 'HS256');
-
-        echo json_encode(["success" => true, "message" => "Password reset successfully", "token" => $jwt]);
+        echo json_encode(["success" => true, "message" => "Password reset successfully"]);
     } else {
         echo json_encode(["success" => false, "message" => "Failed to reset password"]);
     }
