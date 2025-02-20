@@ -97,9 +97,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Check if the insert was successful
         try {
             if ($stmt->execute()) {
-                echo json_encode(["success" => 1, "message" => "Player Created Successfully"]);
+                echo json_encode(["success" => 1, "message" => "Account Created Successfully"]);
             } else {
-                echo json_encode(["success" => 0, "message" => "Failed to create player"]);
+                echo json_encode(["success" => 0, "message" => "Failed to create Account"]);
             }
         } catch (PDOException $e) {
             // Log the error message for debugging
