@@ -83,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // If no errors, proceed to insert the player
+    // If no errors, proceed to insert the users
     if (empty($errors)) {
         $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
 

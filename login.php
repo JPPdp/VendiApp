@@ -76,6 +76,10 @@ try {
     if (!$stmt) {
         throw new Exception('Prepare statement failed: ' . $conn->error);
     }
+    $stmt = $conn->prepare("SELECT * FROM vendors WHERE email = ? LIMIT 1");
+    if (!$stmt) {
+        throw new Exception('Prepare statement failed: ' . $conn->error);
+    }
 
     $stmt->bind_param("s", $email);
     
