@@ -9,7 +9,6 @@ require_once 'vendor/autoload.php'; // Include JWT library
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-
 // Database connection parameters
 $servername = "localhost";
 $username = "root";  // your database username
@@ -28,16 +27,13 @@ function sanitize_input($data) {
 }
 
 // Function to send JSON response
-function send_json_response($success, $message, $data = null, $token = null) {
+function send_json_response($success, $message, $data = null) {
     $response = [
         'success' => $success,
         'message' => $message
     ];
     if ($data) {
         $response = array_merge($response, $data);
-    }
-    if ($token) {
-        $response['token'] = $token;
     }
     echo json_encode($response);
     exit();
@@ -96,39 +92,19 @@ try {
         
         // Verify password
         if (password_verify($password, $user['password'])) {
-
-             // Generate JWT Token
-            $payload = array(
-                "iss" => "localhost", // Replace with your domain
-                "aud" => "localhost", // Replace with your domain
-                "iat" => time(),
-                "nbf" => time(),
-                "exp" => time() + (60 * 60), // Token valid for 1 hour
-                "data" => array(
-                    "user_id" => $user['id'],
-                    "firstname" => $user['firstname'],
-                    "lastname" => $user['lastname'],
-                    "mobilenumber" => $user['mobilenumber'],
-                    "email" => $user['email'],
-                    "password" => $user['password']
-                )
-            );
-
-            $jwt = JWT::encode($payload, $secret_key, 'HS256');
-            // Send success response with token
+            // Send success response
             send_json_response(true, 'Login successful', [
                 'user_id' => $user['id'],
                 'firstname' => $user['firstname'],
                 'lastname' => $user['lastname'],
                 'mobilenumber' => $user['mobilenumber'],
-                'email' => $user['email'],
-                'password' => $user['password']
-            ], $jwt);
+                'email' => $user['email']
+            ]);
         } else {
             throw new Exception('Invalid password');
         }
     } else {
-        throw new Exception('Username And Password Are Incorrect');
+        throw new Exception('Username and password are incorrect');
     }
 
 } catch (Exception $e) {

@@ -97,25 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Check if the insert was successful
         try {
             if ($stmt->execute()) {
-
-                // Generate JWT Token
-                $payload = array(
-                    "iss" => "localhost", // Replace with your domain
-                    "aud" => "localhost", // Replace with your domain
-                    "iat" => time(),
-                    "nbf" => time(),
-                    "exp" => time() + (60 * 60), // Token valid for 1 hour
-                    "data" => array(
-                        "username" => $data['username'],
-                        "firstname" => $data['firstname'],
-                        "lastname" => $data['lastname'],
-                        "email" => $data['email']
-                    )
-                );
-
-                $jwt = JWT::encode($payload, $secret_key, 'HS256');
-
-                echo json_encode(["success" => 1, "message" => "Player Created Successfully", "token" => $jwt]);
+                echo json_encode(["success" => 1, "message" => "Player Created Successfully"]);
             } else {
                 echo json_encode(["success" => 0, "message" => "Failed to create player"]);
             }
