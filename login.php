@@ -76,10 +76,6 @@ try {
     if (!$stmt) {
         throw new Exception('Prepare statement failed: ' . $conn->error);
     }
-    $stmt = $conn->prepare("SELECT * FROM vendors WHERE email = ? LIMIT 1");
-    if (!$stmt) {
-        throw new Exception('Prepare statement failed: ' . $conn->error);
-    }
 
     $stmt->bind_param("s", $email);
     
@@ -96,12 +92,21 @@ try {
         
         // Verify password
         if (password_verify($password, $user['password'])) {
+            // Generate OTP
+            $otp = rand(100000, 999999);
+            $otp_expiry = time() + (5 * 60); // OTP valid for 5 minutes
+
+            // Store OTP in the database
+            $otp_stmt = $conn->prepare("INSERT INTO otp_verification (email, otp, expiry) VALUES (?, ?, ?)");
+            $otp_stmt->bind_param("ssi", $email, $otp, $otp_expiry);
+            $otp_stmt->execute();
+
+            // Send OTP to user's email
+            mail($email, "Your OTP Code", "Your OTP code is: $otp");
+
             // Send success response
-            send_json_response(true, 'Login successful', [
+            send_json_response(true, 'OTP sent to your email. Please verify.', [
                 'user_id' => $user['id'],
-                'firstname' => $user['firstname'],
-                'lastname' => $user['lastname'],
-                'mobilenumber' => $user['mobilenumber'],
                 'email' => $user['email']
             ]);
         } else {
