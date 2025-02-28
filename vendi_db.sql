@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 28, 2025 at 01:39 PM
+-- Generation Time: Feb 28, 2025 at 01:48 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -33,15 +33,29 @@ CREATE TABLE `clients` (
   `lastname` varchar(30) NOT NULL,
   `mobilenumber` int(11) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `password` varchar(16) NOT NULL
+  `password` varchar(16) NOT NULL,
+  `created at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `clients`
 --
 
-INSERT INTO `clients` (`id`, `firstname`, `lastname`, `mobilenumber`, `email`, `password`) VALUES
-(1, 'janrich', 'verbo', 99, 'janrich@gmail.com', 'janrich123');
+INSERT INTO `clients` (`id`, `firstname`, `lastname`, `mobilenumber`, `email`, `password`, `created at`) VALUES
+(1, 'janrich', 'verbo', 99, 'janrich@gmail.com', 'janrich123', '2025-02-28 12:48:35');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `otp_verification`
+--
+
+CREATE TABLE `otp_verification` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `otp` varchar(6) NOT NULL,
+  `expiry` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -57,7 +71,8 @@ CREATE TABLE `vendors` (
   `primarycontactnumber` int(11) NOT NULL,
   `mobilenumber` int(11) NOT NULL,
   `email` varchar(30) NOT NULL,
-  `password` int(16) NOT NULL
+  `password` int(16) NOT NULL,
+  `created at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -71,6 +86,12 @@ ALTER TABLE `clients`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`),
   ADD UNIQUE KEY `email_2` (`email`);
+
+--
+-- Indexes for table `otp_verification`
+--
+ALTER TABLE `otp_verification`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `vendors`
@@ -88,6 +109,12 @@ ALTER TABLE `vendors`
 --
 ALTER TABLE `clients`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `otp_verification`
+--
+ALTER TABLE `otp_verification`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `vendors`
