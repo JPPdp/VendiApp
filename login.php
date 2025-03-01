@@ -66,7 +66,7 @@ try {
     }
 
     // Prepare statement to prevent SQL injection
-    $query = "SELECT * FROM users WHERE email = :email";
+    $query = "SELECT * FROM clients WHERE email = :email";
     $statement = $conn->prepare($query);
     $statement->execute([':email' => $email]);
     $user = $statement->fetch(PDO::FETCH_ASSOC);
