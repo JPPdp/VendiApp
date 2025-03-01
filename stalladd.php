@@ -7,6 +7,7 @@ header("Access-Control-Allow-Headers: Content-Type");
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+
 // Database connection parameters
 $host = 'localhost';
 $dbname = 'vendi_db';
