@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 28, 2025 at 01:48 PM
+-- Generation Time: Mar 01, 2025 at 07:31 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -60,20 +60,38 @@ CREATE TABLE `otp_verification` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `stalls`
+--
+
+CREATE TABLE `stalls` (
+  `item_id` int(11) NOT NULL,
+  `event_profile` blob NOT NULL,
+  `event_items` varchar(255) NOT NULL,
+  `item_description` varchar(255) NOT NULL,
+  `booking_status` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `vendors`
 --
 
 CREATE TABLE `vendors` (
   `id` int(11) NOT NULL,
   `businessname` varchar(60) NOT NULL,
-  `businesscategory` varchar(30) NOT NULL,
-  `businessaddress` varchar(60) NOT NULL,
-  `primarycontactnumber` int(11) NOT NULL,
-  `mobilenumber` int(11) NOT NULL,
+  `mobile` varchar(11) NOT NULL,
   `email` varchar(30) NOT NULL,
-  `password` int(16) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `created at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `vendors`
+--
+
+INSERT INTO `vendors` (`id`, `businessname`, `mobile`, `email`, `password`, `created at`) VALUES
+(2, 'Student Hub', '09467172999', 'verbojanrich20@gmail.com', '$2y$10$Lxq0COipQWir01NU8umuCetdIYXdHyVZHUgG.P98LbpX1RkELWZtW', '2025-03-01 06:07:34');
 
 --
 -- Indexes for dumped tables
@@ -94,11 +112,17 @@ ALTER TABLE `otp_verification`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `stalls`
+--
+ALTER TABLE `stalls`
+  ADD PRIMARY KEY (`item_id`);
+
+--
 -- Indexes for table `vendors`
 --
 ALTER TABLE `vendors`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD UNIQUE KEY `businessname` (`businessname`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -117,10 +141,16 @@ ALTER TABLE `otp_verification`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `stalls`
+--
+ALTER TABLE `stalls`
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `vendors`
 --
 ALTER TABLE `vendors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
