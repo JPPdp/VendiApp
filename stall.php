@@ -32,21 +32,21 @@ try {
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     // Sanitize and validate input parameters if any
-    $item_id = isset($_GET['item_id']) ? sanitize_input($_GET['item_id']) : null;
+    $event_items = isset($_GET['event_items']) ? sanitize_input($_GET['event_items']) : null;
 
     // Prepare SQL query
-    $sql = "SELECT id, name, description, price FROM items";
-    if ($item_id) {
-        $sql .= " WHERE id = :item_id";
+    $sql = "SELECT event_profile, event_items, item_description, item_prices FROM stalls";
+    if ($$event_items) {
+        $sql .= " WHERE event_items = :event_items";
     }
 
     try {
         $stmt = $pdo->prepare($sql);
-        if ($item_id) {
-            $stmt->bindParam(':item_id', $item_id, PDO::PARAM_INT);
+        if ($event_items) {
+            $stmt->bindParam(':event_items', $event_items, PDO::PARAM_INT);
         }
         $stmt->execute();
-        $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stalls = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         echo json_encode(["success" => true, "data" => $items]);
     } catch (PDOException $e) {

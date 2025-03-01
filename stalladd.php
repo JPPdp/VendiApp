@@ -38,13 +38,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    $name = sanitize_input($data['name'] ?? '');
-    $description = sanitize_input($data['description'] ?? '');
-    $price = sanitize_input($data['price'] ?? '');
+    $event_profile = sanitize_input($data['event_profile'] ?? '');
+    $event_items = sanitize_input($data['event_items'] ?? '');
+    $event_description = sanitize_input($data['item_description'] ?? '');
+    $event_prices = sanitize_input($data['item_prices'] ?? '');
 
     // Validate inputs
-    if (empty($name) || empty($description) || empty($price)) {
-        echo json_encode(["success" => false, "message" => "Name, description, and price are required"]);
+    if (empty($event_profile) || empty($event_items) || empty($event_description) || empty($event_prices)) {
+        echo json_encode(["success" => false, "message" => "Item, Description, Price are required"]);
         exit;
     }
 
@@ -54,10 +55,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Insert data into the database
-    $stmt = $pdo->prepare("INSERT INTO items (name, description, price) VALUES (:name, :description, :price)");
-    $stmt->bindParam(':name', $name);
-    $stmt->bindParam(':description', $description);
-    $stmt->bindParam(':price', $price);
+    $stmt = $pdo->prepare("INSERT INTO stalls (name, description, price) VALUES (:name, :description, :price)");
+    $stmt->bindParam(':event_profile', $event_profile);
+    $stmt->bindParam(':event_items', $event_items);
+    $stmt->bindParam(':item_description', $item_description);
+    $stmt->bindParam(':item_prices', $item_prices);
 
     if ($stmt->execute()) {
         echo json_encode(["success" => true, "message" => "Item added successfully"]);
