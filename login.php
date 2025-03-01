@@ -74,24 +74,27 @@ try {
     if ($user) {
         // Verify password
         if ($user['user_password'] === $password) {
-            // Generate OTP
-            $otp = rand(100000, 999999);
-            $otp_expiry = time() + (5 * 60); // OTP valid for 5 minutes
+            // Generate JWT Token
+            $token = JWT::encode(
+                array(
+                    'iat' => time(),
+                    'nbf' => time(),
+                    'exp' => time() + 3600,
+                    'data' => array(
+                        'user_id' => $user['user_id'],
+                        'email' => $user['email']
+                    )
+                ),
+                $secret_key,
+                'HS256'
+            );
 
-            // Store OTP in the database
-            $otp_stmt = $conn->prepare("INSERT INTO otp_verification (email, otp, expiry) VALUES (:email, :otp, :expiry)");
-            $otp_stmt->bindParam(':email', $email);
-            $otp_stmt->bindParam(':otp', $otp);
-            $otp_stmt->bindParam(':expiry', $otp_expiry);
-            $otp_stmt->execute();
-
-            // Send OTP to user's email
-            mail($email, "Your OTP Code", "Your OTP code is: $otp");
+            // Set token as a cookie
+            setcookie('token', $token, time() + 3600, '/', true, true);
 
             // Send success response
-            send_json_response(true, 'OTP sent to your email. Please verify.', [
-                'user_id' => $user['user_id'],
-                'email' => $user['email']
+            send_json_response(true, 'Login successful', [
+                'token' => $token
             ]);
         } else {
             throw new Exception('Wrong Password');
