@@ -1,9 +1,4 @@
 <?php
-require_once 'vendor/autoload.php'; // Include JWT library
-
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
-
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
@@ -16,9 +11,6 @@ $host = 'localhost';
 $dbname = 'vendi_db';
 $username = 'root';
 $password = '';
-
-// Secret key for JWT
-$secret_key = "2169b56560cdbff74b4c9050c2db773ee0747800b27a78781a4e84aceb10a4450ff8049c25bb276a077c1835c862922aaa799138c2b2bcfeec028954cb12540c8f7d654fd6d18816497884937bee07c58e07b971eccce646af12557ee488a30a"; // Replace with a strong, random key. Store securely!
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
