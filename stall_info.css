@@ -1,0 +1,108 @@
+/* CUSTOM PALLETES */
+:root {
+    --white: #FFFFFF;
+    --white1: #fafafa;    
+    --white2: #f0f0f0;
+    --white3: #cccccc;
+    --dark2: #333;
+    --dark1: #333333;
+    --dark3: #393939;
+    --dark4: #282C35;
+    --dark5: #696969;
+    --violet: #4c315a;
+    --gradient: linear-gradient(to right, black 0%, rgb(80, 0, 0) 75%, rgb(60, 0, 116) 100%);
+    --semi-transparent: hsla(0, 0%, 100%, 0.050);
+}
+
+/* FONT FAMILIES */
+@font-face {
+    font-family: 'Poppins';
+    src: url(assets/fonts/Poppins-Full-Version/Poppins-Full-Version/Poppins-Regular.ttf);}
+@font-face {
+    font-family: "Blacksword";
+    src: url(assets/fonts/blacksword/Blacksword.otf);}
+@font-face {
+    font-family: 'CaviarDreams';
+    src: url(assets/fonts/caviar_dreams/CaviarDreams.ttf);}
+@font-face {
+    font-family: 'Coolvetica';
+    src: url(assets/fonts/coolvetica/Coolvetica\ Rg.otf);}
+@font-face {
+    font-family: 'GeoSans';
+    src: url(assets/fonts/geo_sans_light/GeosansLight.ttf);}
+@font-face {
+    font-family: 'Machinery';
+    src: url(assets/fonts/machinery_script/MachineryScript_PERSONAL_USE_ONLY.otf);}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--white2);
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    width: 100%;
+    max-width: 1920px;
+    height: 100%;
+    min-height: 100vh;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    padding: 10px 50px;
+    background-color: white;
+    position: relative;
+    z-index: 2;
+    justify-content: left;
+    border-radius: 20px;
+    margin: 5px;
+}
+
+.LOGO{
+    display: flex;
+    align-items: center;
+}
+
+.LOGO-IMAGE {
+    display: flex;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    color: black;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+/* NAV STYLES */
+.MAIN-NAV {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.MAIN-NAV a {
+    text-decoration: none;
+    color: var(--dark1);
+    margin-left: 20px;
+    font-family: 'Poppins';
+    font-size: 0.9rem;
+    position: relative; 
+    transition: color 0.5s ease;
+}
+
+.MAIN-NAV a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2.5px;
+    width: 0; 
+    height: 2.5px;
+    background-color: black;
+    transition: width 0.5s ease-in-out;
+}
+
+.MAIN-NAV a:hover::after {
+    width: 100%;
+}

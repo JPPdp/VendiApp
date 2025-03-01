@@ -1,89 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vendor Dashboard | Vendi</title>
-  <link rel="stylesheet" href="dashboard.css">
-  <link rel="icon" href="assets/images/VendiBLK2_NoBG.png" type="image/icon type">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Vendi</title>
+        <link rel="icon" href="assets/images/VendiBLK2_NoBG.png" type="image/icon type">
+        <link rel="stylesheet" href="dashboard.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 <body>
 
-  <!-- Main Container -->
-  <div class="CONTAINER">
-    <!-- Navigation Bar -->
-    <div class="NAVIGATION-BAR">
+    <div class="CONTAINER">
+        <!-- Navigation Bar -->
+        <div class="NAVIGATION_BAR">
+            <div class="LOGO">
+                <div class="LOGO_ICON">
+                    <img src="assets/images/VENDI_BG.png" alt="Logo">
+                </div>
+                <div class="LOGO_NAME">Vendi</div>
+            </div>
 
-        <div class="LOGO">
-            <div class="LOGO_NAME">Vendi.</div>
-          </div>
+            <div class="MENU_HEADER">MANAGEMENT</div>
+                    <a href="#DASHBOARD"><i class="fa fa-fw fa-chart-bar"></i> Dashboard</a>
+                    <a href="#"><i class="fa fa-fw fa-store"></i> Listings</a>
+                    <a href="#"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
+                    <a href="#"><i class="fa fa-fw fa-envelope"></i> Messages</a>
+                <div class="MENU_HEADER">PREFERENCES</div>
+                    <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                    <a href="#"><i class="fa fa-fw fa-question-circle"></i> Help</a>
+        </div>
+        
+        <!-- Dashboard Content -->
+        <div class="DASHBOARD" id="DASHBOARD">
+            <div class="UPPER">
+                <div class="LEFT_UPPER">
+                    <h1 class="USERNAME">Welcome, User</h1>
+                </div>
 
-      <div class="MENU-HEADER">MAIN MENU</div>
-        <a href="#DASHBOARD-CONTENT">Dashboard</a>
-        <a href="#">Reservations</a>
-        <a href="#">Schedule</a>
-        <a href="#">Analytics</a>
-        <a href="#">Customers</a>
-      <div class="MENU-HEADER">PREFERENCES</div>
-        <a href="#">Settings</a>
-        <a href="#">Help</a>
+                <div class="RIGHT_UPPER">
+                    <div class="ACCOUNT">
+                        <div class="PROFILE">
+                            <img src="assets/images/jacks.jpg" alt="" class="PROFILE_PIC">
+                            <div class="PROFILE_DROPDOWN">
+                                <a href="#">Profile</a>
+                                <a href="#">Log Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="CONTENT">
+                <div class="BOX">
+                    <h3>Pending</h3>
+                    <p>2</p>
+                </div>
+                <div class="BOX">
+                    <h3>Confirmed</h3>
+                    <p>2</p>
+                </div>
+                <div class="BOX">
+                    <h3>Completed</h3>
+                    <p>40</p>
+                </div>
+            </div>
+
+            <table class="BOOKING_TABLE">
+                <thead>
+                    <tr>
+                        <th>Client Name</th>
+                        <th>Booking Status</th>
+                        <th>Event Venue</th>
+                        <th>Selected Package</th>
+                        <th>Event Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>Pending</td>
+                        <td>Student Plaza</td>
+                        <td>Package 1</td>
+                        <td id>2025-3-15</td>
+                        <td>
+                            <button>Approve</button>
+                            <button>Reject</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-
-    <!-- Dashboard Content -->
-    <div class="DASHBOARD-CONTENT" id="DASHBOARD-CONTENT">
-
-        <div CLASS="WELCOME_HEADER">
-            <h1>Welcome, Vendor!</h1>
-            <p>Here's an overview of your stall bookings and performance.</p>
-        </div>
-
-      <!-- Stats Boxes -->
-      <div class="STATS-BOXES">
-        <div class="STATS-BOX">
-          <h3>New Booking</h3>
-          <p>12</p>
-        </div>
-        <div class="STATS-BOX">
-          <h3>Reserved</h3>
-          <p>8</p>
-        </div>
-        <div class="STATS-BOX">
-          <h3>Revenue</h3>
-          <p>₱10,200</p>
-        </div>
-      </div>
-
-      <!-- Calendar Section -->
-      <div class="CALENDAR-SECTION">
-        <h2>Schedule Calendar</h2>
-        <!-- Add calendar here -->
-      </div>
-
-      <table class="BOOKING-TABLE">
-        <thead>
-
-          <tr>
-            <th>Booker</th>
-            <th>Status</th>
-            <th>Venue</th>
-            <th>Package</th>
-          </tr>
-
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>John Doe</td>
-            <td>Pending</td>
-            <td>PHINMA UPANG Student Plaza</td>
-            <td>Basic</td>
-          </tr>
-        </tbody>
-
-      </table>
-    </div>
-  </div>
+    
 </body>
 </html>

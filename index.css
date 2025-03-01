@@ -51,27 +51,28 @@ html, body {
 header {
     display: flex;
     align-items: center;
-    padding: 10px 20px;
+    padding: 10px 50px;
     background-color: white;
     position: relative;
     z-index: 2;
-    justify-content: space-between; /* Ensures space between logo/nav and account */
+    justify-content: space-between;
     border-radius: 20px;
     margin: 5px;
 }
 
-.LOGO {
+.LOGO{
     display: flex;
     align-items: center;
 }
 
 .LOGO-NAME {
-    font-family: 'Machinery', sans-serif; /* Added fallback font */
+    font-family: 'Machinery'; /* Fontttttt */
     font-size: 1.5rem;
-    margin-left: 20px;
+    align-items: center;
     cursor: pointer;
     color: black;
     text-decoration: none;
+    position: relative;
 }
 
 /* NAV STYLES */
@@ -79,15 +80,15 @@ header {
     display: flex;
     align-items: center;
     gap: 20px;
-    margin-left: 20px; /* Adds space between logo and nav */
 }
 
 .MAIN-NAV a {
     text-decoration: none;
-    color: var(--dark5);
-    font-family: 'Poppins', sans-serif; /* Added fallback font */
+    color: var(--dark1);
+    margin-left: 20px;
+    font-family: 'Poppins';
     font-size: 0.9rem;
-    position: relative;
+    position: relative; 
     transition: color 0.5s ease;
 }
 
@@ -96,8 +97,8 @@ header {
     position: absolute;
     left: 0;
     bottom: -2.5px;
-    width: 0;
-    height: 2px;
+    width: 0; 
+    height: 2.5px;
     background-color: black;
     transition: width 0.5s ease-in-out;
 }
@@ -106,7 +107,7 @@ header {
     width: 100%;
 }
 
-.DROPDOWN-LIST a:hover::after {
+.DROPDOWN-LIST a:hover::after{
     display: none;
 }
 
@@ -117,8 +118,9 @@ header {
 
 .MAIN-NAV .DROP-BUTTON {
     text-decoration: none;
-    color: black;
-    font-family: 'Poppins', sans-serif; /* Added fallback font */
+    color: var(--dark1);
+    margin-left: 10px;
+    font-family: 'Poppins';
     cursor: pointer;
 }
 
@@ -126,16 +128,15 @@ header {
     display: none;
     position: absolute;
     background-color: var(--white);
-    z-index: 1; /* Increased z-index to ensure dropdown appears above other elements */
+    z-index: 0;
     border-radius: 10px;
-    padding: 10px 0; /* Adjusted padding for better spacing */
-    margin-top: 5px; /* Added margin to separate dropdown from button */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added subtle shadow for depth */
+    padding-bottom: 10px;
+    margin-left: -35px;
 }
 
 .MAIN-NAV .DROPDOWN-LIST a {
     color: black;
-    padding: 10px 20px; /* Increased padding for better clickability */
+    padding: 10px;
     text-decoration: none;
     display: block;
     font-size: 0.9rem;
@@ -143,12 +144,14 @@ header {
 
 .MAIN-NAV .DROPDOWN-LIST a:hover {
     background-color: var(--white2);
-    border-radius: 5px; /* Adjusted border-radius for smoother hover effect */
+    border-radius: 10px;
+    color: black;
 }
 
 .MAIN-NAV .DROPDOWN:hover .DROPDOWN-LIST {
     display: block;
 }
+
 
 /* ACCOUNT LINKS STYLE */
 .ACCOUNT {
@@ -158,38 +161,36 @@ header {
 }
 
 .ACCOUNT a {
-    font-family: 'Poppins', sans-serif; /* Added fallback font */
+    font-family: 'Poppins';
     text-decoration: none;
     font-size: 0.9rem;
 }
 
-.ACCOUNT #btnLOGIN {
+.ACCOUNT #btnLOGIN{
     color: black;
     background-color: white;
     border: 1px solid black;
     border-radius: 20px;
     padding: 5px 20px;
     font-weight: bold;
-    transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+    transition: transform 0.5s ease-in-out;
 }
 
-.ACCOUNT #btnLOGIN:hover {
-    transform: translateY(-1px);
+.ACCOUNT #btnLOGIN:hover{
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.ACCOUNT #btnGETSTARTED {
+.ACCOUNT #btnGETSTARTED{
     color: var(--white1);
     background-color: black;
     border-radius: 20px;
     padding: 5px 20px;
     font-weight: bold;
-    transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out, background 0.5s ease-in-out;
+    transition: transform 0.5s ease-in-out;
 }
 
-.ACCOUNT #btnGETSTARTED:hover {
+.ACCOUNT #btnGETSTARTED:hover{
     background: var(--gradient);
-    transform: translateY(-1px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
@@ -356,7 +357,7 @@ header {
 
 .LIST {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-gap: 20px;
     width: 100%;
     padding: 0 1rem;
@@ -417,7 +418,7 @@ header {
 .CARD .CARD-DESCRIPTION .SUB-TITLE {
     font-size: 0.9rem;
     font-family: 'Poppins';
-    color: var(--shadeblack);
+    color: var(--dark3);
     margin-bottom: 1rem;
 }
 

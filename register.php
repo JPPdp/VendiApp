@@ -1,0 +1,163 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve form data
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $mobile = $_POST['mobile'];
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
+
+    // Validate password match
+    if ($password !== $confirm_password) {
+        echo "<div class='alert alert-danger'>Passwords do not match.</div>";
+    } else {
+        // Hash the password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        // Connect to the database
+        $conn = new mysqli("localhost", "root", "", "dbFeb27");
+
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        // Check if the username or email already exists
+        $stmt = $conn->prepare("SELECT id FROM users WHERE username = ? OR email = ?");
+        $stmt->bind_param("ss", $username, $email);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows > 0) {
+            echo "<div class='alert alert-danger'>Username or email already exists. Please choose another.</div>";
+        } else {
+            $stmt->close();
+            // Insert new user into the database
+            if ($stmt = $conn->prepare("INSERT INTO users (username, email, mobile, password) VALUES (?, ?, ?, ?)")) {
+                $stmt->bind_param("ssss", $username, $email, $mobile, $hashed_password);
+                $stmt->execute();
+                echo "<div class='alert alert-success'>Registration successful. You can now log in.</div>";
+            }
+        }
+
+        $stmt->close();
+        $conn->close();
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Vendi</title>
+    <link rel="icon" href="assets/images/VendiBLK2_NoBG.png" type="image/icon type">
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="CONTAINER">
+    <!-- LEFT SECTION -->
+    <div class="LEFT_SECTION">
+        <div class="LOGO">
+            <div class="LOGO_NAME">Vendi.</div>
+            <a href="index.htm" class="BACK_TO_WEBSITE">
+                Back to Website <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        <div class="VECTOR_ART">
+            <img src="assets/images/Visualizing_Vector.png" alt="Vector_Art">
+        </div>
+        <p>Collaborate and create.</p>
+    </div>
+
+    <div class="RIGHT_SECTION">
+
+        <!-- CLIENT SIGN-UP FORM -->
+        <form id="CLIENT_FORM" class="LOGIN_FORM active" method="post" action="registration.php">
+            <h2>CREATE YOUR EVENT PLANS</h2>
+            <p>Welcome! Start planning your unforgettable event by creating an account.</p>
+
+            <!-- Username -->
+            <label for="CLIENT_USERNAME">Username</label>
+            <input type="text" id="CLIENT_USERNAME" name="username" placeholder="Enter Username" required>
+
+            <!-- Email -->
+            <label for="CLIENT_EMAIL">Email</label>
+            <input type="email" id="CLIENT_EMAIL" name="email" placeholder="Enter Email Address" required>
+
+            <!-- Mobile Number -->
+            <label for="CLIENT_MOBILE">Mobile Number</label>
+            <input type="tel" id="CLIENT_MOBILE" name="mobile" placeholder="Enter Mobile Number" required>
+
+            <!-- Password -->
+            <div class="PASSWORD_CONTAINER">
+                <label for="PASSWORD">Password</label>
+                <input type="password" id="PASSWORD" name="password" placeholder="Enter Password" required minlength="8" maxlength="16">
+                <i class="fas fa-eye PASSWORD_TOGGLE" id="password-toggle"></i>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="PASSWORD_CONTAINER">
+                <label for="CONFIRM_PASSWORD">Confirm Password</label>
+                <input type="password" id="CONFIRM_PASSWORD" name="confirm_password" placeholder="Confirm Password" required minlength="8" maxlength="16">
+                <i class="fas fa-eye PASSWORD_TOGGLE" id="confirm-password-toggle"></i>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">SIGN UP</button>
+
+            <!-- Login Link -->
+            <div class="LOGIN">Already have an account?</div>
+            <div class="LOGIN_LINK">
+                <a href="login.php">LOG IN</a>
+            </div>
+        </form>
+
+        <!-- VENDOR SIGN-UP FORM -->
+        <form id="VENDOR_FORM" class="LOGIN_FORM" method="post" action="registration.php">
+            <h2>CONNECT WITH EVENT PLANNERS</h2>
+            <p>Welcome! Create an account to manage your schedule and maximize your event bookings.</p>
+
+            <!-- Username -->
+            <label for="VENDOR_USERNAME">Username</label>
+            <input type="text" id="VENDOR_USERNAME" name="username" placeholder="Enter Username" required>
+
+            <!-- Email -->
+            <label for="VENDOR_EMAIL">Email</label>
+            <input type="email" id="VENDOR_EMAIL" name="email" placeholder="Enter Email Address" required>
+
+            <!-- Mobile Number -->
+            <label for="VENDOR_MOBILE">Mobile Number</label>
+            <input type="tel" id="VENDOR_MOBILE" name="mobile" placeholder="Enter Mobile Number" required>
+
+            <!-- Password -->
+            <div class="PASSWORD_CONTAINER">
+                <label for="PASSWORD">Password</label>
+                <input type="password" id="PASSWORD" name="password" placeholder="Enter Password" required minlength="8">
+                <i class="fas fa-eye PASSWORD_TOGGLE" id="password-toggle"></i>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="PASSWORD_CONTAINER">
+                <label for="CONFIRM_PASSWORD">Confirm Password</label>
+                <input type="password" id="CONFIRM_PASSWORD" name="confirm_password" placeholder="Confirm Password" required minlength="8">
+                <i class="fas fa-eye PASSWORD_TOGGLE" id="confirm-password-toggle"></i>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">SIGN UP</button>
+
+            <!-- Login Link -->
+            <div class="LOGIN">Already have an account?</div>
+            <div class="LOGIN_LINK">
+                <a href="login.php">LOG IN</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src='script.js'></script>
+</body>
+</html>

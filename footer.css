@@ -1,3 +1,98 @@
+/* CUSTOM PALLETES */
+:root {
+    --white: #FFFFFF;
+    --white1: #fafafa;    
+    --white2: #f0f0f0;
+    --white3: #cccccc;
+    --dark2: #333;
+    --dark1: #333333;
+    --dark3: #393939;
+    --dark4: #282C35;
+    --dark5: #696969;
+    --violet: #4c315a;
+    --gradient: linear-gradient(to right, black 0%, rgb(80, 0, 0) 75%, rgb(60, 0, 116) 100%);
+    --semi-transparent: hsla(0, 0%, 100%, 0.050);
+}
+
+/* FONT FAMILIES */
+@font-face {
+    font-family: 'Poppins';
+    src: url(assets/fonts/Poppins-Full-Version/Poppins-Full-Version/Poppins-Regular.ttf);}
+@font-face {
+    font-family: "Blacksword";
+    src: url(assets/fonts/blacksword/Blacksword.otf);}
+@font-face {
+    font-family: 'CaviarDreams';
+    src: url(assets/fonts/caviar_dreams/CaviarDreams.ttf);}
+@font-face {
+    font-family: 'Coolvetica';
+    src: url(assets/fonts/coolvetica/Coolvetica\ Rg.otf);}
+@font-face {
+    font-family: 'GeoSans';
+    src: url(assets/fonts/geo_sans_light/GeosansLight.ttf);}
+@font-face {
+    font-family: 'Machinery';
+    src: url(assets/fonts/machinery_script/MachineryScript_PERSONAL_USE_ONLY.otf);}
+
+
+
+/*BEFORE FOOTER*/
+.BEFOOTER{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(assets/images/GradientBG_Landscape_ALT.png);
+    background-position: bottom;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 50px;
+    border-radius: 20px;
+    margin: 5px;
+    margin-top: 10px;
+}
+
+.BEFOOTER .CALL_OUT{
+    text-align: center;
+}
+
+.BEFOOTER .PARTNER_QUESTION  h1{
+    font: 2rem;
+    color: white;
+    margin-bottom: -10px;
+    font-family: 'Coolvetica';
+}
+.BEFOOTER .PARTNER_QUESTION span{
+    font-size: 2rem;
+    font-family: 'Blacksword';
+    color: white;
+    margin-bottom: 10px;
+}
+
+.BEFOOTER .CALL_OUT p{
+    font-size: 0.9rem;
+    color: white;
+    margin-bottom: 20px;
+    font-family: 'Poppins';
+}
+
+.BEFOOTER .btnPARTNER{
+    background-color: yellow;
+    border-radius: 20px;
+    padding: 10px;
+    text-decoration: none;
+    font-family: 'Coolvetica';
+    font-size: 1rem;
+    color: black;
+    margin-top: 20px;
+    transition: transform 0.5s ease-in-out;
+}
+
+.BEFOOTER .btnPARTNER:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
 /*FOOTER*/
 .FOOTER{
     text-align: center;

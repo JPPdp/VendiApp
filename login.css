@@ -3,6 +3,7 @@
     --white: #FFFFFF;
     --white1: #fafafa;    
     --white2: #f0f0f0;
+    --white3: #cccccc;
     --dark2: #333;
     --dark1: #333333;
     --dark3: #393939;
@@ -112,6 +113,7 @@ html, body {
     text-align: center;
     max-width: 75%;
     margin: 0 auto;
+    margin-top: 150px;
 }
 
 .CONTAINER{
@@ -140,18 +142,18 @@ html, body {
     margin-top: 75px;
     width: 100%;
     z-index: 0;
-    gap: 20px;
+    gap: 10px;
 }
 
 .USER_SELECTION button{
-    padding: 20px;
+    padding: 15px;
     width: 350px;
     font-family: 'Coolvetica';
     font-size: 1rem;
     border: none;
     background-color: transparent;
-    border: 1px solid black;
-    color: black;
+    border: 1px solid var(--dark5);
+    color: var(--dark1);
     cursor: pointer;
     border-radius: 10px ;
     margin: 0;
@@ -178,19 +180,18 @@ html, body {
     background-color: var(--white1);
     border-radius: 10px;
     padding: 25px;
-    margin: 0 auto;
+    margin: 0 100px;
     height: 100%;
-    z-index: 2;
 }
 
 .LOGIN_FORM input,
 .LOGIN_FORM select {
     width: 100%;
-    padding: 15px;
+    padding: 10px;
     margin-top: 10px;
     border-radius: 10px;
     background-color: var(--white);
-    border: 2px solid var(--white2);
+    border: 2px solid var(--white3);
     font-family: 'Poppins';
     box-sizing: border-box;
     font-size: 0.9rem;
@@ -201,7 +202,6 @@ html, body {
 .LOGIN_FORM input:hover,
 .LOGIN_FORM select:hover {
     border-color: var(--dark5);
-    transform: translateY(-1px);
 }
 
 .LOGIN_FORM h2{
@@ -335,21 +335,25 @@ html, body {
 
 .LOGIN_LINK{
     text-align: center;
-    margin-top: 40px;
+    margin-top: 30px;
     transition: transform 0.5s ease;
 }
 
 .LOGIN_LINK a{
-    color: black;
-    padding: 10px 350px;
+    color: var(--dark1);
+    padding: 15px;
     border: 1px solid var(--dark5);
     border-radius: 10px;
     text-decoration: none;
     font-weight: bold;
     font-size: 0.9rem;
+    display: inline-block;
+    min-width: 200px;
+    box-sizing: border-box;
+    transition: transform 0.5s ease-in-out;
 }
 
-.LOGIN_LINK:hover{
+.LOGIN_LINK a:hover{
     color: var(--dark1);
     transform: translateY(-1px);
 }
