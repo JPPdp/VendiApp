@@ -4,10 +4,8 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type");
 
-require_once 'vendor/autoload.php'; // Include JWT library
-
+require 'vendor/autoload.php';
 use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
 
 // Database connection parameters
 $servername = "localhost";
@@ -16,7 +14,7 @@ $password = "";      // your database password
 $dbname = "vendi_db";
 
 // Secret key for JWT
-$secret_key = "2169b56560cdbff74b4c9050c2db773ee0747800b27a78781a4e84aceb10a4450ff8049c25bb276a077c1835c862922aaa799138c2b2bcfeec028954cb12540c8f7d654fd6d18816497884937bee07c58e07b971eccce646af12557ee488a30a"; // Replace with a strong, random key.  Store securely!
+$secret_key = "2169b56560cdbff74b4c9050c2db773ee0747800b27a78781a4e84aceb10a4450ff8049c25bb276a077c1835c862922aaa799138c2b2bcfeec028954cb12540c8f7d654fd6d18816497884937bee07c58e07b971eccce646af12557ee488a30a"; // Replace with a strong, random key. Store securely!
 
 // Function to sanitize input
 function sanitize_input($data) {
@@ -41,12 +39,8 @@ function send_json_response($success, $message, $data = null) {
 
 try {
     // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        throw new Exception('Database connection failed: ' . $conn->connect_error);
-    }
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Get and decode JSON input
     $json_input = file_get_contents('php://input');
@@ -72,33 +66,23 @@ try {
     }
 
     // Prepare statement to prevent SQL injection
-    $stmt = $conn->prepare("SELECT * FROM clients WHERE email = ? LIMIT 1");
-    if (!$stmt) {
-        throw new Exception('Prepare statement failed: ' . $conn->error);
-    }
+    $query = "SELECT * FROM users WHERE email = :email";
+    $statement = $conn->prepare($query);
+    $statement->execute([':email' => $email]);
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
 
-    $stmt->bind_param("s", $email);
-    
-    // Execute the statement
-    if (!$stmt->execute()) {
-        throw new Exception('Query execution failed: ' . $stmt->error);
-    }
-
-    // Get result
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
-        
+    if ($user) {
         // Verify password
-        if (password_verify($password, $user['password'])) {
+        if ($user['user_password'] === $password) {
             // Generate OTP
             $otp = rand(100000, 999999);
             $otp_expiry = time() + (5 * 60); // OTP valid for 5 minutes
 
             // Store OTP in the database
-            $otp_stmt = $conn->prepare("INSERT INTO otp_verification (email, otp, expiry) VALUES (?, ?, ?)");
-            $otp_stmt->bind_param("ssi", $email, $otp, $otp_expiry);
+            $otp_stmt = $conn->prepare("INSERT INTO otp_verification (email, otp, expiry) VALUES (:email, :otp, :expiry)");
+            $otp_stmt->bindParam(':email', $email);
+            $otp_stmt->bindParam(':otp', $otp);
+            $otp_stmt->bindParam(':expiry', $otp_expiry);
             $otp_stmt->execute();
 
             // Send OTP to user's email
@@ -106,25 +90,25 @@ try {
 
             // Send success response
             send_json_response(true, 'OTP sent to your email. Please verify.', [
-                'user_id' => $user['id'],
+                'user_id' => $user['user_id'],
                 'email' => $user['email']
             ]);
         } else {
-            throw new Exception('Invalid password');
+            throw new Exception('Wrong Password');
         }
     } else {
-        throw new Exception('Username and password are incorrect');
+        throw new Exception('Wrong Email Address');
     }
 
 } catch (Exception $e) {
     send_json_response(false, $e->getMessage());
 } finally {
     // Close database connection
-    if (isset($stmt)) {
-        $stmt->close();
+    if (isset($statement)) {
+        $statement->closeCursor();
     }
     if (isset($conn)) {
-        $conn->close();
+        $conn = null;
     }
 }
 ?>
