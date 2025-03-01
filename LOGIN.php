@@ -1,28 +1,27 @@
 <?php
 session_start();
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
+    $businessname = $_POST['businessname'];
     $password = $_POST['password'];
 
-    $conn = new mysqli("localhost", "root", "", "dbFeb27");
+    $conn = new mysqli("localhost", "root", "", "vendi_db");
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    if ($stmt = $conn->prepare("SELECT password FROM users WHERE username = ?")) {
-        $stmt->bind_param("s", $username);
+    if ($stmt = $conn->prepare("SELECT password FROM vendors WHERE businessname = ?")) {
+        $stmt->bind_param("s", $businessname);
         $stmt->execute();
         $stmt->bind_result($hashed_password);
         $stmt->fetch();
 
         if (password_verify($password, $hashed_password)) {
-            $_SESSION['username'] = $username;
-            header("Location: dashboard.php");
+            $_SESSION['businessname'] = $businessname;
+            header("Location: dashboard.html");
             exit();
         } else {
-            echo "<div class='alert alert-danger'>Invalid username or password.</div>";
+            echo "<div class='alert alert-danger'>Invalid business name or password.</div>";
         }
 
         $stmt->close();
@@ -60,50 +59,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <div class="RIGHT_SECTION">
-        <!-- CLIENT/VENDOR SELECTION -->
-        <div class="USER_SELECTION">
-            <button id="btnCLIENT" class="btnUSER active">CLIENT</button>
-            <button id="btnVENDOR" class="btnUSER">VENDOR</button>
-        </div>
-
-        <!-- CLIENT LOGIN FORM -->
-        <form id="CLIENT_FORM" class="LOGIN_FORM active" method="post" action="login.php">
-            <h2>ACCESS YOUR EVENT PLANS</h2>
-            <p>Welcome back! Continue planning your unforgettable event!
-                Log in to access your account. </p>
-
-            <label for="CLIENT_USERNAME">Username</label>
-            <input type="text" id="CLIENT_USERNAME" name="username" placeholder="Enter Username" required>
-        
-            <div class="PASSWORD_CONTAINER">
-                <label for="PASSWORD">Password</label>
-                <input type="password" id="PASSWORD" name="password" placeholder="Enter Password" required minlength="8" maxlength="16">
-                <i class="fas fa-eye PASSWORD_TOGGLE" id="password-toggle"></i>
-            </div>
-        
-            <div class="REMEMBER_FORGOT_CONTAINER">
-                <label for="REMEMBER_ME" class="REMEMBER_ME">
-                    <input type="checkbox" id="REMEMBER_ME" name="REMEMBER_ME">
-                    <span>Remember me</span>
-                </label>
-                <span class="EXTRA">Forgot password? <a href="forgot_password.html">Click here</a></span>
-            </div>
-                    
-            <button type="submit">LOG IN</button>
-        
-            <div class="LOGIN">Not registered yet?</div>
-            <div class="LOGIN_LINK">
-                <a href="register.html">SIGN UP</a>
-            </div>
-        </form>
-
         <!-- VENDOR LOGIN FORM -->
-        <form id="VENDOR_FORM" class="LOGIN_FORM" method="post" action="dashboard.php">
+        <form id="VENDOR_FORM" class="LOGIN_FORM active" method="post" action="login.php">
             <h2>CONNECT WITH EVENT PLANNERS</h2>
             <p> Welcome back! Access your dashboard to manage your schedule and maximize your event bookings. </p>
 
-            <label for="VENDOR_USERNAME">Username</label>
-            <input type="text" id="VENDOR_USERNAME" name="username" placeholder="Enter Username" required>
+            <label for="VENDOR_USERNAME">Businessname</label>
+            <input type="text" id="businessname" name="businessname" placeholder="Enter Business Name" required>
         
             <div class="PASSWORD_CONTAINER">
                 <label for="PASSWORD">Password</label>
@@ -123,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="LOGIN">Not registered yet?</div>
             <div class="LOGIN_LINK">
-                <a href="register.html">SIGN UP</a>
+                <a href="register.php">SIGN UP</a>
             </div>
         </form>
     </div>
