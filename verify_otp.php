@@ -4,19 +4,11 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type");
 
-require_once 'vendor/autoload.php'; // Include JWT library
-
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
-
 // Database connection parameters
 $servername = "localhost";
 $username = "root";  // your database username
 $password = "";      // your database password
 $dbname = "vendi_db";
-
-// Secret key for JWT
-$secret_key = "2169b56560cdbff74b4c9050c2db773ee0747800b27a78781a4e84aceb10a4450ff8049c25bb276a077c1835c862922aaa799138c2b2bcfeec028954cb12540c8f7d654fd6d18816497884937bee07c58e07b971eccce646af12557ee488a30a"; // Replace with a strong, random key.  Store securely!
 
 // Function to sanitize input
 function sanitize_input($data) {
@@ -94,25 +86,8 @@ try {
         if (time() > $otp_data['expiry']) {
             throw new Exception('OTP has expired');
         }
-
-        // Generate JWT Token
-        $payload = array(
-            "iss" => "localhost", // Replace with your domain
-            "aud" => "localhost", // Replace with your domain
-            "iat" => time(),
-            "nbf" => time(),
-            "exp" => time() + (60 * 60), // Token valid for 1 hour
-            "data" => array(
-                "email" => $email
-            )
-        );
-
-        $jwt = JWT::encode($payload, $secret_key, 'HS256');
-
-        // Send success response with JWT
-        send_json_response(true, 'OTP verified successfully', [
-            'token' => $jwt
-        ]);
+        // Send success response
+        send_json_response(true, 'OTP verified successfully');
     } else {
         throw new Exception('Invalid OTP');
     }
