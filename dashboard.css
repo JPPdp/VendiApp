@@ -7,6 +7,9 @@
     --gryShade2: #5E5E5E;
     --gradient_Horizontal: linear-gradient(to right, #D000BB, #0F0053);
     --gradient_Vertical: linear-gradient(to bottom, #D000BB, #0F0053);
+    --gradient_Green: linear-gradient(to bottom, #00f70c, #009c31);
+    --gradient_Red: linear-gradient(to bottom, #fc241d, #c40202);
+    --gradient_Yellow: linear-gradient(to bottom, #f7b500, #f77b00);
 }
 
 /* Font Families */
@@ -15,15 +18,23 @@
     src: url(assets/fonts/machinery_script/MachineryScript_PERSONAL_USE_ONLY.otf);
   }
 @font-face {
-    font-family: 'Inter';
+    font-family: 'Inter_Regular';
     src: url(assets/fonts/Inter-font/Inter-Regular.otf);
+}
+@font-face {
+    font-family: 'Inter_Medium';
+    src: url(assets/fonts/Inter-font/Inter-Medium.otf);
+}
+@font-face {
+    font-family: 'Inter_Bold';
+    src: url(assets/fonts/Inter-font/Inter-Bold.otf);
 }
 
 html,
 body{
     margin: 0 auto;
     padding: 0;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter_Medium', sans-serif;
     color: var(--blkShade1);
     background-color: white;
     overflow-x: hidden;
@@ -36,6 +47,7 @@ body{
 
 .CONTAINER{
     display: flex;
+    background: var(--whtShade1);
 }
 
 .LOGO{
@@ -59,19 +71,28 @@ body{
 
 .LOGO_NAME{
     font-family: 'Machinery';
-    font-size: 25px;
+    font-size: 30px;
     color: var(--blkShade1);
+    margin-top: -10px;
+}
+
+.LOGO_NAME span{
+    font-family: 'Inter_Bold';
+    color: linear-gradient(to right, #D000BB, #0F0053); /* var(--gradient_Horizontal); */
+    font-size: 1rem;
+    position: absolute;
+    margin-top: 25px;
+    margin-left: -55px;
 }
 
 .NAVIGATION_BAR{
     width: 250px;
-    height: 100%;
+    height: 100vh;
     background: white;
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-    margin-right: 20px;
+    margin: 20px;
     z-index: 2;
 }
 
@@ -93,16 +114,16 @@ body{
     left: 0;
     width: 100%;
     height: 1px;
-    background-color: var(--whiteShade1);
+    background-color: var(--whtShade2);
 }
 
 .NAVIGATION_BAR a{
     display: block;
-    font-size: 1.2rem;
+    font-size: 1rem;
     text-decoration: none;
-    color: var(--blkShade1);
+    color: var(--gryShade2);
     padding: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     border-radius: 15px;
     align-items: center;
     transition: 0.2s ease;
@@ -114,14 +135,34 @@ body{
 }
 
 .NAVIGATION_BAR i{
-    margin-right: 10px;
+    margin-right: 15px;
+}
+
+.NAVIGATION_BAR .LOGOUT{
+    color: var(--gryShade2);    
+    padding: 10px;
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+
+.NAVIGATION_BAR .LOGOUT::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--whtShade2);  
 }
 
 /* Dashboard Content */
 .DASHBOARD{
     flex: 1;
     padding: 20px;
-    background-color: white;
+    background: var(--whtShade1);
 }
 
 .UPPER{
@@ -138,9 +179,10 @@ body{
     z-index: 1000;
 }
 
-.LEFT_UPPER h1{
+.LEFT_UPPER .BUSINESS_NAME{
     font-size: 25px;
-    font-weight: bold;
+    font-weight: bolder;
+    font-family: 'Inter_Bold';
     color: var(--blkShade1);
     margin: 0;
 }
@@ -159,9 +201,6 @@ body{
     position: relative;
 }
 
-.USERNAME{
-    font-size: 1rem;
-}
 
 .PROFILE{
     position: relative;
@@ -194,7 +233,7 @@ body{
     display: block;
     padding: 10px 15px;
     text-decoration: none;
-    color: var(--blkShade1); /* Use your CSS variable for text color */
+    color: var(--blkShade1);
     font-size: 14px;
     transition: background-color 0.2s ease;
 }
@@ -211,19 +250,18 @@ body{
 .CONTENT {
     display: flex;
     gap: 20px;
-    padding: 20px;
     margin-bottom: 20px;
     background-color: white;
     border-radius: 20px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Individual box */
 .BOX {
     flex: 1;
     padding: 20px;
-    background: var(--gradient_Vertical);
+    background-color: white;
     border-radius: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -242,7 +280,84 @@ body{
 
 .BOX p {
     font-size: 24px;
-    font-weight: bold;
+    font-weight: bolder;
     color: var(--blkShade1);
     margin: 0;
+}
+
+.BOOKING_TABLE{
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--whtShade1);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.BOOKING_TABLE th{
+    background: var(--gradient_Vertical);
+    color: white;
+    font-size: 1rem;
+    padding: 20px;
+    text-align: center;
+}
+
+.BOOKING_TABLE td {
+    background-color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.BOOKING_TABLE td{
+    width: 10%;
+}
+
+.BOOKING_TABLE .BOOKING_STATUS #APPROVED{
+    background: var(--gradient_Green);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.BOOKING_TABLE .BOOKING_STATUS #REJECTED{
+    background: var(--gradient_Red);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.BOOKING_TABLE .BOOKING_STATUS #PENDING{
+    background: var(--gradient_Vertical);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+
+
+.BOOKING_TABLE .APPROVE {
+    background: var(--gradient_Green);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.BOOKING_TABLE .APPROVE:hover {
+    transform: translateY(-2px);
+}
+
+.BOOKING_TABLE .REJECT {
+    background: var(--gradient_Red);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.BOOKING_TABLE .REJECT:hover {
+    transform: translateY(-2px);
 }

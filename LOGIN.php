@@ -18,10 +18,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (password_verify($password, $hashed_password)) {
             $_SESSION['businessname'] = $businessname;
-            header("Location: dashboard.html");
+            header("Location: dashboard.php");
             exit();
         } else {
-            echo "<div class='alert alert-danger'>Invalid business name or password.</div>";
+            echo "<div class='RED_ALERT'>Invalid business name or password.</div>";
         }
 
         $stmt->close();
@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="RIGHT_SECTION">
         <!-- VENDOR LOGIN FORM -->
-        <form id="VENDOR_FORM" class="LOGIN_FORM active" method="post" action="login.php">
+        <form id="VENDOR_FORM" class="LOGIN_FORM active" method="post" action="">
             <h2>CONNECT WITH EVENT PLANNERS</h2>
             <p> Welcome back! Access your dashboard to manage your schedule and maximize your event bookings. </p>
 

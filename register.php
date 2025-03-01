@@ -1,15 +1,15 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
-    $businessname = $_POST['businessname'];
-    $email = $_POST['email'];
-    $mobile = $_POST['mobile'];
+    $businessname = htmlspecialchars($_POST['businessname']); // Sanitize input
+    $email = htmlspecialchars($_POST['email']); // Sanitize input
+    $mobile = htmlspecialchars($_POST['mobile']); // Sanitize input
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
     // Validate password match
     if ($password !== $confirm_password) {
-        echo "<div class='alert alert-danger'>Passwords do not match.</div>";
+        $error_message = "Passwords do not match.";
     } else {
         // Hash the password
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -28,14 +28,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->store_result();
 
         if ($stmt->num_rows > 0) {
-            echo "<div class='alert alert-danger'>Username or email already exists. Please choose another.</div>";
+            $error_message = "Username or email already exists. Please choose another.";
         } else {
             $stmt->close();
             // Insert new user into the database
             if ($stmt = $conn->prepare("INSERT INTO vendors (businessname, email, mobile, password) VALUES (?, ?, ?, ?)")) {
                 $stmt->bind_param("ssss", $businessname, $email, $mobile, $hashed_password);
-                $stmt->execute();
-                echo "<div class='alert alert-success'>Registration successful. You can now log in.</div>";
+                if ($stmt->execute()) {
+                    // Redirect to login page after successful registration
+                    header("Location: login.php?registration=success");
+                    exit();
+                } else {
+                    $error_message = "Registration failed. Please try again.";
+                }
             }
         }
 
@@ -73,15 +78,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <div class="RIGHT_SECTION">
-
         <!-- VENDOR SIGN-UP FORM -->
-        <form id="VENDOR_FORM" class="LOGIN_FORM active" method="post" action="register.php">
+        <form id="VENDOR_FORM" class="LOGIN_FORM active" method="post" action="">
             <h2>CONNECT WITH EVENT PLANNERS</h2>
             <p>Welcome! Create an account to manage your schedule and maximize your event bookings.</p>
 
-            <!-- Username -->
+            <!-- Display error message if any -->
+            <?php if (!empty($error_message)): ?>
+                <div class="RED_ALERT"><?php echo $error_message; ?></div>
+            <?php endif; ?>
+
+            <!-- Business Name -->
             <label for="VENDOR_USERNAME">Business Name</label>
-            <input type="text" id="VENDOR_USERNAME" name="businessname" placeholder="Enter Business Name" required>
+            <input type="text" id="businessname" name="businessname" placeholder="Enter Business Name" required>
 
             <!-- Email -->
             <label for="VENDOR_EMAIL">Email</label>

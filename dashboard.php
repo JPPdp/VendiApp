@@ -1,13 +1,21 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['businessname'])) {
+    header("Location: dashboard.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | Vendi</title>
-        <link rel="icon" href="assets/images/VendiBLK2_NoBG.png" type="image/icon type">
-        <link rel="stylesheet" href="dashboard.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link rel="icon" href="assets/images/VendiBLK2_NoBG.png" type="image/icon type">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 
@@ -18,24 +26,27 @@
                 <div class="LOGO_ICON">
                     <img src="assets/images/VENDI_BG.png" alt="Logo">
                 </div>
-                <div class="LOGO_NAME">Vendi</div>
+                <div class="LOGO_NAME">Vendi
+                    <span>DASHBOARD</span>
+                </div>
             </div>
 
             <div class="MENU_HEADER">MANAGEMENT</div>
                     <a href="#DASHBOARD"><i class="fa fa-fw fa-chart-bar"></i> Dashboard</a>
-                    <a href="#"><i class="fa fa-fw fa-store"></i> Listings</a>
-                    <a href="#"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
-                    <a href="#"><i class="fa fa-fw fa-envelope"></i> Messages</a>
+                    <a href="db_listings.html"><i class="fa fa-fw fa-store"></i> Listings</a>
+                    <a href="db_bookings.html"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
+                    <a href="db_messages.html"><i class="fa fa-fw fa-envelope"></i> Messages</a>
                 <div class="MENU_HEADER">PREFERENCES</div>
-                    <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                    <a href="db_profile.html"><i class="fa fa-fw fa-user"></i> Profile</a>
                     <a href="#"><i class="fa fa-fw fa-question-circle"></i> Help</a>
+                    <a href="logout.php" class="LOGOUT">Log Out</a>
         </div>
         
         <!-- Dashboard Content -->
         <div class="DASHBOARD" id="DASHBOARD">
             <div class="UPPER">
                 <div class="LEFT_UPPER">
-                    <h1 class="USERNAME">Welcome, User</h1>
+                    <h1 class="BUSINESS_NAME">Welcome, <?php echo htmlspecialchars($_SESSION['businessname']); ?></h1>
                 </div>
 
                 <div class="RIGHT_UPPER">
@@ -44,7 +55,7 @@
                             <img src="assets/images/jacks.jpg" alt="" class="PROFILE_PIC">
                             <div class="PROFILE_DROPDOWN">
                                 <a href="#">Profile</a>
-                                <a href="#">Log Out</a>
+                                <a href="logout.php">Log Out</a>
                             </div>
                         </div>
                     </div>
@@ -79,14 +90,14 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>John Doe</td>
-                        <td>Pending</td>
-                        <td>Student Plaza</td>
-                        <td>Package 1</td>
-                        <td id>2025-3-15</td>
+                        <td class="CLIENT_NAME">Phillip Salvador</td>
+                        <td class="BOOKING_STATUS" id="PENDING">Pending</td>
+                        <td class="EVENT_VENUE">Student Plaza</td>
+                        <td class="SELECTED_PACKAGE">Package 1</td>
+                        <td class="EVENT_DATE">2025-3-15</td>
                         <td>
-                            <button>Approve</button>
-                            <button>Reject</button>
+                            <button class="APPROVE"><i class="fa fa-check"></i></button>
+                            <button class="REJECT"><i class="fa fa-close"></i></button>
                         </td>
                     </tr>
                 </tbody>
