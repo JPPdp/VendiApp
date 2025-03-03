@@ -27,8 +27,11 @@ class LogInFragment : Fragment() {
         }
 
         btnSignUp.setOnClickListener {
-            val intent = Intent(activity, RegistrationActivity::class.java)
-            startActivity(intent)
+            val fragment = RegistrationFragment1()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fgtContainer, fragment)
+                .addToBackStack(null)
+                .commit()
         }
 
         tvForgotPassword.setOnClickListener {

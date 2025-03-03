@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bgvendi"
     android:paddingTop="16dp"
-    tools:context=".RegistrationActivity">
+    tools:context=".LogInActivity">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
