@@ -34,8 +34,8 @@ class LogInFragment : Fragment() {
         tvForgotPassword.setOnClickListener {
             val fragment = PasswordRecoveryFragment()
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fgtContainer, fragment) // Ensure R.id.fgtContainer is the correct fragment container
-                .addToBackStack(null) // Allows back navigation
+                .replace(R.id.fgtContainer, fragment)
+                .addToBackStack(null)
                 .commit()
         }
 

@@ -53,6 +53,7 @@
             android:text="Next"
             android:textColor="@color/white"
             android:textSize="16sp"
+            android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/etCall"
             app:layout_constraintStart_toStartOf="@id/etCall" />
