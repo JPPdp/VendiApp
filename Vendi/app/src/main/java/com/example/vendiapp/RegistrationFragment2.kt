@@ -19,7 +19,7 @@ class RegistrationFragment2 : Fragment() {
 
         val btnNext: Button = view.findViewById(R.id.btnNext)
         btnNext.setOnClickListener {
-            val fragment = RegistrationFragment2()
+            val fragment = RegistrationFragment3()
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fgtContainer, fragment)
                 .addToBackStack(null) // Allows user to navigate back
