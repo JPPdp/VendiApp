@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 
 
 class PasswordRecoveryFragment : Fragment() {
@@ -14,7 +15,17 @@ class PasswordRecoveryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_password_recovery, container, false)
+        val view = inflater.inflate(R.layout.fragment_password_recovery, container, false)
+
+        val btnSubmit: Button = view.findViewById(R.id.btnSubmit)
+        btnSubmit.setOnClickListener {
+            val fragment = CreateNewPasswordFragment()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fgtContainer, fragment)
+                .addToBackStack(null) // Allows user to navigate back
+                .commit()
+        }
+        return view
     }
 
 

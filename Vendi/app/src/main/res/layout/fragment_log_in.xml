@@ -123,6 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" Not register yet? "
+                android:textColor="@color/white"
                 android:contentDescription="Separator and label asking user if he or she is not register yet"/>
 
             <TextView
