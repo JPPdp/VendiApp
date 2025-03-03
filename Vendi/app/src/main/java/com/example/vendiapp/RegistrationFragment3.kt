@@ -23,9 +23,9 @@ class RegistrationFragment3 : Fragment() {
 
         val btnSignIn: Button = view.findViewById(R.id.btnSignIn)
         val cbTerms: CheckBox = view.findViewById(R.id.cbTerms)
-        val etCreatePassword: EditText = view.findViewById(R.id.etCreatePassword)
+//        val etCreatePassword: EditText = view.findViewById(R.id.etCreatePassword)
 
-        btnSignIn.isEnabled = false
+//        btnSignIn.isEnabled = false
 
         cbTerms.setOnCheckedChangeListener { _, isChecked ->
             btnSignIn.isEnabled = isChecked
@@ -33,34 +33,34 @@ class RegistrationFragment3 : Fragment() {
 
         btnSignIn.setOnClickListener {
 
-            val password = etCreatePassword.text.toString()
+//            val password = etCreatePassword.text.toString()
 
-            if (!isValidPassword(password)) {
-                etCreatePassword.error = "Need a strong password!" // Show error if password is weak
-            } else {
+//            if (!isValidPassword(password)) {
+//                etCreatePassword.error = "Need a strong password!" // Show error if password is weak
+//            } else {
                 // Navigate to previous registration fragment
-                val fragment = RegistrationFragment2()
+                val fragment = LogInFragment()
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.fgtContainer, fragment)
                     .addToBackStack(null)
                     .commit()
-            }
+//            }
         }
         return view
     }
 
-    fun openPrivacy(view: View) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://xxx.com"))
-        startActivity(intent)
-    }
-
-    fun openTerms(view: View) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://xxx.com"))
-        startActivity(intent)
-    }
-
-    private fun isValidPassword(password: String): Boolean {
-        return password.length >= 8 // Example rule: At least 8 characters
-    }
+//    fun openPrivacy(view: View) {
+//        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://xxx.com"))
+//        startActivity(intent)
+//    }
+//
+//    fun openTerms(view: View) {
+//        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://xxx.com"))
+//        startActivity(intent)
+//    }
+//
+//    private fun isValidPassword(password: String): Boolean {
+//        return password.length >= 8 // Example rule: At least 8 characters
+//    }
 
 }

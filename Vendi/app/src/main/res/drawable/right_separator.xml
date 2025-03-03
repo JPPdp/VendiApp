@@ -4,11 +4,11 @@
     <!-- Linear Gradient Colors -->
     <gradient
         android:angle="0"
-        android:startColor="#D000BB"
-        android:endColor="#0F0053"
+        android:startColor="@color/grey"
+        android:endColor="@color/trans"
         android:type="linear" />
 
     <!-- Rounded Corners -->
-    <corners android:radius="10dp"/>
+    <corners android:radius="12dp"/>
 
 </shape>

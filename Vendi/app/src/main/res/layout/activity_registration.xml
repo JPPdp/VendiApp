@@ -41,7 +41,7 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fgtContainer"
         android:layout_width="match_parent"
-        android:layout_height="480dp"
+        android:layout_height="560dp"
         app:layout_constraintEnd_toStartOf="@+id/relativeLayout"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/relativeLayout"
