@@ -1,0 +1,153 @@
+/* Form Cards */
+.FORM_CARD {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.FORM_CARD label {
+    display: block;
+    font-size: 0.9rem;
+    font-family: 'Inter_Medium';
+    color: var(--blkShade1);
+    margin-bottom: 10px;
+}
+
+.FORM_CARD input[type="text"],
+.FORM_CARD textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--whtShade2);
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-family: 'Inter_Regular';
+    color: var(--blkShade1);
+    outline: none;
+}
+
+.FORM_CARD textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Upload Container */
+.UPLOAD_CONTAINER {
+    border: 2px dashed var(--whtShade2);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.UPLOAD_CONTAINER:hover {
+    border-color: var(--blkShade1);
+}
+
+.UPLOAD_CONTAINER i {
+    font-size: 2rem;
+    color: var(--gryShade1);
+    margin-bottom: 10px;
+}
+
+.UPLOAD_CONTAINER span {
+    font-size: 0.9rem;
+    color: var(--gryShade1);
+}
+
+/* Thumbnail and Preview Images */
+.THUMBNAIL_PREVIEW img,
+.PREVIEW_IMAGES img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+/* Packages Section */
+.PACKAGES {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.PACKAGE {
+    background: var(--whtShade1);
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid var(--whtShade2);
+}
+
+.PACKAGE input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--whtShade2);
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-family: 'Inter_Regular';
+    color: var(--blkShade1);
+    outline: none;
+    margin-bottom: 10px;
+}
+
+.PACKAGE textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--whtShade2);
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-family: 'Inter_Regular';
+    color: var(--blkShade1);
+    outline: none;
+    resize: vertical;
+    min-height: 80px;
+}
+
+.DELETE_PACKAGE {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background: var(--gradient_Red);
+    color: white;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.DELETE_PACKAGE:hover {
+    background: var(--gradient_Horizontal);
+}
+
+/* Add Package Button */
+.ADD_PACKAGE {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background: var(--gradient_Vertical);
+    color: white;
+    font-size: 0.9rem;
+    font-family: 'Inter_Medium';
+    cursor: pointer;
+}
+
+.ADD_PACKAGE:hover {
+    background: var(--gradient_Horizontal);
+}
+
+/* Save Changes Button */
+.SAVE_CHANGES {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background: var(--gradient_Vertical);
+    color: white;
+    font-size: 0.9rem;
+    font-family: 'Inter_Medium';
+    cursor: pointer;
+}
+
+.SAVE_CHANGES:hover {
+    background: var(--gradient_Horizontal);
+}

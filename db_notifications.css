@@ -1,0 +1,24 @@
+/* Notification Bell */
+.NOTIFICATION {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    margin-left: 20px;
+}
+
+/* Red Dot for Notifications */
+.NOTIFICATION_DOT {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 10px; 
+    height: 10px;
+    background-color: red; 
+    border-radius: 50%; 
+    display: none;
+}
+
+/* Show the red dot when there's a notification */
+.NOTIFICATION.has-notification .NOTIFICATION_DOT {
+    display: block; /* Show the dot */
+}
