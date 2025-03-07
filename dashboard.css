@@ -5,8 +5,9 @@
     --blkShade1: #101010;
     --gryShade1: #939393;
     --gryShade2: #5E5E5E;
-    --gradient_Horizontal: linear-gradient(to right, #D000BB, #0F0053);
-    --gradient_Vertical: linear-gradient(to bottom, #D000BB, #0F0053);
+    --gradient_Horizontal: linear-gradient(to right, #d0008b, #0F0053);
+    --gradient_Vertical: linear-gradient(to bottom, #d0008b, #0F0053);
+    /*--gradient_Vertical: linear-gradient(to bottom, #D000BB, #0F0053);*/
     --gradient_Green: linear-gradient(to bottom, #00f70c, #009c31);
     --gradient_Red: linear-gradient(to bottom, #fc241d, #c40202);
     --gradient_Yellow: linear-gradient(to bottom, #f7b500, #f77b00);
@@ -55,9 +56,7 @@ body{
 .LOGO{
     display: flex;
     align-items: center;
-    gap: 25px;
     position: relative;
-    margin-left: 25px;
 }
 
 .LOGO_ICON{
@@ -74,9 +73,11 @@ body{
 
 .LOGO_NAME{
     font-family: 'Machinery';
-    font-size: 1.75rem;
+    font-size: 2rem;
     color: var(--blkShade1);
     margin-top: -5px;
+    margin-left: 75px;
+    margin-bottom: -5px;
     position: relative;
 }
 
@@ -88,8 +89,8 @@ body{
     color: transparent;
     font-size: 0.8rem;
     position: absolute;
-    margin-top: 25px;
-    margin-left: -47px;
+    margin-top: 27.5px;
+    margin-left: -55px;
 }
 
 .NAVIGATION_BAR{
@@ -234,7 +235,7 @@ body{
     font-size: 0.8rem;
     width: 250px;
     height: 5px;
-    outline: none; /* Remove outline */
+    outline: none;
 }
 
 .SEARCH_BAR button {
@@ -407,8 +408,7 @@ body{
     padding: 20px;
     border-radius: 10px 75px 10px 10px;*/
     box-shadow: 14px 17px 40px 4px rgba(112, 144, 176, 0.08);    
-    min-height: 500px;
-    max-height: 500px;
+    max-height: 400px;
 }
 
 .CALENDAR h2{
@@ -423,6 +423,7 @@ body{
     justify-content: center;
     align-items: center;
     border-radius: 10px;
+    margin: -40px -40px 0px -40px;
 }
 
 .WRAPPER{
@@ -444,11 +445,13 @@ body{
     font-size: 1rem;
     font-family: 'Inter_Bold';
     color: var(--blkShade1);
+    margin-left: 20px;
 }
 
 .WRAPPER header .ICONS {
     display: flex;
     gap: 20px;
+    margin-right: 55px;
 }
 
 .WRAPPER header .ICONS span {
@@ -488,7 +491,7 @@ body{
     list-style: none;
     padding: 0;
     margin: 0;
-    font-family: 'Inter_Regular';
+    font-family: 'Inter_Medium';
     font-size: 0.8rem;    
     color: var(--blkShade1);
 }
@@ -509,7 +512,7 @@ body{
 
 .CALENDAR_BODY .DAYS li.ACTIVE {
     background: var(--blkShade1);
-    font-family: 'Inter_Medium';
+    font-family: 'Inter_Bold';
     color: white;
     border-radius: 5px;
     box-shadow: 14px 17px 40px 4px rgba(112, 144, 176, 0.08);
@@ -526,8 +529,7 @@ body{
     padding: 20px;
     border-radius: 10px 75px 10px 10px;
     box-shadow: 14px 17px 40px 4px rgba(112, 144, 176, 0.08);
-    min-height: 500px;
-    max-height: 500px;
+    max-height: 400px;
     overflow-y: auto;
 }
 

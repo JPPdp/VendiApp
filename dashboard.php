@@ -25,9 +25,9 @@ if (!isset($_SESSION['businessname'])) {
         <!-- Navigation Bar -->
         <div class="NAVIGATION_BAR">
             <div class="LOGO">
-                <div class="LOGO_ICON">
+                <!--<div class="LOGO_ICON">
                     <img src="assets/images/VENDI_BG.png" alt="Logo">
-                </div>
+                </div>-->
                 <div class="LOGO_NAME">Vendi
                     <span>DASHBOARD</span>
                 </div>
@@ -37,9 +37,11 @@ if (!isset($_SESSION['businessname'])) {
                     <a href="#DASHBOARD" class="NAV_ACTIVE"><i class="fa fa-fw fa-chart-bar"></i><span>Dashboard</span></a>
                     <a href="db_listings.html"><i class="fa fa-fw fa-store"></i> Listings</a>
                     <a href="db_bookings.html"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
+                    <a href="db_reports.html"><i class="fa fa-fw fa-chart-line"></i> Reports</a>
+                    <a href="db_customers.html"><i class="fa fa-fw fa-users"></i> Customers</a>
             <div class="MENU_HEADER">PREFERENCES</div>
                     <a href="db_profile.html"><i class="fa fa-fw fa-user"></i> Profile</a>
-                    <a href="help.html"><i class="fa fa-fw fa-question-circle"></i> Help</a>
+                    <a href="dsb_help.html"><i class="fa fa-fw fa-question-circle"></i> Help</a>
                     <a href="logout.php" class="LOGOUT"><i class="fa fa-fw fa-sign-out-alt"></i> Log Out</a>
         </div>
         
@@ -96,14 +98,13 @@ if (!isset($_SESSION['businessname'])) {
             <div class="CALENDAR_TODO_CONTAINER">
                 <!-- Calendar -->
                 <div class="CALENDAR">
-                    <h2>Calendar</h2>
                     <div class="CALENDAR_PLACEHOLDER">
                         <div class="WRAPPER">
                             <header>
                                 <p class="CURRENT_DATE"></p>
                                 <div class="ICONS">
-                                    <span id="PREV" class="ICON_CLASS"><i class="fas fa-caret-square-left"></i></span>
-                                    <span id="NEXT" class="ICON_CLASS"><i class="fas fa-caret-square-right	"></i></span>
+                                    <span id="PREV" class="ICON_CLASS"><i class="fas fa-arrow-alt-circle-left"></i></span>
+                                    <span id="NEXT" class="ICON_CLASS"><i class="fas fa-arrow-alt-circle-right"></i></span>
                                 </div>
                             </header>
                             <div class="CALENDAR_BODY">

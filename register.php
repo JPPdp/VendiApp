@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up | Vendi</title>
     <link rel="icon" href="assets/images/VendiBLK2_NoBG.png" type="image/icon type">
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="login.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -72,22 +72,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </a>
         </div>
         <div class="VECTOR_ART">
-            <img src="assets/images/Visualizing_Vector.png" alt="Vector_Art">
+            <img src="assets/images/Event_Vector.png" alt="Vector_Art">
         </div>
-        <p>Collaborate and create.</p>
+        <p>Collaborate with event organizers.</p>
     </div>
 
     <div class="RIGHT_SECTION">
         <!-- VENDOR SIGN-UP FORM -->
-        <form id="VENDOR_FORM" class="LOGIN_FORM active" method="post" action="">
+        <form id="VENDOR_FORM" class="LOGIN_FORM" method="post" action="" enctype="multipart/form-data">
             <h2>CONNECT WITH EVENT PLANNERS</h2>
-            <p>Welcome! Create an account to manage your schedule and maximize your event bookings.</p>
-
+            <p>Welcome to <span id="VENDI">Vendi</span>! Create a vendor account to manage your listings, organize your schedule, and maximize your event bookings.</p>
             <!-- Display error message if any -->
             <?php if (!empty($error_message)): ?>
                 <div class="RED_ALERT"><?php echo $error_message; ?></div>
             <?php endif; ?>
 
+            <h2>SIGN UP</h2>
             <!-- Business Name -->
             <label for="VENDOR_USERNAME">Business Name</label>
             <input type="text" id="businessname" name="businessname" placeholder="Enter Business Name" required>
@@ -98,34 +98,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <!-- Mobile Number -->
             <label for="VENDOR_MOBILE">Mobile Number</label>
-            <input type="tel" id="VENDOR_MOBILE" name="mobile" placeholder="Enter Mobile Number" required>
-
+            <span id="PHL">+63</span>
+            <input type="tel" id="VENDOR_MOBILE" name="mobile" placeholder="Enter Mobile Number" required  minlength="10" maxlength="10">
             <!-- Password -->
-            <div class="PASSWORD_CONTAINER">
-                <label for="PASSWORD">Password</label>
-                <input type="password" id="PASSWORD" name="password" placeholder="Enter Password" required minlength="8">
-                <i class="fas fa-eye PASSWORD_TOGGLE" id="password-toggle"></i>
+            <div class="BESIDE_FIELDS">
+                <div class="BESIDE_FIELD">
+                    <label for="PASSWORD">Password</label>
+                    <div class="PASSWORD_CONTAINER">
+                        <input type="password" id="PASSWORD" name="password" placeholder="Enter Password" required minlength="8">
+                        <i class="fas fa-eye PASSWORD_TOGGLE" id="password-toggle"></i>
+                        <div id="PASSWORD_REQUIREMENTS" class="password-requirements-dropdown">
+                            Password must meet the following requirements:
+                            <ul>
+                                <li>At least <strong>8 characters</strong> long</li>
+                                <li>Contain at least <strong>one uppercase letter</strong> (A-Z)</li>
+                                <li>Contain at least <strong>one lowercase letter</strong> (a-z)</li>
+                                <li>Contain at least <strong>one number</strong> (0-9)</li>
+                                <li>Contain at least <strong>one special character</strong> (e.g., !@#$%^&*)</li>
+                                <li>No spaces allowed</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="BESIDE_FIELD">
+                    <label for="CONFIRM_PASSWORD">Confirm Password</label>
+                    <div class="PASSWORD_CONTAINER">
+                        <input type="password" id="CONFIRM_PASSWORD" name="confirm_password" placeholder="Re-enter Password" required minlength="8">
+                        <i class="fas fa-eye PASSWORD_TOGGLE" id="confirm-password-toggle"></i>
+                    </div>
+                </div>
             </div>
 
-            <!-- Confirm Password -->
-            <div class="PASSWORD_CONTAINER">
-                <label for="CONFIRM_PASSWORD">Confirm Password</label>
-                <input type="password" id="CONFIRM_PASSWORD" name="confirm_password" placeholder="Confirm Password" required minlength="8">
-                <i class="fas fa-eye PASSWORD_TOGGLE" id="confirm-password-toggle"></i>
-            </div>
+            <!-- Business Document Upload -->
+            <label for="BUSINESS_DOCUMENT">Upload Business Document <span id="FILES">(PDF, JPEG, PNG, max 5MB)</span></label>
+            <input type="file" id="BUSINESS_DOCUMENT" name="business_document" accept=".pdf,.jpg,.jpeg,.png" required>
 
             <!-- Submit Button -->
-            <button type="submit">SIGN UP</button>
+            <button type="submit">Sign Up</button>
 
             <!-- Login Link -->
             <div class="LOGIN">Already have an account?</div>
             <div class="LOGIN_LINK">
-                <a href="login.php">LOG IN</a>
+                <a href="login.php">Log In</a>
             </div>
         </form>
     </div>
 </div>
 
-<script src='script.js'></script>
+<script src='password.js'></script>
+
 </body>
 </html>

@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: dashboard.php");
             exit();
         } else {
-            echo "<div class='RED_ALERT'>Invalid business name or password.</div>";
+            $error_message = "Invalid business name or password.";
         }
 
         $stmt->close();
@@ -60,17 +60,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="RIGHT_SECTION">
         <!-- VENDOR LOGIN FORM -->
-        <form id="VENDOR_FORM" class="LOGIN_FORM active" method="post" action="">
+        <form id="VENDOR_FORM" class="LOGIN_FORM" method="post" action="">
             <h2>CONNECT WITH EVENT PLANNERS</h2>
-            <p> Welcome back! Access your dashboard to manage your schedule and maximize your event bookings. </p>
+            <p> Welcome back to <span id="VENDI">Vendi</span>! Access your dashboard to manage your schedule and maximize your event bookings. </p>
 
-            <label for="VENDOR_USERNAME">Businessname</label>
+            <!-- Display error message if any -->
+            <?php if (!empty($error_message)): ?>
+                <div class="RED_ALERT"><?php echo $error_message; ?></div>
+            <?php endif; ?>
+
+            <h2>LOG IN</h2>
+            <label for="VENDOR_USERNAME">Business Name</label>
             <input type="text" id="businessname" name="businessname" placeholder="Enter Business Name" required>
         
-            <div class="PASSWORD_CONTAINER">
-                <label for="PASSWORD">Password</label>
-                <input type="password" id="PASSWORD" name="password" placeholder="Enter Password" required minlength="8">
-                <i class="fas fa-eye PASSWORD_TOGGLE" id="password-toggle"></i>
+            <div class="BESIDE_FIELD">
+                <div class="PASSWORD_CONTAINER">
+                    <label for="PASSWORD">Password</label>
+                    <input type="password" id="PASSWORD" name="password" placeholder="Enter Password" required minlength="8">
+                    <i class="fas fa-eye PASSWORD_TOGGLE" id="password-toggle"></i>
+                </div>
             </div>
 
             <div class="REMEMBER_FORGOT_CONTAINER">
@@ -81,16 +89,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <span class="EXTRA">Forgot password? <a href="forgot_password.html">Click here</a></span>
             </div>
 
-            <button type="submit">LOG IN</button>
+            <button type="submit">Log In</button>
 
             <div class="LOGIN">Not registered yet?</div>
             <div class="LOGIN_LINK">
-                <a href="register.php">SIGN UP</a>
+                <a href="register.php">Sign Up</a>
             </div>
         </form>
     </div>
 </div>
 
-<script src='script.js'></script>
+<script src='password.js'></script>
 </body>
 </html>

@@ -1,53 +1,76 @@
 /* CUSTOM PALLETES */
-:root {
-    --white: #FFFFFF;
-    --white1: #fafafa;    
-    --white2: #f0f0f0;
-    --white3: #cccccc;
-    --dark2: #333;
-    --dark1: #333333;
-    --dark3: #393939;
-    --dark4: #282C35;
-    --dark5: #696969;
-    --violet: #4c315a;
-    --gradient: linear-gradient(to right, black 0%, rgb(80, 0, 0) 75%, rgb(60, 0, 116) 100%);
+:root{
+    --whtShade1: #f7f9fa;
+    --whtShade2: #f0f0f0;
+    --blkShade1: #101010;
+    --gryShade1: #939393;
+    --gryShade2: #5E5E5E;
+    --gradient_Horizontal: linear-gradient(to right, #D000BB, #0F0053);
+    --gradient_Vertical: linear-gradient(to bottom, #d0008b, #0F0053);
+    --gradient_Green: linear-gradient(to bottom, #00f70c, #009c31);
+    --gradient_Red: linear-gradient(to bottom, #fc241d, #c40202);
+    --gradient_Yellow: linear-gradient(to bottom, #f7b500, #f77b00);
+    --gradient_Blue: linear-gradient(to bottom, #00b4f7, #0055f7);
     --semi-transparent: hsla(0, 0%, 100%, 0.050);
 }
 
-/* FONT FAMILIES */
-@font-face {
-    font-family: 'Poppins';
-    src: url(assets/fonts/Poppins-Full-Version/Poppins-Full-Version/Poppins-Regular.ttf);}
-@font-face {
-    font-family: "Blacksword";
-    src: url(assets/fonts/blacksword/Blacksword.otf);}
-@font-face {
-    font-family: 'CaviarDreams';
-    src: url(assets/fonts/caviar_dreams/CaviarDreams.ttf);}
-@font-face {
-    font-family: 'Coolvetica';
-    src: url(assets/fonts/coolvetica/Coolvetica\ Rg.otf);}
-@font-face {
-    font-family: 'GeoSans';
-    src: url(assets/fonts/geo_sans_light/GeosansLight.ttf);}
+/* Font Families */
 @font-face {
     font-family: 'Machinery';
-    src: url(assets/fonts/machinery_script/MachineryScript_PERSONAL_USE_ONLY.otf);}
+    src: url(assets/fonts/machinery_script/MachineryScript_PERSONAL_USE_ONLY.otf);
+  }
+@font-face {
+    font-family: 'Inter_Regular';
+    src: url(assets/fonts/Inter-font/Inter-Regular.otf);
+}
+@font-face {
+    font-family: 'Inter_Medium';
+    src: url(assets/fonts/Inter-font/Inter-Medium.otf);
+}
+@font-face {
+    font-family: 'Inter_SemiBold';
+    src: url(assets/fonts/Inter-font/Inter-SemiBold.otf);
+}
+@font-face {
+    font-family: 'Inter_SemiBoldItalic';
+    src: url(assets/fonts/Inter-font/Inter-SemiBoldItalic.otf);
+}
+@font-face {
+    font-family: 'Inter_Bold';
+    src: url(assets/fonts/Inter-font/Inter-Bold.otf);
+}
+@font-face {
+    font-family: 'Inter_ExtraBold';
+    src: url(assets/fonts/Inter-font/Inter-ExtraBold.otf);
+}
+@font-face {
+    font-family: 'Inter_Black';
+    src: url(assets/fonts/Inter-font/Inter-Black.otf);
+}
 
 
 html, body {
     margin: 0;
     padding: 0;
     color: black;
-    background-color: var(--white2);
+    background-color: var(--whtShade2);
     overflow-x: hidden;
     scroll-behavior: smooth;
     width: 100%;
+    font-family: 'Inter_Regular';
+    min-width: 960px;
     max-width: 1920px;
     height: 100%;
-    min-height: 100vh;
     margin: 0 auto;
     box-sizing: border-box;
+}
+
+.CONTAINER{
+    display: flex;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 14px 17px 40px 4px rgba(112, 144, 176, 0.08);
+    min-height: 920px;
 }
 
 /* LEFT SECTION */
@@ -57,8 +80,8 @@ html, body {
     background-repeat: no-repeat;
     background-position: bottom;
     background-size: cover;
-    border-radius: 20px;
-    margin: 5px;
+    border-radius: 0px 0px 275px 0px;
+    /*margin: 5px;*/
 }
 
 .LOGO {
@@ -77,14 +100,14 @@ html, body {
 }
 
 .BACK_TO_WEBSITE {
-    font-family: 'Poppins';
+    font-family: 'Inter_Medium';
     font-size: 0.9rem;
     color: white;
     text-decoration: none;
     background-color: transparent;
     margin-left: auto;
     padding: 5px 20px;
-    border: 1px solid var(--dark5);
+    border: 1px solid var(--whtShade2);
     border-radius: 10px;
     transition: transform 0.5s ease;
 }
@@ -107,35 +130,31 @@ html, body {
 }
 
 .LEFT_SECTION p{
-    font-family: 'Coolvetica';
-    font-size: 2rem;
-    color: var(--white);
+    font-family: 'Inter_Bold';
+    font-size: 1.5rem;
+    color: white;
     text-align: center;
     max-width: 75%;
     margin: 0 auto;
-    margin-top: 150px;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
-.CONTAINER{
-    display: flex;
-    margin: 0 auto;
-    min-height: 1000px;
-}
 
 /* RIGHT SECTION */
 .RIGHT_SECTION {
     flex: 50%;
-    background-color: var(--white1);
+    background-color: white;
     position: relative;
     display: flex;
     flex-direction: column;
     z-index: 1;
     overflow-y: auto;
-    margin: 5px;
+    /*margin: 5px;*/
     border-radius: 20px;
 }
 
-.USER_SELECTION{
+/*.USER_SELECTION{
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
@@ -169,17 +188,13 @@ html, body {
     color: white;
     border: none;
     z-index: 1;
-}
+}*/
 
 .LOGIN_FORM{
-    display: none;
-}
-
-.LOGIN_FORM.active{
     display: block;
-    background-color: var(--white1);
+    background-color: white;
     border-radius: 10px;
-    padding: 25px;
+    padding: 50px;
     margin: 0 100px;
     height: 100%;
 }
@@ -190,104 +205,204 @@ html, body {
     padding: 10px;
     margin-top: 10px;
     border-radius: 10px;
-    background-color: var(--white);
-    border: 2px solid var(--white3);
-    font-family: 'Poppins';
+    background-color: var(--whtShade1);
+    border: 2px solid var(--whtShade2);
+    font-family: 'Inter_Regular';
     box-sizing: border-box;
-    font-size: 0.9rem;
-    color: var(--dark3);
-    transition: transform 0.5s ease, border-color 0.5s ease;
+    font-size: 0.8rem;
+    color: var(--blkShade1);
+    transition: border-color 0.3s ease-in-out;
 }
 
 .LOGIN_FORM input:hover,
 .LOGIN_FORM select:hover {
-    border-color: var(--dark5);
+    border-color: var(--gryShade1);
+}
+
+.LOGIN_FORM input:focus,
+.LOGIN_FORM select:focus {
+    border-color: var(--gryShade2);
+    outline: none;
+}
+
+.LOGIN_FORM input::placeholder{
+    font-family: 'Inter_Regular';
+    font-size: 0.8rem;
+    color: var(--gryShade1);
+}
+
+.LOGIN_FORM input[type="tel"] {
+    width: 100%;
+    padding: 10px 10px 10px 50px;
+    margin-top: 10px;
+    border-radius: 10px;
+    background-color: var(--whtShade1);
+    border: 2px solid var(--whtShade2);
+    font-family: 'Inter_Regular';
+    box-sizing: border-box;
+    font-size: 0.8rem;
+    color: var(--blkShade1);
+    transition: border-color 0.3s ease-in-out;
+}
+
+.LOGIN_FORM #PHL{
+    font-family: 'Inter_Medium';
+    font-size: 0.8rem;
+    color:white ;
+    background-color: var(--gryShade1);
+    padding: 10px;
+    margin-top: 12px;
+    border-radius: 10px 0px 0px 10px;
+    z-index: 1;
+    position: absolute;
 }
 
 .LOGIN_FORM h2{
     text-align: left;
-    font-family: 'Coolvetica';
-    font-size: 2.5rem;
+    font-family: 'Inter_Black';
+    color: var(--blkShade1);
+    font-size: 1.5rem;
+    margin-top: 20px;
     margin-bottom: 10px;
 }
 
 .LOGIN_FORM p {
     display: inline-block;
-    font-family: 'Poppins';
-    font-weight: 600;
-    color: var(--dark5);
-    font-size: 0.9rem;
+    font-family: 'Inter_Bold';
+    color: var(--blkShade1);
+    font-size: 0.8rem;
     margin: 0;
     vertical-align: middle;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .LOGIN_FORM #VENDI{
     font-family: 'Machinery';
     font-weight: lighter;
+    margin-right: 1px;
 }
 
 .BESIDE_FIELDS{
     display: flex;
-    gap: 25px;
+    gap: 20px;
+    position: relative;
+    margin-bottom: 20px;
 }
 
 .BESIDE_FIELD{
     flex: 1;
+    position: relative;
 }
 
-.BESIDE_FIELD #BUSINESS_CATEGORY{
-    cursor: pointer;
-}
 
 .LOGIN_FORM label {
     margin-top: 20px;
-    font-family: 'Coolvetica';
+    font-family: 'Inter_SemiBold';
+    font-size: 0.8rem;
+    color: var(--blkShade1);
     display: block;
 }
 
 .LOGIN_FORM button {
-    background-color: black;
-    font-family: 'Coolvetica';
-    font-size: 0.9rem;
+    background: var(--gradient_Vertical);
+    font-family: 'Inter_Bold';
+    font-size: 0.8rem;
     width: 100%;
     padding: 15px;
-    color: var(--white);
+    color: white;
     border: none;
     border-radius: 10px;
-    margin-top: 20px;
+    margin-top: 30px;
     margin-bottom: 10px;
     cursor: pointer;
-    transition: transform 0.5s ease;
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 14px 17px 40px 4px rgba(112, 144, 176, 0.08);
 }
 
 .LOGIN_FORM button:hover{
-    background: var(--gradient);
+    background: var(--gradient_Vertical);
     transform: translateY(-1px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.PASSWORD_CONTAINER {
-    position: relative;
-}
-
+/* Password Input Field */
 .PASSWORD_CONTAINER input[type="password"] {
-    padding-right: 30px;
+    width: 100%;
+    padding: 10px;
+    padding-right: 40px;
+    margin-top: 10px;
+    border-radius: 10px;
+    background-color: var(--whtShade1);
+    border: 2px solid var(--whtShade2);
+    font-family: 'Inter_Regular';
+    font-size: 0.8rem;
+    color: var(--blkShade1);
+    transition: border-color 0.3s ease-in-out;
     box-sizing: border-box;
 }
 
 .PASSWORD_CONTAINER .PASSWORD_TOGGLE {
     position: absolute;
-    top: 67%;
-    right: 20px;
+    top: 77.5%;
+    right: 15px;
     transform: translateY(-50%);
     cursor: pointer;
-    color: var(--dark5);
+    color: var(--gryShade1);
     font-size: 1rem;
 }
 
 .PASSWORD_CONTAINER .PASSWORD_TOGGLE:hover{
-    color: var(--dark3);
+    color: var(--gryShade2);
+}
+
+#PASSWORD_REQUIREMENTS ul {
+    list-style-type: disc; 
+    padding-left: 20px;
+    margin-top: 5px; 
+}
+
+#PASSWORD_REQUIREMENTS li {
+    font-size: 0.75rem; 
+    margin-bottom: 3px; 
+}
+/* Password Requirements Dropdown */
+.password-requirements-dropdown {
+    display: none; 
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border: 1px solid var(--whtShade2);
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 2; 
+    margin-top: 5px;
+}
+
+/* Show dropdown when input is focused */
+.PASSWORD_CONTAINER:focus-within .password-requirements-dropdown {
+    display: block;
+}
+
+/* Password Requirements List */
+.password-requirements-dropdown ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-top: 5px;
+}
+
+.password-requirements-dropdown li {
+    font-size: 0.8rem;
+    color: var(--gryShade1);
+    margin-bottom: 5px;
+}
+/*.PASSWORD_REQUIREMENTS{
+    display: none;
+    font-family: 'Inter_Regular';
+    font-size: 0.8rem;
+    color: var(--gryShade1);
+    margin-top: 5px;
 }
 
 .TERMS {
@@ -296,9 +411,9 @@ html, body {
 }
 
 .TERMS label {
-    font-family: 'Poppins';
-    font-size: 0.9rem;
-    color: var(--dark5);
+    font-family: 'Inter_Regular';
+    font-size: 0.8rem;
+    color: red;
 }
 
 .TERMS a, a {
@@ -310,7 +425,9 @@ html, body {
 
 .TERMS a:hover, a:hover {
     color: var(--dark1);
-}
+}*/
+
+
 
 .LOGIN{
     display: flex;
@@ -319,9 +436,9 @@ html, body {
     margin-top: 20px;
     margin-bottom: 20px;
     position: relative;
-    font-family: 'Poppins';
-    color: var(--dark5);
-    font-size: 0.9rem;
+    font-family: 'Inter_SemiBoldItalic';
+    color: var(--gryShade2);
+    font-size: 0.8rem;
 }
 
 .LOGIN::before,
@@ -329,33 +446,28 @@ html, body {
     content: '';
     flex: 1;
     height: 1px;
-    background-color: var(--dark5);
+    background-color: var(--gryShade1);
     margin: 0 10px;
 }
 
 .LOGIN_LINK{
     text-align: center;
-    margin-top: 30px;
-    transition: transform 0.5s ease;
+    margin-top: 20px;
 }
 
 .LOGIN_LINK a{
-    color: var(--dark1);
+    color: var(--gryShade2);
     padding: 15px;
-    border: 1px solid var(--dark5);
     border-radius: 10px;
     text-decoration: none;
     font-weight: bold;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     display: inline-block;
-    min-width: 200px;
     box-sizing: border-box;
-    transition: transform 0.5s ease-in-out;
 }
 
 .LOGIN_LINK a:hover{
-    color: var(--dark1);
-    transform: translateY(-1px);
+    text-decoration: underline;
 }
 
 .REMEMBER_FORGOT_CONTAINER {
@@ -370,7 +482,7 @@ html, body {
     padding-left: 15px;
     text-indent: -15px;
     align-items: center;
-    color: var(--dark5);
+    color: var(--blkShade1);
     gap: 10px;
 }
 
@@ -389,17 +501,43 @@ html, body {
 }
 
 .EXTRA {
-    font-family: 'Poppins';
-    font-size: 0.9rem;
-    color: var(--dark5);
+    font-family: 'Inter_Regular';
+    font-size: 0.8rem;
+    color: var(--gryShade1);
 }
 
 .EXTRA a {
-    color: var(--dark5);
+    color: var(--gryShade1);
     text-decoration: none;
-    font-weight: bold;
+    font-family: 'Inter_Bold';
 }
 
 .EXTRA a:hover {
-    color: var(--dark1);
+    color: var(--gryShade2);
+}
+
+#BUSINESS_DOCUMENT {
+    margin-top: 10px;
+    font-family: 'Inter_Regular';
+    font-size: 0.8rem;
+    color: var(--gryShade1);
+}
+
+label #FILES {
+    color: var(--gryShade1);
+    font-family: 'Inter_Medium';
+    font-size: 0.75rem;
+}
+
+/* Error Message Style */
+.RED_ALERT {
+    background-color: #ffebee; /* Light red background */
+    color: #c62828; /* Dark red text */
+    font-family: 'Inter_Medium';
+    font-size: 0.9rem;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #c62828; /* Red border */
+    margin-bottom: 20px;
+    display: block; /* Ensure it takes up the full width */
 }
