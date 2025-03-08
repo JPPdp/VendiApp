@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:background="@color/trans"
             android:text="CREATE A VENDI ACCOUNT"
-            android:textColor="@color/textcolor"
+            android:textColor="@color/textColor"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/etCall"

@@ -1,9 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.VendiApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Theme.VendiApp" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>  <!-- Makes status bar transparent -->
+        <item name="android:windowTranslucentStatus">true</item> <!-- Extends content to status bar -->
     </style>
 
-    <style name="Theme.VendiApp" parent="Base.Theme.VendiApp" />
 </resources>
