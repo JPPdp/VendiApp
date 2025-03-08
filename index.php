@@ -9,7 +9,7 @@ require_once 'database.php';
 $servername = "localhost";
 $username = "root";  // your database username
 $password = "";      // your database password
-$dbname = "customersdb";
+$dbname = "vendi_db";
 
 // Function to sanitize input
 function sanitize_input($data) {
@@ -65,7 +65,7 @@ try {
     }
 
     // Prepare statement to prevent SQL injection
-    $stmt = $conn->prepare("SELECT * FROM customers WHERE email = ? LIMIT 1");
+    $stmt = $conn->prepare("SELECT * FROM clients WHERE email = ? LIMIT 1");
     if (!$stmt) {
         throw new Exception('Prepare statement failed: ' . $conn->error);
     }
@@ -88,7 +88,6 @@ try {
             // Send success response
             send_json_response(true, 'Login successful', [
                 'user_id' => $user['id'],
-                'username' => $user['username'],
                 'email' => $user['email'],
             ]);
         } else {
