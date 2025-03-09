@@ -155,7 +155,7 @@
             app:layout_constraintTop_toBottomOf="@id/rl" />
 
         <TextView
-            android:id="@+id/tvFood"
+            android:id="@+id/tvTab"
             android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -174,9 +174,10 @@
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintEnd_toEndOf="@id/tvFood"
-            app:layout_constraintStart_toStartOf="@id/tvFood"
-            app:layout_constraintTop_toBottomOf="@id/tvFood"
+            android:layout_marginBottom="60dp"
+            app:layout_constraintEnd_toEndOf="@id/tvTab"
+            app:layout_constraintStart_toStartOf="@id/tvTab"
+            app:layout_constraintTop_toBottomOf="@id/tvTab"
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

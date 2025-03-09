@@ -71,11 +71,13 @@ class EventAdapter(private var itemList: List<Event>) : RecyclerView.Adapter<Rec
     class FeaturedItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val itemImage: ImageView = itemView.findViewById(R.id.ivFeatureEventImage)
         private val itemName: TextView = itemView.findViewById(R.id.tvFeatureEventName)
+        private val location: TextView = itemView.findViewById(R.id.tvFeatureLocation)
         private val price: TextView = itemView.findViewById(R.id.tvFeaturePrice)
 
         // Binds the featured item data to the UI elements
         fun bind(item: Event) {
             itemName.text = item.name
+            location.text = item.location
             price.text = item.price
             itemImage.setImageResource(item.imageRes)
         }

@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         val tabLayout: TabLayout = findViewById(R.id.tabLayout)
         val viewPager: ViewPager2 = findViewById(R.id.viewPager)
         val featuredRecyclerView: RecyclerView = findViewById(R.id.rvFeaturedProducts)
+        val tvTab: TextView = findViewById(R.id.tvTab) // Updates based on the selected tab
 
         // Setup Featured Events RecyclerView (Horizontal Layout)
         featuredRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         viewPager.isUserInputEnabled = false // Disable swipe to prevent accidental switching
 
         // Ensure the first tab (Food) is selected when the app launches
-        viewPager.setCurrentItem(0, false) // Set default tab to "Food"
+        viewPager.setCurrentItem(0, false)
         tabLayout.selectTab(tabLayout.getTabAt(0))
 
         // Customize Tab Layout with Icons and Text
@@ -70,6 +71,7 @@ class MainActivity : AppCompatActivity() {
 
         // Ensure the first tab is styled correctly on startup
         updateTabAppearance(tabLayout.getTabAt(0), isSelected = true)
+        tvTab.text = "Food" // Set default TextView text
 
         // Handle Tab Selection
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -77,14 +79,15 @@ class MainActivity : AppCompatActivity() {
                 updateTabAppearance(tab, isSelected = true)
                 viewPager.setCurrentItem(tab?.position ?: 0, false) // Switch ViewPager page
 
-                // Update events based on selected category
+                // Update TextView based on the selected tab
                 val category = when (tab?.position) {
                     0 -> "Food"
                     1 -> "Beverages"
                     2 -> "Entertainment"
                     else -> "Food"
                 }
-                eventViewModel.loadEvents(category) // Load events for selected category
+                tvTab.text = category // Change TextView text dynamically
+                eventViewModel.loadEvents(category) // Load events for the selected category
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {

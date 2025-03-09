@@ -5,6 +5,7 @@ import com.example.vendiapp.model.Event
 
 class EventRepository {
 
+    // Returns event list based on selected category
     fun getEvents(category: String): List<Event> {
         return when (category) {
             "Food" -> getFoodItems()
@@ -14,18 +15,25 @@ class EventRepository {
         }
     }
 
+    // Sample Events for Food Category
     private fun getFoodItems(): List<Event> = listOf(
-        Event("Food Festival", "City Center", "₱999", 5.0, R.drawable.img_potatocorner, isFeatured = true),
-        Event("BBQ Night", "Downtown", "₱1,999", 4.8, R.drawable.img_playerkitchen, isFeatured = true)
+        Event("Festival Street BBQ", "Bunuan Guest, Dagupan", "₱350", 4.8, R.drawable.img_street_bbq, isFeatured = true),
+        Event("Food Truck Tacos", "Pantal Riverside, Dagupan", "₱250", 4.7, R.drawable.img_foodtruck_tacos, isFeatured = true),
+        Event("Food Festival", "City Center Plaza, Dagupan", "₱999", 5.0, R.drawable.img_potatocorner, isFeatured = true),
+        Event("BBQ Night", "Downtown Park, Dagupan", "₱1,999", 4.8, R.drawable.img_playerkitchen, isFeatured = true)
     )
 
+    // Sample Events for Beverages Category
     private fun getBeverageItems(): List<Event> = listOf(
-        Event("Coffee Tasting", "Cafe Lounge", "₱150", 4.6, R.drawable.img_coffe, isFeatured = true),
-        Event("Wine Night", "Rooftop Bar", "₱180", 4.7, R.drawable.img_fruitshake, isFeatured = true)
-    )
+        Event("Coffee Tasting", "Artisan Coffee Fair", "₱150", 4.7, R.drawable.img_coffee_tasting, isFeatured = true),
+        Event("Wine Night", "Rooftop Wine & Dine", "₱180", 4.8, R.drawable.img_wine_night, isFeatured = true),
+        Event("Oktoberfest Beer", "Annual Beer Festival", "₱299", 4.9, R.drawable.img_oktoberfest_beer, isFeatured = true),
+        Event("Cocktail Mixology", "Bartender’s Special", "₱450", 4.8, R.drawable.img_cocktail_mixology, isFeatured = true)
+        )
 
+    // Sample Events for Entertainment Category
     private fun getEntertainmentItems(): List<Event> = listOf(
-        Event("Concert Night", "Arena", "₱3,000", 4.9, R.drawable.img_concert, isFeatured = true),
-        Event("Movie Screening", "Theater", "₱500", 4.5, R.drawable.img_movie, isFeatured = true)
+        Event("Concert Night", "Dagupan Grand Arena", "₱3,000", 4.9, R.drawable.img_lemonology, isFeatured = true),
+        Event("Movie Screening", "City Cinema, Dagupan", "₱500", 4.5, R.drawable.img_playerkitchen, isFeatured = true)
     )
 }
