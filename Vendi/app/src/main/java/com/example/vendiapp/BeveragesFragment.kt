@@ -22,7 +22,7 @@ class BeveragesFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_beverages, container, false)
         recyclerView = view.findViewById(R.id.rvEventBeveragesList)
 
-        // Sample food Data (Including both regular & featured)
+        // Sample Event beverages Data (Including both regular & featured)
         val allEventBeveragesList = listOf(
             Event("Coffee Tasting", "Artisan Coffee Fair", "₱150", 4.7, R.drawable.img_coffee_tasting, isFeatured = true),
             Event("Wine Night", "Rooftop Wine & Dine", "₱180", 4.8, R.drawable.img_wine_night, isFeatured = true),

@@ -33,7 +33,9 @@ class EventRepository {
 
     // Sample Events for Entertainment Category
     private fun getEntertainmentItems(): List<Event> = listOf(
-        Event("Concert Night", "Dagupan Grand Arena", "₱3,000", 4.9, R.drawable.img_lemonology, isFeatured = true),
-        Event("Movie Screening", "City Cinema, Dagupan", "₱500", 4.5, R.drawable.img_playerkitchen, isFeatured = true)
-    )
+        Event("Stand-up Comedy", "Laugh Out Loud Comedy Bar", "₱300", 4.9, R.drawable.img_comedy_show, isFeatured = true),
+        Event("Magic Show", "Illusions & Wonders", "₱220", 4.6, R.drawable.img_magic_show, isFeatured = true),
+        Event("Rock Concert", "City Arena Live", "₱500", 4.9, R.drawable.img_rock_concert, isFeatured = true),
+        Event("Circus Spectacular", "The Grand Circus Show", "₱400", 4.7, R.drawable.img_circus, isFeatured = true)
+        )
 }
