@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="top|center"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".StallDetailsFragment">
+
+    <ImageView
+        android:id="@+id/ivEventImage"
+        android:layout_width="match_parent"
+        android:layout_height="216dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="20dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/rounded_no_border_no_padding"
+        android:clipToOutline="true"
+        android:src="@drawable/img_lemonology"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_height="wrap_content">
+
+        <!-- Food Name -->
+        <TextView
+            android:id="@+id/tvSubEventName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Non-Alcoholic"
+            android:textSize="14sp"
+            android:textColor="@color/black"/>
+
+        <ImageView
+            android:id="@+id/ivFeatureStar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:scaleType="centerCrop"
+            android:layout_toStartOf="@id/tvEventRating"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/icon_star_yellow" />
+
+        <!-- Rating -->
+        <TextView
+            android:id="@+id/tvEventRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="8dp"
+            android:text="5.0"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_height="wrap_content">
+
+        <!-- Food Name -->
+        <TextView
+            android:id="@+id/tvEventName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="0dp"
+            android:text="Potato Corner"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvStartsAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Starts At"
+            android:layout_toStartOf="@id/tvEventPrice"
+            android:layout_marginEnd="8dp"
+            android:layout_alignBaseline="@id/tvEventName"/>
+
+        <TextView
+            android:id="@+id/tvEventPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/black"
+            android:text="₱799"
+            android:textStyle="bold"
+            android:textSize="16sp"/>
+
+        <!-- Location -->
+        <ImageView
+            android:id="@+id/tvIconLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvEventName"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/icon_current_location" />
+
+        <TextView
+            android:id="@+id/tvEventLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Malued District, Dagupan City"
+            android:layout_toEndOf="@id/tvIconLocation"
+            android:layout_alignBaseline="@id/tvIconLocation"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_below="@id/tvEventName"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvDescriptionTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="From parties to markets and special gatherings, we serve up refreshing, zesty drinks that your guests won’t forget. Ready to add a burst of flavor to your event?"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp" />
+
+    <TextView
+        android:id="@+id/tvPreview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Preview"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp">
+        
+        <ImageView
+            android:id="@+id/iv3"
+            android:layout_width="98dp"
+            android:layout_height="64dp"
+            android:src="@drawable/img_lemonology_3"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:background="@drawable/rounded_no_border_no_padding"
+            android:layout_marginEnd="16dp"/>
+
+        <ImageView
+            android:id="@+id/iv2"
+            android:layout_width="98dp"
+            android:layout_height="64dp"
+            android:src="@drawable/img_lemonology_2"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:background="@drawable/rounded_no_border_no_padding"
+            android:layout_marginEnd="16dp"/>
+
+        <ImageView
+            android:id="@+id/iv1"
+            android:layout_width="98dp"
+            android:layout_height="64dp"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:background="@drawable/rounded_no_border_no_padding"
+            android:src="@drawable/img_lemonology_1" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvPackage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose Package"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvEventPackageDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toStartOf="@id/rl"
+        app:layout_constraintTop_toBottomOf="@id/rl" />
+
+</LinearLayout>

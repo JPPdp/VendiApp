@@ -1,7 +1,10 @@
 package com.example.vendiapp
 
+import android.app.ActivityOptions
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -11,7 +14,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.example.vendiapp.viewmodel.EventViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -28,12 +30,25 @@ class MainActivity : AppCompatActivity() {
         // Initialize UI Components
         val tabLayout: TabLayout = findViewById(R.id.tabLayout)
         val viewPager: ViewPager2 = findViewById(R.id.viewPager)
-        val featuredRecyclerView: RecyclerView = findViewById(R.id.rvFeaturedProducts)
+        val featuredRecyclerView: RecyclerView = findViewById(R.id.rvFeaturedEvents)
         val tvTab: TextView = findViewById(R.id.tvTab) // Updates based on the selected tab
 
         // Setup Featured Events RecyclerView (Horizontal Layout)
         featuredRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        featuredAdapter = EventAdapter(emptyList()) // Initially, the list is empty
+        featuredAdapter = EventAdapter(emptyList()) { event ->
+            val intent = Intent(this, StallDetailsActivity::class.java).apply {
+                putExtra("eventTitle", event.title)
+                putExtra("eventSubTitle", event.subTitle)
+                putExtra("eventDescription", event.description)
+                putExtra("eventImage", event.imageRes)
+                putExtra("eventLocation", event.location)
+                Log.d("DEBUG", "Event Rating: ${event.rating}") // Debugging
+                putExtra("eventRating", event.rating.toDouble())
+                putExtra("eventPrice", event.price)
+
+            }
+            startActivity(intent)
+        }
         featuredRecyclerView.adapter = featuredAdapter
 
         // Observe ViewModel to update RecyclerView when event data changes
@@ -102,13 +117,18 @@ class MainActivity : AppCompatActivity() {
         // Setup Bottom Navigation
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
-        // Load the default fragment (HomeFragment) on app launch
-        loadFragment(HomeFragment())
-
         // Handle bottom navigation item selection
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.nav_home -> loadFragment(HomeFragment()) // Load Home Fragment
+                R.id.nav_home -> {
+                    // Restart MainActivity instead of loading HomeFragment
+                    val intent = Intent(this, MainActivity::class.java)
+                    finish() // Finish the current instance of MainActivity
+
+                    // Use ActivityOptions for a smooth transition (Android 14+)
+                    val options = ActivityOptions.makeCustomAnimation(this, 0, 0).toBundle()
+                    startActivity(intent, options)
+                }
                 R.id.nav_schedule -> loadFragment(ScheduleFragment()) // Load Schedule Fragment
                 R.id.nav_profile -> loadFragment(ProfileFragment()) // Load Profile Fragment
             }

@@ -51,25 +51,25 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:scaleType="centerCrop"
-            android:layout_toStartOf="@id/tvFeatureRating"
+            android:layout_toStartOf="@id/tvFeatureEventRating"
             android:layout_below="@id/ivFeatureEventImage"
             android:layout_marginEnd="8dp"
             android:src="@drawable/icon_star_yellow" />
 
         <!-- Rating -->
         <TextView
-            android:id="@+id/tvFeatureRating"
+            android:id="@+id/tvFeatureEventRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/ivFeatureEventImage"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="8dp"
-            android:text="5.0"
+            android:text="1.0"
             android:textSize="16sp" />
 
         <!-- Location -->
         <TextView
-            android:id="@+id/tvFeatureLocation"
+            android:id="@+id/tvFeatureEventLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvFeatureEventName"
@@ -86,8 +86,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Starts at "
-            android:layout_below="@id/tvFeatureLocation"
-            android:layout_alignStart="@id/tvFeatureLocation"
+            android:layout_below="@id/tvFeatureEventLocation"
+            android:layout_alignStart="@id/tvFeatureEventLocation"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:textSize="14sp"
@@ -95,7 +95,7 @@
 
         <!-- Price -->
         <TextView
-            android:id="@+id/tvFeaturePrice"
+            android:id="@+id/tvFeatureEventPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="₱1,299"

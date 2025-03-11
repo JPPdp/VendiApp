@@ -1,10 +1,8 @@
-package com.example.vendiapp.viewmodel
+package com.example.vendiapp
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.vendiapp.model.Event
-import com.example.vendiapp.repository.EventRepository
 
 class EventViewModel : ViewModel() {
 
