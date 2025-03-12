@@ -1,162 +1,51 @@
 package com.example.vendiapp
 
-import android.app.ActivityOptions
-import android.content.Intent
-import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Log
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var featuredAdapter: EventAdapter // Adapter for featured events
-    private val eventViewModel: EventViewModel by viewModels() // ViewModel to manage event data
+    private lateinit var featuredAdapter: EventAdapter
+    private val eventViewModel: EventViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Initialize UI Components
         val tabLayout: TabLayout = findViewById(R.id.tabLayout)
         val viewPager: ViewPager2 = findViewById(R.id.viewPager)
         val featuredRecyclerView: RecyclerView = findViewById(R.id.rvFeaturedEvents)
-        val tvTab: TextView = findViewById(R.id.tvTab) // Updates based on the selected tab
+        val tvTab: TextView = findViewById(R.id.tvTab)
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
 
-        // Setup Featured Events RecyclerView (Horizontal Layout)
-        featuredRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         featuredAdapter = EventAdapter(emptyList()) { event ->
-            val intent = Intent(this, StallDetailsActivity::class.java).apply {
-                putExtra("eventTitle", event.title)
-                putExtra("eventSubTitle", event.subTitle)
-                putExtra("eventDescription", event.description)
-                putExtra("eventImage", event.imageRes)
-                putExtra("eventLocation", event.location)
-                Log.d("DEBUG", "Event Rating: ${event.rating}") // Debugging
-                putExtra("eventRating", event.rating.toDouble())
-                putExtra("eventPrice", event.price)
-
-            }
-            startActivity(intent)
-        }
-        featuredRecyclerView.adapter = featuredAdapter
-
-        // Observe ViewModel to update RecyclerView when event data changes
-        eventViewModel.events.observe(this) { newList ->
-            featuredAdapter.updateData(newList) // Update adapter with new event data
+            startActivity(event.toIntent(this))
         }
 
-        // Setup ViewPager2 with Tabs
-        val adapter = ViewPagerAdapter(this)
-        viewPager.adapter = adapter
-        viewPager.isUserInputEnabled = false // Disable swipe to prevent accidental switching
+        setupFeaturedRecyclerView(featuredRecyclerView, featuredAdapter)
+        observeEventViewModel(eventViewModel, featuredAdapter)
 
-        // Ensure the first tab (Food) is selected when the app launches
+        val tabIcons = listOf(R.drawable.icon_noodle_white, R.drawable.icon_drink_black, R.drawable.icon_chair_grey)
+        val tabTexts = listOf("Food", "Beverages", "Entertainment")
+
+        viewPager.adapter = ViewPagerAdapter(this)
+        viewPager.isUserInputEnabled = false
         viewPager.setCurrentItem(0, false)
         tabLayout.selectTab(tabLayout.getTabAt(0))
 
-        // Customize Tab Layout with Icons and Text
-        val tabIcons = listOf(
-            R.drawable.icon_noodle_white,
-            R.drawable.icon_drink_black,
-            R.drawable.icon_chair_grey
-        )
-        val tabTexts = listOf("Food", "Beverages", "Entertainment")
-
-        // Link TabLayout with ViewPager2 using TabLayoutMediator
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            val tabView = layoutInflater.inflate(R.layout.custom_tab, null)
-            val tabIcon = tabView.findViewById<ImageView>(R.id.tab_icon)
-            val tabText = tabView.findViewById<TextView>(R.id.tab_text)
-
-            tabIcon.setImageResource(tabIcons[position]) // Set tab icon
-            tabText.text = tabTexts[position] // Set tab text
-            tab.customView = tabView
-        }.attach()
-
-        // Ensure the first tab is styled correctly on startup
+        setupTabLayoutWithViewPager(tabLayout, viewPager, tabIcons, tabTexts)
         updateTabAppearance(tabLayout.getTabAt(0), isSelected = true)
-        tvTab.text = "Food" // Set default TextView text
+        tvTab.text = "Food"
 
-        // Handle Tab Selection
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                updateTabAppearance(tab, isSelected = true)
-                viewPager.setCurrentItem(tab?.position ?: 0, false) // Switch ViewPager page
+        handleTabSelection(tabLayout, viewPager, tvTab, eventViewModel)
+        setupBottomNavigation(bottomNavigationView)
 
-                // Update TextView based on the selected tab
-                val category = when (tab?.position) {
-                    0 -> "Food"
-                    1 -> "Beverages"
-                    2 -> "Entertainment"
-                    else -> "Food"
-                }
-                tvTab.text = category // Change TextView text dynamically
-                eventViewModel.loadEvents(category) // Load events for the selected category
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                updateTabAppearance(tab, isSelected = false)
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-                // Do nothing on reselection
-            }
-        })
-
-        // Setup Bottom Navigation
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-
-        // Handle bottom navigation item selection
-        bottomNavigationView.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_home -> {
-                    // Restart MainActivity instead of loading HomeFragment
-                    val intent = Intent(this, MainActivity::class.java)
-                    finish() // Finish the current instance of MainActivity
-
-                    // Use ActivityOptions for a smooth transition (Android 14+)
-                    val options = ActivityOptions.makeCustomAnimation(this, 0, 0).toBundle()
-                    startActivity(intent, options)
-                }
-                R.id.nav_schedule -> loadFragment(ScheduleFragment()) // Load Schedule Fragment
-                R.id.nav_profile -> loadFragment(ProfileFragment()) // Load Profile Fragment
-            }
-            true
-        }
-
-        // Load default category events (Food) on app launch
         eventViewModel.loadEvents("Food")
-    }
-
-    // Loads the selected fragment into the fragment container
-    private fun loadFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commit()
-    }
-
-    // Updates the appearance of tabs (changes icon and text color)
-    private fun updateTabAppearance(tab: TabLayout.Tab?, isSelected: Boolean) {
-        tab?.customView?.let {
-            val tabText = it.findViewById<TextView>(R.id.tab_text)
-            val tabIcon = it.findViewById<ImageView>(R.id.tab_icon)
-
-            val textColor = if (isSelected) R.color.bright else R.color.grey
-            val iconColor = if (isSelected) R.color.bright else R.color.black
-
-            tabText.setTextColor(ContextCompat.getColor(this, textColor))
-            tabIcon.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(this, iconColor))
-        }
     }
 }
