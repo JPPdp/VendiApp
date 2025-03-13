@@ -1,0 +1,159 @@
+/* Custom Colors */
+:root{
+    --whtShade1: #f7f9fa;
+    --whtShade2: #f0f0f0;
+    --blkShade1: #101010;
+    --gryShade1: #b0b0b0;
+    --gryShade2: #5E5E5E;
+    --gradient_Horizontal: linear-gradient(to left, #d0008b, #3b0053);
+    --gradient_Vertical: linear-gradient(to top, #d0008b, #0F0053);
+    /*--gradient_Vertical: linear-gradient(to bottom, #D000BB, #0F0053);*/
+    --gradient_Green: linear-gradient(to top, #00f70c, #009c31);
+    --gradient_Red: linear-gradient(to top, #fc241d, #c40202);
+    --gradient_Yellow: linear-gradient(to top, #f7b500, #f77b00);
+    --gradient_Blue: linear-gradient(to top, #00b4f7, #0055f7);
+}
+
+/* Font Families */
+@font-face {
+    font-family: 'Machinery';
+    src: url(assets/fonts/machinery_script/MachineryScript_PERSONAL_USE_ONLY.otf);
+  }
+@font-face {
+    font-family: 'Inter_Regular';
+    src: url(assets/fonts/Inter-font/Inter-Regular.otf);
+}
+@font-face {
+    font-family: 'Inter_Medium';
+    src: url(assets/fonts/Inter-font/Inter-Medium.otf);
+}
+@font-face {
+    font-family: 'Inter_SemiBold';
+    src: url(assets/fonts/Inter-font/Inter-SemiBold.otf);
+}
+@font-face {
+    font-family: 'Inter_SemiBoldItalic';
+    src: url(assets/fonts/Inter-font/Inter-SemiBoldItalic.otf);
+}
+@font-face {
+    font-family: 'Inter_Bold';
+    src: url(assets/fonts/Inter-font/Inter-Bold.otf);
+}
+@font-face {
+    font-family: 'Inter_ExtraBold';
+    src: url(assets/fonts/Inter-font/Inter-ExtraBold.otf);
+}
+@font-face {
+    font-family: 'Inter_Black';
+    src: url(assets/fonts/Inter-font/Inter-Black.otf);
+}
+
+/* BOOKING TABLE */
+.BOOKING_TABLE {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
+    min-height: 500px;
+    max-height: 850px;
+    overflow-y: auto;
+}
+
+.BOOKING_TABLE table {
+    border-collapse: collapse; 
+    width: 100%; 
+    table-layout: fixed;
+}
+
+.BOOKING_TABLE h2 {
+    background: white;
+    color: var(--blkShade1);
+    font-size: 1rem;
+    font-family: 'Inter_Bold';
+    padding: 20px 20px 10px 20px;
+    margin: 0;
+}
+
+.BOOKING_TABLE th {
+    background: white;
+    color: var(--blkShade1);
+    font-size: 0.8rem;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--gryShade1);
+    text-align: left;
+}
+
+.BOOKING_TABLE td {
+    background-color: white;
+    font-size: 0.8rem;
+    font-family: 'Inter_Regular';
+    color: var(--blkShade1);
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--whtShade2);
+}
+
+.BOOKING_TABLE td {
+    width: 10%;
+}
+
+.BOOKING_TABLE .BOOKING_STATUS #APPROVED {
+    background: var(--gradient_Green);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.BOOKING_TABLE .BOOKING_STATUS #REJECTED {
+    background: var(--gradient_Red);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.ACCEPT_BUTTON{
+    color: white;
+    padding: 2.5px 5px;
+    font-size: 0.75rem;
+    font-family: 'Inter_Medium';
+    background: var(--gradient_Green);
+    border: 1px solid white;
+    border-radius: 5px;
+    min-width: 25px;
+}
+
+.DECLINE_BUTTON{
+    color: white;
+    padding: 2.5px 5px;
+    font-size: 0.75rem;
+    font-family: 'Inter_Medium';
+    background: var(--gradient_Red);
+    border: 1px solid white;
+    border-radius: 5px;
+    min-width: 25px;
+}
+
+
+
+.STATUS_PENDING {
+    color: black;
+    background-color: red;
+}
+
+.STATUS_ACCEPTED {
+    color: white;
+    background-color: #4CAF50;
+}
+
+.STATUS_REJECTED {
+    color: white;
+    background-color: #f44336;
+}

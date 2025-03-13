@@ -42,4 +42,5 @@ document.addEventListener('DOMContentLoaded', function () {
             toggleIcon.classList.add('fa-eye');
         }
     }
+    
 });

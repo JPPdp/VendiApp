@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Vendi</title>
     <link rel="icon" href="assets/images/VendiBLK2_NoBG.png" type="image/icon type">
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="login.css?v=<?php echo date('his'); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- VENDOR LOGIN FORM -->
         <form id="VENDOR_FORM" class="LOGIN_FORM" method="post" action="">
             <h2>CONNECT WITH EVENT PLANNERS</h2>
-            <p> Welcome back to <span id="VENDI">Vendi</span>! Access your dashboard to manage your schedule and maximize your event bookings. </p>
+            <p> Welcome back to <span id="VENDI">Vendi</span>! Access your dashboard to manage your listings, organize your schedule, and maximize your event bookings. </p>
 
             <!-- Display error message if any -->
             <?php if (!empty($error_message)): ?>
@@ -80,20 +80,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <i class="fas fa-eye PASSWORD_TOGGLE" id="password-toggle"></i>
                 </div>
             </div>
-
-            <div class="REMEMBER_FORGOT_CONTAINER">
-                <label for="REMEMBER_ME" class="REMEMBER_ME">
-                    <input type="checkbox" id="REMEMBER_ME" name="REMEMBER_ME">
-                    <span>Remember me</span>
-                </label>
-                <span class="EXTRA">Forgot password? <a href="forgot_password.html">Click here</a></span>
-            </div>
+            
+            <span class="EXTRA">Forgot password? <a href="forgot_password.html">Click here</a></span>
 
             <button type="submit">Log In</button>
 
             <div class="LOGIN">Not registered yet?</div>
             <div class="LOGIN_LINK">
-                <a href="register.php">Sign Up</a>
+                <a href="register1.php">Sign Up</a>
             </div>
         </form>
     </div>

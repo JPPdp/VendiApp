@@ -1,0 +1,351 @@
+/* Custom Colors */
+:root{
+    --whtShade1: #f7f9fa;
+    --whtShade2: #f0f0f0;
+    --blkShade1: #101010;
+    --gryShade1: #b0b0b0;
+    --gryShade2: #5E5E5E;
+    --gradient_Horizontal: linear-gradient(to left, #d0008b, #3b0053);
+    --gradient_Vertical: linear-gradient(to top, #d0008b, #0F0053);
+    /*--gradient_Vertical: linear-gradient(to bottom, #D000BB, #0F0053);*/
+    --gradient_Green: linear-gradient(to top, #00f70c, #009c31);
+    --gradient_Red: linear-gradient(to top, #fc241d, #c40202);
+    --gradient_Yellow: linear-gradient(to top, #f7b500, #f77b00);
+    --gradient_Blue: linear-gradient(to top, #00b4f7, #0055f7);
+}
+
+/* Font Families */
+@font-face {
+    font-family: 'Machinery';
+    src: url(assets/fonts/machinery_script/MachineryScript_PERSONAL_USE_ONLY.otf);
+  }
+@font-face {
+    font-family: 'Inter_Regular';
+    src: url(assets/fonts/Inter-font/Inter-Regular.otf);
+}
+@font-face {
+    font-family: 'Inter_Medium';
+    src: url(assets/fonts/Inter-font/Inter-Medium.otf);
+}
+@font-face {
+    font-family: 'Inter_SemiBold';
+    src: url(assets/fonts/Inter-font/Inter-SemiBold.otf);
+}
+@font-face {
+    font-family: 'Inter_SemiBoldItalic';
+    src: url(assets/fonts/Inter-font/Inter-SemiBoldItalic.otf);
+}
+@font-face {
+    font-family: 'Inter_Bold';
+    src: url(assets/fonts/Inter-font/Inter-Bold.otf);
+}
+@font-face {
+    font-family: 'Inter_ExtraBold';
+    src: url(assets/fonts/Inter-font/Inter-ExtraBold.otf);
+}
+@font-face {
+    font-family: 'Inter_Black';
+    src: url(assets/fonts/Inter-font/Inter-Black.otf);
+}
+
+/* Profile Container */
+.PROFILE_CONTAINER {
+    display: flex;
+    gap: 20px; 
+    /*padding: 20px;*/
+    border-radius: 10px;
+    min-height: 500px;
+}
+
+/* Left Profile Section */
+.LEFT_PROFILE {
+    flex: 1; /* Takes 25% of the container */
+    max-width: 25%; /* Ensures it doesn't grow beyond 25% */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Profile Picture Container */
+.PROFILE_PIC_CONTAINER {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.PROFILE_PIC2 {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+}
+
+.LEFT_PROFILE h2{
+    font-size: 1.25rem;
+    font-family: 'Inter_Bold';
+    color: var(--blkShade1);
+    text-align: center;
+    margin-top: -10px;
+    margin-bottom: -20px;
+    cursor: not-allowed;
+}
+
+#VENDOR_DESCRIPTION{
+    min-height: 200px;
+    padding: 10px;
+    border-radius: 10px;
+    background: var(--whtShade1);
+    font-family: 'Inter_Regular';
+    font-size: 0.8rem;
+    border: 1px solid var(--whtShade1);
+    resize: none;
+    outline: none;
+}
+
+/* Button Container */
+.BUTTON_CONTAINER {
+    display: flex;
+    justify-content: space-around;
+    gap: -20px;
+    margin-top: 0px;
+}
+
+.SUBMIT_BUTTON {
+    width: 100%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Inter_Bold';
+    font-size: 0.8rem;
+    cursor: pointer;
+    box-shadow: 14px 17px 40px 4px rgba(112, 144, 176, 0.08);
+    transition: transform 0.3s ease-in-out;
+}
+
+.SUBMIT_BUTTON {
+    background: var(--gradient_Vertical);
+    color: white;
+}
+
+.SUBMIT_BUTTON:hover{
+    transform: translateY(-1px);
+}
+
+.EDIT_ICON_CONTAINER{
+    position: relative;
+}
+
+.EDIT_ICON {
+    position: absolute;
+    bottom: 11px; /* Adjust as necessary */
+    left: 20px; /* Adjust as necessary */
+    width: 12.5px; /* Size of the icon */
+    height: 12.5px; /* Size of the icon */
+    border-radius: 50%; 
+    border: 3px solid white;
+    background: var(--gradient_Vertical); 
+    padding: 10px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.8rem; /* Icon size */
+    color: white; /* Icon color */
+    cursor: pointer;
+}
+
+.SERVICE_OFFERED{
+    text-align: center;
+    font-family: 'Inter_Bold';
+    font-size: 0.8rem;
+    color: var(--gryShade2);
+    margin-top: 0px;
+    margin-bottom: -20px;
+}
+
+
+/* Right Profile Section */
+.RIGHT_PROFILE {
+    flex: 3; /* Takes 75% of the container */
+    max-width: 75%; /* Ensures it doesn't grow beyond 75% */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.RIGHT_PROFILE h2{
+    text-align: left;
+    font-family: 'Inter_Black';
+    color: var(--blkShade1);
+    font-size: 1.5rem;
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+label{
+    margin-top: 20px;
+    font-family: 'Inter_SemiBold';
+    font-size: 0.8rem;
+    color: var(--blkShade1);
+    display: block;
+}
+
+.STACK{
+    background-color: white;
+    border-bottom: 2px solid var(--whtShade2);
+}
+
+.STACK img {
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    right: 0;
+    margin-top: 20px;
+}
+
+.STACK1{
+    background-color: white;
+}
+
+/* Input Fields Readonly*/
+#VENDOR_EMAIL,
+#VENDOR_MOBILE,
+#ADDRESS,
+#CITY,
+#PROVINCE {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    background-color: var(--whtShade1);
+    border: 2px solid var(--whtShade2);
+    font-family: 'Inter_Regular';
+    box-sizing: border-box;
+    font-size: 0.8rem;
+    color: var(--gryShade1);
+    cursor: not-allowed;
+}
+
+/*PARTNER THINGS*/
+.BESIDE_FIELDS{
+    display: flex;
+    gap: 20px;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.BESIDE_FIELD{
+    flex: 1;
+    position: relative;
+}
+
+.LOGIN{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    font-family: 'Inter_SemiBoldItalic';
+    color: var(--gryShade2);
+    font-size: 0.8rem;
+}
+
+.LOGIN::before,
+.LOGIN::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: var(--gryShade1);
+    margin: 0 10px;
+}
+
+.LOGIN_LINK{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.LOGIN_LINK a{
+    color: var(--gryShade2);
+    padding: 15px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.8rem;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+.LOGIN_LINK a:hover{
+    text-decoration: underline;
+}
+
+/* View Button Styling */
+.VIEW_BUTTON {
+    display: inline-block;
+    padding: 10px 20px;
+    background: var(--gradient_Vertical);
+    color: white;
+    font-family: 'Inter_Bold';
+    font-size: 0.8rem;
+    border-radius: 10px;
+    text-decoration: none;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+
+/* Document Image View */
+.EXPAND {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    padding-top: 40px; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.5); 
+}
+
+.EXPAND:target {
+    display: block;
+}
+
+.EXPANDED_IMAGE {
+    margin: auto;
+    display: block;
+    max-width: 80%; /* Maximum width of the expanded image */
+    max-height: 90vh; /* Maximum height of the expanded image */
+    border-radius: 10px;
+}
+
+.CLOSE_BUTTON {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    color: var(--whtShade2);
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.CLOSE_BUTTON:hover,
+.CLOSE_BUTTON:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}

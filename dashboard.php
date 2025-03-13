@@ -5,6 +5,21 @@ if (!isset($_SESSION['businessname'])) {
     header("Location: dashboard.php");
     exit();
 }
+
+$status = "Pending"; // This could be retrieved from a database
+
+// Conditional class or ID based on status
+if ($status == "Pending") {
+    $statusClass = "STATUS_PENDING";
+    $statusText = "Pending";
+} elseif ($status == "Accepted") {
+    $statusClass = "STATUS_ACCEPTED";
+    $statusText = "Accepted";
+} elseif ($status == "Rejected") {
+    $statusClass = "STATUS_REJECTED";
+    $statusText = "Rejected";
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -14,14 +29,14 @@ if (!isset($_SESSION['businessname'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | Vendi</title>
     <link rel="icon" href="assets/images/VendiBLK2_NoBG.png" type="image/icon type">
-    <link rel="stylesheet" href="dashboard.css">
-    <link rel="stylesheet" href="db_notifications.css">
+    <link rel="stylesheet" href="bookings.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="dashboard.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
 
-    <div class="CONTAINER">
+    <div class="NAV_CONTAINER">
         <!-- Navigation Bar -->
         <div class="NAVIGATION_BAR">
             <div class="LOGO">
@@ -34,13 +49,13 @@ if (!isset($_SESSION['businessname'])) {
             </div>
 
             <div class="MENU_HEADER">MANAGEMENT</div>
-                    <a href="#DASHBOARD" class="NAV_ACTIVE"><i class="fa fa-fw fa-chart-bar"></i><span>Dashboard</span></a>
-                    <a href="db_listings.html"><i class="fa fa-fw fa-store"></i> Listings</a>
-                    <a href="db_bookings.html"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
-                    <a href="db_reports.html"><i class="fa fa-fw fa-chart-line"></i> Reports</a>
-                    <a href="db_customers.html"><i class="fa fa-fw fa-users"></i> Customers</a>
-            <div class="MENU_HEADER">PREFERENCES</div>
-                    <a href="db_profile.html"><i class="fa fa-fw fa-user"></i> Profile</a>
+                    <a href="#DASHBOARD" class="NAV_ACTIVE"><i class="	fas fa-stream"></i><span>Dashboard</span></a>
+                    <a href="listings.html"><i class="fa fa-fw fa-store"></i> Listings</a>
+                    <a href="bookings.php"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
+                    <a href="reports.htm"><i class="fas fa-chart-pie"></i> Reports</a>
+                    <a href="customers.htm"><i class="fa fa-fw fa-users"></i> Customers</a>
+            <div class="MENU_HEADER">SETTINGS</div>
+                    <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
                     <a href="dsb_help.html"><i class="fa fa-fw fa-question-circle"></i> Help</a>
                     <a href="logout.php" class="LOGOUT"><i class="fa fa-fw fa-sign-out-alt"></i> Log Out</a>
         </div>
@@ -49,12 +64,12 @@ if (!isset($_SESSION['businessname'])) {
         <div class="DASHBOARD" id="DASHBOARD">
             <div class="UPPER">
                 <div class="LEFT_UPPER">
-                    <h1 class="BUSINESS_NAME">Welcome, <?php echo htmlspecialchars($_SESSION['businessname']); ?></h1>
+                    <h1 class="DASHBOARD_TITLE">Dashboard</h1>
                 </div>
 
                 <div class="RIGHT_UPPER">
                     <div class="SEARCH_BAR">
-                        <input type="text" placeholder="Search...">
+                        <input type="text" placeholder="Search here...">
                         <button type="submit"><i class="fas fa-search"></i></button>
                     </div>
                     <div class="ACCOUNT">
@@ -62,19 +77,18 @@ if (!isset($_SESSION['businessname'])) {
                             <i class="fas fa-bell"></i>
                             <span class="NOTIFICATION_DOT"></span> <!-- Red dot for notifications -->
                         </div>
-                        <i class="fas fa-question-circle"></i> <!-- Help Icon -->
                         <a href="db_profile.html">
                             <img src="assets/images/tiara.png" alt="Profile Picture" class="PROFILE_PIC">
-                        </a>                  
+                        </a>    
+                        <span class="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['businessname']); ?></span>             
                     </div>
                 </div>
-                
             </div>
 
             <div class="CONTENT">
                 <div class="BOX PENDING">
                     <h3>Pending</h3>
-                    <p>2</p>
+                    <p>2,232</p>
                     <i class="far fa-clock"></i> <!-- Icon Pending -->
                 </div>
                 <div class="BOX ACTIVE">
@@ -95,107 +109,91 @@ if (!isset($_SESSION['businessname'])) {
             </div>
 
             <!-- Schedule Manager -->
-            <div class="CALENDAR_TODO_CONTAINER">
-                <!-- Calendar -->
-                <div class="CALENDAR">
-                    <div class="CALENDAR_PLACEHOLDER">
-                        <div class="WRAPPER">
-                            <header>
-                                <p class="CURRENT_DATE"></p>
-                                <div class="ICONS">
-                                    <span id="PREV" class="ICON_CLASS"><i class="fas fa-arrow-alt-circle-left"></i></span>
-                                    <span id="NEXT" class="ICON_CLASS"><i class="fas fa-arrow-alt-circle-right"></i></span>
+            <div class="MAIN_CONTAINER">
+                <div class="LEFT_MAIN">
+                    <div class="BOOKING_TABLE">
+                        <h2>Booking Summary</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Reference ID</th>
+                                    <th>Client Name</th>
+                                    <th>Client Email</th>
+                                    <th>Event Date</th>
+                                    <th>Event Location</th>
+                                    <th>Package</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Example -->
+                                <tr>
+                                    <td class="REFERENCE_ID">#12345</td>
+                                    <td class="CLIENT_NAME">John Marston</td>
+                                    <td class="CLIENT_EMAIL">marston@gmail.com</td>
+                                    <td class="EVENT_DATE">11/1/25<br> <small>4:00 PM</small> </td>
+                                    <td class="EVENT_LOCATION">Dagupan Convention Center</td>
+                                    <td class="PACKAGE">Basic Package</td>
+                                    <td class="<?php echo $statusClass; ?>"><?php echo $statusText; ?></td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+
+                <div class="RIGHT_MAIN">
+                    <!-- Calendar -->
+                    <div class="CALENDAR">
+                        <div class="CALENDAR_PLACEHOLDER">
+                            <div class="WRAPPER">
+                                <header>
+                                    <div class="ICONS">
+                                        <span id="PREV" class="ICON_CLASS"><i class="fa fa-caret-left"></i></span>
+                                        <p class="CURRENT_DATE"></p>
+                                        <span id="NEXT" class="ICON_CLASS"><i class="fa fa-caret-right"></i></span>
+                                    </div>
+                                </header>
+                                <div class="CALENDAR_BODY">
+                                    <ul class="WEEKS">
+                                        <li>Sun</li>
+                                        <li>Mon</li>
+                                        <li>Tue</li>
+                                        <li>Wed</li>
+                                        <li>Thu</li>
+                                        <li>Fri</li>
+                                        <li>Sat</li>
+                                    </ul>
+                                    <ul class="DAYS"></ul>
                                 </div>
-                            </header>
-                            <div class="CALENDAR_BODY">
-                                <ul class="WEEKS">
-                                    <li>Sun</li>
-                                    <li>Mon</li>
-                                    <li>Tue</li>
-                                    <li>Wed</li>
-                                    <li>Thu</li>
-                                    <li>Fri</li>
-                                    <li>Sat</li>
-                                </ul>
-                                <ul class="DAYS"></ul>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- To-Do List -->
-                <div class="TODO_LIST">
-                    <div class="TODO_HEADER">
-                        <h2>To-Do List</h2>
-                        <span class="ADD_TASK" id="ADD_TASK"><i class="fas fa-plus"></i></span>
+                    
+                    <!-- To-Do List -->
+                    <div class="TODO_LIST">
+                        <div class="TODO_HEADER">
+                            <h2>To-Do List</h2>
+                            <span class="ADD_TASK" id="ADD_TASK"><i class="fas fa-plus"></i></span>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Task</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="TODO_BODY">
+                                <!-- Texts are auto added here -->
+                            </tbody>
+                        </table>
                     </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Task</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="TODO_BODY">
-                            <!-- Texts are auto added here -->
-                        </tbody>
-                    </table>
                 </div>
 
-            </div>
-        
-            <div class="BOOKING_TABLE">
-    <h2>Booking Summary</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Reference ID</th>
-                <th>Event Date <i class="fa fa-filter"></i></th>
-                <th>Client Name</th>
-                <th>Client Email</th>
-                <th>Mobile Number</th>
-                <th>Status</th>
-                <th>Created Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- <?php
-            // Check if bookings present
-            // if ($result->num_rows > 0) {
-            //     // Output data for each row
-            //     while ($row = $result->fetch_assoc()) {
-            //         echo "<tr>";
-            //         echo "<td class='REFERENCE_ID'>#" . htmlspecialchars($row['reference_id']) . "</td>";
-            //         echo "<td class='EVENT_DATE'>" . htmlspecialchars($row['event_date']) . "</td>";
-            //         echo "<td class='DURATION'>" . htmlspecialchars($row['duration']) . "</td>";
-            //         echo "<td class='CLIENT_NAME'>" . htmlspecialchars($row['client_name']) . "</td>";
-            //         echo "<td class='CLIENT_EMAIL'>" . htmlspecialchars($row['client_email']) . "</td>";
-            //         echo "<td class='STATUS' id='" . htmlspecialchars($row['status']) . "'>" . htmlspecialchars($row['status']) . "</td>";
-            //         echo "<td class='CREATED_DATE'>" . htmlspecialchars($row['created_date']) . "</td>";
-            //         echo "</tr>";
-            //     }
-            // } else {
-            //     // If no bookings, display message
-            //     echo "<tr><td colspan='7'>No bookings found.</td></tr>";
-            // }
-
-            // Close the database connection
-            // $conn->close();
-            ?> -->
-
-            <!-- Example Row -->
-            <tr>
-                <td class="REFERENCE_ID">#12345</td>
-                <td class="EVENT_DATE">11/1/25<br> <small>4:00 PM</small> </td>
-                <td class="CLIENT_NAME">John Marston</td>
-                <td class="CLIENT_EMAIL">marston@gmail.com</td>
-                <td class="MOBILE_NUMBER">09191290321</td>
-                <td class="STATUS" id="PENDING">Pending</td>
-                <td class="CREATED_DATE">10/29/25 <br> <small>12:00 PM</small></td>
-            </tr>
-        </tbody>
-    </table>
-</div>  
+            </div><!-- END | MAIN_CONTAINER -->
+            
+            
         </div>
     </div>
 
