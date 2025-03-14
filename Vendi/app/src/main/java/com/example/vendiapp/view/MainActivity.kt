@@ -17,7 +17,6 @@ import com.example.vendiapp.adapter.EventAdapter
 import com.example.vendiapp.viewmodel.EventViewModel
 import com.example.vendiapp.ProfileFragment
 import com.example.vendiapp.R
-import com.example.vendiapp.ScheduleFragment
 import com.example.vendiapp.adapter.ViewPagerAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
@@ -116,7 +115,10 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> restartMainActivity()
-                R.id.nav_schedule -> loadFragment(ScheduleFragment())
+                R.id.nav_schedule -> {
+                    val intent = Intent(this, MyScheduleActivity::class.java)
+                    startActivity(intent)
+                }
                 R.id.nav_profile -> loadFragment(ProfileFragment())
             }
             true

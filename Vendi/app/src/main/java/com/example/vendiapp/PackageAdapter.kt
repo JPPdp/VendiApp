@@ -19,7 +19,7 @@ class PackageAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PackageViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.package_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_package, parent, false)
         return PackageViewHolder(view)
     }
 
