@@ -5,6 +5,7 @@
     --blkShade1: #101010;
     --gryShade1: #b0b0b0;
     --gryShade2: #5E5E5E;
+    --gradient_White: linear-gradient(to bottom, #f7f9fa, #ffffff);
     --gradient_Horizontal: linear-gradient(to left, #d0008b, #3b0053);
     --gradient_Vertical: linear-gradient(to top, #d0008b, #0F0053);
     /*--gradient_Vertical: linear-gradient(to bottom, #D000BB, #0F0053);*/
@@ -169,7 +170,7 @@ html, body {
     padding: 10px;
     margin-top: 10px;
     border-radius: 10px;
-    background-color: var(--whtShade1);
+    background: var(--gradient_White);
     border: 2px solid var(--whtShade2);
     font-family: 'Inter_Regular';
     box-sizing: border-box;
@@ -196,7 +197,7 @@ html, body {
     padding: 10px 10px 10px 52px;
     margin-top: 10px;
     border-radius: 10px;
-    background-color: var(--whtShade1);
+    background: var(--gradient_White);
     border: 2px solid var(--whtShade2);
     font-family: 'Inter_Regular';
     box-sizing: border-box;
@@ -290,7 +291,7 @@ html, body {
     padding-right: 40px;
     margin-top: 10px;
     border-radius: 10px;
-    background-color: var(--whtShade1);
+    background: var(--gradient_White);
     border: 2px solid var(--whtShade2);
     font-family: 'Inter_Regular';
     font-size: 0.8rem;

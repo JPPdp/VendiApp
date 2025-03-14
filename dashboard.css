@@ -5,6 +5,7 @@
     --blkShade1: #101010;
     --gryShade1: #b0b0b0;
     --gryShade2: #5E5E5E;
+    --gradient_White: linear-gradient(to bottom, #f7f9fa, #ffffff);
     --gradient_Horizontal: linear-gradient(to left, #d0008b, #3b0053);
     --gradient_Vertical: linear-gradient(to top, #d0008b, #0F0053);
     /*--gradient_Vertical: linear-gradient(to bottom, #D000BB, #0F0053);*/
@@ -65,7 +66,7 @@ body{
 
 .NAV_CONTAINER{
     display: flex;
-    background: white;
+    background: var(--gradient_White);
 }
 
 .LOGO{
@@ -198,7 +199,7 @@ body{
 .DASHBOARD{
     flex: 1;
     padding: 20px;
-    background: white;
+    background: var(--gradient_White);
 }
 
 .UPPER{
@@ -342,7 +343,7 @@ body{
     flex: 1;
     padding: 20px;
     background-color: white;
-    border-radius: 10px 75px 10px 10px;
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
     text-align: left;
     transition: transform 0.5s ease-in-out;
@@ -363,6 +364,7 @@ body{
     color: var(--blkShade1);
     margin: 0;
     margin-left: 10px;
+    margin-bottom: 10px;
 }
 
 /* ICON STYLES */
@@ -388,7 +390,7 @@ body{
     box-shadow: 1px 1px 10px 5px rgba(247, 181, 0, 0.25);
 }
 
-.ACTIVE i{
+.SCHEDULED i{
     background: var(--gradient_Blue);
     padding: 20px;
     border-radius: 50%;
@@ -397,7 +399,7 @@ body{
     transition: box-shadow 0.2s ease-in-out; 
 }
 
-.ACTIVE i:hover{
+.SCHEDULED i:hover{
     box-shadow: 1px 1px 10px 5px rgba(0, 180, 247, 0.25);
 }
 
@@ -428,53 +430,51 @@ body{
 }
 
 /* ICONS LEFT LINE */
-.PENDING::before{
+.PENDING::before {
     content: '';
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
-    width: 10px;
-    height: 100%;
+    width: 100%;
+    height: 10px;
     background: var(--gradient_Yellow);
-    border-radius: 15px 0px 0px 15px;
+    border-radius: 0px 0px 15px 15px;
 }
 
-.ACTIVE::before{
+.SCHEDULED::before{
     content: '';
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
-    width: 10px;
-    height: 100%;
+    width: 100%;
+    height: 10px;
     background: var(--gradient_Blue);
-    border-radius: 15px 0px 0px 15px;
+    border-radius: 0px 0px 15px 15px;
 }
 
 .COMPLETED::before{
     content: '';
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
-    width: 10px;
-    height: 100%;
+    width: 100%;
+    height: 10px;
     background: var(--gradient_Green);
-    border-radius: 15px 0px 0px 15px;
+    border-radius: 0px 0px 15px 15px;
 }
 
 .CANCELLED::before{
     content: '';
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
-    width: 10px;
-    height: 100%;
+    width: 100%;
+    height: 10px;
     background: var(--gradient_Red);
-    border-radius: 15px 0px 0px 15px;
+    border-radius: 0px 0px 15px 15px;
 }
 
 
-
-/* CALENDAR & TODO */
 .MAIN_CONTAINER {
     display: flex;
     gap: 20px;
@@ -496,7 +496,8 @@ body{
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
-    max-height: 375px;
+    min-height: 378px;
+    max-height: 378px;
     margin-bottom: 20px;
 }
 
@@ -581,10 +582,13 @@ body{
 .CALENDAR_BODY .DAYS li {
     width: calc(100% / 7);
     text-align: center;
-    padding: 17.5px 0;
+    padding: 17px 0;
     color: var(--blkShade1);
     cursor: pointer;
     box-sizing: border-box;
+    border: 1px solid var(--whtShade1);
+    border-radius: 10px;
+    background: var(--gradient_White);
 }
 
 .CALENDAR_BODY .DAYS li.INACTIVE {
@@ -593,11 +597,9 @@ body{
 
 .CALENDAR_BODY .DAYS li.ACTIVE {
     background: var(--gradient_Vertical);
-    font-family: 'Inter_Bold';
     color: white;
-    border-radius: 50%; /* Circular background */
-    border: 2.5px solid white;
-    margin: 0 auto; /* Center horizontally */
+    border-radius: 10px;
+    margin: 0 auto; 
     box-shadow: 14px 17px 40px 4px rgba(112, 144, 176, 0.08);
 }
 

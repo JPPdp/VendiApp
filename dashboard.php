@@ -31,6 +31,7 @@ if ($status == "Pending") {
     <link rel="icon" href="assets/images/VendiBLK2_NoBG.png" type="image/icon type">
     <link rel="stylesheet" href="bookings.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="dashboard.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="notifications.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
@@ -56,7 +57,7 @@ if ($status == "Pending") {
                     <a href="customers.htm"><i class="fa fa-fw fa-users"></i> Customers</a>
             <div class="MENU_HEADER">SETTINGS</div>
                     <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
-                    <a href="dsb_help.html"><i class="fa fa-fw fa-question-circle"></i> Help</a>
+                    <a href="help.php"><i class="fa fa-fw fa-question-circle"></i> Help</a>
                     <a href="logout.php" class="LOGOUT"><i class="fa fa-fw fa-sign-out-alt"></i> Log Out</a>
         </div>
         
@@ -91,8 +92,8 @@ if ($status == "Pending") {
                     <p>2,232</p>
                     <i class="far fa-clock"></i> <!-- Icon Pending -->
                 </div>
-                <div class="BOX ACTIVE">
-                    <h3>Active</h3>
+                <div class="BOX SCHEDULED">
+                    <h3>Scheduled</h3>
                     <p>2</p>
                     <i class="far fa-check-circle"></i> <!-- Icon Active -->
                 </div>

@@ -208,7 +208,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <!-- Province Dropdown -->
                     <label for="PROVINCE">Province</label>
                     <select id="PROVINCE" name="PROVINCE" required>
-                        <option value="Pangasinan" selected>Pangasinan</option>
+                        <option value="" disabled selected>Select Province</option>
+                        <option value="Pangasinan">Pangasinan</option>
                     </select>
                 </div>
             </div>

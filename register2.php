@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php endif; ?>
 
         <div class="REGISTRATION_STEPS">
-            <div class="STEP">
+            <div class="STEP active">
                 <span>Account Information</span>
             </div>
             <div class="STEP active">
@@ -122,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <!-- Optional Back Link -->
             <div class="LOGIN">Back to Registration?</div>
             <div class="LOGIN_LINK">
-                <a href="1register.php">Go Back</a>
+                <a href="register1.php">Go Back</a>
             </div>
 
         </form>

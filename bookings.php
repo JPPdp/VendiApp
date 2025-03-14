@@ -54,7 +54,7 @@ if ($status == "Pending") {
                     <a href="customers.htm"><i class="fa fa-fw fa-users"></i> Customers</a>
             <div class="MENU_HEADER">SETTINGS</div>
                     <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
-                    <a href="dsb_help.html"><i class="fa fa-fw fa-question-circle"></i> Help</a>
+                    <a href="help.php"><i class="fa fa-fw fa-question-circle"></i> Help</a>
                     <a href="logout.php" class="LOGOUT"><i class="fa fa-fw fa-sign-out-alt"></i> Log Out</a>
         </div>
         
