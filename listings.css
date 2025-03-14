@@ -1,0 +1,25 @@
+
+.LISTINGS_CONTAINER {
+    display: flex;
+    gap: 20px; 
+    /*padding: 20px;*/
+    border-radius: 10px;
+    min-height: 500px;
+}
+
+#PACKAGE_NAME,
+#DESCRIPTION,
+#STARTING_PRICE,
+#CAPACTIY{
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    background: var(--gradient_White);
+    border: 2px solid var(--whtShade2);
+    font-family: 'Inter_Regular';
+    box-sizing: border-box;
+    font-size: 0.8rem;
+    color: var(--gryShade2);
+    cursor: not-allowed;
+}

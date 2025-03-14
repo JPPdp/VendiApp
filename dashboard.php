@@ -50,7 +50,7 @@ if ($status == "Pending") {
             </div>
 
             <div class="MENU_HEADER">MANAGEMENT</div>
-                    <a href="#DASHBOARD" class="NAV_ACTIVE"><i class="	fas fa-stream"></i><span>Dashboard</span></a>
+                    <a href="#DASHBOARD" class="NAV_ACTIVE"><i class="	fas fa-stream"></i><span> Dashboard</span></a>
                     <a href="listings.html"><i class="fa fa-fw fa-store"></i> Listings</a>
                     <a href="bookings.php"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
                     <a href="reports.htm"><i class="fas fa-chart-pie"></i> Reports</a>

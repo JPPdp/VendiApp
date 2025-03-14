@@ -47,9 +47,9 @@ if ($status == "Pending") {
             </div>
 
             <div class="MENU_HEADER">MANAGEMENT</div>
-                    <a href="dashboard.php"><i class="fas fa-stream"></i>Dashboard</a>
+                    <a href="dashboard.php"><i class="fas fa-stream"></i> Dashboard</a>
                     <a href="listings.html"><i class="fa fa-fw fa-store"></i> Listings</a>
-                    <a href="bookings.php"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
+                    <a href="bookings.php" class="NAV_ACTIVE"><i class="fa fa-fw fa-calendar"></i> <span> Bookings</span></a>
                     <a href="reports.htm"><i class="fas fa-chart-pie"></i> Reports</a>
                     <a href="customers.htm"><i class="fa fa-fw fa-users"></i> Customers</a>
             <div class="MENU_HEADER">SETTINGS</div>

@@ -353,7 +353,8 @@ label{
     font-family: 'Inter_Bold';
     font-size: 0.8rem;
     border-radius: 10px;
-    border: 1px solid var(--gryShade2);
+    border: 2px solid var(--whtShade2); 
+    background: var(--gradient_White);
     text-decoration: none;
     margin-top: 10px;
     cursor: pointer;
@@ -421,21 +422,21 @@ label{
 
 /* DELETE ACCOUNT BUTTON */
 #DELETE_ACCOUNT {
-    background: var(--whtShade1); 
+    background: var(--gradient_White);
     color: #c40202; 
-    border: 1px solid #c40202; 
+    border: 2px solid var(--whtShade2); 
 }
 
 #DELETE_ACCOUNT:hover {
     background: var(--gradient_Red); 
     color: white; 
-    border: 1px solid #c40202; 
+    border: 1px solid #c40202;
 }
 
 /* CHANGE PASSWORD BUTTON */
 #CHANGE_PASSWORD {
-    background: var(--whtShade1); 
+    background: var(--gradient_White);
     color: var(--gryShade2); 
-    border: 1px solid var(--gryShade2); 
+    border: 2px solid var(--whtShade2); 
 }
 
