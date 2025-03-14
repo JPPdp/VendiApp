@@ -1,4 +1,4 @@
-package com.example.vendiapp
+package com.example.vendiapp.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,10 +6,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.vendiapp.R
+import com.example.vendiapp.model.EventModel
 
 class EventAdapter(
-    private var itemList: List<Event>,
-    private val onItemClick: (Event) -> Unit // Click listener
+    private var itemList: List<EventModel>,
+    private val onItemClick: (EventModel) -> Unit // Click listener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -42,12 +44,12 @@ class EventAdapter(
 
     override fun getItemCount() = itemList.size
 
-    fun updateData(newList: List<Event>) {
+    fun updateEvents(newList: List<EventModel>) {
         itemList = newList
         notifyDataSetChanged()
     }
 
-    class CategoryViewHolder(itemView: View, private val onItemClick: (Event) -> Unit) :
+    class CategoryViewHolder(itemView: View, private val onItemClick: (EventModel) -> Unit) :
         RecyclerView.ViewHolder(itemView) {
 
         private val itemImage: ImageView = itemView.findViewById(R.id.ivEventImage)
@@ -56,21 +58,20 @@ class EventAdapter(
         private val price: TextView = itemView.findViewById(R.id.tvPrice)
         private val rating: TextView = itemView.findViewById(R.id.tvRating)
 
-        fun bind(item: Event) {
+        fun bind(item: EventModel) {
             itemName.text = item.title
             location.text = item.location
             price.text = item.price
             rating.text = item.rating.toString()
 
-            if (item.imageRes is Int) {
-                itemImage.setImageResource(item.imageRes as Int)
-            }
+            // Directly set the image resource (no need for casting or checking type)
+            itemImage.setImageResource(item.imageRes)
 
             itemView.setOnClickListener { onItemClick(item) }
         }
     }
 
-    class FeaturedItemViewHolder(itemView: View, private val onItemClick: (Event) -> Unit) :
+    class FeaturedItemViewHolder(itemView: View, private val onItemClick: (EventModel) -> Unit) :
         RecyclerView.ViewHolder(itemView) {
 
         private val itemImage: ImageView = itemView.findViewById(R.id.ivFeatureEventImage)
@@ -80,15 +81,14 @@ class EventAdapter(
         private val rating: TextView = itemView.findViewById(R.id.tvFeatureEventRating) // Added rating
         private val starIcon: ImageView = itemView.findViewById(R.id.ivFeatureStar) // Added star icon
 
-        fun bind(item: Event) {
+        fun bind(item: EventModel) {
             itemName.text = item.title
             location.text = item.location
             price.text = item.price
             rating.text = item.rating.toString()
 
-            if (item.imageRes is Int) {
-                itemImage.setImageResource(item.imageRes as Int)
-            }
+            // Directly set the image resource (no need for casting)
+            itemImage.setImageResource(item.imageRes)
 
             itemView.setOnClickListener { onItemClick(item) }
         }

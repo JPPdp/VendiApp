@@ -1,6 +1,6 @@
-package com.example.vendiapp
+package com.example.vendiapp.model
 
-data class Event(
+data class EventModel(
     val title: String,
     val subTitle: String,
     val description:String,
@@ -8,5 +8,6 @@ data class Event(
     val price: String,
     val rating: Double,
     val imageRes: Int,
-    val isFeatured: Boolean
+    val isFeatured: Boolean,
+    val category: String
 )

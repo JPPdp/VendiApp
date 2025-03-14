@@ -20,7 +20,7 @@ class StallDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view = inflater.inflate(R.layout.fragment_stall_details, container, false)
+        val view = inflater.inflate(R.layout.fragment_event_details, container, false)
 
         // Get references to UI elements
         val eventImage: ImageView = view.findViewById(R.id.ivEventImage)

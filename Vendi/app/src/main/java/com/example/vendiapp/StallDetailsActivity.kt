@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 class StallDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_stall_details)
+        setContentView(R.layout.activity_event_details)
 
         // Retrieve event details from intent
         val eventTitle = intent.getStringExtra("eventTitle") ?: "Unknown Title Event"

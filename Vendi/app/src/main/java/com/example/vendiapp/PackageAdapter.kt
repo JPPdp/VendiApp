@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class PackageAdapter(
-    private val packageList: List<PackageModel>
+    private var packageList: List<PackageModel>
 ) : RecyclerView.Adapter<PackageAdapter.PackageViewHolder>() {
 
     inner class PackageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -32,4 +32,10 @@ class PackageAdapter(
     }
 
     override fun getItemCount(): Int = packageList.size
+
+    // ✅ Add this function to update package list dynamically
+    fun updatePackages(newPackages: List<PackageModel>) {
+        packageList = newPackages
+        notifyDataSetChanged() // Refresh RecyclerView
+    }
 }
