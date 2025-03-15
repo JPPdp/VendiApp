@@ -1,9 +1,12 @@
-package com.example.vendiapp.view
+package com.example.vendiapp.view.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.vendiapp.R
+import com.example.vendiapp.view.main.home.HomeFragment
+import com.example.vendiapp.view.main.profile.ProfileFragment
+import com.example.vendiapp.view.main.schedule.MyScheduleFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {

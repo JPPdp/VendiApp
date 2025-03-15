@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/vendi_background"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".LogInFragment">
+    android:fitsSystemWindows="true"
+    tools:context=".view.auth.LogInFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <ImageView
             android:id="@+id/ivTitleDisplay"
@@ -147,7 +148,6 @@
             app:layout_constraintStart_toStartOf="@id/ll"
             app:layout_constraintEnd_toEndOf="@id/ll"
             app:layout_constraintTop_toBottomOf="@id/ll"/>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

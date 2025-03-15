@@ -1,4 +1,4 @@
-package com.example.vendiapp.view
+package com.example.vendiapp.view.main.schedule
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

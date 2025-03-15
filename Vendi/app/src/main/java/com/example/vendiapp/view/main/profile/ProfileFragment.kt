@@ -1,4 +1,4 @@
-package com.example.vendiapp.view
+package com.example.vendiapp.view.main.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,9 +17,18 @@ class ProfileFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         // Navigate to Account Info Fragment
-        val llAccountInfoNext = view.findViewById<LinearLayout>(R.id.llRedirectToAccountInfo)
-        llAccountInfoNext.setOnClickListener {
+        val llRedirectToAccountInfo = view.findViewById<LinearLayout>(R.id.llRedirectToAccountInfo)
+        llRedirectToAccountInfo.setOnClickListener {
             val fragment = AccountInfoFragment()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fgtContainer, fragment)
+                .addToBackStack(null) // Allows user to navigate back
+                .commit()
+        }
+
+        val llChangePasswordNext = view.findViewById<LinearLayout>(R.id.llChangePasswordNext)
+        llChangePasswordNext.setOnClickListener {
+            val fragment = ChangePasswordFragment()
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fgtContainer, fragment)
                 .addToBackStack(null) // Allows user to navigate back

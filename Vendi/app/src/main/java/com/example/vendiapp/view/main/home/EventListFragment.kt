@@ -1,4 +1,4 @@
-package com.example.vendiapp.view
+package com.example.vendiapp.view.main.home
 
 import android.content.Intent
 import android.os.Bundle
