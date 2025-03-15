@@ -1,12 +1,12 @@
 package com.example.vendiapp.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.fragment.app.Fragment
 import com.example.vendiapp.R
-
 
 class ProfileFragment : Fragment() {
 
@@ -14,8 +14,20 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
+
+        // Navigate to Account Info Fragment
+        val llAccountInfoNext = view.findViewById<LinearLayout>(R.id.llRedirectToAccountInfo)
+        llAccountInfoNext.setOnClickListener {
+            val fragment = AccountInfoFragment()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fgtContainer, fragment)
+                .addToBackStack(null) // Allows user to navigate back
+                .commit()
+        }
+
+        return view
+
     }
 
 }
