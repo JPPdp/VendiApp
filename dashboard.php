@@ -51,7 +51,7 @@ if ($status == "Pending") {
 
             <div class="MENU_HEADER">MANAGEMENT</div>
                     <a href="#DASHBOARD" class="NAV_ACTIVE"><i class="	fas fa-stream"></i><span> Dashboard</span></a>
-                    <a href="listings.html"><i class="fa fa-fw fa-store"></i> Listings</a>
+                    <a href="listings.php"><i class="fa fa-fw fa-store"></i> Listings</a>
                     <a href="bookings.php"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
                     <a href="reports.htm"><i class="fas fa-chart-pie"></i> Reports</a>
                     <a href="customers.htm"><i class="fa fa-fw fa-users"></i> Customers</a>
@@ -147,6 +147,8 @@ if ($status == "Pending") {
                 <div class="RIGHT_MAIN">
                     <!-- Calendar -->
                     <div class="CALENDAR">
+                        <h2>Calendar</h2>
+
                         <div class="CALENDAR_PLACEHOLDER">
                             <div class="WRAPPER">
                                 <header>

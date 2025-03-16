@@ -56,7 +56,7 @@
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
-    min-height: 500px;
+    min-height: 850px;
     max-height: 850px;
     overflow-y: auto;
 }
@@ -145,7 +145,8 @@
 
 .STATUS_PENDING {
     color: black;
-    background-color: red;
+    background: red;
+    font-size: 2rem;
 }
 
 .STATUS_ACCEPTED {

@@ -119,10 +119,11 @@
     min-height: 200px;
     padding: 10px;
     border-radius: 10px;
-    background: var(--whtShade1);
+    background: var(--gradient_White);
+    color: var(--blkShade1);
     font-family: 'Inter_Regular';
     font-size: 0.8rem;
-    border: 1px solid var(--whtShade1);
+    border: 2px solid var(--whtShade2);
     resize: none;
     outline: none;
     box-sizing: border-box;
@@ -268,7 +269,7 @@ label{
     margin: 0px;
 }
 
-/* Input Fields Readonly*/
+/* Input Fields Readonly */
 #businessname,
 #VENDOR_EMAIL,
 #VENDOR_MOBILE,
@@ -428,9 +429,9 @@ label{
 }
 
 #DELETE_ACCOUNT:hover {
-    background: var(--gradient_Red); 
-    color: white; 
-    border: 1px solid #c40202;
+    background: var(--gradient_White);
+    color: #c40202; 
+    border: 2px solid #c40202;
 }
 
 /* CHANGE PASSWORD BUTTON */

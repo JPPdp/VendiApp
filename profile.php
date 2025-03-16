@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="MENU_HEADER">MANAGEMENT</div>
             <a href="dashboard.php"><i class="fas fa-stream"></i> Dashboard</a>
-            <a href="listings.html"><i class="fa fa-fw fa-store"></i> Listings</a>
+            <a href="listings.php"><i class="fa fa-fw fa-store"></i> Listings</a>
             <a href="bookings.php"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
             <a href="reports.htm"><i class="fas fa-chart-pie"></i> Reports</a>
             <a href="customers.htm"><i class="fa fa-fw fa-users"></i> Customers</a>
@@ -114,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <!-- Right Profile Section -->
                 <div class="RIGHT_PROFILE">
                     <div class="RIGHT_PART">
-                    <h2>Vendor Profile</h2>
+                    <h2>Account Details</h2>
                         <!-- 1st Stack: Contact Information -->
                         <div class="STACK">
                             <h3>Account Information</h3>

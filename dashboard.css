@@ -111,7 +111,7 @@ body{
 
 .NAVIGATION_BAR{
     width: 250px;
-    height: 100vh;
+    min-height: 100vh;
     background: var(--gradient_Vertical);
     padding: 20px;
     box-shadow: 14px 17px 40px 4px rgba(112, 144, 176, 0.08);    
@@ -496,9 +496,15 @@ body{
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
-    min-height: 378px;
-    max-height: 378px;
+    max-height: 400px;
     margin-bottom: 20px;
+}
+
+.CALENDAR h2 {
+    font-size: 1rem;
+    font-family: 'Inter_Bold';
+    color: var(--blkShade1);
+    margin: 0;
 }
 
 .CALENDAR_PLACEHOLDER {
@@ -506,7 +512,7 @@ body{
     justify-content: center;
     align-items: center;
     border-radius: 20px;
-    margin: -25px -40px 0 -40px;
+    margin: -20px -40px 0 -40px;
 }
 
 .WRAPPER {
@@ -587,7 +593,6 @@ body{
     cursor: pointer;
     box-sizing: border-box;
     border: 1px solid var(--whtShade1);
-    border-radius: 10px;
     background: var(--gradient_White);
 }
 
@@ -598,7 +603,7 @@ body{
 .CALENDAR_BODY .DAYS li.ACTIVE {
     background: var(--gradient_Vertical);
     color: white;
-    border-radius: 10px;
+    border-radius: 50%;
     margin: 0 auto; 
     box-shadow: 14px 17px 40px 4px rgba(112, 144, 176, 0.08);
 }

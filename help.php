@@ -81,7 +81,7 @@ if (!isset($_SESSION['businessname'])) {
                     <label for="EMAIL">Email</label>
                     <input type="email" id="VENDOR_EMAIL" name="EMAIL" value="email@.email.com" readonly>
 
-                    <label for="MESSAGE">Message:</label>
+                    <label for="MESSAGE">Message</label>
                     <textarea id="MESSAGE" name="MESSAGE" rows="5" placeholder="Enter your message here..." required></textarea>
 
                     <button type="submit">Send Message</button>

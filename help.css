@@ -27,7 +27,7 @@
 
 #HELP_FORM label{
     margin-top: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
     font-family: 'Inter_SemiBold';
     font-size: 0.8rem;
     color: var(--blkShade1);
@@ -39,13 +39,15 @@
     min-height: 100px;
     padding: 10px;
     border-radius: 10px;
-    background: var(--whtShade1);
+    background: var(--gradient_White);
+    color: var(--blkShade1);
     font-family: 'Inter_Regular';
     font-size: 0.8rem;
-    border: 1px solid var(--whtShade1);
+    border: 2px solid var(--whtShade2);
     resize: none;
     outline: none;
     box-sizing: border-box;
+    margin-top: 10px;
     margin-bottom: 20px;
 }
 
