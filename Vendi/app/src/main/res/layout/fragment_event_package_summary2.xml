@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EventPackageSummaryFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".EventPackageSummary2Fragment">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -91,54 +91,29 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/llLocation"
-        android:layout_width="240dp"
+    <TextView
+        android:id="@+id/tvResponse"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/ll"
-        app:layout_constraintStart_toStartOf="parent">
+        android:textSize="32sp"
+        android:textColor="@color/black"
+        android:text="Booking Successful!"
+        android:textStyle="bold"
+        android:layout_margin="16dp"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@id/ll"
+        app:layout_constraintEnd_toEndOf="@id/ll"
+        app:layout_constraintStart_toStartOf="@id/ll"/>
 
-        <ImageView
-            android:id="@+id/ivIconLocation"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/icon_location_gradiant" />
-
-        <TextView
-            android:id="@+id/tvLocationText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="360 Arellano St., Pantal, Dagupan City, Pangasinan" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llTime"
-        android:layout_width="240dp"
+    <TextView
+        android:id="@+id/tvSubResponse"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="@id/llLocation"
-        app:layout_constraintTop_toBottomOf="@id/llLocation">
-
-        <ImageView
-            android:id="@+id/ivIconTime"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/icon_clock_gradiant" />
-
-        <TextView
-            android:id="@+id/ivTimeText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="10:30 AM - 11:00 PM" />
-
-    </LinearLayout>
+        android:text="Please wait for the vendor’s confirmation once online. You may leave the screen."
+        app:layout_constraintTop_toBottomOf="@id/tvResponse"
+        app:layout_constraintStart_toStartOf="@id/tvResponse"
+        app:layout_constraintEnd_toEndOf="@id/tvResponse"
+        android:textAlignment="center"/>
 
 
     <androidx.appcompat.widget.AppCompatButton
@@ -150,10 +125,9 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/llTime"
+        app:layout_constraintTop_toBottomOf="@id/tvSubResponse"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
