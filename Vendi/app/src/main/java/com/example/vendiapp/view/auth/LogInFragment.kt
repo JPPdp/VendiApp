@@ -25,8 +25,8 @@ class LogInFragment : Fragment() {
         val btnSignIn: Button = view.findViewById(R.id.btnSignIn)
         val btnSignUp: Button = view.findViewById(R.id.btnSignUp)
         val tvForgotPassword: TextView = view.findViewById(R.id.tvForgotPassword)
-        val etEmail: EditText = view.findViewById(R.id.etEmail)
-        val etPassword: EditText = view.findViewById(R.id.etPassword)
+      //  val etEmail: EditText = view.findViewById(R.id.etEmail)
+       // val etPassword: EditText = view.findViewById(R.id.etPassword)
 
         btnSignIn.setOnClickListener {
 //            val email = etEmail.text.toString()

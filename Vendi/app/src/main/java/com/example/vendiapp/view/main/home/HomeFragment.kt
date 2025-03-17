@@ -1,6 +1,5 @@
 package com.example.vendiapp.view.main.home
 
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,12 +10,14 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.vendiapp.R
 import com.example.vendiapp.adapter.EventAdapter
 import com.example.vendiapp.adapter.ViewPagerAdapter
+import com.example.vendiapp.model.EventModel
 import com.example.vendiapp.viewmodel.EventViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -50,16 +51,7 @@ class HomeFragment : Fragment() {
     private fun setupFeaturedEventsRecyclerView(recyclerView: RecyclerView) {
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         featuredAdapter = EventAdapter(emptyList()) { event ->
-            val intent = Intent(requireContext(), EventDetailsActivity::class.java).apply {
-                putExtra("eventTitle", event.title)
-                putExtra("eventSubTitle", event.subTitle)
-                putExtra("eventDescription", event.description)
-                putExtra("eventImage", event.imageRes)
-                putExtra("eventLocation", event.location)
-                putExtra("eventRating", event.rating)
-                putExtra("eventPrice", event.price)
-            }
-            startActivity(intent)
+            openEventDetails(event) // Use fragment instead of activity
         }
         recyclerView.adapter = featuredAdapter
 
@@ -127,6 +119,14 @@ class HomeFragment : Fragment() {
 
             tabText.setTextColor(ContextCompat.getColor(requireContext(), textColor))
             tabIcon.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), iconColor))
+        }
+    }
+
+    // Open EventDetailsFragment instead of Activity
+    private fun openEventDetails(event: EventModel) {
+        parentFragmentManager.commit {
+            replace(R.id.fgtContainer, EventDetailsFragment.newInstance(event))
+            addToBackStack(null) // Enables back navigation
         }
     }
 }

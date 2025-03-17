@@ -1,11 +1,11 @@
 package com.example.vendiapp.view.main.home
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -58,18 +58,12 @@ class EventListFragment : Fragment() {
         return view
     }
 
-    // Navigate to StallDetailsActivity with event data
+    // Navigate to EventDetailsFragment instead of EventDetailsActivity
     private fun navigateToDetails(event: EventModel) {
-        val intent = Intent(requireContext(), EventDetailsActivity::class.java).apply {
-            putExtra("eventTitle", event.title)
-            putExtra("eventSubTitle", event.subTitle)
-            putExtra("eventDescription", event.description)
-            putExtra("eventLocation", event.location)
-            putExtra("eventPrice", event.price)
-            putExtra("eventRating", event.rating)
-            putExtra("eventImage", event.imageRes)
+        parentFragmentManager.commit {
+            replace(R.id.fgtContainer, EventDetailsFragment.newInstance(event))
+            addToBackStack(null) // Allows going back to the event list
         }
-        startActivity(intent)
     }
 
     // Factory method to create fragment instance with category
@@ -83,3 +77,4 @@ class EventListFragment : Fragment() {
         }
     }
 }
+

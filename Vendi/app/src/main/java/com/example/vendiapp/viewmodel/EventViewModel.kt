@@ -12,7 +12,7 @@ class EventViewModel : ViewModel() {
     private val eventRepository = EventRepository()
 
     private val _events = MutableLiveData<List<EventModel>>()
-    val events: LiveData<List<EventModel>> get() = _events
+    private val events: LiveData<List<EventModel>> get() = _events
 
     private val _nonFeaturedEvents = MutableLiveData<List<EventModel>>()
     val nonFeaturedEvents: LiveData<List<EventModel>> get() = _nonFeaturedEvents

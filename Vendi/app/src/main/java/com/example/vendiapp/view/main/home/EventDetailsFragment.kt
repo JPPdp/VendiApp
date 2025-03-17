@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vendiapp.PackageAdapter
@@ -16,7 +17,8 @@ import com.example.vendiapp.model.EventModel
 import com.example.vendiapp.viewmodel.EventDetailsViewModel
 
 class EventDetailsFragment : Fragment() {
-    private val viewModel: EventDetailsViewModel by activityViewModels()
+
+    private val viewModel: EventDetailsViewModel by viewModels()
     private lateinit var packageAdapter: PackageAdapter
 
     override fun onCreateView(
@@ -38,9 +40,7 @@ class EventDetailsFragment : Fragment() {
         rvEventPackageDetails.adapter = packageAdapter
 
         // Load event details from arguments if available
-        arguments?.let { bundle ->
-            viewModel.loadEventFromBundle(bundle)
-        }
+        arguments?.let { bundle -> viewModel.loadEventFromBundle(bundle) }
 
         // Observe ViewModel for event data
         viewModel.event.observe(viewLifecycleOwner) { event ->
@@ -60,25 +60,29 @@ class EventDetailsFragment : Fragment() {
             packageAdapter.updatePackages(packages)
         }
 
+        val llBack = view.findViewById<LinearLayout>(R.id.llBack)
+        llBack.setOnClickListener {
+            parentFragmentManager.popBackStack() // Go back to the previous fragment
+        }
+
         return view
     }
 
     companion object {
         fun newInstance(event: EventModel): EventDetailsFragment {
-            val fragment = EventDetailsFragment()
-            val args = Bundle().apply {
-                putString("eventTitle", event.title)
-                putString("eventSubTitle", event.subTitle)
-                putString("eventDescription", event.description)
-                putString("eventLocation", event.location)
-                putString("eventPrice", event.price)
-                putDouble("eventRating", event.rating)
-                putInt("eventImage", event.imageRes)
-                putBoolean("isFeatured", event.isFeatured)
-                putString("category", event.category)
+            return EventDetailsFragment().apply {
+                arguments = Bundle().apply {
+                    putString("eventTitle", event.title)
+                    putString("eventSubTitle", event.subTitle)
+                    putString("eventDescription", event.description)
+                    putString("eventLocation", event.location)
+                    putString("eventPrice", event.price)
+                    putDouble("eventRating", event.rating)
+                    putInt("eventImage", event.imageRes)
+                    putBoolean("isFeatured", event.isFeatured)
+                    putString("category", event.category)
+                }
             }
-            fragment.arguments = args
-            return fragment
         }
     }
 }
