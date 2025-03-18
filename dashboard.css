@@ -16,38 +16,14 @@
 }
 
 /* Font Families */
-@font-face {
-    font-family: 'Machinery';
-    src: url(assets/fonts/machinery_script/MachineryScript_PERSONAL_USE_ONLY.otf);
-  }
-@font-face {
-    font-family: 'Inter_Regular';
-    src: url(assets/fonts/Inter-font/Inter-Regular.otf);
-}
-@font-face {
-    font-family: 'Inter_Medium';
-    src: url(assets/fonts/Inter-font/Inter-Medium.otf);
-}
-@font-face {
-    font-family: 'Inter_SemiBold';
-    src: url(assets/fonts/Inter-font/Inter-SemiBold.otf);
-}
-@font-face {
-    font-family: 'Inter_SemiBoldItalic';
-    src: url(assets/fonts/Inter-font/Inter-SemiBoldItalic.otf);
-}
-@font-face {
-    font-family: 'Inter_Bold';
-    src: url(assets/fonts/Inter-font/Inter-Bold.otf);
-}
-@font-face {
-    font-family: 'Inter_ExtraBold';
-    src: url(assets/fonts/Inter-font/Inter-ExtraBold.otf);
-}
-@font-face {
-    font-family: 'Inter_Black';
-    src: url(assets/fonts/Inter-font/Inter-Black.otf);
-}
+@font-face {font-family: 'Machinery'; src: url(assets/fonts/machinery_script/MachineryScript_PERSONAL_USE_ONLY.otf);}
+@font-face { font-family: 'Inter_Regular'; src: url(assets/fonts/Inter-font/Inter-Regular.otf);}
+@font-face { font-family: 'Inter_Medium'; src: url(assets/fonts/Inter-font/Inter-Medium.otf);}
+@font-face {font-family: 'Inter_SemiBold'; src: url(assets/fonts/Inter-font/Inter-SemiBold.otf);}
+@font-face {font-family: 'Inter_SemiBoldItalic'; src: url(assets/fonts/Inter-font/Inter-SemiBoldItalic.otf);}
+@font-face {font-family: 'Inter_Bold'; src: url(assets/fonts/Inter-font/Inter-Bold.otf);}
+@font-face {font-family: 'Inter_ExtraBold'; src: url(assets/fonts/Inter-font/Inter-ExtraBold.otf);}
+@font-face {font-family: 'Inter_Black'; src: url(assets/fonts/Inter-font/Inter-Black.otf);}
 
 html,
 body{
@@ -488,7 +464,7 @@ body{
 }
 
 .RIGHT_MAIN {
-    flex: 25%;
+    flex: 24%;
 }
 
 .CALENDAR {
@@ -505,6 +481,7 @@ body{
     font-family: 'Inter_Bold';
     color: var(--blkShade1);
     margin: 0;
+    padding-bottom: 10px;
 }
 
 .CALENDAR_PLACEHOLDER {
@@ -619,7 +596,7 @@ body{
     min-height: 375px;
     max-height: 375px;
     padding: 20px;
-    border-radius: 20px;
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
     overflow-y: auto;
 }
@@ -699,4 +676,81 @@ body{
     width: 80%; 
     word-wrap: break-word; 
     white-space: normal; /* Text wrap */
+}
+
+/* Package Overview Section */
+.PACKAGE_OVERVIEW {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    min-height: 450px;
+    max-height: 450px;
+    overflow-y: auto;
+}
+
+.PACKAGE_OVERVIEW h2 {
+    font-size: 1rem;
+    font-family: 'Inter_Bold';
+    color: var(--blkShade1);
+    margin: 0;
+    padding-bottom: 10px;
+}
+
+.PACKAGE_OVERVIEW table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.PACKAGE_OVERVIEW th,
+.PACKAGE_OVERVIEW td {
+    padding: 10px;
+    text-align: left;
+    font-size: 0.8rem;
+    font-family: 'Inter_Regular';
+    color: var(--blkShade1);
+}
+
+.PACKAGE_OVERVIEW th {
+    color: var();
+    font-family: 'Inter_Bold';
+    text-align: center;
+    border-bottom: 1px solid var(--gryShade1);
+}
+
+.PACKAGE_OVERVIEW td {
+    border-bottom: 1px solid var(--whtShade2);
+    text-align: center;
+}
+
+.PACKAGE_OVERVIEW td:first-child {
+    width: 100px;
+}
+
+.PACKAGE_OVERVIEW .PACKAGE_IMAGE img {
+    width: 75px;
+    height: 50px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* No Data Message */
+.NO_DATA {
+    text-align: center;
+    padding: 50px;
+    color: var(--gryShade1);
+    font-family: 'Inter_Medium';
+    font-size: 1rem;
+}
+
+.NO_DATA i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: var(--gryShade1);
+}
+
+.NO_DATA p {
+    margin: 0;
 }

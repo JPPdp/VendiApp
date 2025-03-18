@@ -6,7 +6,7 @@ if (!isset($_SESSION['businessname'])) {
     exit();
 }
 
-$status = "Pending"; // This could be retrieved from a database
+$status = "Pending"; // retrieve from a database
 
 // Conditional class or ID based on status
 if ($status == "Pending") {
@@ -112,6 +112,41 @@ if ($status == "Pending") {
             <!-- Schedule Manager -->
             <div class="MAIN_CONTAINER">
                 <div class="LEFT_MAIN">
+                    <!-- Package Overview Section -->
+                    <div class="PACKAGE_OVERVIEW">
+                        <h2>Package Overview</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Package Image</th>
+                                    <th>Package Name</th>
+                                    <th>Price</th>
+                                    <th>Capacity</th>
+                                    <th>Times Booked</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Example Row (Replace with PHP loop to fetch data from the database) -->
+                                <tr>
+                                    <!-- Package Image -->
+                                    <td class="PACKAGE_IMAGE">
+                                        <img src="assets/images/2srevadilla.jpg" alt="Package 1">
+                                    </td>
+                                    <!-- Package Name -->
+                                    <td class="PACKAGE_NAME">Basic Package</td>
+                                    <!-- Package Price -->
+                                    <td class="PACKAGE_PRICE">₱5,000</td>
+                                    <!-- Package Capacity -->
+                                    <td class="PACKAGE_CAPACITY">50 Guests</td>
+                                    <!-- Times Booked -->
+                                    <td class="TIMES_BOOKED">12</td>
+                                </tr>
+                                <!-- Add more rows dynamically using PHP -->
+                            </tbody>   
+                        </table>
+                    </div>
+
+                    <!-- Bookings Section -->
                     <div class="BOOKING_TABLE">
                         <h2>Booking Summary</h2>
                         <table>

@@ -123,3 +123,4 @@ ADD_TASK.addEventListener("click", () => {
         addTask(taskText);
     }
 });
+

@@ -24,14 +24,13 @@
 @font-face {font-family: 'Inter_ExtraBold'; src: url(assets/fonts/Inter-font/Inter-ExtraBold.otf);}
 @font-face {font-family: 'Inter_Black'; src: url(assets/fonts/Inter-font/Inter-Black.otf);}
 
-
 .LISTINGS_CONTAINER {
     display: flex;
     flex-direction: column;
     background: white;
     padding: 20px;
     border-radius: 50px;
-    min-height: 10px;
+    height: 100%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
     overflow-y: auto;
 }
@@ -87,7 +86,7 @@
 
 /* Left Section of Each Package */
 .LEFT_PART {
-    flex: 30%; 
+    flex: 20%; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -95,8 +94,8 @@
 
 .PACKAGE_THUMBNAIL img {
     width: 100%;
-    max-width: 350px;
-    max-height: 250px;
+    max-width: 300px;
+    max-height: 200px;
     object-fit: cover;
     border-radius: 5px;
 }
@@ -141,7 +140,7 @@
     background: var(--gradient_White);
     border: 2px solid var(--whtShade2);
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
     min-height: 75px;
     cursor: not-allowed;
 }
@@ -222,9 +221,12 @@
 .PACKAGE_ACTIONS #PACKAGE_DELETE:hover {
     color: white;
     background: var(--gradient_Red);
+    
 }
 
 .PACKAGE_DETAIL{
+    display: flex;
+    justify-content: space-between;
     width: 100%;
     padding: 10px;
     padding-top: 0;
@@ -242,6 +244,7 @@
 
 .PACKAGE_DETAIL i {
     margin-right: 5px;
+    color: var(--gryShade2); /* Using a color from the defined palette for consistency */
 }
 
 /*PARTNER THINGS*/

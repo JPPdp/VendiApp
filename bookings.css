@@ -15,38 +15,14 @@
 }
 
 /* Font Families */
-@font-face {
-    font-family: 'Machinery';
-    src: url(assets/fonts/machinery_script/MachineryScript_PERSONAL_USE_ONLY.otf);
-  }
-@font-face {
-    font-family: 'Inter_Regular';
-    src: url(assets/fonts/Inter-font/Inter-Regular.otf);
-}
-@font-face {
-    font-family: 'Inter_Medium';
-    src: url(assets/fonts/Inter-font/Inter-Medium.otf);
-}
-@font-face {
-    font-family: 'Inter_SemiBold';
-    src: url(assets/fonts/Inter-font/Inter-SemiBold.otf);
-}
-@font-face {
-    font-family: 'Inter_SemiBoldItalic';
-    src: url(assets/fonts/Inter-font/Inter-SemiBoldItalic.otf);
-}
-@font-face {
-    font-family: 'Inter_Bold';
-    src: url(assets/fonts/Inter-font/Inter-Bold.otf);
-}
-@font-face {
-    font-family: 'Inter_ExtraBold';
-    src: url(assets/fonts/Inter-font/Inter-ExtraBold.otf);
-}
-@font-face {
-    font-family: 'Inter_Black';
-    src: url(assets/fonts/Inter-font/Inter-Black.otf);
-}
+@font-face {font-family: 'Machinery'; src: url(assets/fonts/machinery_script/MachineryScript_PERSONAL_USE_ONLY.otf);}
+@font-face { font-family: 'Inter_Regular'; src: url(assets/fonts/Inter-font/Inter-Regular.otf);}
+@font-face { font-family: 'Inter_Medium'; src: url(assets/fonts/Inter-font/Inter-Medium.otf);}
+@font-face {font-family: 'Inter_SemiBold'; src: url(assets/fonts/Inter-font/Inter-SemiBold.otf);}
+@font-face {font-family: 'Inter_SemiBoldItalic'; src: url(assets/fonts/Inter-font/Inter-SemiBoldItalic.otf);}
+@font-face {font-family: 'Inter_Bold'; src: url(assets/fonts/Inter-font/Inter-Bold.otf);}
+@font-face {font-family: 'Inter_ExtraBold'; src: url(assets/fonts/Inter-font/Inter-ExtraBold.otf);}
+@font-face {font-family: 'Inter_Black'; src: url(assets/fonts/Inter-font/Inter-Black.otf);}
 
 /* BOOKING TABLE */
 .BOOKING_TABLE {
@@ -60,6 +36,7 @@
     max-height: 850px;
     overflow-y: auto;
 }
+
 
 .BOOKING_TABLE table {
     border-collapse: collapse; 

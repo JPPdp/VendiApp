@@ -32,7 +32,7 @@ if (!isset($_SESSION['businessname'])) {
             </div>
             <div class="MENU_HEADER">MANAGEMENT</div>
             <a href="dashboard.php"><i class="fas fa-stream"></i> Dashboard</a>
-            <a href="listings.html" class="NAV_ACTIVE"><i class="fa fa-fw fa-store"></i><span> Listings</span></a>
+            <a href="listings.php" class="NAV_ACTIVE"><i class="fa fa-fw fa-store"></i><span> Listings</span></a>
             <a href="bookings.php"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
             <a href="reports.htm"><i class="fas fa-chart-pie"></i> Reports</a>
             <a href="customers.htm"><i class="fa fa-fw fa-users"></i> Customers</a>
@@ -71,7 +71,6 @@ if (!isset($_SESSION['businessname'])) {
                     <h2>Package Management</h2>
                         <a href="listings_add_package.php" id="ADD_PACKAGE"><i class="fas fa-plus"></i> Add Package</a>
                 </header>
-            </div>
 
                 <!-- Example Package -->
                 <div class="PACKAGE">
@@ -106,20 +105,20 @@ if (!isset($_SESSION['businessname'])) {
                         <div class="BESIDE_FIELDS">
                             <div class="BESIDE_FIELD">
                                 <div class="PACKAGE_DETAIL">
-                                    <h3 id="label">Starting Price</h3>
-                                    <p id="STARTING_PRICE"><i class="fas fa-tag"></i> ₱<?php echo "1,299" ?></p>
+                                    <h3 id="label"><i class="fas fa-tag"></i>Starting Price</h3>
+                                    <p id="STARTING_PRICE"> ₱<?php echo "1,299" ?></p>
                                 </div>
                             </div>
                             <div class="BESIDE_FIELD">
                                 <div class="PACKAGE_DETAIL">
-                                    <h3 id="label">Capacity</h3>
-                                    <p id="CAPACITY"><i class="fas fa-users"></i> Good for <?php echo "50" ?> pax</p>
+                                    <h3 id="label"><i class="fas fa-users"></i>Capacity</h3>
+                                    <p id="CAPACITY"> Good for <?php echo "50" ?> pax</p>
                                 </div>
                             </div>
                             <div class="BESIDE_FIELD">
                                 <div class="PACKAGE_DETAIL">
-                                    <h3 id="label">Date Created</h3>
-                                    <p id="DATE_CREATED"><i class="fas fa-calendar-alt"></i> <?php echo "March 17, 2025" ?></p>
+                                    <h3 id="label"><i class="fas fa-calendar-alt"></i>Date Created</h3>
+                                    <p id="DATE_CREATED"> <?php echo "March 17, 2025" ?></p>
                                 </div>
                             </div>
                         </div>
@@ -130,6 +129,8 @@ if (!isset($_SESSION['businessname'])) {
                         </div>
                     </div>
                 </div>
+
+            </div>
 
 
 

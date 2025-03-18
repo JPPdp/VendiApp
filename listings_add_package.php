@@ -79,7 +79,7 @@ if (!isset($_SESSION['businessname'])) {
                         <form class="PACKAGE_FORM" action="submit_package.php" method="POST" enctype="multipart/form-data" >
                                 <!-- Package Name -->
                                 <div class="FORM_GROUP">
-                                    <label for="PACKAGE_NAME">Package Name</label>
+                                    <label for="PACKAGE_NAME"><i class="fas fa-box"></i> Package Name</label>
                                     <input type="text" id="PACKAGE_NAME" name="PACKAGE_NAME" placeholder="Enter package name" required>
                                 </div>
 
@@ -87,7 +87,7 @@ if (!isset($_SESSION['businessname'])) {
                                     <div class="BESIDE_FIELD">
                                         <!-- Package Description -->
                                         <div class="FORM_GROUP">
-                                            <label for="PACKAGE_DESCRIPTION">Description</label>
+                                            <label for="PACKAGE_DESCRIPTION"><i class="fas fa-info-circle"></i> Description</label>
                                             <textarea id="PACKAGE_DESCRIPTION" name="PACKAGE_DESCRIPTION" rows="4" placeholder="Enter package description" required></textarea>
                                         </div>
                                     </div>
@@ -95,18 +95,36 @@ if (!isset($_SESSION['businessname'])) {
                                     <div class="BESIDE_FIELD">
                                         <!-- Package Features -->
                                         <div class="FORM_GROUP">
-                                            <label>Key Features</label>
-                                                <div id="PACKAGE_FEATURES">
-                                                    <div class="FEATURE_ITEM">
-                                                        <input type="text" name="feature1" placeholder="Feature 1" required>
-                                                    </div>
-                                                    <div class="FEATURE_ITEM">
-                                                        <input type="text" name="feature2" placeholder="Feature 2" required>
-                                                    </div>
-                                                    <div class="FEATURE_ITEM">
-                                                        <input type="text" name="feature3" placeholder="Feature 3" required>
-                                                    </div>
+                                            <label><i class="fas fa-list"></i> Inclusions</label>
+                                            <div id="PACKAGE_INCLUSIONS">
+                                                <div class="INCLUSION_ITEM">
+                                                    <input type="text" name="inclusion1" placeholder="Inclusion 1" required>
                                                 </div>
+                                                <div class="INCLUSION_ITEM">
+                                                    <input type="text" name="inclusion2" placeholder="Inclusion 2" required>
+                                                </div>
+                                                <div class="INCLUSION_ITEM">
+                                                    <input type="text" name="inclusion3" placeholder="Inclusion 3" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="BESIDE_FIELDS">
+                                    <div class="BESIDE_FIELD">
+                                        <!-- Starting Price -->
+                                        <div class="FORM_GROUP">
+                                            <label for="STARTING_PRICE"><i class="fas fa-tag"></i> Starting Price</label>
+                                            <input type="number" id="STARTING_PRICE" name="STARTING_PRICE" placeholder="Enter starting price" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="BESIDE_FIELD">
+                                        <!-- Capacity -->
+                                        <div class="FORM_GROUP">
+                                            <label for="CAPACITY"><i class="fas fa-users"></i> Capacity</label>
+                                            <input type="number" id="CAPACITY" name="CAPACITY" placeholder="Enter capacity (e.g., 50)" required>
                                         </div>
                                     </div>
                                 </div>
@@ -115,20 +133,17 @@ if (!isset($_SESSION['businessname'])) {
                         <div class="RIGHT_MAIN">
                             <!-- Package Thumbnail -->
                             <div class="FORM_GROUP">
-                                <label for="PACKAGE_THUMBNAIL">Thumbnail Image</label>
-                                <input type="file" id="PACKAGE_THUMBNAIL" name="PACKAGE_THUMBNAIL" accept="image/*" required>
-                            </div>
-
-                            <!-- Starting Price -->
-                            <div class="FORM_GROUP">
-                                <label for="STARTING_PRICE">Starting Price</label>
-                                <input type="number" id="STARTING_PRICE" name="STARTING_PRICE" placeholder="Enter starting price" required>
-                            </div>
-
-                            <!-- Capacity -->
-                            <div class="FORM_GROUP">
-                                <label for="CAPACITY">Capacity</label>
-                                <input type="number" id="CAPACITY" name="CAPACITY" placeholder="Enter capacity (e.g., 50)" required>
+                                <label for="PACKAGE_THUMBNAIL"><i class="fas fa-image"></i> Thumbnail Image</label>
+                                <div class="THUMBNAIL_PREVIEW_CONTAINER">
+                                    <img id="thumbnailPreview" src="#" alt="Preview">
+                                    <div class="PLACEHOLDER_TEXT">
+                                        <i class="fas fa-image"></i>
+                                        <span>Package Thumbnail</span>
+                                    </div>
+                                </div>
+                                <div class="FILE_INPUT_CONTAINER">
+                                    <input type="file" id="PACKAGE_THUMBNAIL" name="PACKAGE_THUMBNAIL" accept="image/*" required>
+                                </div>
                             </div>
                         </div>
 
@@ -146,6 +161,31 @@ if (!isset($_SESSION['businessname'])) {
                 </div>
         </div>
     </div>
+
+    <!-- Add this JavaScript before closing body tag -->
+    <script>
+    document.getElementById('PACKAGE_THUMBNAIL').addEventListener('change', function(e) {
+        const preview = document.getElementById('thumbnailPreview');
+        const placeholder = document.querySelector('.PLACEHOLDER_TEXT');
+        const file = e.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                placeholder.style.display = 'none';
+            }
+
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+            placeholder.style.display = 'flex';
+            preview.src = '#';
+        }
+    });
+    </script>
 
 </body>
 </html>
