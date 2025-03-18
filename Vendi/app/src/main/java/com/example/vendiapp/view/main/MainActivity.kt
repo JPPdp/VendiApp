@@ -8,12 +8,21 @@ import com.example.vendiapp.view.main.home.HomeFragment
 import com.example.vendiapp.view.main.profile.ProfileFragment
 import com.example.vendiapp.view.main.schedule.MyScheduleFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.vendiapp.utils.ApiUtils
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        ApiUtils.addUser(
+            this,
+            "John Doe",
+            "john@example.com",
+            "1234567890",
+            "password123"
+        )
 
         if (savedInstanceState == null) {
             loadFragment(HomeFragment()) // Load HomeFragment by default
