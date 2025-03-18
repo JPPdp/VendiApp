@@ -1,61 +1,153 @@
 package com.example.vendiapp.utils
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import okhttp3.*
+import org.json.JSONObject
+import java.io.IOException
 
 object ApiUtils {
 
-    // Function to simulate adding a user
-    fun addUser(
-        context: Context,
-        fullName: String,
-        email: String,
-        phoneNumber: String,
-        password: String
-    ) {
-        if (fullName.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
-            Log.d("ApiUtils", "User added successfully: $fullName, $email, $phoneNumber")
-            Toast.makeText(context, "User added successfully!", Toast.LENGTH_SHORT).show()
-        } else {
-            Log.e("ApiUtils", "Failed to add user: Missing fields.")
-            Toast.makeText(context, "Failed to add user. Please fill all required fields.", Toast.LENGTH_SHORT).show()
-        }
-    }
+    private const val BASE_URL = "http://localhost/vendi-api/api/" // Replace with your actual API URL
 
-    // Function to simulate getting a list of users
-    fun getUsers(): List<Map<String, String>> {
-        return listOf(
-            mapOf("fullName" to "John Doe", "email" to "john@example.com", "phone" to "1234567890"),
-            mapOf("fullName" to "Jane Smith", "email" to "jane@example.com", "phone" to "0987654321"),
-            mapOf("fullName" to "Michael Brown", "email" to "michael@example.com", "phone" to "1122334455")
+    // ✅ Register User to Database
+    fun registerUserToDB(context: Context, fullName: String, email: String, phone: String, password: String) {
+        val url = "${BASE_URL}register.php"
+
+        val json = JSONObject().apply {
+            put("full_name", fullName)
+            put("email", email)
+            put("phone_number", phone)
+            put("password", password)
+        }
+
+        val requestBody = RequestBody.create(
+            MediaType.parse("application/json; charset=utf-8"),
+            json.toString()
         )
-    }
 
-    // Function to simulate user login
-    fun loginUser(email: String, password: String): Boolean {
-        val dummyUsers = getUsers()
-        for (user in dummyUsers) {
-            if (user["email"] == email && password == "password123") {
-                Log.d("ApiUtils", "Login successful for $email")
-                return true
+        val request = Request.Builder()
+            .url(url)
+            .post(requestBody)
+            .build()
+
+        val client = OkHttpClient()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                (context as? AppCompatActivity)?.runOnUiThread {
+                    Toast.makeText(context, "Failed to connect to server.", Toast.LENGTH_SHORT).show()
+                }
             }
-        }
-        Log.e("ApiUtils", "Login failed for $email")
-        return false
+
+            override fun onResponse(call: Call, response: Response) {
+                response.use { res ->
+                    if (!res.isSuccessful) {
+                        (context as? AppCompatActivity)?.runOnUiThread {
+                            Toast.makeText(context, "Server error: ${res.code()}", Toast.LENGTH_SHORT).show()
+                        }
+                        return
+                    }
+
+                    val responseBody = res.body()?.string()
+                    if (responseBody != null) {
+                        try {
+                            val jsonResponse = JSONObject(responseBody)
+                            val message = jsonResponse.getString("message")
+
+                            (context as? AppCompatActivity)?.runOnUiThread {
+                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            (context as? AppCompatActivity)?.runOnUiThread {
+                                Toast.makeText(context, "Invalid response format.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } else {
+                        (context as? AppCompatActivity)?.runOnUiThread {
+                            Toast.makeText(context, "Empty response from server.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+        })
     }
 
-    // Function to delete a user by email
-    fun deleteUser(email: String): Boolean {
-        val dummyUsers = getUsers().toMutableList()
-        val userToRemove = dummyUsers.find { it["email"] == email }
-        return if (userToRemove != null) {
-            dummyUsers.remove(userToRemove)
-            Log.d("ApiUtils", "User deleted: $email")
-            true
-        } else {
-            Log.e("ApiUtils", "User not found: $email")
-            false
-        }
+    // ✅ Fetch All Users from Database
+    fun getUsersFromDB(context: Context, onResult: (List<User>?) -> Unit) {
+        val url = "${BASE_URL}get_users.php"
+
+        val request = Request.Builder()
+            .url(url)
+            .get()
+            .build()
+
+        val client = OkHttpClient()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                (context as? AppCompatActivity)?.runOnUiThread {
+                    Toast.makeText(context, "Failed to connect to server.", Toast.LENGTH_SHORT).show()
+                }
+                onResult(null)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                response.use { res ->
+                    if (!res.isSuccessful) {
+                        (context as? AppCompatActivity)?.runOnUiThread {
+                            Toast.makeText(context, "Server error: ${res.code()}", Toast.LENGTH_SHORT).show()
+                        }
+                        onResult(null)
+                        return
+                    }
+
+                    val responseBody = res.body()?.string()
+                    if (responseBody != null) {
+                        try {
+                            val jsonArray = JSONObject(responseBody).getJSONArray("users")
+                            val userList = mutableListOf<User>()
+
+                            for (i in 0 until jsonArray.length()) {
+                                val userObj = jsonArray.getJSONObject(i)
+                                val user = User(
+                                    userObj.getInt("user_id"),
+                                    userObj.getString("full_name"),
+                                    userObj.getString("email"),
+                                    userObj.getString("phone_number")
+                                )
+                                userList.add(user)
+                            }
+
+                            (context as? AppCompatActivity)?.runOnUiThread {
+                                onResult(userList)
+                            }
+
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            (context as? AppCompatActivity)?.runOnUiThread {
+                                Toast.makeText(context, "Error parsing data.", Toast.LENGTH_SHORT).show()
+                            }
+                            onResult(null)
+                        }
+                    } else {
+                        (context as? AppCompatActivity)?.runOnUiThread {
+                            Toast.makeText(context, "No data received.", Toast.LENGTH_SHORT).show()
+                        }
+                        onResult(null)
+                    }
+                }
+            }
+        })
     }
 }
+
+// ✅ User Data Model
+data class User(
+    val userId: Int,
+    val full_name: String,
+    val email: String,
+    val phone_number: String
+)

@@ -16,7 +16,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        ApiUtils.addUser(
+        // Call this inside onCreate()
+        ApiUtils.registerUserToDB(
             this,
             "John Doe",
             "john@example.com",
