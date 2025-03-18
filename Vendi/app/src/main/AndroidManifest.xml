@@ -13,13 +13,13 @@
         android:theme="@style/Theme.VendiApp"
         tools:targetApi="31">
         <activity
+            android:name=".view.main.test.TestActivity"
+            android:exported="false"/>
+        <activity
             android:name=".view.booking.BookingActivity"
             android:exported="false" />
         <activity
             android:name=".view.vendor.VendorActivity"
-            android:exported="false" />
-        <activity
-            android:name=".api.MainActivity2"
             android:exported="false" />
         <activity
             android:name=".OnboardingActivity"
@@ -33,9 +33,6 @@
         <activity
             android:name=".view.auth.AuthActivity"
             android:exported="true" />
-        <activity
-            android:name=".view.main.home.EventDetailsActivity"
-            android:exported="false" />
         <activity
             android:name=".view.main.MainActivity"
             android:exported="true" />
