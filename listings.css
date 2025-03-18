@@ -29,10 +29,8 @@
     flex-direction: column;
     background: white;
     padding: 20px;
-    border-radius: 50px;
-    height: 100%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
-    overflow-y: auto;
+    border-radius: 10px;
+    height: auto;
 }
 
 .LISTINGS_HEADER {
@@ -40,6 +38,8 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 0px;
+    padding-bottom: 10px ;
+    border-bottom: 1px solid var(--whtShade2);
 }
 
 .LISTINGS_HEADER h2 {
@@ -58,6 +58,7 @@
     border-radius: 20px;
     border: 2px solid var(--whtShade2);
     text-decoration: none;
+    transition: border 0.2s ease-in-out;
 }
 
 .LISTINGS_HEADER #ADD_PACKAGE i{
@@ -65,7 +66,6 @@
 }
 
 .LISTINGS_HEADER #ADD_PACKAGE:hover {
-    color: var(--blkShade1);
     border: 2px solid var(--gryShade1);
 }
 
@@ -75,18 +75,18 @@
     position: relative;
     display: flex;
     gap: 20px;
-    padding: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
     background: white;
     border-radius: 10px;
-    border: 2px solid var(--whtShade2);
-    box-shadow: 14px 17px 40px 4px rgba(112, 144, 176, 0.08);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
     margin-top: 20px;
     margin-bottom: 40px;
 }
 
 /* Left Section of Each Package */
 .LEFT_PART {
-    flex: 20%; 
+    flex: 10%; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -139,10 +139,11 @@
     font-size: 0.8rem;
     background: var(--gradient_White);
     border: 2px solid var(--whtShade2);
+    color: var(--gryShade2);
     padding: 10px;
     border-radius: 5px;
-    min-height: 75px;
-    cursor: not-allowed;
+    max-height: 80px;
+    overflow-y: auto;
 }
 
 .PACKAGE_FEATURES {
@@ -153,8 +154,10 @@
     padding: 10px;
     padding-top: 0;
     padding-bottom: 0;
-    border-radius: 10px;
-    cursor: not-allowed;
+    border-radius: 5px;
+    max-height: 100px;
+    cursor: pointer;
+    overflow-y: auto;
 }
 
 .PACKAGE_FEATURES h3 {
@@ -179,49 +182,7 @@
 }
 
 .PACKAGE_FEATURES i {
-    color: green;
-}
-
-.PACKAGE_ACTIONS {
-    position: absolute; 
-    bottom: 0px; 
-    right: 20px; 
-    transform: translateY(50%); 
-    display: flex;
-    gap: 20px; 
-    padding: 5px 10px;
-    background:white;
-    border: 2px solid var(--whtShade2);
-    border-radius: 10px;
-}
-
-.PACKAGE_ACTIONS button {
-    padding: 8px 12px;
-    min-width: 75px;
-    border-radius: 20px;
-    border: none;
-    font-family: 'Inter_Medium';
-    font-size: 0.8rem;
-    color: var(--gryShade2);
-    background: var(--gradient_White);
-    border: 2px solid var(--whtShade2);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.PACKAGE_ACTIONS button i{
     margin-right: 5px;
-}
-
-.PACKAGE_ACTIONS #PACKAGE_EDIT:hover {
-    color: white;
-    background: var(--gradient_Blue);
-}
-
-.PACKAGE_ACTIONS #PACKAGE_DELETE:hover {
-    color: white;
-    background: var(--gradient_Red);
-    
 }
 
 .PACKAGE_DETAIL{
@@ -244,7 +205,6 @@
 
 .PACKAGE_DETAIL i {
     margin-right: 5px;
-    color: var(--gryShade2); /* Using a color from the defined palette for consistency */
 }
 
 /*PARTNER THINGS*/

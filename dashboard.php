@@ -53,8 +53,8 @@ if ($status == "Pending") {
                     <a href="#DASHBOARD" class="NAV_ACTIVE"><i class="	fas fa-stream"></i><span> Dashboard</span></a>
                     <a href="listings.php"><i class="fa fa-fw fa-store"></i> Listings</a>
                     <a href="bookings.php"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
-                    <a href="reports.htm"><i class="fas fa-chart-pie"></i> Reports</a>
-                    <a href="customers.htm"><i class="fa fa-fw fa-users"></i> Customers</a>
+                    <a href="reports.php"><i class="fas fa-chart-pie"></i> Reports</a>
+                    <a href="customers.php"><i class="fa fa-fw fa-users"></i> Customers</a>
             <div class="MENU_HEADER">SETTINGS</div>
                     <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
                     <a href="help.php"><i class="fa fa-fw fa-question-circle"></i> Help</a>
@@ -125,6 +125,63 @@ if ($status == "Pending") {
                                     <th>Times Booked</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                <!-- Example Row (Replace with PHP loop to fetch data from the database) -->
+                                <tr>
+                                    <!-- Package Image -->
+                                    <td class="PACKAGE_IMAGE">
+                                        <img src="assets/images/2srevadilla.jpg" alt="Package 1">
+                                    </td>
+                                    <!-- Package Name -->
+                                    <td class="PACKAGE_NAME">Basic Package</td>
+                                    <!-- Package Price -->
+                                    <td class="PACKAGE_PRICE">₱5,000</td>
+                                    <!-- Package Capacity -->
+                                    <td class="PACKAGE_CAPACITY">50 Guests</td>
+                                    <!-- Times Booked -->
+                                    <td class="TIMES_BOOKED">12</td>
+                                </tr>
+                                <!-- Add more rows dynamically using PHP -->
+                            </tbody>   
+
+                            <tbody>
+                                <!-- Example Row (Replace with PHP loop to fetch data from the database) -->
+                                <tr>
+                                    <!-- Package Image -->
+                                    <td class="PACKAGE_IMAGE">
+                                        <img src="assets/images/2srevadilla.jpg" alt="Package 1">
+                                    </td>
+                                    <!-- Package Name -->
+                                    <td class="PACKAGE_NAME">Basic Package</td>
+                                    <!-- Package Price -->
+                                    <td class="PACKAGE_PRICE">₱5,000</td>
+                                    <!-- Package Capacity -->
+                                    <td class="PACKAGE_CAPACITY">50 Guests</td>
+                                    <!-- Times Booked -->
+                                    <td class="TIMES_BOOKED">12</td>
+                                </tr>
+                                <!-- Add more rows dynamically using PHP -->
+                            </tbody>   
+
+                            <tbody>
+                                <!-- Example Row (Replace with PHP loop to fetch data from the database) -->
+                                <tr>
+                                    <!-- Package Image -->
+                                    <td class="PACKAGE_IMAGE">
+                                        <img src="assets/images/2srevadilla.jpg" alt="Package 1">
+                                    </td>
+                                    <!-- Package Name -->
+                                    <td class="PACKAGE_NAME">Basic Package</td>
+                                    <!-- Package Price -->
+                                    <td class="PACKAGE_PRICE">₱5,000</td>
+                                    <!-- Package Capacity -->
+                                    <td class="PACKAGE_CAPACITY">50 Guests</td>
+                                    <!-- Times Booked -->
+                                    <td class="TIMES_BOOKED">12</td>
+                                </tr>
+                                <!-- Add more rows dynamically using PHP -->
+                            </tbody>   
+
                             <tbody>
                                 <!-- Example Row (Replace with PHP loop to fetch data from the database) -->
                                 <tr>

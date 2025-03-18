@@ -105,12 +105,17 @@
     border-radius: 20px;
     border: 2px solid var(--whtShade2);
     text-decoration: none;
+    transition: border 0.2s ease-in-out;
+}
+
+.LISTINGS_HEADER #ADD_PACKAGE i{
+    margin-right: 5px;
 }
 
 .LISTINGS_HEADER #ADD_PACKAGE:hover {
-    color: var(--blkShade1);
     border: 2px solid var(--gryShade1);
 }
+
 
 /* FORM STYLES */
 .PACKAGE_FORM {
@@ -169,19 +174,19 @@
 }
 
 /* Feature Input Container */
-#PACKAGE_INCLUSIONS {
+#PACKAGE_FEATURES {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.INCLUSION_ITEM {
+.FEATURE_ITEM {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.INCLUSION_ITEM input {
+.FEATURE_ITEM select {
     flex: 1;
     padding: 10px;
     border: 2px solid var(--whtShade2);
@@ -195,19 +200,12 @@
 
 /* Submit Button Container */
 .MAIN_CONTAINER .FORM_GROUP_SUBMIT {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 16px;
-    width: 420px;
     padding: 12px 24px;
-    background: white;
     border-radius: 50px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    margin-top: 10px;
 }
 
 /* Common Button Styles */
@@ -217,15 +215,9 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    
-    /* Typography */
     font-size: 0.8rem;
     font-family: 'Inter_Medium';
-    
-    /* Spacing */
     padding: 10px 16px;
-    
-    /* Visual */
     border-radius: 20px;
     cursor: pointer;
 }
@@ -374,6 +366,7 @@ button[type="submit"].loading::after {
 /* File Input Styling */
 .FILE_INPUT_CONTAINER {
     position: relative;
+    margin-right: 20px;
 }
 
 #PACKAGE_THUMBNAIL {

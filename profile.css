@@ -402,12 +402,12 @@ label{
     background: var(--gradient_White);
     color: #c40202; 
     border: 2px solid var(--whtShade2); 
+    transition: background-color 02 ease;
 }
 
 #DELETE_ACCOUNT:hover {
-    background: var(--gradient_White);
-    color: #c40202; 
-    border: 2px solid #c40202;
+    color: white;
+    background: var(--gradient_Red);
 }
 
 /* CHANGE PASSWORD BUTTON */

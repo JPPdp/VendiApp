@@ -178,6 +178,11 @@ body{
     background: var(--gradient_White);
 }
 
+.DASHBOARD2{
+    background: white;
+    flex: 1;
+    padding: 20px;
+}
 .UPPER{
     display: flex;
     justify-content: space-between;
@@ -569,8 +574,8 @@ body{
     color: var(--blkShade1);
     cursor: pointer;
     box-sizing: border-box;
-    border: 1px solid var(--whtShade1);
     background: var(--gradient_White);
+    border-radius: 10px;
 }
 
 .CALENDAR_BODY .DAYS li.INACTIVE {
@@ -685,8 +690,8 @@ body{
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
     margin-bottom: 20px;
-    min-height: 450px;
-    max-height: 450px;
+    min-height: 400px;
+    max-height: 400px;
     overflow-y: auto;
 }
 
@@ -723,6 +728,7 @@ body{
 .PACKAGE_OVERVIEW td {
     border-bottom: 1px solid var(--whtShade2);
     text-align: center;
+    padding: 5px;
 }
 
 .PACKAGE_OVERVIEW td:first-child {
@@ -734,23 +740,4 @@ body{
     height: 50px;
     border-radius: 10px;
     object-fit: cover;
-}
-
-/* No Data Message */
-.NO_DATA {
-    text-align: center;
-    padding: 50px;
-    color: var(--gryShade1);
-    font-family: 'Inter_Medium';
-    font-size: 1rem;
-}
-
-.NO_DATA i {
-    font-size: 2rem;
-    margin-bottom: 10px;
-    color: var(--gryShade1);
-}
-
-.NO_DATA p {
-    margin: 0;
 }

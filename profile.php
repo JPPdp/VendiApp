@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a href="listings.php"><i class="fa fa-fw fa-store"></i> Listings</a>
             <a href="bookings.php"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
             <a href="reports.htm"><i class="fas fa-chart-pie"></i> Reports</a>
-            <a href="customers.htm"><i class="fa fa-fw fa-users"></i> Customers</a>
+            <a href="customers.php"><i class="fa fa-fw fa-users"></i> Customers</a>
             <div class="MENU_HEADER">SETTINGS</div>
             <a href="profile.php" class="NAV_ACTIVE"><i class="fa fa-fw fa-user"></i> <span> Profile</span> </a>
             <a href="help.php"><i class="fa fa-fw fa-question-circle"></i> Help</a>
@@ -86,8 +86,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="LEFT_PROFILE">
                     <div class="PROFILE_PIC_CONTAINER"><!-- Profile Picture -->
                         <img src="assets/images/jacks.jpg" alt="Profile Picture" class="PROFILE_PIC2">
-                        <div class="EDIT_ICON_CONTAINER">
-                        <i class="EDIT_ICON fas fa-pencil-alt" aria-hidden="true"></i>
+                        <div class="EDIT_ICON_CONTAINER" title="Change Profile Picture">
+                            <i class="EDIT_ICON fas fa-camera" aria-hidden="true"></i>
                         </div>
                         <!--<input type="file" id="VENDOR_PROFILE_PIC" name="profile_pic" accept="image/*">-->
                     </div>

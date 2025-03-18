@@ -34,7 +34,7 @@ if (!isset($_SESSION['businessname'])) {
             <a href="listings.html" class="NAV_ACTIVE"><i class="fa fa-fw fa-store"></i><span> Listings</span></a>
             <a href="bookings.php"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
             <a href="reports.htm"><i class="fas fa-chart-pie"></i> Reports</a>
-            <a href="customers.htm"><i class="fa fa-fw fa-users"></i> Customers</a>
+            <a href="customers.php"><i class="fa fa-fw fa-users"></i> Customers</a>
             <div class="MENU_HEADER">SETTINGS</div>
             <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
             <a href="help.php"><i class="fa fa-fw fa-question-circle"></i> Help</a>
@@ -95,19 +95,74 @@ if (!isset($_SESSION['businessname'])) {
                                     <div class="BESIDE_FIELD">
                                         <!-- Package Features -->
                                         <div class="FORM_GROUP">
-                                            <label><i class="fas fa-list"></i> Inclusions</label>
-                                            <div id="PACKAGE_INCLUSIONS">
-                                                <div class="INCLUSION_ITEM">
-                                                    <input type="text" name="inclusion1" placeholder="Inclusion 1" required>
+                                            <label><i class="fas fa-list"></i> Features</label>
+                                            <div id="PACKAGE_FEATURES">
+                                                <div class="FEATURE_ITEM">
+                                                    <select name="feature1">
+                                                        <option value="" disabled selected>Select Feature 1</option>
+                                                            <option value="" disabled>&#128197; Event Type</option>
+                                                        <option value="Birthday">Birthday</option>
+                                                        <option value="Corporate">Corporate</option>
+                                                        <option value="Wedding">Wedding</option>
+                                                            <option value="" disabled>&#127838; Food Options</option>
+                                                        <option value="Desserts">Desserts</option>
+                                                        <option value="Fast Food">Fast Food</option>
+                                                        <option value="Vegan">Vegan</option>
+                                                            <option value="" disabled>&#127866; Beverage Options</option>
+                                                        <option value="Alcoholic">Alcoholic</option>
+                                                        <option value="Coffee & Tea">Coffee & Tea</option>
+                                                        <option value="Refreshments">Refreshments</option>
+                                                            <option value="" disabled>&#127909; Entertainment Options</option>
+                                                        <option value="Kid-Friendly">Arts & Crafts</option>
+                                                        <option value="Games & Activities">Games & Activities</option>
+                                                        <option value="Games & Activities">Photobooth</option>
+                                                    </select>
                                                 </div>
-                                                <div class="INCLUSION_ITEM">
-                                                    <input type="text" name="inclusion2" placeholder="Inclusion 2" required>
+                                                <div class="FEATURE_ITEM">
+                                                    <select name="feature2">
+                                                        <option value="" disabled selected>Select Feature 2</option>
+                                                        <option value="" disabled>&#128197; Event Type</option>
+                                                        <option value="Birthday">Birthday</option>
+                                                        <option value="Corporate">Corporate</option>
+                                                        <option value="Wedding">Wedding</option>
+                                                            <option value="" disabled>&#127838; Food Options</option>
+                                                        <option value="Desserts">Desserts</option>
+                                                        <option value="Fast Food">Fast Food</option>
+                                                        <option value="Vegan">Vegan</option>
+                                                            <option value="" disabled>&#127866; Beverage Options</option>
+                                                        <option value="Alcoholic">Alcoholic</option>
+                                                        <option value="Coffee & Tea">Coffee & Tea</option>
+                                                        <option value="Refreshments">Refreshments</option>
+                                                            <option value="" disabled>&#127909; Entertainment Options</option>
+                                                        <option value="Kid-Friendly">Arts & Crafts</option>
+                                                        <option value="Games & Activities">Games & Activities</option>
+                                                        <option value="Games & Activities">Photobooth</option>
+                                                    </select>
                                                 </div>
-                                                <div class="INCLUSION_ITEM">
-                                                    <input type="text" name="inclusion3" placeholder="Inclusion 3" required>
+                                                <div class="FEATURE_ITEM">
+                                                    <select name="feature3">
+                                                        <option value="" disabled selected>Select Feature 3</option>
+                                                        <option value="" disabled>&#128197; Event Type</option>
+                                                        <option value="Birthday">Birthday</option>
+                                                        <option value="Corporate">Corporate</option>
+                                                        <option value="Wedding">Wedding</option>
+                                                            <option value="" disabled>&#127838; Food Options</option>
+                                                        <option value="Desserts">Desserts</option>
+                                                        <option value="Fast Food">Fast Food</option>
+                                                        <option value="Vegan">Vegan</option>
+                                                            <option value="" disabled>&#127866; Beverage Options</option>
+                                                        <option value="Alcoholic">Alcoholic</option>
+                                                        <option value="Coffee & Tea">Coffee & Tea</option>
+                                                        <option value="Refreshments">Refreshments</option>
+                                                            <option value="" disabled>&#127909; Entertainment Options</option>
+                                                        <option value="Kid-Friendly">Arts & Crafts</option>
+                                                        <option value="Games & Activities">Games & Activities</option>
+                                                        <option value="Games & Activities">Photobooth</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
 
@@ -124,7 +179,7 @@ if (!isset($_SESSION['businessname'])) {
                                         <!-- Capacity -->
                                         <div class="FORM_GROUP">
                                             <label for="CAPACITY"><i class="fas fa-users"></i> Capacity</label>
-                                            <input type="number" id="CAPACITY" name="CAPACITY" placeholder="Enter capacity (e.g., 50)" required>
+                                            <input type="number" id="CAPACITY" name="CAPACITY" placeholder="Enter guest capacity (e.g., 50)" required>
                                         </div>
                                     </div>
                                 </div>
@@ -145,7 +200,6 @@ if (!isset($_SESSION['businessname'])) {
                                     <input type="file" id="PACKAGE_THUMBNAIL" name="PACKAGE_THUMBNAIL" accept="image/*" required>
                                 </div>
                             </div>
-                        </div>
 
                             <!-- Submit Button -->
                             <div class="FORM_GROUP_SUBMIT">
@@ -157,12 +211,14 @@ if (!isset($_SESSION['businessname'])) {
                                     <button type="submit" id="SUBMIT_PACKAGE"><i class="fas fa-upload"></i> Publish</button>
                                 </div>
                             </div>
+                        </div>
+
+
                         </form>
                 </div>
         </div>
     </div>
 
-    <!-- Add this JavaScript before closing body tag -->
     <script>
     document.getElementById('PACKAGE_THUMBNAIL').addEventListener('change', function(e) {
         const preview = document.getElementById('thumbnailPreview');

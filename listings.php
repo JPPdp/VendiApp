@@ -34,8 +34,8 @@ if (!isset($_SESSION['businessname'])) {
             <a href="dashboard.php"><i class="fas fa-stream"></i> Dashboard</a>
             <a href="listings.php" class="NAV_ACTIVE"><i class="fa fa-fw fa-store"></i><span> Listings</span></a>
             <a href="bookings.php"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
-            <a href="reports.htm"><i class="fas fa-chart-pie"></i> Reports</a>
-            <a href="customers.htm"><i class="fa fa-fw fa-users"></i> Customers</a>
+            <a href="reports.php"><i class="fas fa-chart-pie"></i> Reports</a>
+            <a href="customers.php"><i class="fa fa-fw fa-users"></i> Customers</a>
             <div class="MENU_HEADER">SETTINGS</div>
             <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
             <a href="help.php"><i class="fa fa-fw fa-question-circle"></i> Help</a>
@@ -43,7 +43,7 @@ if (!isset($_SESSION['businessname'])) {
         </div>
         
         <!-- Dashboard Content -->
-        <div class="DASHBOARD" id="DASHBOARD">
+        <div class="DASHBOARD2" id="DASHBOARD">
             <div class="UPPER">
                 <div class="LEFT_UPPER">
                     <h1 class="DASHBOARD_TITLE">Listings</h1>
@@ -76,7 +76,7 @@ if (!isset($_SESSION['businessname'])) {
                 <div class="PACKAGE">
                     <div class="LEFT_PART">
                         <div class="PACKAGE_THUMBNAIL">
-                            <img src="assets/images/2srevadilla.jpg" alt="Package Thumbnail">
+                            <img src="assets/images/jollitown.png" alt="Package Thumbnail">
                         </div>
                     </div>
                     <div class="RIGHT_PART">
@@ -90,16 +90,23 @@ if (!isset($_SESSION['businessname'])) {
                         <!-- Package Description and Features -->
                         <div class="PACKAGE_CONTENT">
                             <div class="PACKAGE_DESCRIPTION">
-                                <span id="PACKAGE_DESCRIPTION"><?php echo "Package Description goes here" ?></span>
+                                <span id="PACKAGE_DESCRIPTION"><?php echo "With colorful decorations, 
+                                langhap-sarap favorites, and non-stop fun - it's the ultimate celebration 
+                                for your little one! From exciting games to a special appearance by Jollibee 
+                                himself, every moment is filled with joy. With our customizable party packages, 
+                                you can create the perfect event that fits your budget and preferences." ?></span>
                             </div>
-                             <div class="PACKAGE_FEATURES">
-                                <h3>Key Features</h3>
-                                <ul>
-                                    <li><i class="fas fa-check"></i> <?php echo "Provides for 50 guests" ?></li>
-                                    <li><i class="fas fa-check"></i> <?php echo "Another feature" ?></li>
-                                    <li><i class="fas fa-check"></i> <?php echo "Another feature" ?></li>
-                                </ul>
-                            </div>
+                                <div class="PACKAGE_FEATURES">
+                                    <h3><i class='fas fa-tag'></i>Features</h3>
+                                    <ul>
+                                        <?php
+                                            $categories = array("Birthday", "Games & Activities", "Kid-Friendly");
+                                            foreach ($categories as $category) {
+                                                echo "<li> $category</li>";
+                                            }
+                                        ?>
+                                    </ul>
+                                </div>
                         </div>
                         <!-- Package Details -->
                         <div class="BESIDE_FIELDS">
@@ -112,7 +119,7 @@ if (!isset($_SESSION['businessname'])) {
                             <div class="BESIDE_FIELD">
                                 <div class="PACKAGE_DETAIL">
                                     <h3 id="label"><i class="fas fa-users"></i>Capacity</h3>
-                                    <p id="CAPACITY"> Good for <?php echo "50" ?> pax</p>
+                                    <p id="CAPACITY"><?php echo "50" ?> guests</p>
                                 </div>
                             </div>
                             <div class="BESIDE_FIELD">
@@ -122,13 +129,8 @@ if (!isset($_SESSION['businessname'])) {
                                 </div>
                             </div>
                         </div>
-                        <!-- Package Actions -->
-                        <div class="PACKAGE_ACTIONS">
-                            <button id="PACKAGE_EDIT"><i class="fas fa-edit"></i> Edit</button>
-                            <button id="PACKAGE_DELETE"><i class="fas fa-trash"></i> Delete</button>
-                        </div>
                     </div>
-                </div>
+                </div> <!-- End div-Package -->
 
             </div>
 
