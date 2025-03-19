@@ -53,7 +53,6 @@ if ($status == "Pending") {
                     <a href="#DASHBOARD" class="NAV_ACTIVE"><i class="	fas fa-stream"></i><span> Dashboard</span></a>
                     <a href="listings.php"><i class="fa fa-fw fa-store"></i> Listings</a>
                     <a href="bookings.php"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
-                    <a href="reports.php"><i class="fas fa-chart-pie"></i> Reports</a>
                     <a href="customers.php"><i class="fa fa-fw fa-users"></i> Customers</a>
             <div class="MENU_HEADER">SETTINGS</div>
                     <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -78,7 +77,7 @@ if ($status == "Pending") {
                             <i class="fas fa-bell"></i>
                             <span class="NOTIFICATION_DOT"></span> <!-- Red dot for notifications -->
                         </div>
-                        <a href="db_profile.html">
+                        <a href="profile.php">
                             <img src="assets/images/tiara.png" alt="Profile Picture" class="PROFILE_PIC">
                         </a>    
                         <span class="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['businessname']); ?></span>             

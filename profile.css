@@ -417,3 +417,52 @@ label{
     border: 2px solid var(--whtShade2); 
 }
 
+/* Confirmation Div */
+.CONFIRMATION_DIV {
+    display: none; /* Hidden by default */
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Show Confirmation Div when targeted */
+.CONFIRMATION_DIV:target {
+    display: block; /* Show the confirmation div */
+}
+
+/* Confirmation Buttons */
+.CONFIRMATION_BUTTONS {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.CONFIRM_BTN,
+.CANCEL_BTN {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-family: 'Inter_Medium';
+    cursor: pointer;
+    transition: filter 0.3s ease;
+}
+
+.CONFIRM_BTN {
+    background: var(--gradient_Red);
+    color: white;
+}
+
+.CANCEL_BTN {
+    background: var(--gradient_Blue);
+    color: white;
+}
+
+.CONFIRM_BTN:hover,
+.CANCEL_BTN:hover {
+    filter: brightness(110%);
+}

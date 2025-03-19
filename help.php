@@ -35,7 +35,6 @@ if (!isset($_SESSION['businessname'])) {
             <a href="dashboard.php"><i class="fas fa-stream"></i>Dashboard</a>
             <a href="listings.html"><i class="fa fa-fw fa-store"></i> Listings</a>
             <a href="bookings.php"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
-            <a href="reports.php"><i class="fas fa-chart-pie"></i> Reports</a>
             <a href="customers.php"><i class="fa fa-fw fa-users"></i> Customers</a>
 
             <div class="MENU_HEADER">SETTINGS</div>

@@ -1,13 +1,36 @@
 <?php
 session_start();
 
-//Display name on Upper Right Nav
 if (!isset($_SESSION['businessname'])) {
     header("Location: dashboard.php");
     exit();
 }
 
+// Simulated customer data
+$customers = [
+    [
+        'profile_pic' => 'assets/images/tiara.png',
+        'client_name' => 'John Marston',
+        'client_email' => 'marston@gmail.com',
+        'mobile_number' => '+1234567890',
+    ],
+    [
+        'profile_pic' => 'assets/images/tiara.png',
+        'client_name' => 'Arthur Morgan',
+        'client_email' => 'arthur@gmail.com',
+        'mobile_number' => '+0987654321',
+    ],
+];
 
+// Handle delete action
+if (isset($_GET['delete'])) {
+    $index = $_GET['delete'];
+    if (isset($customers[$index])) {
+        array_splice($customers, $index, 1); // Simulate deletion
+    }
+    header("Location: customers.php"); // Redirect to refresh the page
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -15,14 +38,16 @@ if (!isset($_SESSION['businessname'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listings | Vendi</title>
+    <title>Customers | Vendi</title>
     <link rel="icon" href="assets/images/VendiBLK2_NoBG.png" type="image/icon type">
     <link rel="stylesheet" href="notifications.css">
     <link rel="stylesheet" href="dashboard.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="listings.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="customers.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
+
     <div class="NAV_CONTAINER">
         <!-- Navigation Bar -->
         <div class="NAVIGATION_BAR">
@@ -31,24 +56,25 @@ if (!isset($_SESSION['businessname'])) {
                     <span>DASHBOARD</span>
                 </div>
             </div>
+
             <div class="MENU_HEADER">MANAGEMENT</div>
-            <a href="dashboard.php"><i class="fas fa-stream"></i> Dashboard</a>
-            <a href="listings.php"><i class="fa fa-fw fa-store"></i><span> Listings</span></a>
-            <a href="bookings.php"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
-            <a href="reports.php"><i class="fas fa-chart-pie"></i> Reports</a>
-            <a href="customers.php" class="NAV_ACTIVE"><i class="fa fa-fw fa-users"></i> <span>Customers</span></a>
+                    <a href="dashboard.php"><i class="fas fa-stream"></i> Dashboard</a>
+                    <a href="listings.php"><i class="fa fa-fw fa-store"></i> Listings</a>
+                    <a href="bookings.php"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
+                    <a href="customers.php" class="NAV_ACTIVE"><i class="fa fa-fw fa-users"></i> <span> Customers</span></a>
             <div class="MENU_HEADER">SETTINGS</div>
-            <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
-            <a href="help.php"><i class="fa fa-fw fa-question-circle"></i> Help</a>
-            <a href="logout.php" class="LOGOUT"><i class="fa fa-fw fa-sign-out-alt"></i> Log Out</a>
+                    <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
+                    <a href="help.php"><i class="fa fa-fw fa-question-circle"></i> Help</a>
+                    <a href="logout.php" class="LOGOUT"><i class="fa fa-fw fa-sign-out-alt"></i> Log Out</a>
         </div>
         
         <!-- Dashboard Content -->
-        <div class="DASHBOARD2" id="DASHBOARD">
+        <div class="DASHBOARD" id="DASHBOARD">
             <div class="UPPER">
                 <div class="LEFT_UPPER">
-                    <h1 class="DASHBOARD_TITLE">Clients</h1>
+                    <h1 class="DASHBOARD_TITLE">Customers</h1>
                 </div>
+
                 <div class="RIGHT_UPPER">
                     <div class="SEARCH_BAR">
                         <input type="text" placeholder="Search here...">
@@ -67,10 +93,42 @@ if (!isset($_SESSION['businessname'])) {
                 </div>
             </div>
 
-            
+            <!-- Customer Details Table -->
+            <div class="MAIN_CONTAINER">
+                <div class="CUSTOMER_TABLE">
+                    <h2>Customer Details</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Profile Picture</th>
+                                <th>Client Name</th>
+                                <th>Client Email</th>
+                                <th>Mobile Number</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($customers as $index => $customer): ?>
+                                <tr>
+                                    <td class="PROFILE_PIC">
+                                        <img src="<?php echo $customer['profile_pic']; ?>" alt="Profile Picture" class="PROFILE_PIC">
+                                    </td>
+                                    <td class="CLIENT_NAME"><?php echo $customer['client_name']; ?></td>
+                                    <td class="CLIENT_EMAIL"><?php echo $customer['client_email']; ?></td>
+                                    <td class="MOBILE_NUMBER"><?php echo $customer['mobile_number']; ?></td>
+                                    <td class="ACTION_BUTTONS">
+                                        <a href="customers.php?delete=<?php echo $index; ?>" class="DELETE_BUTTON">Delete</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
-
-
-
+    <script src="dashboard.js"></script>
+    
 </body>
 </html>

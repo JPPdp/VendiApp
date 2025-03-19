@@ -179,7 +179,7 @@ body{
 }
 
 .DASHBOARD2{
-    background: white;
+    background: var(--whtShade1);
     flex: 1;
     padding: 20px;
 }

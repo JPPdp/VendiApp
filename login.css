@@ -529,3 +529,77 @@ label #FILES {
     font-size: 1.5rem;
 
 }
+
+.FORM_GROUP {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.FORM_GROUP label {
+    font-size: 0.8rem;
+    font-family: 'Inter_Bold';
+    color: var(--blkShade1);
+}
+
+.FORM_GROUP i {
+    font-size: 0.8rem;
+    color: var(--blkShade1);
+    margin-right: 5px;
+}
+
+.FORM_GROUP input,
+.FORM_GROUP textarea,
+.FORM_GROUP select {
+    font-size: 0.8rem;
+    font-family: 'Inter_Regular';
+    padding: 10px;
+    border: 2px solid var(--whtShade2);
+    border-radius: 5px;
+    background: var(--gradient_White);
+    color: var(--blkShade1);
+    outline: none;
+}
+
+.FORM_GROUP input:focus,
+.FORM_GROUP textarea:focus,
+.FORM_GROUP select:focus {
+    border-color: var(--gryShade1);
+}
+
+#PACKAGE_DESCRIPTION {
+    flex: 1;
+    font-size: 0.8rem;
+    background: var(--gradient_White);
+    border: 2px solid var(--whtShade2);
+    padding: 10px;
+    border-radius: 5px;
+    min-height: 145px;
+    resize: none;
+
+}
+
+/* Feature Input Container */
+#PACKAGE_FEATURES {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.FEATURE_ITEM {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.FEATURE_ITEM select {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid var(--whtShade2);
+    border-radius: 5px;
+    background: var(--gradient_White);
+    font-size: 0.8rem;
+    font-family: 'Inter_Regular';
+    color: var(--blkShade1);
+    outline: none;
+}

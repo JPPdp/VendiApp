@@ -1,0 +1,71 @@
+/* CUSTOMER TABLE */
+.CUSTOMER_TABLE {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
+    min-height: 850px;
+    max-height: 850px;
+    overflow-y: auto;
+}
+
+.CUSTOMER_TABLE table {
+    border-collapse: collapse; 
+    width: 100%; 
+    table-layout: fixed;
+}
+
+.CUSTOMER_TABLE h2 {
+    background: white;
+    color: var(--blkShade1);
+    font-size: 1rem;
+    font-family: 'Inter_Bold';
+    padding: 20px 20px 10px 20px;
+    margin: 0;
+}
+
+.CUSTOMER_TABLE th {
+    background: white;
+    color: var(--blkShade1);
+    font-size: 0.8rem;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--gryShade1);
+    text-align: center;
+}
+
+.CUSTOMER_TABLE td {
+    background-color: white;
+    font-size: 0.8rem;
+    font-family: 'Inter_Regular';
+    color: var(--blkShade1);
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    border-bottom: 1px solid var(--whtShade2);
+}
+
+.CUSTOMER_TABLE .PROFILE_PIC img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.DELETE_BUTTON {
+    color: white;
+    padding: 5px 10px;
+    font-size: 0.75rem;
+    font-family: 'Inter_Medium';
+    background: var(--gradient_Red);
+    border: 1px solid white;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}

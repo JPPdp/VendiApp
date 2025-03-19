@@ -33,7 +33,6 @@ if (!isset($_SESSION['businessname'])) {
             <a href="dashboard.php"><i class="fas fa-stream"></i> Dashboard</a>
             <a href="listings.html" class="NAV_ACTIVE"><i class="fa fa-fw fa-store"></i><span> Listings</span></a>
             <a href="bookings.php"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
-            <a href="reports.htm"><i class="fas fa-chart-pie"></i> Reports</a>
             <a href="customers.php"><i class="fa fa-fw fa-users"></i> Customers</a>
             <div class="MENU_HEADER">SETTINGS</div>
             <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -57,7 +56,7 @@ if (!isset($_SESSION['businessname'])) {
                             <i class="fas fa-bell"></i>
                             <span class="NOTIFICATION_DOT"></span> <!-- Red dot for notifications -->
                         </div>
-                        <a href="db_profile.html">
+                        <a href="profile.php">
                             <img src="assets/images/tiara.png" alt="Profile Picture" class="PROFILE_PIC">
                         </a>    
                         <span class="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['businessname']); ?></span>             
@@ -188,12 +187,12 @@ if (!isset($_SESSION['businessname'])) {
                         <div class="RIGHT_MAIN">
                             <!-- Package Thumbnail -->
                             <div class="FORM_GROUP">
-                                <label for="PACKAGE_THUMBNAIL"><i class="fas fa-image"></i> Thumbnail Image</label>
+                                <label for="PACKAGE_THUMBNAIL"><i class="fas fa-image"></i> Package Image</label>
                                 <div class="THUMBNAIL_PREVIEW_CONTAINER">
                                     <img id="thumbnailPreview" src="#" alt="Preview">
                                     <div class="PLACEHOLDER_TEXT">
                                         <i class="fas fa-image"></i>
-                                        <span>Package Thumbnail</span>
+                                        <span>Package Image</span>
                                     </div>
                                 </div>
                                 <div class="FILE_INPUT_CONTAINER">

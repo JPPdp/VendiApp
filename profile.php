@@ -48,7 +48,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a href="dashboard.php"><i class="fas fa-stream"></i> Dashboard</a>
             <a href="listings.php"><i class="fa fa-fw fa-store"></i> Listings</a>
             <a href="bookings.php"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
-            <a href="reports.htm"><i class="fas fa-chart-pie"></i> Reports</a>
             <a href="customers.php"><i class="fa fa-fw fa-users"></i> Customers</a>
             <div class="MENU_HEADER">SETTINGS</div>
             <a href="profile.php" class="NAV_ACTIVE"><i class="fa fa-fw fa-user"></i> <span> Profile</span> </a>
@@ -72,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <i class="fas fa-bell"></i>
                             <span class="NOTIFICATION_DOT"></span> <!-- Red dot for notifications -->
                         </div>
-                        <a href="db_profile.html">
+                        <a href="profile.php">
                             <img src="assets/images/tiara.png" alt="Profile Picture" class="PROFILE_PIC">
                         </a>    
                         <span class="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['businessname']); ?></span>             
@@ -85,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <!-- Left Profile Section -->
                 <div class="LEFT_PROFILE">
                     <div class="PROFILE_PIC_CONTAINER"><!-- Profile Picture -->
-                        <img src="assets/images/jacks.jpg" alt="Profile Picture" class="PROFILE_PIC2">
+                        <img src="assets/images/tiara.png" alt="Profile Picture" class="PROFILE_PIC2">
                         <div class="EDIT_ICON_CONTAINER" title="Change Profile Picture">
                             <i class="EDIT_ICON fas fa-camera" aria-hidden="true"></i>
                         </div>
@@ -174,8 +173,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <a href="#IMAGE_VIEW" class="VIEW_BUTTON" id="VIEW_BUTTON">View File</a>
                                 </div>
 
-                                                    <!-- Container for Expanded Image -->
-                                <div id="IMAGE_VIEW" class="EXPAND">
+                                <div id="IMAGE_VIEW" class="EXPAND"><!-- Container for Expanded Image -->
                                     <a href="#" class="CLOSE_BUTTON">&times;</a>
                                     <img class="EXPANDED_IMAGE" src="assets/images/sample_document.png" alt="Expanded Business Document">
                                 </div>
