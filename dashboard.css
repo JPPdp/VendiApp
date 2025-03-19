@@ -427,8 +427,8 @@ body{
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
-    min-height: 400px;
-    max-height: 400px;
+    min-height: 410px;
+    max-height: 410px;
     margin-bottom: 20px;
 }
 
@@ -525,7 +525,7 @@ body{
     color: var(--blkShade1);
     cursor: pointer;
     box-sizing: border-box;
-    border-radius: 10px;
+    border: 0.5px solid var(--whtShade2);
 }
 
 .CALENDAR_BODY .DAYS li.INACTIVE {
@@ -640,8 +640,8 @@ body{
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
-    min-height: 400px;
-    max-height: 400px;
+    min-height: 410px;
+    max-height: 410px;
     overflow-y: auto;
 }
 
@@ -708,8 +708,8 @@ body{
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
     margin-bottom: 20px;
-    min-height: 400px;
-    max-height: 400px;
+    min-height: 410px;
+    max-height: 410px;
 
     display: flex;
     flex-direction: column;
@@ -721,7 +721,7 @@ body{
     font-family: 'Inter_Bold';
     color: var(--blkShade1);
     margin: 0;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
 }
 
 
