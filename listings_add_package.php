@@ -88,7 +88,7 @@ if (!isset($_SESSION['businessname'])) {
                                         <!-- Package Description -->
                                         <div class="FORM_GROUP">
                                             <label for="PACKAGE_DESCRIPTION"><i class="fas fa-info-circle"></i> Description</label>
-                                            <textarea id="PACKAGE_DESCRIPTION" name="PACKAGE_DESCRIPTION" rows="4" placeholder="Enter package description" required></textarea>
+                                            <textarea id="PACKAGE_DESCRIPTION" name="PACKAGE_DESCRIPTION" maxlength="400" placeholder="Enter package description" required></textarea>
                                         </div>
                                     </div>
 

@@ -86,121 +86,89 @@ if ($status == "Pending") {
                 </div>
             </div>
 
-            <div class="CONTENT">
-                <div class="BOX PENDING">
-                    <h3>Pending</h3>
-                    <p>2,232</p>
-                    <i class="far fa-clock"></i> <!-- Icon Pending -->
+                <!-- Boxes -->
+                <div class="CONTENT">
+
+                    <div class="BOX PENDING">
+                        <h3><i class="far fa-clock"></i> Pending</h3>
+                        <p>2,232</p>
+                        <i class="far fa-clock"></i>
+                    </div>
+                    <div class="BOX SCHEDULED">
+                        <h3><i class="far fa-check-circle"></i> Scheduled</h3>
+                        <p>2</p>
+                        <i class="far fa-check-circle"></i>
+                    </div>
+                    <div class="BOX COMPLETED">
+                        <h3><i class="fas fa-check-circle"></i> Completed</h3>
+                        <p>40</p>
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="BOX CANCELLED">
+                        <h3><i class="fas fa-times-circle"></i> Cancelled</h3>
+                        <p>5</p>
+                        <i class="fas fa-times-circle"></i>
+                    </div>
                 </div>
-                <div class="BOX SCHEDULED">
-                    <h3>Scheduled</h3>
-                    <p>2</p>
-                    <i class="far fa-check-circle"></i> <!-- Icon Active -->
-                </div>
-                <div class="BOX COMPLETED">
-                    <h3>Completed</h3>
-                    <p>40</p>
-                    <i class="fas fa-check-circle"></i> <!-- Icon Completed -->
-                </div>
-                <div class="BOX CANCELLED">
-                    <h3>Cancelled</h3>
-                    <p>5</p>
-                    <i class="fas fa-times-circle"></i> <!-- Icon Cancelled -->
-                </div>
-            </div>
 
             <!-- Schedule Manager -->
             <div class="MAIN_CONTAINER">
+                <!-- Left Main Content -->
                 <div class="LEFT_MAIN">
-                    <!-- Package Overview Section -->
-                    <div class="PACKAGE_OVERVIEW">
-                        <h2>Package Overview</h2>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Package Image</th>
-                                    <th>Package Name</th>
-                                    <th>Price</th>
-                                    <th>Capacity</th>
-                                    <th>Times Booked</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Example Row (Replace with PHP loop to fetch data from the database) -->
-                                <tr>
-                                    <!-- Package Image -->
-                                    <td class="PACKAGE_IMAGE">
-                                        <img src="assets/images/2srevadilla.jpg" alt="Package 1">
-                                    </td>
-                                    <!-- Package Name -->
-                                    <td class="PACKAGE_NAME">Basic Package</td>
-                                    <!-- Package Price -->
-                                    <td class="PACKAGE_PRICE">₱5,000</td>
-                                    <!-- Package Capacity -->
-                                    <td class="PACKAGE_CAPACITY">50 Guests</td>
-                                    <!-- Times Booked -->
-                                    <td class="TIMES_BOOKED">12</td>
-                                </tr>
-                                <!-- Add more rows dynamically using PHP -->
-                            </tbody>   
+                    <!-- Flex Container for Package Overview and Trending Chart -->
+                    <div class="FLEX_CONTAINER">
+                        <!-- Package Overview (70%) -->
+                        <div class="PACKAGE_OVERVIEW">
+                            <h2>Listings</h2>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th><i class="fas fa-image"></i> Package Image</th>
+                                        <th><i class="fas fa-box"></i> Package Name</th>
+                                        <th><i class="fas fa-tag"></i> Price</th>
+                                        <th><i class="fas fa-users"></i> Capacity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Example Row (Replace with PHP loop to fetch data from the database) -->
+                                    <tr>
+                                        <td class="PACKAGE_IMAGE">
+                                            <img src="assets/images/jollitown.png" alt="Package Image">
+                                        </td>
+                                        <td class="PACKAGE_NAME"><?php echo "Basic Package"?></td>
+                                        <td class="PACKAGE_PRICE">₱<?php echo "1,299"?></td>
+                                        <td class="PACKAGE_CAPACITY"><?php echo "50"?> Guests</td>
+                                    </tr>
+                                </tbody>   
+                            </table>
+                        </div>
 
-                            <tbody>
-                                <!-- Example Row (Replace with PHP loop to fetch data from the database) -->
-                                <tr>
-                                    <!-- Package Image -->
-                                    <td class="PACKAGE_IMAGE">
-                                        <img src="assets/images/2srevadilla.jpg" alt="Package 1">
-                                    </td>
-                                    <!-- Package Name -->
-                                    <td class="PACKAGE_NAME">Basic Package</td>
-                                    <!-- Package Price -->
-                                    <td class="PACKAGE_PRICE">₱5,000</td>
-                                    <!-- Package Capacity -->
-                                    <td class="PACKAGE_CAPACITY">50 Guests</td>
-                                    <!-- Times Booked -->
-                                    <td class="TIMES_BOOKED">12</td>
-                                </tr>
-                                <!-- Add more rows dynamically using PHP -->
-                            </tbody>   
+                        <!-- Trending Packages Bar Chart -->
+                        <div class="TRENDING_CHART">
+                            <h2>Listings Overview</h2>
+                            <div class="CHART_CONTAINER">
+                                <?php
+                                if (isset($packages) && count($packages) > 0) {
+                                    // Find the maximum popularity value for scaling
+                                    $maxPopularity = max(array_column($packages, 'popularity'));
 
-                            <tbody>
-                                <!-- Example Row (Replace with PHP loop to fetch data from the database) -->
-                                <tr>
-                                    <!-- Package Image -->
-                                    <td class="PACKAGE_IMAGE">
-                                        <img src="assets/images/2srevadilla.jpg" alt="Package 1">
-                                    </td>
-                                    <!-- Package Name -->
-                                    <td class="PACKAGE_NAME">Basic Package</td>
-                                    <!-- Package Price -->
-                                    <td class="PACKAGE_PRICE">₱5,000</td>
-                                    <!-- Package Capacity -->
-                                    <td class="PACKAGE_CAPACITY">50 Guests</td>
-                                    <!-- Times Booked -->
-                                    <td class="TIMES_BOOKED">12</td>
-                                </tr>
-                                <!-- Add more rows dynamically using PHP -->
-                            </tbody>   
-
-                            <tbody>
-                                <!-- Example Row (Replace with PHP loop to fetch data from the database) -->
-                                <tr>
-                                    <!-- Package Image -->
-                                    <td class="PACKAGE_IMAGE">
-                                        <img src="assets/images/2srevadilla.jpg" alt="Package 1">
-                                    </td>
-                                    <!-- Package Name -->
-                                    <td class="PACKAGE_NAME">Basic Package</td>
-                                    <!-- Package Price -->
-                                    <td class="PACKAGE_PRICE">₱5,000</td>
-                                    <!-- Package Capacity -->
-                                    <td class="PACKAGE_CAPACITY">50 Guests</td>
-                                    <!-- Times Booked -->
-                                    <td class="TIMES_BOOKED">12</td>
-                                </tr>
-                                <!-- Add more rows dynamically using PHP -->
-                            </tbody>   
-                        </table>
+                                    // Loop through each package and generate bars
+                                    foreach ($packages as $package) {
+                                        // Calculate the height of the bar based on popularity
+                                        $height = ($package['popularity'] / $maxPopularity) * 100;
+                                        ?>
+                                        <div class="BAR" style="height: <?= $height ?>%;" data-label="<?= $package['name'] ?>"></div>
+                                        <?php
+                                    }
+                                } else {
+                                    // If there's are no packages
+                                    ?>
+                            <div class="BAR NO_PACKAGES" style="height: 0%;" data-label="No Packages Available"></div>
+                            <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Bookings Section -->
@@ -228,11 +196,10 @@ if ($status == "Pending") {
                                     <td class="EVENT_LOCATION">Dagupan Convention Center</td>
                                     <td class="PACKAGE">Basic Package</td>
                                     <td class="<?php echo $statusClass; ?>"><?php echo $statusText; ?></td>
-                                    </tr>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
-
                 </div>
 
 

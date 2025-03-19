@@ -42,7 +42,7 @@ body{
 
 .NAV_CONTAINER{
     display: flex;
-    background: var(--gradient_White);
+    background: var(--whtShade1);
 }
 
 .LOGO{
@@ -175,7 +175,7 @@ body{
 .DASHBOARD{
     flex: 1;
     padding: 20px;
-    background: var(--gradient_White);
+    background: var(--whtShade1);
 }
 
 .DASHBOARD2{
@@ -312,6 +312,7 @@ body{
     margin-left: -10px;
 }
 
+
 /* Booking Boxes */
 .CONTENT {
     display: flex;
@@ -322,137 +323,86 @@ body{
 /* BOXES STYLE */
 .BOX {
     flex: 1;
-    padding: 20px;
-    background-color: white;
+    padding: 20px 20px 10px 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
     text-align: left;
     transition: transform 0.5s ease-in-out;
     position: relative;
-    border: 1px solid var(--whtShade1);
+    overflow: hidden;
 }
 
 .BOX h3 {
     font-size: 0.8rem;
     font-family: 'Inter_Regular';
-    color: var(--gryShade1);
+    color: var(--whtShade2);
     margin: 0px 0px 10px 10px;
+    display: flex; 
+    align-items: center;
+    gap: 10px;
+}
+
+.BOX h3 i {
+    font-size: 1rem; 
+    color: inherit;
 }
 
 .BOX p {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-family: 'Inter_Bold';
-    color: var(--blkShade1);
+    color: white;
     margin: 0;
     margin-left: 10px;
     margin-bottom: 10px;
 }
 
-/* ICON STYLES */
-.BOX i {
+/* ICON STYLES (Bottom Right Icon) */
+.BOX i:not(h3 i) { 
     position: absolute;
-    right: 50px;
-    top: 10%;
-    transform: translateY(-50%);
-    font-size: 1.5rem;
+    right: -10px; 
+    bottom: -10px; 
+    font-size: 5rem; 
+    transform: rotate(15deg); 
+    color: white; 
+    z-index: 1; 
+    pointer-events: none;
 }
 
-/* ICON COLORS */
-.PENDING i{
-    background: var(--gradient_Yellow);
-    padding: 20px;
-    border-radius: 50%;
-    color: white;
-    box-shadow: 14px 17px 40px 4px rgba(112, 144, 176, 0.08);
-    transition: box-shadow 0.2s ease-in-out;     
+/* BACKGROUND AND BORDER COLORS */
+.PENDING {
+    background: linear-gradient(to top, #f7b500, #f77b00);
+    transition: 0.2s ease;
 }
 
-.PENDING i:hover {
+.SCHEDULED {
+    background: linear-gradient(to top, #00b4f7, #0055f7);
+    transition: 0.2s ease;
+}
+
+.COMPLETED {
+    background: linear-gradient(to top, #00f70c, #009c31);
+    transition: 0.2s ease;
+}
+
+.CANCELLED {
+    background: linear-gradient(to top, #fc241d, #c40202);
+    transition: 0.2s ease;
+}
+
+/* Hover Effects */
+.PENDING:hover {
     box-shadow: 1px 1px 10px 5px rgba(247, 181, 0, 0.25);
 }
 
-.SCHEDULED i{
-    background: var(--gradient_Blue);
-    padding: 20px;
-    border-radius: 50%;
-    color: white;
-    box-shadow: 14px 17px 40px 4px rgba(112, 144, 176, 0.08);   
-    transition: box-shadow 0.2s ease-in-out; 
-}
-
-.SCHEDULED i:hover{
+.SCHEDULED:hover {
     box-shadow: 1px 1px 10px 5px rgba(0, 180, 247, 0.25);
 }
 
-.COMPLETED i{
-    background: var(--gradient_Green);
-    padding: 20px;
-    border-radius: 50%;
-    color: white;
-    box-shadow: 14px 17px 40px 4px rgba(112, 144, 176, 0.08);   
-    transition: box-shadow 0.2s ease-in-out; 
-}
-
-.COMPLETED i:hover{
+.COMPLETED:hover {
     box-shadow: 1px 1px 10px 5px rgba(0, 247, 12, 0.25);
 }
 
-.CANCELLED i{
-    background: var(--gradient_Red);
-    padding: 20px;
-    border-radius: 50%;
-    color: white;
-    box-shadow: 14px 17px 40px 4px rgba(112, 144, 176, 0.08);
-    transition: box-shadow 0.2s ease-in-out;     
-}
-
-.CANCELLED i:hover{
+.CANCELLED:hover {
     box-shadow: 1px 1px 10px 5px rgba(247, 0, 0, 0.25);
-}
-
-/* ICONS LEFT LINE */
-.PENDING::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 10px;
-    background: var(--gradient_Yellow);
-    border-radius: 0px 0px 15px 15px;
-}
-
-.SCHEDULED::before{
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 10px;
-    background: var(--gradient_Blue);
-    border-radius: 0px 0px 15px 15px;
-}
-
-.COMPLETED::before{
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 10px;
-    background: var(--gradient_Green);
-    border-radius: 0px 0px 15px 15px;
-}
-
-.CANCELLED::before{
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 10px;
-    background: var(--gradient_Red);
-    border-radius: 0px 0px 15px 15px;
 }
 
 
@@ -477,6 +427,7 @@ body{
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
+    min-height: 400px;
     max-height: 400px;
     margin-bottom: 20px;
 }
@@ -574,7 +525,6 @@ body{
     color: var(--blkShade1);
     cursor: pointer;
     box-sizing: border-box;
-    background: var(--gradient_White);
     border-radius: 10px;
 }
 
@@ -683,13 +633,13 @@ body{
     white-space: normal; /* Text wrap */
 }
 
-/* Package Overview Section */
+/* Package Overview (70%) */
 .PACKAGE_OVERVIEW {
+    flex: 50%;
     background-color: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
-    margin-bottom: 20px;
     min-height: 400px;
     max-height: 400px;
     overflow-y: auto;
@@ -717,9 +667,11 @@ body{
     font-family: 'Inter_Regular';
     color: var(--blkShade1);
 }
+.PACKAGE_OVERVIEW i{
+    margin-right: 5px;
+}
 
 .PACKAGE_OVERVIEW th {
-    color: var();
     font-family: 'Inter_Bold';
     text-align: center;
     border-bottom: 1px solid var(--gryShade1);
@@ -738,6 +690,103 @@ body{
 .PACKAGE_OVERVIEW .PACKAGE_IMAGE img {
     width: 75px;
     height: 50px;
-    border-radius: 10px;
+    border-radius: 5px;
     object-fit: cover;
+}
+
+/* Flex Container for Package Overview and Trending Chart */
+.FLEX_CONTAINER {
+    display: flex;
+    gap: 20px;
+}
+
+/* Trending Packages Bar Chart */
+.TRENDING_CHART {
+    flex: 50%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    min-height: 400px;
+    max-height: 400px;
+
+    display: flex;
+    flex-direction: column;
+    overflow-x: auto;
+}
+
+.TRENDING_CHART h2 {
+    font-size: 1rem;
+    font-family: 'Inter_Bold';
+    color: var(--blkShade1);
+    margin: 0;
+    padding-bottom: 10px;
+}
+
+
+/* Chart Container */
+.CHART_CONTAINER {
+    flex-grow: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start; 
+    gap: 60px; 
+    padding: 0;
+    background: repeating-linear-gradient(
+        to top,
+        transparent,
+        transparent 24%,
+        var(--whtShade2) 25%,
+        var(--whtShade2) 25%
+    ); /* Grid lines */
+    height: 100%;
+    position: relative;
+    margin-bottom: 40px;
+    border-bottom: 2px solid var(--whtShade2);
+}
+
+/* Bars */
+.BAR {
+    min-width: 50px;
+    background: var(--gradient_Vertical); 
+    border-radius: 5px 5px 0 0;
+    position: relative;
+    transition: height 0.3s ease; 
+}
+
+.BAR::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: -45px; 
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.6rem;
+    font-family: 'Inter_Bold';
+    color: var(--blkShade1);
+    text-align: center;
+}
+
+.BAR:hover {
+    filter: brightness(110%); 
+}
+
+/* No Packages Available Bar */
+.BAR.NO_PACKAGES {
+    width: 100%; 
+    height: 100%; 
+    background: transparent; 
+    position: absolute; 
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-family: 'Inter_Medium';
+    color: var(--gryShade1);
+    text-align: center;
+    white-space: nowrap;
+    padding: 10px;
 }
