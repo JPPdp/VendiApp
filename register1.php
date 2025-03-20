@@ -141,20 +141,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <h2>SIGN UP</h2>
             
             <!-- Business Name -->
-            <label for="VENDOR_USERNAME">Business Name</label>
+            <label for="VENDOR_USERNAME">Business Name <span id="REQUIRED">*</span></label>
             <input type="text" id="businessname" name="businessname" placeholder="Enter Business Name" required>
 
 
             <div class="BESIDE_FIELDS">
                 <div class="BESIDE_FIELD">
                     <!-- Email -->
-                    <label for="VENDOR_EMAIL">Email</label>
+                    <label for="VENDOR_EMAIL">Email <span id="REQUIRED">*</span></label>
                     <input type="email" id="VENDOR_EMAIL" name="email" placeholder="Enter Email Address" required>
                 </div>
 
                 <div class="BESIDE_FIELD">
                     <!-- Mobile Number -->
-                    <label for="VENDOR_MOBILE">Mobile Number</label>
+                    <label for="VENDOR_MOBILE">Mobile Number <span id="REQUIRED">*</span></label>
                     <span id="PHL">+63</span>
                     <input type="tel" id="VENDOR_MOBILE" name="mobile" placeholder="Enter Mobile Number" required minlength="10" maxlength="10">
                 </div>
@@ -164,7 +164,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <!-- Password -->
             <div class="BESIDE_FIELDS">
                 <div class="BESIDE_FIELD">
-                    <label for="PASSWORD">Password</label>
+                    <label for="PASSWORD">Password <span id="REQUIRED">*</span></label>
                     <div class="PASSWORD_CONTAINER">
                         <input type="password" id="PASSWORD" name="password" placeholder="Enter Password" required minlength="8">
                         <i class="fas fa-eye PASSWORD_TOGGLE" id="password-toggle"></i>
@@ -181,7 +181,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <!-- Confirm Password -->
                 <div class="BESIDE_FIELD">
-                    <label for="CONFIRM_PASSWORD">Confirm Password</label>
+                    <label for="CONFIRM_PASSWORD">Confirm Password <span id="REQUIRED">*</span></label>
                     <div class="PASSWORD_CONTAINER">
                         <input type="password" id="CONFIRM_PASSWORD" name="confirm_password" placeholder="Re-enter Password" required minlength="8">
                         <i class="fas fa-eye PASSWORD_TOGGLE" id="confirm-password-toggle"></i>
@@ -191,13 +191,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="BESIDE_FIELDS">
                 <div class="BESIDE_FIELD">
-                    <label for="ADDRESS">Address</label> 
+                    <label for="ADDRESS">Address <span id="REQUIRED">*</span></label> 
                     <input type="text" id="ADDRESS" name="ADDRESS" placeholder="Enter complete address" required>
                 </div>
 
                 <div class="BESIDE_FIELD">
                     <!-- City/Municipality Dropdown -->
-                    <label for="CITY">City/Municipality</label>
+                    <label for="CITY">City/Municipality <span id="REQUIRED">*</span></label>
                     <select id="CITY" name="CITY" required>
                         <option value="" disabled selected>Select City/Municipality</option>
                         <option value="Dagupan">Dagupan</option>
@@ -206,7 +206,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <div class="BESIDE_FIELD">
                     <!-- Province Dropdown -->
-                    <label for="PROVINCE">Province</label>
+                    <label for="PROVINCE">Province <span id="REQUIRED">*</span></label>
                     <select id="PROVINCE" name="PROVINCE" required>
                         <option value="" disabled selected>Select Province</option>
                         <option value="Pangasinan">Pangasinan</option>

@@ -95,17 +95,6 @@ if (!isset($_SESSION['businessname'])) {
                                 himself, every moment is filled with joy. With our customizable party packages, 
                                 you can create the perfect event that fits your budget and preferences." ?></span>
                             </div>
-                                <div class="PACKAGE_FEATURES">
-                                    <h3><i class='fas fa-tag'></i>Features</h3>
-                                    <ul>
-                                        <?php
-                                            $categories = array("Birthday", "Games & Activities", "Kid-Friendly");
-                                            foreach ($categories as $category) {
-                                                echo "<li> $category</li>";
-                                            }
-                                        ?>
-                                    </ul>
-                                </div>
                         </div>
                         <!-- Package Details -->
                         <div class="BESIDE_FIELDS">

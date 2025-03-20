@@ -104,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p>Kindly submit your proof of business document and select the services you offer to proceed.</p>
 
             <!-- Services Offered -->
-            <label for="CATEGORY">Business Category</label>
+            <label for="CATEGORY">Business Category <span id="REQUIRED">*</span></label>
             <select id="CATEGORY" name="CATEGORY" required>
                 <option value="" disabled selected>What does your business primarily offer?</option>
                 <option value="FOOD">Food</option>
@@ -117,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="BESIDE_FIELD">
                     <!-- Package Description -->
                     <div class="FORM_GROUP">
-                        <label for="PACKAGE_DESCRIPTION">Description</label>
+                        <label for="PACKAGE_DESCRIPTION">Description <span id="REQUIRED">*</span></label>
                         <textarea id="PACKAGE_DESCRIPTION" name="PACKAGE_DESCRIPTION" maxlength="400" placeholder="Enter package description" required></textarea>
                     </div>
                 </div>
@@ -125,10 +125,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="BESIDE_FIELD">
                     <!-- Package Features -->
                     <div class="FORM_GROUP">
-                        <label>Features</label>
+                        <label>Features <span id="REQUIRED">*</span></label>
                         <div id="PACKAGE_FEATURES">
                             <div class="FEATURE_ITEM">
-                                <select name="feature1">
+                                <select name="feature1" required>
                                     <option value="" disabled selected>Select Feature 1</option>
                                     <option value="" disabled>&#128197; Event Type</option>
                                     <option value="Birthday">Birthday</option>
@@ -149,7 +149,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </select>
                             </div>
                             <div class="FEATURE_ITEM">
-                                <select name="feature2">
+                                <select name="feature2" required>
                                     <option value="" disabled selected>Select Feature 2</option>
                                     <option value="" disabled>&#128197; Event Type</option>
                                     <option value="Birthday">Birthday</option>
@@ -170,7 +170,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </select>
                             </div>
                             <div class="FEATURE_ITEM">
-                                <select name="feature3">
+                                <select name="feature3" required>
                                     <option value="" disabled selected>Select Feature 3</option>
                                     <option value="" disabled>&#128197; Event Type</option>
                                     <option value="Birthday">Birthday</option>
@@ -196,7 +196,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <!-- Business Document Upload -->
-            <label for="BUSINESS_DOCUMENT">Upload Business Document <span id="FILES">(PDF, JPEG, PNG, max 5MB)</span></label>
+            <label for="BUSINESS_DOCUMENT">Upload Business Document <span id="FILES">(PDF, JPEG, PNG, max 5MB)</span> <span id="REQUIRED">*</span></label>
             <input type="file" id="BUSINESS_DOCUMENT" name="business_document" accept=".pdf,.jpg,.jpeg,.png" required>
 
             <!-- Submit Button -->
