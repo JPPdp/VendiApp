@@ -2,8 +2,8 @@
 session_start();
 
 // Check if the user is coming from the sign-up form
-if (!isset($_GET['registration']) || $_GET['registration'] !== 'success') {
-    header("Location: register2.php"); // Redirect to sign-up if accessed directly
+if (!isset($_SESSION['registration_data'])) {
+    header("Location: register1.php"); // Redirect to sign-up if accessed directly
     exit();
 }
 
@@ -11,45 +11,43 @@ $error_message = '';
 $success_message = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Connect to the database
-    $conn = new mysqli("localhost", "root", "", "vendi_db");
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
     // Retrieve form data
-    $service = htmlspecialchars(trim($_POST['SERVICE']));
+    $business_category = htmlspecialchars(trim($_POST['business_category']));
+    $business_description = htmlspecialchars(trim($_POST['business_description']));
+    $features1 = htmlspecialchars(trim($_POST['features1']));
+    $features2 = htmlspecialchars(trim($_POST['features2']));
+    $features3 = htmlspecialchars(trim($_POST['features3']));
     $business_document = $_FILES['business_document'];
 
-    // Handle file upload (basic example)
-    if ($business_document['error'] == UPLOAD_ERR_OK) {
+    // Check if the file was uploaded without errors
+    if ($business_document['error'] === UPLOAD_ERR_OK) {
         $upload_dir = 'uploads/'; // Make sure this directory exists and is writable
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
+        }
         $upload_file = $upload_dir . basename($business_document['name']);
 
-        // Move uploaded file to the desired directory
+        // Move the uploaded file to the desired directory
         if (move_uploaded_file($business_document['tmp_name'], $upload_file)) {
-            // Insert into database (assuming you have a column for service and document path)
-            $stmt = $conn->prepare("UPDATE vendors SET business_category = ?, business_document = ? WHERE email = ?");
-            $stmt->bind_param("sss", $service, $upload_file, $_SESSION['email']);
-            
-            if ($stmt->execute()) {
-                // Success message after successful submission
-                $success_message = "Business validation submitted successfully!";
-                header("Location: register3.php"); // Redirect to pending approval page
-                exit();
-            } else {
-                $error_message = "Failed to save business validation. Please try again.";
-            }
+            // Read the file content
+            $file_content = file_get_contents($upload_file);
+
+            // Update session data with new inputs
+            $_SESSION['registration_data']['business_category'] = $business_category;
+            $_SESSION['registration_data']['business_description'] = $business_description;
+            $_SESSION['registration_data']['features1'] = $features1;
+            $_SESSION['registration_data']['features2'] = $features2;
+            $_SESSION['registration_data']['features3'] = $features3;
+            $_SESSION['registration_data']['business_documents'] = $file_content;
+
+            header("Location: register3.php");
+            exit();
         } else {
             $error_message = "Failed to upload business document. Please try again.";
         }
     } else {
         $error_message = "Error uploading file.";
     }
-
-    $stmt->close();
-    $conn->close();
 }
 ?>
 

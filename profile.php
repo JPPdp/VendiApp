@@ -6,21 +6,45 @@ if (!isset($_SESSION['businessname'])) {
     exit();
 }
 
+// Assuming you have a database connection established
+$conn = new mysqli("localhost", "root", "", "vendi_db");
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch data from the database
+$sql = "SELECT * FROM vendors WHERE businessname = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $_SESSION['businessname']);
+$stmt->execute();
+$result = $stmt->get_result();
+$vendor = $result->fetch_assoc();
+
+if ($vendor) {
+    $_SESSION['business_description'] = $vendor['business_description'];
+    $_SESSION['email'] = $vendor['email'];
+    $_SESSION['mobile'] = $vendor['mobile'];
+    $_SESSION['address'] = $vendor['address'];
+    $_SESSION['city_municipal'] = $vendor['city_municipal'];
+    $_SESSION['province'] = $vendor['province'];
+    $_SESSION['business_category'] = $vendor['business_category'];
+    $_SESSION['business_documents'] = $vendor['business_documents'];
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $businessDescription = $_POST['BUSINESS_DESCRIPTION'];
   
-    // Assuming you have a database connection established
-    $sql = "UPDATE vendors SET business_description = ? WHERE business_name = ?";
+    $sql = "UPDATE vendors SET business_description = ? WHERE businessname = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $businessDescription, $_SESSION['businessname']);
     if ($stmt->execute()) {
-      echo "Business description updated successfully.";
+        $_SESSION['business_description'] = $businessDescription;
     } else {
-      echo "Error updating business description: " . $conn->error;
+        echo "Error updating business description: " . $conn->error;
     }
     $stmt->close();
-  }
-  
+}
 ?>
 
 <!DOCTYPE html>
@@ -107,53 +131,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </form>
                 </div>
 
-
-
-
                 <!-- Right Profile Section -->
                 <div class="RIGHT_PROFILE">
                     <div class="RIGHT_PART">
-                    <h2>Account Details</h2>
+                        <h2>Account Details</h2>
                         <!-- 1st Stack: Contact Information -->
                         <div class="STACK">
                             <h3>Account Information</h3>
                             <div class="BESIDE_FIELDS">
                                 <div class="BESIDE_FIELD">
-                                    <!-- Email -->
+                                    <!-- Business Name -->
                                     <label>Business Name</label>
                                     <input type="text" id="businessname" name="businessname" value="<?php echo htmlspecialchars($_SESSION['businessname']); ?>" readonly>
-                                    </div>
+                                </div>
                                 <div class="BESIDE_FIELD">
                                     <!-- Email -->
                                     <label>Email</label>
-                                    <input type="email" id="VENDOR_EMAIL" name="email" value="email@email.com" readonly><!--<?php echo htmlspecialchars($_SESSION['email']); ?>-->
+                                    <input type="email" id="business_email" name="email" value="<?php echo htmlspecialchars($_SESSION['email']); ?>" readonly>
                                 </div>
 
                                 <div class="BESIDE_FIELD">
                                     <!-- Mobile Number -->
                                     <label>Mobile Number</label>
-                                    <input type="tel" id="VENDOR_MOBILE" name="mobile"required minlength="10" maxlength="10" value="9172717281" readonly><!--<?php echo htmlspecialchars($_SESSION['mobile']); ?>-->
+                                    <input type="tel" id="business_mobile" name="mobile"required minlength="10" maxlength="10" value="<?php echo htmlspecialchars($_SESSION['mobile']); ?>" readonly>
                                 </div>
                             </div>
                         </div>
 
                         <!-- 2nd Stack: Address Information -->
                         <div class="STACK">
-                        <h3>Address Information</h3>
+                            <h3>Address Information</h3>
                             <div class="BESIDE_FIELDS">
                                 <div class="BESIDE_FIELD">
                                     <label>Address</label>
-                                    <input type="text" id="ADDRESS" name="ADDRESS" value="RS Building, Arellano" readonly><!--<?php echo $vendor['address']; ?>-->
+                                    <input type="text" id="business_address" name="address" value="<?php echo htmlspecialchars($_SESSION['address']); ?>" readonly>
                                 </div>
 
                                 <div class="BESIDE_FIELD">
                                     <label>City</label>
-                                    <input type="text" id="CITY" name="CITY" value="Dagupan City" readonly>
+                                    <input type="text" id="business_city" name="address" value="<?php echo htmlspecialchars($_SESSION['city_municipal']); ?>" readonly>
                                     </div>
 
                                 <div class="BESIDE_FIELD">
                                     <label>Province</label>
-                                    <input type="text" id="PROVINCE" name="PROVINCE" value="Pangasinan" readonly>
+                                    <input type="text" id="business_province" name="province" value="<?php echo htmlspecialchars($_SESSION['province']); ?>" readonly>
                                 </div>
                             </div>
                         </div>
@@ -164,7 +185,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="BESIDE_FIELDS">
                                 <div class="BESIDE_FIELD">
                                 <label>Services Offered</label>
-                                <input type="text" id="SERVICE" name="SERVICE" value="Food" readonly>
+                                <input type="text" id="business_service" name="Services" value="<?php echo htmlspecialchars($_SESSION['business_category']); ?>" readonly>
                                 </div>
 
                                 <div class="BESIDE_FIELD">
@@ -175,7 +196,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                 <div id="IMAGE_VIEW" class="EXPAND"><!-- Container for Expanded Image -->
                                     <a href="#" class="CLOSE_BUTTON">&times;</a>
-                                    <img class="EXPANDED_IMAGE" src="assets/images/sample_document.png" alt="Expanded Business Document">
+                                    <img class="EXPANDED_IMAGE" src="<?php echo htmlspecialchars($_SESSION['business_documents']); ?>" alt="Expanded Business Document">
                                 </div>
                             </div>
                         </div>

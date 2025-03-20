@@ -20,24 +20,21 @@ function validatePassword($password) {
     return true;
 }
 
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
     $businessname = htmlspecialchars($_POST['businessname']);
-    
-    // Sanitize and validate email
     $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
-    
-    // Check if email is valid
+    $mobile = htmlspecialchars($_POST['mobile']);
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
+    $address = htmlspecialchars($_POST['address']);
+    $city_municipal = htmlspecialchars($_POST['city_municipal']);
+    $province = htmlspecialchars($_POST['province']);
+
+    // Validate email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error_message = "Invalid email format.";
     } else {
-        // Sanitize mobile input
-        $mobile = htmlspecialchars($_POST['mobile']);
-        
-        $password = $_POST['password'];
-        $confirm_password = $_POST['confirm_password'];
-
         // Validate password match
         if ($password !== $confirm_password) {
             $error_message = "Passwords do not match.";
@@ -50,38 +47,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Hash the password
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-                // Connect to the database
-                $conn = new mysqli("localhost", "root", "", "vendi_db");
-
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
-                }
-
-                // Check if the username or email already exists
-                $stmt = $conn->prepare("SELECT id FROM vendors WHERE businessname = ? OR email = ?");
-                $stmt->bind_param("ss", $businessname, $email);
-                $stmt->execute();
-                $stmt->store_result();
-
-                if ($stmt->num_rows > 0) {
-                    $error_message = "Username or email already exists. Please choose another.";
-                } else {
-                    $stmt->close();
-                    // Insert new user into the database
-                    if ($stmt = $conn->prepare("INSERT INTO vendors (businessname, email, mobile, password) VALUES (?, ?, ?, ?)")) {
-                        $stmt->bind_param("ssss", $businessname, $email, $mobile, $hashed_password);
-                        if ($stmt->execute()) {
-                            // Redirect to next page after successful registration
-                            header("Location: register2.php?registration=success");
-                            exit();
-                        } else {
-                            $error_message = "Registration failed. Please try again.";
-                        }
-                    }
-                }
-
-                $stmt->close();
-                $conn->close();
+                // Store data in session and redirect to register2.php
+                session_start();
+                $_SESSION['registration_data'] = [
+                    'businessname' => $businessname,
+                    'email' => $email,
+                    'mobile' => $mobile,
+                    'password' => $hashed_password,
+                    'address' => $address,
+                    'city_municipal' => $city_municipal,
+                    'province' => $province
+                ];
+                header("Location: register2.php");
+                exit();
             }
         }
     }
