@@ -116,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="text" id="businessname" name="businessname" value="<?php echo htmlspecialchars($_SESSION['businessname']); ?>" readonly>
 
                     <label for="EMAIL">Email</label>
-                    <input type="email" id="VENDOR_EMAIL" name="EMAIL" value="email@.email.com" readonly>
+                    <input type="email" id="business_email" name="email" value="<?php echo htmlspecialchars($_SESSION['email']); ?>" readonly>
 
                     <label for="MESSAGE">Message</label>
                     <textarea id="MESSAGE" name="MESSAGE" rows="5" placeholder="Enter your message here..." required></textarea>
