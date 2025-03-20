@@ -5,6 +5,44 @@ if (!isset($_SESSION['businessname'])) {
     header("Location: dashboard.php");
     exit();
 }
+$conn = new mysqli("localhost", "root", "", "vendi_db");
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch data from the database
+$sql = "SELECT * FROM vendors WHERE businessname = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $_SESSION['businessname']);
+$stmt->execute();
+$result = $stmt->get_result();
+$vendor = $result->fetch_assoc();
+
+if ($vendor) {
+    $_SESSION['vendors_profile'] = $vendor['vendors_profile'];
+}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] == 0) {
+        $profilePic = $_FILES['profile_pic'];
+        $profilePicPath = 'uploads/' . basename($profilePic['name']);
+        
+        if (move_uploaded_file($profilePic['tmp_name'], $profilePicPath)) {
+            $sql = "UPDATE vendors SET vendors_profile = ? WHERE businessname = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ss", $profilePicPath, $_SESSION['businessname']);
+            if ($stmt->execute()) {
+                $_SESSION['vendors_profile'] = $profilePicPath;
+            } else {
+                echo "Error updating profile picture: " . $conn->error;
+            }
+            $stmt->close();
+        } else {
+            echo "Error uploading profile picture.";
+        }
+    }
+    $conn->close();
+}
 ?>
 
 <!DOCTYPE html>
@@ -60,7 +98,7 @@ if (!isset($_SESSION['businessname'])) {
                             <span class="NOTIFICATION_DOT"></span> <!-- Red dot for notifications -->
                         </div>
                         <a href="db_profile.html">
-                            <img src="assets/images/tiara.png" alt="Profile Picture" class="PROFILE_PIC">
+                            <img src="<?php echo htmlspecialchars($_SESSION['vendors_profile']); ?>" alt="Profile Picture" class="PROFILE_PIC">
                         </a>    
                         <span class="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['businessname']); ?></span>             
                     </div>
