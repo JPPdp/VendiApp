@@ -574,7 +574,7 @@ label #FILES {
     border: 2px solid var(--whtShade2);
     padding: 10px;
     border-radius: 5px;
-    min-height: 145px;
+    min-height: 135px;
     resize: none;
 
 }
@@ -584,6 +584,7 @@ label #FILES {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-top: -10px;
 }
 
 .FEATURE_ITEM {

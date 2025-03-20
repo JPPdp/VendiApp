@@ -19,7 +19,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Retrieve form data
-    $service = htmlspecialchars(trim($_POST['SERVICE']));
     $business_document = $_FILES['business_document'];
 
     // Handle file upload (basic example)

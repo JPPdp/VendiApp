@@ -92,96 +92,21 @@ if (!isset($_SESSION['businessname'])) {
                                     </div>
 
                                     <div class="BESIDE_FIELD">
-                                        <!-- Package Features -->
-                                        <div class="FORM_GROUP">
-                                            <label><i class="fas fa-list"></i> Features</label>
-                                            <div id="PACKAGE_FEATURES">
-                                                <div class="FEATURE_ITEM">
-                                                    <select name="feature1">
-                                                        <option value="" disabled selected>Select Feature 1</option>
-                                                            <option value="" disabled>&#128197; Event Type</option>
-                                                        <option value="Birthday">Birthday</option>
-                                                        <option value="Corporate">Corporate</option>
-                                                        <option value="Wedding">Wedding</option>
-                                                            <option value="" disabled>&#127838; Food Options</option>
-                                                        <option value="Desserts">Desserts</option>
-                                                        <option value="Fast Food">Fast Food</option>
-                                                        <option value="Vegan">Vegan</option>
-                                                            <option value="" disabled>&#127866; Beverage Options</option>
-                                                        <option value="Alcoholic">Alcoholic</option>
-                                                        <option value="Coffee & Tea">Coffee & Tea</option>
-                                                        <option value="Refreshments">Refreshments</option>
-                                                            <option value="" disabled>&#127909; Entertainment Options</option>
-                                                        <option value="Kid-Friendly">Arts & Crafts</option>
-                                                        <option value="Games & Activities">Games & Activities</option>
-                                                        <option value="Games & Activities">Photobooth</option>
-                                                    </select>
-                                                </div>
-                                                <div class="FEATURE_ITEM">
-                                                    <select name="feature2">
-                                                        <option value="" disabled selected>Select Feature 2</option>
-                                                        <option value="" disabled>&#128197; Event Type</option>
-                                                        <option value="Birthday">Birthday</option>
-                                                        <option value="Corporate">Corporate</option>
-                                                        <option value="Wedding">Wedding</option>
-                                                            <option value="" disabled>&#127838; Food Options</option>
-                                                        <option value="Desserts">Desserts</option>
-                                                        <option value="Fast Food">Fast Food</option>
-                                                        <option value="Vegan">Vegan</option>
-                                                            <option value="" disabled>&#127866; Beverage Options</option>
-                                                        <option value="Alcoholic">Alcoholic</option>
-                                                        <option value="Coffee & Tea">Coffee & Tea</option>
-                                                        <option value="Refreshments">Refreshments</option>
-                                                            <option value="" disabled>&#127909; Entertainment Options</option>
-                                                        <option value="Kid-Friendly">Arts & Crafts</option>
-                                                        <option value="Games & Activities">Games & Activities</option>
-                                                        <option value="Games & Activities">Photobooth</option>
-                                                    </select>
-                                                </div>
-                                                <div class="FEATURE_ITEM">
-                                                    <select name="feature3">
-                                                        <option value="" disabled selected>Select Feature 3</option>
-                                                        <option value="" disabled>&#128197; Event Type</option>
-                                                        <option value="Birthday">Birthday</option>
-                                                        <option value="Corporate">Corporate</option>
-                                                        <option value="Wedding">Wedding</option>
-                                                            <option value="" disabled>&#127838; Food Options</option>
-                                                        <option value="Desserts">Desserts</option>
-                                                        <option value="Fast Food">Fast Food</option>
-                                                        <option value="Vegan">Vegan</option>
-                                                            <option value="" disabled>&#127866; Beverage Options</option>
-                                                        <option value="Alcoholic">Alcoholic</option>
-                                                        <option value="Coffee & Tea">Coffee & Tea</option>
-                                                        <option value="Refreshments">Refreshments</option>
-                                                            <option value="" disabled>&#127909; Entertainment Options</option>
-                                                        <option value="Kid-Friendly">Arts & Crafts</option>
-                                                        <option value="Games & Activities">Games & Activities</option>
-                                                        <option value="Games & Activities">Photobooth</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="BESIDE_FIELDS">
-                                    <div class="BESIDE_FIELD">
-                                        <!-- Starting Price -->
+                                            <!-- Starting Price -->
                                         <div class="FORM_GROUP">
                                             <label for="STARTING_PRICE"><i class="fas fa-tag"></i> Starting Price</label>
                                             <input type="number" id="STARTING_PRICE" name="STARTING_PRICE" placeholder="Enter starting price" required>
                                         </div>
-                                    </div>
 
-                                    <div class="BESIDE_FIELD">
                                         <!-- Capacity -->
-                                        <div class="FORM_GROUP">
+                                        <div class="FORM_GROUP" id="CAPACITY">
                                             <label for="CAPACITY"><i class="fas fa-users"></i> Capacity</label>
                                             <input type="number" id="CAPACITY" name="CAPACITY" placeholder="Enter guest capacity (e.g., 50)" required>
                                         </div>
                                     </div>
                                 </div>
+
+
                     </div>
 
                         <div class="RIGHT_MAIN">
