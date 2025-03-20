@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2025 at 04:29 AM
+-- Generation Time: Mar 20, 2025 at 06:10 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,17 @@ SET time_zone = "+00:00";
 --
 -- Database: `vendi_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_console`
+--
+
+CREATE TABLE `admin_console` (
+  `admin_id` int(11) NOT NULL,
+  `Admin_name` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -86,7 +97,8 @@ CREATE TABLE `stalls` (
 --
 
 CREATE TABLE `vendors` (
-  `id` int(11) NOT NULL,
+  `vendors_id` int(11) NOT NULL,
+  `vendors_profile` blob NOT NULL,
   `businessname` varchar(60) NOT NULL,
   `business_description` longtext NOT NULL,
   `mobile` varchar(11) NOT NULL,
@@ -107,13 +119,19 @@ CREATE TABLE `vendors` (
 -- Dumping data for table `vendors`
 --
 
-INSERT INTO `vendors` (`id`, `businessname`, `business_description`, `mobile`, `email`, `password`, `address`, `city_municipal`, `province`, `business_category`, `features1`, `features2`, `features3`, `business_documents`, `created at`) VALUES
-(2, 'Student Hub', '', '09467172999', 'verbojanrich20@gmail.com', '$2y$10$Lxq0COipQWir01NU8umuCetdIYXdHyVZHUgG.P98LbpX1RkELWZtW', '', '', '', '', '', '', '', '', '2025-03-01 06:07:34'),
-(3, 'Students Book', '', '9997986272', 'JanrichVerbo@devsfamily.onmicr', '$2y$10$3XAGJQjDgsfRlGEsU8x0qeECB9GVKDG5CoH78kZ2tBhRywMmePUwq', '', '', '', '', '', '', '', '', '2025-03-15 12:36:43');
+INSERT INTO `vendors` (`vendors_id`, `vendors_profile`, `businessname`, `business_description`, `mobile`, `email`, `password`, `address`, `city_municipal`, `province`, `business_category`, `features1`, `features2`, `features3`, `business_documents`, `created at`) VALUES
+(2, '', 'Student Hub', 'Hello', '09467172999', 'verbojanrich20@gmail.com', '$2y$10$Lxq0COipQWir01NU8umuCetdIYXdHyVZHUgG.P98LbpX1RkELWZtW', '', '', '', '', '', '', '', '', '2025-03-01 06:07:34'),
+(4, '', 'Students Book', '', '9997986272', 'JanrichVerbo@devsfamily.onmicr', '$2y$10$3XAGJQjDgsfRlGEsU8x0qeECB9GVKDG5CoH78kZ2tBhRywMmePUwq', '', '', '', '', '', '', '', '', '2025-03-15 12:36:43');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin_console`
+--
+ALTER TABLE `admin_console`
+  ADD PRIMARY KEY (`admin_id`);
 
 --
 -- Indexes for table `bookings`
@@ -145,12 +163,18 @@ ALTER TABLE `stalls`
 -- Indexes for table `vendors`
 --
 ALTER TABLE `vendors`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`vendors_id`),
   ADD UNIQUE KEY `businessname` (`businessname`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `admin_console`
+--
+ALTER TABLE `admin_console`
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `bookings`
@@ -180,7 +204,7 @@ ALTER TABLE `stalls`
 -- AUTO_INCREMENT for table `vendors`
 --
 ALTER TABLE `vendors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `vendors_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
