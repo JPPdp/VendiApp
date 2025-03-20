@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Move uploaded file to the desired directory
         if (move_uploaded_file($business_document['tmp_name'], $upload_file)) {
             // Insert into database (assuming you have a column for service and document path)
-            $stmt = $conn->prepare("UPDATE vendors SET category = ?, business_document = ? WHERE email = ?");
+            $stmt = $conn->prepare("UPDATE vendors SET business_category = ?, business_document = ? WHERE email = ?");
             $stmt->bind_param("sss", $service, $upload_file, $_SESSION['email']);
             
             if ($stmt->execute()) {

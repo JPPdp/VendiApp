@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .booking {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        .booking-details {
+            display: none;
+            margin-top: 10px;
+        }
+        .calendar {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Booking Management</h1>
+    <div id="bookings">
+        <div class="booking" onclick="toggleDetails(this)">
+            <p>Booking #1: John Doe</p>
+            <div class="booking-details">
+                <p>Full details about booking #1...</p>
+                <button onclick="approveBooking(1)">Approve</button>
+                <button onclick="declineBooking(1)">Decline</button>
+            </div>
+        </div>
+        <div class="booking" onclick="toggleDetails(this)">
+            <p>Booking #2: Jane Smith</p>
+            <div class="booking-details">
+                <p>Full details about booking #2...</p>
+                <button onclick="approveBooking(2)">Approve</button>
+                <button onclick="declineBooking(2)">Decline</button>
+            </div>
+        </div>
+    </div>
+    <div class="calendar" id="calendar"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: [
+                    // Example events
+                    { title: 'Booking #1', start: '2023-10-01' },
+                    { title: 'Booking #2', start: '2023-10-07' }
+                ]
+            });
+            calendar.render();
+        });
+
+        function toggleDetails(element) {
+            var details = element.querySelector('.booking-details');
+            details.style.display = details.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function approveBooking(id) {
+            alert('Booking ' + id + ' approved.');
+        }
+
+        function declineBooking(id) {
+            alert('Booking ' + id + ' declined.');
+        }
+    </script>
+</body>
+</html>
