@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Move uploaded file to the desired directory
         if (move_uploaded_file($business_document['tmp_name'], $upload_file)) {
             // Insert into database (assuming you have a column for service and document path)
-            $stmt = $conn->prepare("UPDATE vendors SET service_offered = ?, business_document = ? WHERE email = ?");
+            $stmt = $conn->prepare("UPDATE vendors SET category = ?, business_document = ? WHERE email = ?");
             $stmt->bind_param("sss", $service, $upload_file, $_SESSION['email']);
             
             if ($stmt->execute()) {
@@ -104,8 +104,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p>Kindly submit your proof of business document and select the services you offer to proceed.</p>
 
             <!-- Services Offered -->
-            <label for="SERVICE">Services Offered</label>
-            <select id="SERVICE" name="SERVICE" required>
+            <label for="CATEGORY">Business Category</label>
+            <select id="CATEGORY" name="CATEGORY" required>
                 <option value="" disabled selected>What does your business primarily offer?</option>
                 <option value="FOOD">Food</option>
                 <option value="BEVERAGES">Beverages</option>

@@ -121,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <span>Account Information</span>
             </div>
             <div class="STEP">
-                <span>Business Validation</span>
+                <span>Business Information</span>
             </div>
             <div class="STEP">
                 <span>Confirmation</span>

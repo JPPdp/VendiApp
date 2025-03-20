@@ -162,7 +162,12 @@ if ($status == "Pending") {
                                 } else {
                                     // If there's are no packages
                                     ?>
-                            <div class="BAR NO_PACKAGES" style="height: 0%;" data-label="No Packages Available"></div>
+                            <div class="BAR" style="height: 100%;" data-label="No Packages Available"></div>
+                            <div class="BAR" style="height: 100%;" data-label="No Packages Available"></div>
+                            <div class="BAR" style="height: 100%;" data-label="No Packages Available"></div>
+                            <div class="BAR" style="height: 100%;" data-label="No Packages Available"></div>
+                            <div class="BAR" style="height: 100%;" data-label="No Packages Available"></div>
+                            <div class="BAR" style="height: 100%;" data-label="No Packages Available"></div>
                             <?php
                                 }
                                 ?>

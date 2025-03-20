@@ -750,7 +750,7 @@ body{
 .BAR {
     min-width: 50px;
     background: var(--gradient_Vertical); 
-    border-radius: 5px 5px 0 0;
+    border-radius: 25px 25px 0 0;
     position: relative;
     transition: height 0.3s ease; 
 }
