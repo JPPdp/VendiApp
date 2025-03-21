@@ -6,6 +6,34 @@ if (!isset($_SESSION['businessname'])) {
     exit();
 }
 
+// Get the current hour (24-hour format)
+$currentHour = date('H');
+
+// Determine the greeting based on the time
+if ($currentHour < 12) {
+    $greeting = 'Good Morning!';
+} elseif ($currentHour < 18) {
+    $greeting = 'Good Afternoon!';
+} else {
+    $greeting = 'Good Evening!';
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get the status updates from the form
+    $statusUpdates = $_POST['status'];
+
+    // Example: Loop through the status updates and process them
+    foreach ($statusUpdates as $vendorId => $newStatus) {
+        // Here, you would typically update the database
+        // Example SQL: UPDATE vendors SET status = '$newStatus' WHERE vendor_id = '$vendorId';
+        echo "Updated vendor $vendorId to status: $newStatus<br>";
+    }
+
+    // Redirect back to the vendors page
+    header("Location: vendors.php");
+    exit();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +45,6 @@ if (!isset($_SESSION['businessname'])) {
     <link rel="icon" href="assets/images/VendiBLK2_NoBG.png" type="image/icon type">
     <link rel="stylesheet" href="bookings.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="dashboard.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="notifications.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
@@ -27,18 +54,15 @@ if (!isset($_SESSION['businessname'])) {
         <!-- Navigation Bar -->
         <div class="NAVIGATION_BAR">
             <div class="LOGO">
-                <!--<div class="LOGO_ICON">
-                    <img src="assets/images/VENDI_BG.png" alt="Logo">
-                </div>-->
                 <div class="LOGO_NAME">Vendi
                     <span>ADMIN</span>
                 </div>
             </div>
 
             <div class="MENU_HEADER">ADMINISTRATION</div>
-                    <a href="admin_dashboard.html"><i class="fas fa-tachometer-alt"></i><span> Dashboard</span></a>
-                    <a href="#" class="NAV_ACTIVE"><i class="fas fa-store"></i> Active Vendors</a>
-                    <a href="bookings.php"><i class="fas fa-user-cog"></i> Manage Vendors</a>
+                    <a href="admin_dashboard.html"><i class="fas fa-home"></i><span> Home</span></a>
+                    <a href="#" class="NAV_ACTIVE"><i class="fas fa-store"></i> Vendors</a>
+                    <a href="bookings.php"><i class="fas fa-user-cog"></i> Manage</a>
                     <a href="customers.php"><i class="fas fa-comment-dots"></i> Feedback</a>
             <div class="MENU_HEADER">SETTINGS</div>
                     <a href="logout.php" class="LOGOUT"><i class="fa fa-fw fa-sign-out-alt"></i> Log Out</a>
@@ -52,15 +76,8 @@ if (!isset($_SESSION['businessname'])) {
                 </div>
 
                 <div class="RIGHT_UPPER">
-                    <div class="SEARCH_BAR">
-                        <input type="text" placeholder="Search here...">
-                        <button type="submit"><i class="fas fa-search"></i></button>
-                    </div>
                     <div class="ACCOUNT">
-                        <div class="NOTIFICATION">
-                            <i class="fas fa-bell"></i>
-                            <span class="NOTIFICATION_DOT"></span> <!-- Red dot for notifications -->
-                        </div>
+                        <span class="HELLO"><?php echo $greeting; ?></span>
                         <a href="profile.php">
                             <img src="assets/images/tiara.png" alt="Profile Picture" class="PROFILE_PIC">
                         </a>    
@@ -69,50 +86,59 @@ if (!isset($_SESSION['businessname'])) {
                 </div>
             </div>
             
-            <!-- Booking Details Table -->
+            <!-- Vendor Details Table -->
             <div class="MAIN_CONTAINER">
                 <div class="BOOKING_TABLE">
-                    <h2>Booking Details</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Business Documents</th>
-                                <th>Business Name</th>
-                                <th>Business Email</th>
-                                <th>Mobile Number</th>
-                                <th>Address</th>
-                                <th>City/Municipality</th>
-                                <th>Province</th>
-                                <th>Category</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Example -->
-                            <tr>
-                                <td class="VIEW_DOCUMENT">
-                                    <a href="#IMAGE_VIEW" class="VIEW_BUTTON" id="VIEW_BUTTON">View File</a>
-                                </td>
-                                <div id="IMAGE_VIEW" class="EXPAND">
-                                    <a href="#" class="CLOSE_BUTTON">&times;</a>
-                                    <img class="EXPANDED_IMAGE" src="assets/images/sample_document.png" alt="Document File">
-                                </div>
-                                <td class="CLIENT_NAME">Jollibee</td>
-                                <td class="CLIENT_EMAIL">jollibee@gmail.com</td>
-                                <td class="MOBILE_NUMBER">+1234567890</td>
-                                <td class="ADDRESS">70 Bacayao</td>
-                                <td class="CITY_MUNICIPALITY">Dagupan City</td>
-                                <td class="PROVINCE">Pangasinan</td>
-                                <td class="CATEGORY">Food</td>
-                                <td class="<?php echo "Pending Approval"></td>
-                                <td class="ACTION_BUTTONS">
-                                    <button class="APPROVE_BUTTON">Approve</button>
-                                    <button class="REJECT_BUTTON">Reject</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <h2>Vendor Details</h2>
+                    <form action="update_vendors.php" method="POST">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Business Documents</th>
+                                    <th>Business Name</th>
+                                    <th>Business Email</th>
+                                    <th>Mobile Number</th>
+                                    <th>Address</th>
+                                    <th>City/Municipality</th>
+                                    <th>Province</th>
+                                    <th>Category</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Example Row 1 -->
+                                <tr>
+                                    <td class="VIEW_DOCUMENT">
+                                        <a href="#IMAGE_VIEW" class="VIEW_BUTTON" id="VIEW_BUTTON">View File</a>
+                                    </td>
+                                    <div id="IMAGE_VIEW" class="EXPAND">
+                                        <a href="#" class="CLOSE_BUTTON">&times;</a>
+                                        <img class="EXPANDED_IMAGE" src="assets/images/sample_document.png" alt="Document File">
+                                    </div>
+                                    <td class="CLIENT_NAME">Jollibee</td>
+                                    <td class="CLIENT_EMAIL">jollibee@gmail.com</td>
+                                    <td class="MOBILE_NUMBER">+1234567890</td>
+                                    <td class="ADDRESS">70 Bacayao</td>
+                                    <td class="CITY_MUNICIPALITY">Dagupan City</td>
+                                    <td class="PROVINCE">Pangasinan</td>
+                                    <td class="CATEGORY">Food</td>
+                                    <td class="STATUS_PENDING">Pending</td>
+                                    <td class="ACTION_BUTTONS">
+                                        <select name="status[1]" class="STATUS_DROPDOWN">
+                                            <option value="Pending">Pending</option>
+                                            <option value="Approved">Approve</option>
+                                            <option value="Rejected">Reject</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="SUBMIT_BUTTON_CONTAINER">
+                            <span id="SUBMIT_TEXT">Update vendor status?</span>
+                            <button type="submit" class="SUBMIT_BUTTON">Submit</button>
+                        </div>                    
+                    </form>
                 </div>
             </div>
 
