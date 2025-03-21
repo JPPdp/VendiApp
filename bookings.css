@@ -96,7 +96,8 @@
     border-radius: 10px;
 }
 
-.ACCEPT_BUTTON{
+.ACCEPT_BUTTON,
+.APPROVE_BUTTON{
     color: white;
     padding: 2.5px 5px;
     font-size: 0.75rem;
@@ -107,7 +108,8 @@
     min-width: 25px;
 }
 
-.DECLINE_BUTTON{
+.DECLINE_BUTTON,
+.REJECT_BUTTON{
     color: white;
     padding: 2.5px 5px;
     font-size: 0.75rem;
@@ -134,4 +136,64 @@
 .STATUS_REJECTED {
     color: white;
     background-color: #f44336;
+}
+
+/* View Button Styling */
+#VIEW_BUTTON {
+    display: inline-block;
+    padding: 10px;
+    color: var(--gryShade2);
+    font-family: 'Inter_Bold';
+    font-size: 0.8rem;
+    border-radius: 10px;
+    border: 2px solid var(--whtShade2); 
+    background: var(--gradient_White);
+    text-decoration: none;
+    margin-top: 10px;
+    cursor: pointer;
+    text-align: center;
+}
+
+/* Document Image View */
+.EXPAND {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    padding-top: 40px; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.5); 
+}
+
+.EXPAND:target {
+    display: block;
+}
+
+.EXPANDED_IMAGE {
+    margin: auto;
+    display: block;
+    max-width: 80%; /* Maximum width of the expanded image */
+    max-height: 90vh; /* Maximum height of the expanded image */
+    border-radius: 10px;
+}
+
+.CLOSE_BUTTON {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    color: var(--whtShade2);
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.CLOSE_BUTTON:hover,
+.CLOSE_BUTTON:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
 }

@@ -4,7 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $businessname = $_POST['businessname'];
     $password = $_POST['password'];
 
-    $conn = new mysqli("localhost", "root", "", "vendi_db");
+    $conn = new mysqli("localhost", "root", "", "vendidb");
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);

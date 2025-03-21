@@ -12,7 +12,7 @@ $success_message = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Connect to the database
-    $conn = new mysqli("localhost", "root", "", "vendi_db");
+    $conn = new mysqli("localhost", "root", "", "vendidb");
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
@@ -118,78 +118,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="FORM_GROUP">
                         <label for="PACKAGE_DESCRIPTION">Description <span id="REQUIRED">*</span></label>
                         <textarea id="PACKAGE_DESCRIPTION" name="PACKAGE_DESCRIPTION" maxlength="400" placeholder="Enter package description" required></textarea>
-                    </div>
-                </div>
-
-                <div class="BESIDE_FIELD">
-                    <!-- Package Features -->
-                    <div class="FORM_GROUP">
-                        <label>Features <span id="REQUIRED">*</span></label>
-                        <div id="PACKAGE_FEATURES">
-                            <div class="FEATURE_ITEM">
-                                <select name="feature1" required>
-                                    <option value="" disabled selected>Select Feature 1</option>
-                                    <option value="" disabled>&#128197; Event Type</option>
-                                    <option value="Birthday">Birthday</option>
-                                    <option value="Corporate">Corporate</option>
-                                    <option value="Wedding">Wedding</option>
-                                    <option value="" disabled>&#127838; Food Options</option>
-                                    <option value="Desserts">Desserts</option>
-                                    <option value="Fast Food">Fast Food</option>
-                                    <option value="Vegan">Vegan</option>
-                                    <option value="" disabled>&#127866; Beverage Options</option>
-                                    <option value="Alcoholic">Alcoholic</option>
-                                    <option value="Coffee & Tea">Coffee & Tea</option>
-                                    <option value="Refreshments">Refreshments</option>
-                                    <option value="" disabled>&#127909; Entertainment Options</option>
-                                    <option value="Kid-Friendly">Arts & Crafts</option>
-                                    <option value="Games & Activities">Games & Activities</option>
-                                    <option value="Photobooth">Photobooth</option>
-                                </select>
-                            </div>
-                            <div class="FEATURE_ITEM">
-                                <select name="feature2" required>
-                                    <option value="" disabled selected>Select Feature 2</option>
-                                    <option value="" disabled>&#128197; Event Type</option>
-                                    <option value="Birthday">Birthday</option>
-                                    <option value="Corporate">Corporate</option>
-                                    <option value="Wedding">Wedding</option>
-                                    <option value="" disabled>&#127838; Food Options</option>
-                                    <option value="Desserts">Desserts</option>
-                                    <option value="Fast Food">Fast Food</option>
-                                    <option value="Vegan">Vegan</option>
-                                    <option value="" disabled>&#127866; Beverage Options</option>
-                                    <option value="Alcoholic">Alcoholic</option>
-                                    <option value="Coffee & Tea">Coffee & Tea</option>
-                                    <option value="Refreshments">Refreshments</option>
-                                    <option value="" disabled>&#127909; Entertainment Options</option>
-                                    <option value="Kid-Friendly">Arts & Crafts</option>
-                                    <option value="Games & Activities">Games & Activities</option>
-                                    <option value="Photobooth">Photobooth</option>
-                                </select>
-                            </div>
-                            <div class="FEATURE_ITEM">
-                                <select name="feature3" required>
-                                    <option value="" disabled selected>Select Feature 3</option>
-                                    <option value="" disabled>&#128197; Event Type</option>
-                                    <option value="Birthday">Birthday</option>
-                                    <option value="Corporate">Corporate</option>
-                                    <option value="Wedding">Wedding</option>
-                                    <option value="" disabled>&#127838; Food Options</option>
-                                    <option value="Desserts">Desserts</option>
-                                    <option value="Fast Food">Fast Food</option>
-                                    <option value="Vegan">Vegan</option>
-                                    <option value="" disabled>&#127866; Beverage Options</option>
-                                    <option value="Alcoholic">Alcoholic</option>
-                                    <option value="Coffee & Tea">Coffee & Tea</option>
-                                    <option value="Refreshments">Refreshments</option>
-                                    <option value="" disabled>&#127909; Entertainment Options</option>
-                                    <option value="Kid-Friendly">Arts & Crafts</option>
-                                    <option value="Games & Activities">Games & Activities</option>
-                                    <option value="Photobooth">Photobooth</option>
-                                </select>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
