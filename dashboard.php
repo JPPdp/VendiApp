@@ -176,13 +176,13 @@ if ($status == "Pending") {
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Reference ID</th>
-                                    <th>Client Name</th>
-                                    <th>Client Email</th>
-                                    <th>Event Date</th>
-                                    <th>Event Location</th>
-                                    <th>Package</th>
-                                    <th>Status</th>
+                                    <th><i class="fas fa-hashtag"></i> Reference ID</th>
+                                    <th><i class="fas fa-user"></i> Client Name</th>
+                                    <th><i class="fas fa-envelope"></i> Client Email</th>
+                                    <th><i class="fas fa-calendar-alt"></i> Event Date</th>
+                                    <th><i class="fas fa-map-marker-alt"></i> Event Location</th>
+                                    <th><i class="fas fa-box"></i> Package</th>
+                                    <th><i class="fas fa-info-circle"></i> Status</th>
                                 </tr>
                             </thead>
                             <tbody>

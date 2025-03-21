@@ -24,6 +24,54 @@
 @font-face {font-family: 'Inter_ExtraBold'; src: url(assets/fonts/Inter-font/Inter-ExtraBold.otf);}
 @font-face {font-family: 'Inter_Black'; src: url(assets/fonts/Inter-font/Inter-Black.otf);}
 
+.BOOKINGS_CONTAINER {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    padding: 20px;
+    border-radius: 50px;
+    height: auto;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.BOOKINGS_HEADER {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0px;
+    padding-bottom: 10px ;
+}
+
+.BOOKINGS_HEADER h2 {
+    font-size: 1rem;
+    font-family: 'Inter_Bold';
+    color: var(--blkShade1);
+    margin: 0;
+}
+
+.BOOKINGS_HEADER #UPDATE {
+    cursor: pointer;
+    font-size: 0.8rem;
+    color: var(--gryShade2);
+    background: var(--gradient_White);
+    padding: 12px 16px;
+    border-radius: 20px;
+    border: 2px solid var(--whtShade2);
+    text-decoration: none;
+    transition: border 0.2s ease-in-out;
+    font-family: 'Inter_Bold';
+}
+
+.BOOKINGS_HEADER #UPDATE i{
+    margin-right: 5px;
+}
+
+.BOOKINGS_HEADER #UPDATE:hover {
+    border: 2px solid var(--gryShade1);
+}
+
+
 /* BOOKING TABLE */
 .BOOKING_TABLE {
     border-collapse: collapse;
@@ -51,6 +99,10 @@
     font-family: 'Inter_Bold';
     margin: 0;
     padding-bottom: 10px;
+}
+
+.BOOKING_TABLE i{
+    margin-right: 5px;
 }
 
 .BOOKING_TABLE th {
@@ -89,7 +141,7 @@
     border-radius: 10px;
 }
 
-.BOOKING_TABLE .BOOKING_STATUS #REJECTED {
+.BOOKING_TABLE .BOOKING_STATUS #CANCELLED {
     background: var(--gradient_Red);
     color: white;
     padding: 10px 20px;
@@ -101,25 +153,12 @@
     color: white;
     padding: 2.5px 5px;
     font-size: 0.75rem;
-    font-family: 'Inter_Medium';
+    font-family: 'Inter_Bold';
     background: var(--gradient_Green);
     border: 1px solid white;
     border-radius: 5px;
     min-width: 25px;
 }
-
-.DECLINE_BUTTON,
-.REJECT_BUTTON{
-    color: white;
-    padding: 2.5px 5px;
-    font-size: 0.75rem;
-    font-family: 'Inter_Medium';
-    background: var(--gradient_Red);
-    border: 1px solid white;
-    border-radius: 5px;
-    min-width: 25px;
-}
-
 
 
 .STATUS_PENDING {
@@ -133,7 +172,7 @@
     background-color: #4CAF50;
 }
 
-.STATUS_REJECTED {
+.STATUS_CANCELLED {
     color: white;
     background-color: #f44336;
 }
@@ -196,4 +235,39 @@
     color: white;
     text-decoration: none;
     cursor: pointer;
+}
+
+/* Status Dropdown */
+.STATUS_DROPDOWN {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    font-family: 'Inter_Medium';
+    border: 2px solid var(--whtShade2);
+    border-radius: 20px;
+    background: var(--gradient_White);
+    color: var(--gryShade2);
+    cursor: pointer;
+    outline: none;
+    transition: border 0.2s ease-in-out;
+}
+
+.STATUS_DROPDOWN:hover {
+    border: 2px solid var(--gryShade1);
+}
+
+/* Submit Button */
+.SUBMIT_BUTTON {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-family: 'Inter_Bold';
+    background: var(--gradient_Vertical);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+.SUBMIT_BUTTON:hover {
 }

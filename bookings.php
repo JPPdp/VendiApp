@@ -15,9 +15,30 @@ if ($status == "Pending") {
 } elseif ($status == "Accepted") {
     $statusClass = "STATUS_ACCEPTED";
     $statusText = "Accepted";
-} elseif ($status == "Rejected") {
-    $statusClass = "STATUS_REJECTED";
-    $statusText = "Rejected";
+} elseif ($status == "Cancelled") {
+    $statusClass = "STATUS_CANCELLED";
+    $statusText = "Cancelled";
+}
+
+if (!isset($_SESSION['businessname'])) {
+    header("Location: dashboard.php");
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get the status updates from the form
+    $statusUpdates = $_POST['status'];
+
+    // Example: Loop through the status updates and process them
+    foreach ($statusUpdates as $referenceId => $newStatus) {
+        // Here, you would typically update the database
+        // Example SQL: UPDATE bookings SET status = '$newStatus' WHERE reference_id = '$referenceId';
+        echo "Updated booking $referenceId to status: $newStatus<br>";
+    }
+
+    // Redirect back to the bookings page
+    header("Location: bookings.php");
+    exit();
 }
 
 ?>
@@ -65,15 +86,8 @@ if ($status == "Pending") {
                 </div>
 
                 <div class="RIGHT_UPPER">
-                    <div class="SEARCH_BAR">
-                        <input type="text" placeholder="Search here...">
-                        <button type="submit"><i class="fas fa-search"></i></button>
-                    </div>
                     <div class="ACCOUNT">
-                        <div class="NOTIFICATION">
-                            <i class="fas fa-bell"></i>
-                            <span class="NOTIFICATION_DOT"></span> <!-- Red dot for notifications -->
-                        </div>
+                        <span class="HELLO">Hello,</span>
                         <a href="db_profile.html">
                             <img src="assets/images/tiara.png" alt="Profile Picture" class="PROFILE_PIC">
                         </a>    
@@ -83,55 +97,69 @@ if ($status == "Pending") {
             </div>
 
             <!-- Booking Details Table -->
-            <div class="MAIN_CONTAINER">
-                <div class="BOOKING_TABLE">
+            <div class="BOOKINGS_CONTAINER">
+                <header class="BOOKINGS_HEADER">
                     <h2>Booking Details</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Reference ID</th>
-                                <th>Client Name</th>
-                                <th>Client Email</th>
-                                <th>Mobile Number</th>
-                                <th>Event Date</th>
-                                <th>Event Location</th>
-                                <th>Package</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Example -->
-                            <tr>
-                                <td class="REFERENCE_ID">#12345</td>
-                                <td class="CLIENT_NAME">John Marston</td>
-                                <td class="CLIENT_EMAIL">marston@gmail.com</td>
-                                <td class="MOBILE_NUMBER">+1234567890</td>
-                                <td class="EVENT_DATE">11/1/25<br> <small>4:00 PM</small> </td>
-                                <td class="EVENT_LOCATION">Dagupan Convention Center</td>
-                                <td class="PACKAGE">Basic Package</td>
-                                <td class="<?php echo $statusClass; ?>"><?php echo $statusText; ?></td>
-                                <td class="ACTION_BUTTONS">
-                                    <button class="DECLINE_BUTTON">Decline</button>
-                                    <button class="ACCEPT_BUTTON">Accept</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="REFERENCE_ID">#12345</td>
-                                <td class="CLIENT_NAME">John Marston</td>
-                                <td class="CLIENT_EMAIL">marston@gmail.com</td>
-                                <td class="MOBILE_NUMBER">+1234567890</td>
-                                <td class="EVENT_DATE">11/1/25<br> <small>4:00 PM</small> </td>
-                                <td class="EVENT_LOCATION">Dagupan Convention Center</td>
-                                <td class="PACKAGE">Basic Package</td>
-                                <td class="<?php echo $statusClass; ?>"><?php echo $statusText; ?></td>
-                                <td class="ACTION_BUTTONS">
-                                    <button class="DECLINE_BUTTON">Decline</button>
-                                    <button class="ACCEPT_BUTTON">Accept</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                </header>
+            </div>
+
+                <div class="BOOKING_TABLE">
+                    <form action="update_bookings.php" method="POST">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th><i class="fas fa-hashtag"></i> Reference ID</th>
+                                    <th><i class="fas fa-user"></i> Client Name</th>
+                                    <th><i class="fas fa-envelope"></i> Client Email</th>
+                                    <th><i class="fas fa-phone"></i> Mobile Number</th>
+                                    <th><i class="fas fa-calendar-alt"></i> Event Date</th>
+                                    <th><i class="fas fa-map-marker-alt"></i> Event Location</th>
+                                    <th><i class="fas fa-box"></i> Package</th>
+                                    <th><i class="fas fa-info-circle"></i> Status</th>
+                                    <th><i class="fas fa-cogs"></i> Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Example Row 1 -->
+                                <tr>
+                                    <td class="REFERENCE_ID">#12345</td>
+                                    <td class="CLIENT_NAME">John Marston</td>
+                                    <td class="CLIENT_EMAIL">marston@gmail.com</td>
+                                    <td class="MOBILE_NUMBER">+1234567890</td>
+                                    <td class="EVENT_DATE">11/1/25<br> <small>4:00 PM</small></td>
+                                    <td class="EVENT_LOCATION">Dagupan Convention Center</td>
+                                    <td class="PACKAGE">Basic Package</td>
+                                    <td class="<?php echo $statusClass; ?>"><?php echo $statusText; ?></td>
+                                    <td class="ACTION_BUTTONS">
+                                        <select name="status[12345]" class="STATUS_DROPDOWN">
+                                            <option value="Pending" <?php echo ($status == "Pending") ? "selected" : ""; ?>>Pending</option>
+                                            <option value="Approved" <?php echo ($status == "Approved") ? "selected" : ""; ?>>Approve</option>
+                                            <option value="Cancelled" <?php echo ($status == "Cancelled") ? "selected" : ""; ?>>Cancel</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <!-- Example Row 2 -->
+                                <tr>
+                                    <td class="REFERENCE_ID">#67890</td>
+                                    <td class="CLIENT_NAME">Arthur Morgan</td>
+                                    <td class="CLIENT_EMAIL">arthur@gmail.com</td>
+                                    <td class="MOBILE_NUMBER">+0987654321</td>
+                                    <td class="EVENT_DATE">12/1/25<br> <small>5:00 PM</small></td>
+                                    <td class="EVENT_LOCATION">Dagupan City Plaza</td>
+                                    <td class="PACKAGE">Premium Package</td>
+                                    <td class="<?php echo $statusClass; ?>"><?php echo $statusText; ?></td>
+                                    <td class="ACTION_BUTTONS">
+                                        <select name="status[67890]" class="STATUS_DROPDOWN">
+                                            <option value="Pending" <?php echo ($status == "Pending") ? "selected" : ""; ?>>Pending</option>
+                                            <option value="Approved" <?php echo ($status == "Approved") ? "selected" : ""; ?>>Approve</option>
+                                            <option value="Cancelled" <?php echo ($status == "Cancelled") ? "selected" : ""; ?>>Cancel</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button type="submit" class="SUBMIT_BUTTON">Update</button>
+                    </form>
                 </div>
             </div>
         </div>

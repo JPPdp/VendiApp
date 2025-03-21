@@ -208,7 +208,7 @@ body{
     justify-content: flex-end; /* Align right */
     color: var(--blkShade1);
     background-color: white;
-    box-shadow: 14px 17px 40px 4px rgba(112, 144, 176, 0.08);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
     padding: 10px 20px;
     border-radius: 30px;
     margin: 0;
@@ -369,42 +369,41 @@ body{
 
 /* BACKGROUND AND BORDER COLORS */
 .PENDING {
-    background: linear-gradient(to top, #f7b500, #f77b00);
+    background: linear-gradient(to top, rgba(128, 0, 128, 0.9), rgba(102, 0, 204, 0.9)); /* Darker purple to lighter purple */
     transition: 0.2s ease;
 }
 
 .SCHEDULED {
-    background: linear-gradient(to top, #00b4f7, #0055f7);
+    background: linear-gradient(to top, rgba(147, 112, 219, 0.9), rgba(123, 104, 238, 0.9)); /* Medium purple to lighter purple */
     transition: 0.2s ease;
 }
 
 .COMPLETED {
-    background: linear-gradient(to top, #00f70c, #009c31);
+    background: linear-gradient(to top, rgba(186, 85, 211, 0.9), rgba(153, 50, 204, 0.9)); /* Orchid to dark orchid */
     transition: 0.2s ease;
 }
 
 .CANCELLED {
-    background: linear-gradient(to top, #fc241d, #c40202);
+    background: linear-gradient(to top, rgba(75, 0, 130, 0.9), rgba(106, 90, 205, 0.9)); /* Indigo to slate blue */
     transition: 0.2s ease;
 }
 
 /* Hover Effects */
 .PENDING:hover {
-    box-shadow: 1px 1px 10px 5px rgba(247, 181, 0, 0.25);
+    box-shadow: 1px 1px 10px 5px rgba(128, 0, 128, 0.4); /* Matching the darker purple */
 }
 
 .SCHEDULED:hover {
-    box-shadow: 1px 1px 10px 5px rgba(0, 180, 247, 0.25);
+    box-shadow: 1px 1px 10px 5px rgba(147, 112, 219, 0.4); /* Matching the medium purple */
 }
 
 .COMPLETED:hover {
-    box-shadow: 1px 1px 10px 5px rgba(0, 247, 12, 0.25);
+    box-shadow: 1px 1px 10px 5px rgba(186, 85, 211, 0.4); /* Matching the orchid */
 }
 
 .CANCELLED:hover {
-    box-shadow: 1px 1px 10px 5px rgba(247, 0, 0, 0.25);
+    box-shadow: 1px 1px 10px 5px rgba(75, 0, 130, 0.4); /* Matching the indigo */
 }
-
 
 .MAIN_CONTAINER {
     display: flex;
@@ -538,6 +537,7 @@ body{
     border-radius: 50%;
     margin: 0 auto; 
     box-shadow: 14px 17px 40px 4px rgba(112, 144, 176, 0.08);
+    opacity: 75%;
 }
 
 .CALENDAR_BODY .DAYS li:not(.ACTIVE):hover {

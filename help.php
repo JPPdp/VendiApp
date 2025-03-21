@@ -32,7 +32,7 @@ if (!isset($_SESSION['businessname'])) {
             </div>
             
             <div class="MENU_HEADER">MANAGEMENT</div>
-            <a href="dashboard.php"><i class="fas fa-stream"></i>Dashboard</a>
+            <a href="dashboard.php"><i class="fas fa-stream"></i> Dashboard</a>
             <a href="listings.html"><i class="fa fa-fw fa-store"></i> Listings</a>
             <a href="bookings.php"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
             <a href="customers.php"><i class="fa fa-fw fa-users"></i> Customers</a>

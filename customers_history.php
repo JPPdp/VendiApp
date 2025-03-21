@@ -8,21 +8,38 @@ if (!isset($_SESSION['businessname'])) {
 
 // Simulated customer data
 $customers = [
-    [
-        'id' => 1, // Unique ID for each customer
+    1 => [ // Customer ID 1
         'profile_pic' => 'assets/images/tiara.png',
         'client_name' => 'John Marston',
         'client_email' => 'marston@gmail.com',
         'mobile_number' => '+1234567890',
+        'booking_history' => [
+            ['date' => '2023-10-01', 'service' => 'Basic Package', 'status' => 'Completed'],
+            ['date' => '2023-10-05', 'service' => 'Basic Package', 'status' => 'Scheduled'],
+        ],
     ],
-    [
-        'id' => 2, // Unique ID for each customer
+    2 => [ // Customer ID 2
         'profile_pic' => 'assets/images/tiara.png',
         'client_name' => 'Arthur Morgan',
         'client_email' => 'arthur@gmail.com',
         'mobile_number' => '+0987654321',
+        'booking_history' => [
+            ['date' => '2023-09-28', 'service' => 'Basic Package', 'status' => 'Completed'],
+            ['date' => '2023-10-10', 'service' => 'Basic Package', 'status' => 'Pending'],
+        ],
     ],
 ];
+
+// Get the customer ID from the URL
+$customerId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+// Check if the customer exists
+if (!isset($customers[$customerId])) {
+    header("Location: customers.php");
+    exit();
+}
+
+$customer = $customers[$customerId];
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +47,7 @@ $customers = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customers | Vendi</title>
+    <title>Customer History | Vendi</title>
     <link rel="icon" href="assets/images/VendiBLK2_NoBG.png" type="image/icon type">
     <link rel="stylesheet" href="notifications.css">
     <link rel="stylesheet" href="dashboard.css?v=<?php echo time(); ?>">
@@ -64,14 +81,10 @@ $customers = [
         <div class="DASHBOARD" id="DASHBOARD">
             <div class="UPPER">
                 <div class="LEFT_UPPER">
-                    <h1 class="DASHBOARD_TITLE">Customers</h1>
+                    <h1 class="DASHBOARD_TITLE"><a href="customers.php" id="BREADCRUMB">Customers /</a> History</h1>
                 </div>
 
                 <div class="RIGHT_UPPER">
-                    <div class="SEARCH_BAR">
-                        <input type="text" placeholder="Search here...">
-                        <button type="submit"><i class="fas fa-search"></i></button>
-                    </div>
                     <div class="ACCOUNT">
                         <div class="NOTIFICATION">
                             <i class="fas fa-bell"></i>
@@ -85,36 +98,29 @@ $customers = [
                 </div>
             </div>
 
-            <!-- Customer Details Table -->
-            <div class="CUSTOMERS_CONTAINER">
+            <!-- Customer Booking History -->
+                <div class="CUSTOMERS_CONTAINER">
                     <header class="CUSTOMERS_HEADER">
-                        <h2>Customers Management</h2>
+                        <h2>Booking History: <?php echo $customer['client_name']; ?></h2>
+                        <a href="customers.php" id="GO_BACK"><i class="fas fa-arrow-left"></i> Go Back</a>
                     </header>
-            </div> 
-
+                </div> 
+            
                 <div class="CUSTOMER_TABLE">
                     <table>
                         <thead>
                             <tr>
-                                <th><i class="fas fa-image"></i> Profile Picture</th>
-                                <th><i class="fas fa-user"></i> Client Name</th>
-                                <th><i class="fas fa-envelope"></i> Client Email</th>
-                                <th><i class="fas fa-phone"></i> Mobile Number</th>
-                                <th><i class="fas fa-history"></i> History</th>
+                                <th><i class="fa fa-calendar-alt"></i> Date</th>
+                                <th><i class="fa fa-box"></i> Selected Package</th>
+                                <th><i class="fa fa-info-circle"></i> Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($customers as $customer): ?>
+                            <?php foreach ($customer['booking_history'] as $booking): ?>
                                 <tr>
-                                    <td class="PROFILE_PIC">
-                                        <img src="<?php echo $customer['profile_pic']; ?>" alt="Profile Picture" class="PROFILE_PIC">
-                                    </td>
-                                    <td class="CLIENT_NAME"><?php echo $customer['client_name']; ?></td>
-                                    <td class="CLIENT_EMAIL"><?php echo $customer['client_email']; ?></td>
-                                    <td class="MOBILE_NUMBER"><?php echo $customer['mobile_number']; ?></td>
-                                    <td class="ACTION_BUTTONS">
-                                        <a href="customers_history.php?id=<?php echo $customer['id']; ?>" class="VIEW_BUTTON">View</a>
-                                    </td>
+                                    <td><?php echo $booking['date']; ?></td>
+                                    <td><?php echo $booking['service']; ?></td>
+                                    <td><?php echo $booking['status']; ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -122,6 +128,7 @@ $customers = [
                 </div>
             </div>
         </div>
+    </div>
 
     <script src="dashboard.js"></script>
 </body>
