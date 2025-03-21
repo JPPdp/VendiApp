@@ -6,6 +6,18 @@ if (!isset($_SESSION['businessname'])) {
     exit();
 }
 
+// Get the current hour (24-hour format)
+$currentHour = date('H');
+
+// Determine the greeting based on the time
+if ($currentHour < 12) {
+    $greeting = 'Good Morning,';
+} elseif ($currentHour < 18) {
+    $greeting = 'Good Afternoon,';
+} else {
+    $greeting = 'Good Evening,';
+}
+
 $status = "Pending"; // retrieve from a database
 
 // Conditional class or ID based on status
@@ -68,19 +80,12 @@ if ($status == "Pending") {
                 </div>
 
                 <div class="RIGHT_UPPER">
-                    <div class="SEARCH_BAR">
-                        <input type="text" placeholder="Search here...">
-                        <button type="submit"><i class="fas fa-search"></i></button>
-                    </div>
                     <div class="ACCOUNT">
-                        <div class="NOTIFICATION">
-                            <i class="fas fa-bell"></i>
-                            <span class="NOTIFICATION_DOT"></span> <!-- Red dot for notifications -->
-                        </div>
+                        <span class="HELLO"><?php echo $greeting; ?></span>
                         <a href="profile.php">
                             <img src="assets/images/tiara.png" alt="Profile Picture" class="PROFILE_PIC">
                         </a>    
-                        <span class="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['businessname']); ?></span>             
+                        <span class="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['businessname']); ?> !</span>             
                     </div>
                 </div>
             </div>

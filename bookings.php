@@ -20,9 +20,16 @@ if ($status == "Pending") {
     $statusText = "Cancelled";
 }
 
-if (!isset($_SESSION['businessname'])) {
-    header("Location: dashboard.php");
-    exit();
+// Get the current hour (24-hour format)
+$currentHour = date('H');
+
+// Determine the greeting based on the time
+if ($currentHour < 12) {
+    $greeting = 'Good Morning,';
+} elseif ($currentHour < 18) {
+    $greeting = 'Good Afternoon,';
+} else {
+    $greeting = 'Good Evening,';
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -87,11 +94,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="RIGHT_UPPER">
                     <div class="ACCOUNT">
-                        <span class="HELLO">Hello,</span>
-                        <a href="db_profile.html">
+                        <span class="HELLO"><?php echo $greeting; ?></span>
+                        <a href="profile.php">
                             <img src="assets/images/tiara.png" alt="Profile Picture" class="PROFILE_PIC">
                         </a>    
-                        <span class="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['businessname']); ?></span>             
+                        <span class="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['businessname']); ?> !</span>             
                     </div>
                 </div>
             </div>
@@ -158,7 +165,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </tr>
                             </tbody>
                         </table>
-                        <button type="submit" class="SUBMIT_BUTTON">Update</button>
+                        <div class="SUBMIT_BUTTON_CONTAINER">
+                            <span id="SUBMIT_TEXT">Update booking status?</span>
+                            <button type="submit" class="SUBMIT_BUTTON">Submit</button>
+                        </div>                    
                     </form>
                 </div>
             </div>
