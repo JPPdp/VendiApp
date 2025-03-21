@@ -1,24 +1,15 @@
-package com.example.vendiapp.api
+package com.example.vendiapp.network
 
-import com.example.vendiapp.model.ApiResponse
-import com.example.vendiapp.model.User
+import com.example.vendiapp.model.Product
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface ApiService {
 
-    interface ApiService {
-
-        @FormUrlEncoded
-        @POST("add_user.php")
-        fun addUser(
-            @Field("full_name") fullName: String,
-            @Field("email") email: String,
-            @Field("phone_number") phoneNumber: String,
-            @Field("password") password: String
-        ): Call<ApiResponse>
-
-        @GET("get_users.php")
-        fun getUsers(): Call<List<User>>
-    }
+    @GET("fetch_products.php")
+    fun getProductsByCategory(
+        @Query("category_id") categoryId: Int,
+        @Query("limit") limit: Int
+    ): Call<List<Product>>
 }

@@ -4,27 +4,20 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.vendiapp.R
 import com.example.vendiapp.model.Product
-import kotlinx.android.synthetic.main.item_product.view.*
 
-class ProductAdapter(
-    private val context: Context,
-    private val products: MutableList<Product>
-) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(private val context: Context, private var productList: MutableList<Product>) :
+    RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     inner class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(product: Product) {
-            itemView.tvProductName.text = product.product_name
-            itemView.tvProductPrice.text = "₱ ${product.price}"
-
-            Glide.with(context)
-                .load(product.product_image) // Use URL for image
-                .placeholder(R.drawable.placeholder_image)
-                .into(itemView.ivProductImage)
-        }
+        val ivProductImage: ImageView = itemView.findViewById(R.id.ivProductImage)
+        val tvProductName: TextView = itemView.findViewById(R.id.tvProductName)
+        val tvProductPrice: TextView = itemView.findViewById(R.id.tvProductPrice)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -33,13 +26,23 @@ class ProductAdapter(
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        holder.bind(products[position])
+        val product = productList[position]
+        holder.tvProductName.text = product.productName
+        holder.tvProductPrice.text = "₱${product.price}"
+
+        // Load the product image using Glide
+        Glide.with(context)
+            .load(product.productImage)
+            .placeholder(R.drawable.placeholder)
+            .into(holder.ivProductImage)
     }
 
-    override fun getItemCount(): Int = products.size
+    override fun getItemCount(): Int {
+        return productList.size
+    }
 
     fun addProducts(newProducts: List<Product>) {
-        products.addAll(newProducts)
+        productList.addAll(newProducts)
         notifyDataSetChanged()
     }
 }

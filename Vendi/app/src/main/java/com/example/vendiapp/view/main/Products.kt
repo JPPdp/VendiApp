@@ -1,10 +1,10 @@
-package com.example.vendiapp.view.products
+package com.example.vendiapp.view.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,8 +23,10 @@ class ProductsFragment : Fragment() {
     private val limit = 10
     private val categoryId = 1 // Default category
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_products, container, false)
 
         val rvProducts: RecyclerView = view.findViewById(R.id.rvProducts)
@@ -43,21 +45,33 @@ class ProductsFragment : Fragment() {
 
     private fun loadProducts(offset: Int) {
         isLoading = true
-        val url = "http://192.168.0.100/vendiapp/api/products/get_products.php?category_id=$categoryId&limit=$limit&offset=$offset"
+        val url =
+            "http://192.168.68.105/vendiapp/api/products/get_products.php?category_id=$categoryId&limit=$limit&offset=$offset"
 
         val request = Request.Builder().url(url).build()
         OkHttpClient().newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 isLoading = false
+                Log.e("NetworkError", "Error: ${e.message}")
+                e.printStackTrace()
             }
 
             override fun onResponse(call: Call, response: Response) {
-                response.body?.let {
-                    val productList = parseProductJson(it.string())
+                if (!response.isSuccessful || response.body == null) {
+                    isLoading = false
+                    Log.e("ResponseError", "Response failed with code: ${response.code}")
+                    return
+                }
+
+                val responseBody = response.body!!.string()
+                if (responseBody.isNotEmpty()) {
+                    val productList = parseProductJson(responseBody)
                     activity?.runOnUiThread {
                         productAdapter.addProducts(productList)
                         isLoading = false
                     }
+                } else {
+                    isLoading = false
                 }
             }
         })
