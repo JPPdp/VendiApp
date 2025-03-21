@@ -18,19 +18,16 @@ if ($currentHour < 12) {
     $greeting = 'Good Evening!';
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the status updates from the form
-    $statusUpdates = $_POST['status'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_client'])) {
+    // Get the client ID to delete
+    $clientId = $_POST['client_id'];
 
-    // Example: Loop through the status updates and process them
-    foreach ($statusUpdates as $vendorId => $newStatus) {
-        // Here, you would typically update the database
-        // Example SQL: UPDATE vendors SET status = '$newStatus' WHERE vendor_id = '$vendorId';
-        echo "Updated vendor $vendorId to status: $newStatus<br>";
-    }
+    // Here, you would typically delete the client from the database
+    // Example SQL: DELETE FROM clients WHERE client_id = '$clientId';
+    echo "Deleted client with ID: $clientId<br>";
 
-    // Redirect back to the vendors page
-    header("Location: vendors.php");
+    // Redirect back to the clients page
+    header("Location: admin_clients.php");
     exit();
 }
 
@@ -60,8 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="MENU_HEADER">ADMINISTRATION</div>
-                    <a href="#" class="NAV_ACTIVE"><i class="fas fa-store"></i> Vendors</a>
-                    <a href="admin_clients.html"><i class="fas fa-users"></i> Clients</a>
+                    <a href="admin_vendors.php"><i class="fas fa-store"></i> Vendors</a>
+                    <a href="#" class="NAV_ACTIVE"><i class="fas fa-users"></i> Clients</a>
                     <a href="admin_feedback.html"><i class="fas fa-comment-dots"></i> Feedback</a>
             <div class="MENU_HEADER">SETTINGS</div>
                     <a href="logout.php" class="LOGOUT"><i class="fa fa-fw fa-sign-out-alt"></i> Log Out</a>
@@ -71,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="DASHBOARD" id="DASHBOARD">
             <div class="UPPER">
                 <div class="LEFT_UPPER">
-                    <h1 class="DASHBOARD_TITLE">Vendors</h1>
+                    <h1 class="DASHBOARD_TITLE">Clients</h1>
                 </div>
 
                 <div class="RIGHT_UPPER">
@@ -85,58 +82,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
             
-            <!-- Vendor Details Table -->
+            <!-- Client Details Table -->
             <div class="MAIN_CONTAINER">
                 <div class="BOOKING_TABLE">
-                    <h2>Vendor Details</h2>
-                    <form action="update_vendors.php" method="POST">
+                    <h2>Client Details</h2>
+                    <form action="admin_clients.php" method="POST">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Business Documents</th>
-                                    <th>Business Name</th>
-                                    <th>Business Email</th>
+                                    <th>User ID</th>
+                                    <th>Profile Picture</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
                                     <th>Mobile Number</th>
-                                    <th>Address</th>
-                                    <th>City/Municipality</th>
-                                    <th>Province</th>
-                                    <th>Category</th>
-                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <!-- Example Row 1 -->
                                 <tr>
-                                    <td class="VIEW_DOCUMENT">
-                                        <a href="#IMAGE_VIEW" class="VIEW_BUTTON" id="VIEW_BUTTON">View File</a>
+                                    <td class="USER_ID">1</td>
+                                    <td class="PROFILE_PICTURE">
+                                        <img src="assets/images/profile1.png" alt="Profile Picture" class="CLIENT_PROFILE_PIC">
                                     </td>
-                                    <div id="IMAGE_VIEW" class="EXPAND">
-                                        <a href="#" class="CLOSE_BUTTON">&times;</a>
-                                        <img class="EXPANDED_IMAGE" src="assets/images/sample_document.png" alt="Document File">
-                                    </div>
-                                    <td class="CLIENT_NAME">Jollibee</td>
-                                    <td class="CLIENT_EMAIL">jollibee@gmail.com</td>
+                                    <td class="CLIENT_NAME">John Doe</td>
+                                    <td class="CLIENT_EMAIL">john.doe@gmail.com</td>
                                     <td class="MOBILE_NUMBER">+1234567890</td>
-                                    <td class="ADDRESS">70 Bacayao</td>
-                                    <td class="CITY_MUNICIPALITY">Dagupan City</td>
-                                    <td class="PROVINCE">Pangasinan</td>
-                                    <td class="CATEGORY">Food</td>
-                                    <td class="STATUS_PENDING">Pending</td>
                                     <td class="ACTION_BUTTONS">
-                                        <select name="status[1]" class="STATUS_DROPDOWN">
-                                            <option value="Pending">Pending</option>
-                                            <option value="Approved">Approve</option>
-                                            <option value="Rejected">Reject</option>
-                                        </select>
+                                        <button type="submit" name="delete_client" class="DELETE_BUTTON">
+                                            <i class="fas fa-trash-alt"></i> Delete
+                                        </button>
+                                        <input type="hidden" name="client_id" value="1">
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="SUBMIT_BUTTON_CONTAINER">
-                            <span id="SUBMIT_TEXT">Update vendor status?</span>
-                            <button type="submit" class="SUBMIT_BUTTON">Submit</button>
-                        </div>                    
                     </form>
                 </div>
             </div>

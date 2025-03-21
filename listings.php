@@ -12,11 +12,11 @@ $currentHour = date('H');
 
 // Determine the greeting based on the time
 if ($currentHour < 12) {
-    $greeting = 'Good Morning,';
+    $greeting = 'Good Morning!';
 } elseif ($currentHour < 18) {
-    $greeting = 'Good Afternoon,';
+    $greeting = 'Good Afternoon!';
 } else {
-    $greeting = 'Good Evening,';
+    $greeting = 'Good Evening!';
 }
 
 ?>
@@ -65,7 +65,7 @@ if ($currentHour < 12) {
                         <a href="profile.php">
                             <img src="assets/images/tiara.png" alt="Profile Picture" class="PROFILE_PIC">
                         </a>    
-                        <span class="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['businessname']); ?> !</span>             
+                        <span class="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['businessname']); ?></span>             
                     </div>
                 </div>
             </div>

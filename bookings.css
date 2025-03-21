@@ -290,3 +290,37 @@
 .SUBMIT_BUTTON:hover {
     filter: brightness(110%);
 }
+
+.DELETE_BUTTON {
+    padding: 8px 20px;
+    font-size: 0.8rem;
+    font-family: 'Inter_Bold';
+    background: var(--gradient_White);
+    border: 2px solid var(--whtShade2);
+    color: var(--gryShade2);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.DELETE_BUTTON:hover {
+    border: 2px solid var(--gryShade1);
+    color: #c40202;
+}
+
+.RESOLVE_BUTTON {
+    padding: 8px 20px;
+    font-size: 0.8rem;
+    font-family: 'Inter_Bold';
+    background: var(--gradient_White);
+    border: 2px solid var(--whtShade2);
+    color: var(--gryShade2);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.RESOLVE_BUTTON:hover {
+    border: 2px solid var(--gryShade1);
+    color: var(--blkShade1);
+}
