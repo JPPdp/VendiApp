@@ -248,11 +248,12 @@ label{
 /* Input Fields Readonly */
 #businessname,
 #VENDOR_EMAIL,
-#VENDOR_MOBILE,
-#ADDRESS,
-#CITY,
-#PROVINCE,
-#SERVICE,
+#business_email,
+#business_mobile,
+#business_address,
+#business_city,
+#business_province,
+#business_service,
 #VIEW_BUTTON,
 .ACCOUNT_MANAGE {
     width: 100%;
@@ -305,6 +306,11 @@ label{
 .LOGIN_LINK{
     text-align: center;
     margin-top: 20px;
+}
+.RIGHT_UPPER .GREETING{
+    color: white;
+    font-size: 0.8rem;
+    margin-right: -10px;
 }
 
 .LOGIN_LINK a{
@@ -395,6 +401,12 @@ label{
     margin-top: 10px;
     cursor: pointer;
     text-align: center;
+}
+.GREETING {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
 }
 
 /* DELETE ACCOUNT BUTTON */
