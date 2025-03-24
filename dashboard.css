@@ -794,31 +794,3 @@ body{
     white-space: nowrap;
     padding: 10px;
 }
-
-/* Notification Styles */
-#SUCCESSFUL_NOTIF {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 10px 20px;
-    background-color: #4CAF50; /* Green background */
-    color: white;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-    font-weight: bold;
-    text-align: center;
-}
-
-.SUCCESSFUL_NOTIF_HIDDEN {
-    opacity: 0;
-    visibility: hidden;
-}
-
-.SUCCESSFUL_NOTIF_VISIBLE {
-    opacity: 1;
-    visibility: visible;
-}

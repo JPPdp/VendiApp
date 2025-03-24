@@ -123,31 +123,3 @@ ADD_TASK.addEventListener("click", () => {
         addTask(taskText);
     }
 });
-
-
-function showSuccessfulNotif() {
-    const SUCCESSFUL_NOTIF = document.getElementById('SUCCESSFUL_NOTIF');
-    SUCCESSFUL_NOTIF.classList.remove('SUCCESSFUL_NOTIF_HIDDEN');
-    SUCCESSFUL_NOTIF.classList.add('SUCCESSFUL_NOTIF_VISIBLE');
-
-    // Hide the notification after 3 seconds
-    setTimeout(() => {
-        SUCCESSFUL_NOTIF.classList.remove('SUCCESSFUL_NOTIF_VISIBLE');
-        SUCCESSFUL_NOTIF.classList.add('SUCCESSFUL_NOTIF_HIDDEN');
-    }, 3000);
-}
-
-// Example usage: Call this function when the profile picture is successfully changed
-// Replace this with your actual logic for changing the profile picture
-function changeProfilePicture() {
-    // Simulate a successful profile picture change
-    console.log("Profile Picture Changed Successfully!");
-    showSuccessfulNotif();
-}
-
-// Attach the function to your profile picture change logic
-document.querySelector('.EDIT_ICON_CONTAINER').addEventListener('click', () => {
-    // Add your logic to handle the profile picture change here
-    // For example, you might upload the image to the server and then call showSuccessfulNotif() on success
-    changeProfilePicture();
-});
