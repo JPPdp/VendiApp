@@ -290,6 +290,7 @@ label{
 #VIEW_BUTTON,
 #DESCRIPTION_FORM,
 #ADMIN_NAME,
+#ADMIN_EMAIL,
 .ACCOUNT_MANAGE {
     width: 100%;
     padding: 10px;

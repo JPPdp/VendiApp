@@ -11,9 +11,9 @@ $currentHour = date('H');
 
 // Determine the greeting based on the time
 if ($currentHour >= 1 && $currentHour < 4) {
-    $greeting = '🌄 Good Dawn!';
+    $greeting = '🌅 Good Dawn!';
 } elseif ($currentHour >= 16 && $currentHour < 18.5) {
-    $greeting = '🌅 Good Dusk!';
+    $greeting = '🌄 Good Dusk!';
 } elseif ($currentHour < 12) {
     $greeting = '☀️ Good Morning!';
 } elseif ($currentHour < 18) {
@@ -45,7 +45,7 @@ if ($admin) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_FILES['admin_profile_pic']) && $_FILES['admin_profile_pic']['error'] == 0) {
+    if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] == 0) {
         $profilePic = $_FILES['profile_pic'];
         $profilePicPath = 'admin_uploads/' . basename($profilePic['name']);
         
@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Error uploading profile picture.";
         }
     } else {
-        if (isset($_POST['ADMIN_DESCRIPTION'])) {
+        if (isset($_POST['admin_description'])) {
             $adminDescription = $_POST['admin_description'];
             $sql = "UPDATE admin_console SET admin_description = ? WHERE admin_name = ?";
             $stmt = $conn->prepare($sql);
@@ -136,23 +136,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <img src="<?php echo htmlspecialchars($_SESSION['admin_profile']); ?>" alt="Profile Picture" class="PROFILE_PIC2">
                         <div class="EDIT_ICON_CONTAINER" title="Change Profile Picture">
                             <form id="PROFILE_PIC_FORM" method="post" enctype="multipart/form-data">
-                                <label for="VENDOR_PROFILE_PIC" class="EDIT_ICON_LABEL">
+                                <label for="ADMIN_PROFILE_PIC" class="EDIT_ICON_LABEL">
                                     <i class="EDIT_ICON fas fa-camera" aria-hidden="true"></i>
-                                    <input type="file" id="VENDOR_PROFILE_PIC" name="profile_pic" accept="image/*" style="display: none;" onchange="document.getElementById('PROFILE_PIC_FORM').submit();">
+                                    <input type="file" id="ADMIN_PROFILE_PIC" name="profile_pic" accept="image/*" style="display: none;" onchange="document.getElementById('PROFILE_PIC_FORM').submit();">
                                 </label>
                             </form>
                         </div>
                     </div>
-                    <!-- Business Name -->
-                    <h2 id="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['admin_name']); ?></h2>
+                    <!-- Admin Name -->
+                    <h2 id="Admin_Name"><?php echo htmlspecialchars($_SESSION['admin_name']); ?></h2>
                 
                     <p class="USER_ID">ID: <?php echo htmlspecialchars($_SESSION['admin_id']); ?></p>
 
-                    <!-- Form for Business Description -->
+                    <!-- Form for Admin Description -->
                     <form id="ADMIN_DESCRIPTION_FORM" method="post">
-                        <!-- Business Description -->
+                        <!-- Admin Description -->
                         <label for="ADMIN_DESCRIPTION">Admin Description</label>
-                        <textarea id="ADMIN_DESCRIPTION" name="Admin_Description" placeholder="Enter a brief description of your business"><?php echo htmlspecialchars($_SESSION['admin_description']); ?></textarea>
+                        <textarea id="ADMIN_DESCRIPTION" name="admin_description" placeholder="Enter a brief description of yourself"><?php echo htmlspecialchars($_SESSION['admin_description']); ?></textarea>
 
                         <div class="BUTTON_CONTAINER"> <!-- Button -->
                         <button type="submit" class="SUBMIT_BUTTON">Submit</button>
@@ -169,18 +169,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <h3>Account Information</h3>
                             <div class="BESIDE_FIELDS">
                                 <div class="BESIDE_FIELD">
-                                    <!-- Business Name -->
+                                    <!-- Admin Name -->
                                     <label>Admin Name</label>
-                                    <input type="text" id="businessname" name="businessname" value="<?php echo htmlspecialchars($_SESSION['admin_name']); ?>" readonly>
+                                    <input type="text" id="ADMIN_NAME" name="adminname" value="<?php echo htmlspecialchars($_SESSION['admin_name']); ?>" readonly>
                                 </div>
                                 <div class="BESIDE_FIELD">
                                     <!-- Email -->
-                                    <label>Admin Email</label>
-                                    <input type="email" id="business_email" name="email" value="<?php echo htmlspecialchars($_SESSION['admin_email']); ?>" readonly>
+                                    <label>Email</label>
+                                    <input type="email" id="ADMIN_EMAIL" name="email" value="<?php echo htmlspecialchars($_SESSION['admin_email']); ?>" readonly>
                                 </div>
-                    
                             </div>
                         </div>
+                    </div>
+
                     <div class="RIGHT_PART2">
                         <h2>Account Management</h2>
                         <div class="STACK3">
@@ -199,5 +200,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 
+    <script src="dashboard.js"></script>
 </body>
 </html>
