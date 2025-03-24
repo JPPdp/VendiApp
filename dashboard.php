@@ -11,11 +11,11 @@ $currentHour = date('H');
 
 // Determine the greeting based on the time
 if ($currentHour < 12) {
-    $greeting = 'Good Morning!';
+    $greeting = '☀️ Good Morning!';
 } elseif ($currentHour < 18) {
-    $greeting = 'Good Afternoon!';
+    $greeting = '🌤️ Good Afternoon!';
 } else {
-    $greeting = 'Good Evening!';
+    $greeting = '🌙 Good Evening!';
 }
 
 $status = "Pending"; // retrieve from a database

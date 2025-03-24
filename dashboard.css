@@ -123,7 +123,7 @@ body{
     color: var(--gryShade1);
     padding: 10px;
     margin-bottom: 15px;
-    border-radius: 15px;
+    border-radius: 15px 0px 0px 15px;
     align-items: center;
 }
 
@@ -152,22 +152,22 @@ body{
 
 .NAVIGATION_BAR a.NAV_ACTIVE, 
 .NAVIGATION_BAR a.NAV_ACTIVE:hover {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    background: var(--whtShade2);
     font-family: 'Inter_Bold';  
-    color: white;
+    margin-right: -25px;
 }
 
 .NAV_ACTIVE span{
-    color: white;
+    background: var(--gradient_Vertical);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .NAV_ACTIVE i{
     color: white;
     padding: 5px;
     border-radius: 25%;
+    background: var(--gradient_Vertical);
 }
 
 
