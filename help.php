@@ -5,7 +5,23 @@ if (!isset($_SESSION['businessname'])) {
     header("Location: dashboard.php");
     exit();
 }
-$conn = new mysqli("localhost", "root", "", "vendi_db");
+date_default_timezone_set('Asia/Manila');
+
+$currentHour = date('H');
+
+// Determine the greeting based on the time
+if ($currentHour >= 1 && $currentHour < 4) {
+    $greeting = '🌄 Good Dawn!';
+} elseif ($currentHour >= 16 && $currentHour < 18.5) {
+    $greeting = '🌅 Good Dusk!';
+} elseif ($currentHour < 12) {
+    $greeting = '☀️ Good Morning!';
+} elseif ($currentHour < 18) {
+    $greeting = '🌤️ Good Afternoon!';
+} else {
+    $greeting = '🌙 Good Evening!';
+}
+$conn = new mysqli("localhost", "root", "", "janrich_db");
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -70,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             
             <div class="MENU_HEADER">MANAGEMENT</div>
-            <a href="dashboard.php"><i class="fas fa-stream"></i>Dashboard</a>
+            <a href="dashboard.php"><i class="fas fa-stream"></i> Dashboard</a>
             <a href="listings.html"><i class="fa fa-fw fa-store"></i> Listings</a>
             <a href="bookings.php"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
             <a href="customers.php"><i class="fa fa-fw fa-users"></i> Customers</a>
@@ -88,16 +104,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <h1 class="DASHBOARD_TITLE">Help</h1>
                 </div>
                 <div class="RIGHT_UPPER">
-                    <div class="SEARCH_BAR">
-                        <input type="text" placeholder="Search here...">
-                        <button type="submit"><i class="fas fa-search"></i></button>
-                    </div>
                     <div class="ACCOUNT">
-                        <div class="NOTIFICATION">
-                            <i class="fas fa-bell"></i>
-                            <span class="NOTIFICATION_DOT"></span> <!-- Red dot for notifications -->
-                        </div>
-                        <a href="db_profile.html">
+                        <span class="HELLO"><?php echo $greeting; ?></span>
+                        <a href="profile.php">
                             <img src="<?php echo htmlspecialchars($_SESSION['vendors_profile']); ?>" alt="Profile Picture" class="PROFILE_PIC">
                         </a>    
                         <span class="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['businessname']); ?></span>             
@@ -116,7 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="text" id="businessname" name="businessname" value="<?php echo htmlspecialchars($_SESSION['businessname']); ?>" readonly>
 
                     <label for="EMAIL">Email</label>
-                    <input type="email" id="business_email" name="email" value="<?php echo htmlspecialchars($_SESSION['email']); ?>" readonly>
+                    <input type="email" id="VENDOR_EMAIL" name="EMAIL" value="<?php echo htmlspecialchars($_SESSION['email']); ?>" readonly>
 
                     <label for="MESSAGE">Message</label>
                     <textarea id="MESSAGE" name="MESSAGE" rows="5" placeholder="Enter your message here..." required></textarea>

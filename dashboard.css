@@ -152,22 +152,22 @@ body{
 
 .NAVIGATION_BAR a.NAV_ACTIVE, 
 .NAVIGATION_BAR a.NAV_ACTIVE:hover {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    background: var(--whtShade2);
     font-family: 'Inter_Bold';  
-    color: white;
+    margin-right: -25px;
 }
 
 .NAV_ACTIVE span{
-    color: white;
+    background: var(--gradient_Horizontal);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .NAV_ACTIVE i{
     color: white;
     padding: 5px;
     border-radius: 25%;
+    background: var(--gradient_Horizontal);
 }
 
 
@@ -208,7 +208,7 @@ body{
     justify-content: flex-end; /* Align right */
     color: var(--blkShade1);
     background-color: white;
-    box-shadow: 14px 17px 40px 4px rgba(112, 144, 176, 0.08);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
     padding: 10px 20px;
     border-radius: 30px;
     margin: 0;
@@ -223,6 +223,12 @@ body{
     padding: 10px 20px;
     border-radius: 40px;
     margin: 0;
+}
+
+.RIGHT_UPPER .HELLO{
+    color: white;
+    font-size: 0.8rem;
+    margin-right: -10px;
 }
 
 .SEARCH_BAR {
@@ -276,7 +282,6 @@ body{
     display: flex;
     align-items: center;
     gap: 20px;
-    margin-left: -10px;
     position: relative;
 }
 
@@ -300,14 +305,13 @@ body{
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    border: 2px solid var(--whiteShade1);
     object-fit: cover;
     cursor: pointer;
 }
 
 .BUSINESS_NAME{
     font-size: 0.8rem;
-    font-family: 'Inter_Medium';
+    font-family: 'Inter_Bold';
     color: white;
     margin-left: -10px;
 }
@@ -369,42 +373,41 @@ body{
 
 /* BACKGROUND AND BORDER COLORS */
 .PENDING {
-    background: linear-gradient(to top, #f7b500, #f77b00);
+    background: linear-gradient(to top, rgba(128, 0, 128, 0.9), rgba(102, 0, 204, 0.9)); /* Darker purple to lighter purple */
     transition: 0.2s ease;
 }
 
 .SCHEDULED {
-    background: linear-gradient(to top, #00b4f7, #0055f7);
+    background: linear-gradient(to top, rgba(147, 112, 219, 0.9), rgba(123, 104, 238, 0.9)); /* Medium purple to lighter purple */
     transition: 0.2s ease;
 }
 
 .COMPLETED {
-    background: linear-gradient(to top, #00f70c, #009c31);
+    background: linear-gradient(to top, rgba(186, 85, 211, 0.9), rgba(153, 50, 204, 0.9)); /* Orchid to dark orchid */
     transition: 0.2s ease;
 }
 
 .CANCELLED {
-    background: linear-gradient(to top, #fc241d, #c40202);
+    background: linear-gradient(to top, rgba(75, 0, 130, 0.9), rgba(106, 90, 205, 0.9)); /* Indigo to slate blue */
     transition: 0.2s ease;
 }
 
 /* Hover Effects */
 .PENDING:hover {
-    box-shadow: 1px 1px 10px 5px rgba(247, 181, 0, 0.25);
+    box-shadow: 1px 1px 10px 5px rgba(128, 0, 128, 0.4); /* Matching the darker purple */
 }
 
 .SCHEDULED:hover {
-    box-shadow: 1px 1px 10px 5px rgba(0, 180, 247, 0.25);
+    box-shadow: 1px 1px 10px 5px rgba(147, 112, 219, 0.4); /* Matching the medium purple */
 }
 
 .COMPLETED:hover {
-    box-shadow: 1px 1px 10px 5px rgba(0, 247, 12, 0.25);
+    box-shadow: 1px 1px 10px 5px rgba(186, 85, 211, 0.4); /* Matching the orchid */
 }
 
 .CANCELLED:hover {
-    box-shadow: 1px 1px 10px 5px rgba(247, 0, 0, 0.25);
+    box-shadow: 1px 1px 10px 5px rgba(75, 0, 130, 0.4); /* Matching the indigo */
 }
-
 
 .MAIN_CONTAINER {
     display: flex;
@@ -538,6 +541,7 @@ body{
     border-radius: 50%;
     margin: 0 auto; 
     box-shadow: 14px 17px 40px 4px rgba(112, 144, 176, 0.08);
+    opacity: 75%;
 }
 
 .CALENDAR_BODY .DAYS li:not(.ACTIVE):hover {

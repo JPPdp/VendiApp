@@ -5,7 +5,24 @@ if (!isset($_SESSION['businessname'])) {
     header("Location: dashboard.php");
     exit();
 }
-$conn = new mysqli("localhost", "root", "", "vendi_db");
+date_default_timezone_set('Asia/Manila');
+
+$currentHour = date('H');
+
+// Determine the greeting based on the time
+if ($currentHour >= 1 && $currentHour < 4) {
+    $greeting = '🌅 Good Dawn!';
+} elseif ($currentHour >= 16 && $currentHour < 18.5) {
+    $greeting = '🌄 Good Dusk!';
+} elseif ($currentHour < 12) {
+    $greeting = '☀️ Good Morning!';
+} elseif ($currentHour < 18) {
+    $greeting = '🌤️ Good Afternoon!';
+} else {
+    $greeting = '🌙 Good Evening!';
+}
+
+$conn = new mysqli("localhost", "root", "", "janrich_db");
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -105,15 +122,8 @@ if ($status == "Pending") {
                 </div>
 
                 <div class="RIGHT_UPPER">
-                    <div class="SEARCH_BAR">
-                        <input type="text" placeholder="Search here...">
-                        <button type="submit"><i class="fas fa-search"></i></button>
-                    </div>
                     <div class="ACCOUNT">
-                        <div class="NOTIFICATION">
-                            <i class="fas fa-bell"></i>
-                            <span class="NOTIFICATION_DOT"></span> <!-- Red dot for notifications -->
-                        </div>
+                        <span class="HELLO"><?php echo $greeting; ?></span>
                         <a href="profile.php">
                             <img src="<?php echo htmlspecialchars($_SESSION['vendors_profile']); ?>" alt="Profile Picture" class="PROFILE_PIC">
                         </a>    
@@ -213,13 +223,13 @@ if ($status == "Pending") {
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Reference ID</th>
-                                    <th>Client Name</th>
-                                    <th>Client Email</th>
-                                    <th>Event Date</th>
-                                    <th>Event Location</th>
-                                    <th>Package</th>
-                                    <th>Status</th>
+                                    <th><i class="fas fa-hashtag"></i> Reference ID</th>
+                                    <th><i class="fas fa-user"></i> Client Name</th>
+                                    <th><i class="fas fa-envelope"></i> Client Email</th>
+                                    <th><i class="fas fa-calendar-alt"></i> Event Date</th>
+                                    <th><i class="fas fa-map-marker-alt"></i> Event Location</th>
+                                    <th><i class="fas fa-box"></i> Package</th>
+                                    <th><i class="fas fa-info-circle"></i> Status</th>
                                 </tr>
                             </thead>
                             <tbody>

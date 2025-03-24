@@ -5,13 +5,29 @@ if (!isset($_SESSION['businessname'])) {
     header("Location: dashboard.php");
     exit();
 }
-$conn = new mysqli("localhost", "root", "", "vendi_db");
+date_default_timezone_set('Asia/Manila');
+
+$currentHour = date('H');
+
+// Determine the greeting based on the time
+if ($currentHour >= 1 && $currentHour < 4) {
+    $greeting = '🌄 Good Dawn!';
+} elseif ($currentHour >= 16 && $currentHour < 18.5) {
+    $greeting = '🌅 Good Dusk!';
+} elseif ($currentHour < 12) {
+    $greeting = '☀️ Good Morning!';
+} elseif ($currentHour < 18) {
+    $greeting = '🌤️ Good Afternoon!';
+} else {
+    $greeting = '🌙 Good Evening!';
+}
+$conn = new mysqli("localhost", "root", "", "janrich_db");
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch data from the database
+// Fetch vendor data from the database
 $sql = "SELECT * FROM vendors WHERE businessname = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $_SESSION['businessname']);
@@ -22,6 +38,18 @@ $vendor = $result->fetch_assoc();
 if ($vendor) {
     $_SESSION['vendors_profile'] = $vendor['vendors_profile'];
 }
+
+// Fetch customer data from the database
+$sql = "SELECT * FROM clients";
+$result = $conn->query($sql);
+
+$customers = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $customers[] = $row;
+    }
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] == 0) {
         $profilePic = $_FILES['profile_pic'];
@@ -44,30 +72,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 
-// Simulated customer data
-$customers = [
-    [
-        'profile_pic' => 'assets/images/tiara.png',
-        'client_name' => 'John Marston',
-        'client_email' => 'marston@gmail.com',
-        'mobile_number' => '+1234567890',
-    ],
-    [
-        'profile_pic' => 'assets/images/tiara.png',
-        'client_name' => 'Arthur Morgan',
-        'client_email' => 'arthur@gmail.com',
-        'mobile_number' => '+0987654321',
-    ],
-];
-
 // Handle delete action
 if (isset($_GET['delete'])) {
     $index = $_GET['delete'];
     if (isset($customers[$index])) {
-        array_splice($customers, $index, 1); // Simulate deletion
+        $sql = "DELETE FROM clients WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $customers[$index]['id']);
+        $stmt->execute();
+        $stmt->close();
+        header("Location: customers.php"); // Redirect to refresh the page
+        exit();
     }
-    header("Location: customers.php"); // Redirect to refresh the page
-    exit();
 }
 ?>
 
@@ -114,16 +130,9 @@ if (isset($_GET['delete'])) {
                 </div>
 
                 <div class="RIGHT_UPPER">
-                    <div class="SEARCH_BAR">
-                        <input type="text" placeholder="Search here...">
-                        <button type="submit"><i class="fas fa-search"></i></button>
-                    </div>
                     <div class="ACCOUNT">
-                        <div class="NOTIFICATION">
-                            <i class="fas fa-bell"></i>
-                            <span class="NOTIFICATION_DOT"></span> <!-- Red dot for notifications -->
-                        </div>
-                        <a href="db_profile.html">
+                        <span class="HELLO"><?php echo $greeting; ?></span>
+                        <a href="profile.php">
                             <img src="<?php echo htmlspecialchars($_SESSION['vendors_profile']); ?>" alt="Profile Picture" class="PROFILE_PIC">
                         </a>    
                         <span class="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['businessname']); ?></span>             
@@ -132,30 +141,34 @@ if (isset($_GET['delete'])) {
             </div>
 
             <!-- Customer Details Table -->
-            <div class="MAIN_CONTAINER">
+            <div class="CUSTOMERS_CONTAINER">
+                    <header class="CUSTOMERS_HEADER">
+                        <h2>Customers Management</h2>
+                    </header>
+            </div> 
+
                 <div class="CUSTOMER_TABLE">
-                    <h2>Customer Details</h2>
                     <table>
                         <thead>
                             <tr>
-                                <th>Profile Picture</th>
-                                <th>Client Name</th>
-                                <th>Client Email</th>
-                                <th>Mobile Number</th>
-                                <th>Action</th>
+                                <th><i class="fas fa-image"></i> Profile Picture</th>
+                                <th><i class="fas fa-user"></i> Client Name</th>
+                                <th><i class="fas fa-envelope"></i> Client Email</th>
+                                <th><i class="fas fa-phone"></i> Mobile Number</th>
+                                <th><i class="fas fa-history"></i> History</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($customers as $index => $customer): ?>
+                            <?php foreach ($customers as $customer): ?>
                                 <tr>
                                     <td class="PROFILE_PIC">
-                                        <img src="<?php echo $customer['profile_pic']; ?>" alt="Profile Picture" class="PROFILE_PIC">
+                                        <img src="<?php echo htmlspecialchars($customer['profile_pic']); ?>" alt="Profile Picture" class="PROFILE_PIC">
                                     </td>
-                                    <td class="CLIENT_NAME"><?php echo $customer['client_name']; ?></td>
-                                    <td class="CLIENT_EMAIL"><?php echo $customer['client_email']; ?></td>
-                                    <td class="MOBILE_NUMBER"><?php echo $customer['mobile_number']; ?></td>
+                                    <td class="CLIENT_NAME"><?php echo htmlspecialchars($customer['client_name']); ?></td>
+                                    <td class="CLIENT_EMAIL"><?php echo htmlspecialchars($customer['client_email']); ?></td>
+                                    <td class="MOBILE_NUMBER"><?php echo htmlspecialchars($customer['mobile_number']); ?></td>
                                     <td class="ACTION_BUTTONS">
-                                        <a href="customers.php?delete=<?php echo $index; ?>" class="DELETE_BUTTON">Delete</a>
+                                        <a href="customers_history.php?id=<?php echo $customer['id']; ?>" class="VIEW_BUTTON">View</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -164,9 +177,7 @@ if (isset($_GET['delete'])) {
                 </div>
             </div>
         </div>
-    </div>
 
     <script src="dashboard.js"></script>
-    
 </body>
 </html>

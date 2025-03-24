@@ -89,6 +89,39 @@
     display: block;
 }
 
+#ADMIN_DESCRIPTION {
+    width: 100%; /* Ensure it takes up all available space */
+    min-height: 200px;
+    padding: 10px;
+    border-radius: 10px;
+    background: var(--gradient_White);
+    color: var(--blkShade1);
+    font-family: 'Inter_Regular';
+    font-size: 0.8rem;
+    border: 2px solid var(--whtShade2);
+    resize: none;
+    outline: none;
+    box-sizing: border-box;
+    margin-bottom: 0px;
+}
+
+#ADMIN_DESCRIPTION label {
+    margin-top: 40px;
+    margin-bottom: 10px;
+    font-family: 'Inter_SemiBold';
+    font-size: 0.8rem;
+    color: var(--blkShade1);
+    display: block;
+}
+
+#ADMIN_DESCRIPTION label {
+    margin-top: 40px;
+    margin-bottom: 10px;
+    font-family: 'Inter_SemiBold';
+    font-size: 0.8rem;
+    color: var(--blkShade1);
+    display: block;
+}
 /* Textarea Styling */
 .LEFT_PROFILE #VENDOR_DESCRIPTION {
     width: 100%; /* Ensure it takes up all available space */
@@ -248,12 +281,15 @@ label{
 /* Input Fields Readonly */
 #businessname,
 #VENDOR_EMAIL,
-#VENDOR_MOBILE,
-#ADDRESS,
-#CITY,
-#PROVINCE,
-#SERVICE,
+#business_email,
+#business_mobile,
+#business_address,
+#business_city,
+#business_province,
+#business_service,
 #VIEW_BUTTON,
+#DESCRIPTION_FORM,
+#ADMIN_NAME,
 .ACCOUNT_MANAGE {
     width: 100%;
     padding: 10px;
@@ -305,6 +341,11 @@ label{
 .LOGIN_LINK{
     text-align: center;
     margin-top: 20px;
+}
+.RIGHT_UPPER .GREETING{
+    color: white;
+    font-size: 0.8rem;
+    margin-right: -10px;
 }
 
 .LOGIN_LINK a{
@@ -395,6 +436,12 @@ label{
     margin-top: 10px;
     cursor: pointer;
     text-align: center;
+}
+.GREETING {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
 }
 
 /* DELETE ACCOUNT BUTTON */

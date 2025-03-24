@@ -6,7 +6,23 @@ if (!isset($_SESSION['businessname'])) {
     header("Location: dashboard.php");
     exit();
 }
-$conn = new mysqli("localhost", "root", "", "vendi_db");
+date_default_timezone_set('Asia/Manila');
+
+$currentHour = date('H');
+
+// Determine the greeting based on the time
+if ($currentHour >= 1 && $currentHour < 4) {
+    $greeting = '🌄 Good Dawn!';
+} elseif ($currentHour >= 16 && $currentHour < 18.5) {
+    $greeting = '🌅 Good Dusk!';
+} elseif ($currentHour < 12) {
+    $greeting = '☀️ Good Morning!';
+} elseif ($currentHour < 18) {
+    $greeting = '🌤️ Good Afternoon!';
+} else {
+    $greeting = '🌙 Good Evening!';
+}
+$conn = new mysqli("localhost", "root", "", "janrich_db");
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -86,17 +102,10 @@ if ($vendor) {
                     <h1 class="DASHBOARD_TITLE">Listings</h1>
                 </div>
                 <div class="RIGHT_UPPER">
-                    <div class="SEARCH_BAR">
-                        <input type="text" placeholder="Search here...">
-                        <button type="submit"><i class="fas fa-search"></i></button>
-                    </div>
                     <div class="ACCOUNT">
-                        <div class="NOTIFICATION">
-                            <i class="fas fa-bell"></i>
-                            <span class="NOTIFICATION_DOT"></span> <!-- Red dot for notifications -->
-                        </div>
+                        <span class="HELLO"><?php echo $greeting; ?></span>
                         <a href="profile.php">
-                            <img src="<?php echo htmlspecialchars($_SESSION['vendors_profile']); ?>" alt="Profile Picture" class="PROFILE_PIC">
+                            <img src="<?php echo htmlspecialchars($_SESSION['vendors_profile'])?>" alt="Profile Picture" class="PROFILE_PIC">
                         </a>    
                         <span class="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['businessname']); ?></span>             
                     </div>
@@ -159,9 +168,5 @@ if ($vendor) {
                 </div> <!-- End div-Package -->
 
             </div>
-
-
-
-
 </body>
 </html>

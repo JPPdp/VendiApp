@@ -6,6 +6,64 @@ if (!isset($_SESSION['businessname'])) {
     header("Location: dashboard.php");
     exit();
 }
+date_default_timezone_set('Asia/Manila');
+
+// Get the current hour (24-hour format)
+$currentHour = date('H');
+
+// Determine the greeting based on the time
+if ($currentHour >= 1 && $currentHour < 4) {
+    $greeting = '🌄 Good Dawn!';
+} elseif ($currentHour >= 16 && $currentHour < 18.5) {
+    $greeting = '🌅 Good Dusk!';
+} elseif ($currentHour < 12) {
+    $greeting = '☀️ Good Morning!';
+} elseif ($currentHour < 18) {
+    $greeting = '🌤️ Good Afternoon!';
+} else {
+    $greeting = '🌙 Good Evening!';
+}
+
+// Establish database connection
+$conn = new mysqli("localhost", "root", "", "janrich_db");
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch vendor data from the database
+$sql = "SELECT * FROM vendors WHERE businessname = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $_SESSION['businessname']);
+$stmt->execute();
+$result = $stmt->get_result();
+$vendor = $result->fetch_assoc();
+
+if ($vendor) {
+    $_SESSION['vendors_profile'] = $vendor['vendors_profile'];
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] == 0) {
+        $profilePic = $_FILES['profile_pic'];
+        $profilePicPath = 'uploads/' . basename($profilePic['name']);
+        
+        if (move_uploaded_file($profilePic['tmp_name'], $profilePicPath)) {
+            $sql = "UPDATE vendors SET vendors_profile = ? WHERE businessname = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ss", $profilePicPath, $_SESSION['businessname']);
+            if ($stmt->execute()) {
+                $_SESSION['vendors_profile'] = $profilePicPath;
+            } else {
+                echo "Error updating profile picture: " . $conn->error;
+            }
+            $stmt->close();
+        } else {
+            echo "Error uploading profile picture.";
+        }
+    }
+    $conn->close(); 
+}
 ?>
 
 <!DOCTYPE html>
@@ -47,17 +105,10 @@ if (!isset($_SESSION['businessname'])) {
                     <h1 class="DASHBOARD_TITLE"><a href="listings.php" id="BREADCRUMB">Listings /</a> Add Package</h1>
                 </div>
                 <div class="RIGHT_UPPER">
-                    <div class="SEARCH_BAR">
-                        <input type="text" placeholder="Search here...">
-                        <button type="submit"><i class="fas fa-search"></i></button>
-                    </div>
                     <div class="ACCOUNT">
-                        <div class="NOTIFICATION">
-                            <i class="fas fa-bell"></i>
-                            <span class="NOTIFICATION_DOT"></span> <!-- Red dot for notifications -->
-                        </div>
+                        <span class="HELLO"><?php echo $greeting; ?></span>
                         <a href="profile.php">
-                            <img src="assets/images/tiara.png" alt="Profile Picture" class="PROFILE_PIC">
+                            <img src="<?php echo htmlspecialchars($_SESSION['vendors_profile'])?>" alt="Profile Picture" class="PROFILE_PIC">
                         </a>    
                         <span class="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['businessname']); ?></span>             
                     </div>
@@ -92,96 +143,21 @@ if (!isset($_SESSION['businessname'])) {
                                     </div>
 
                                     <div class="BESIDE_FIELD">
-                                        <!-- Package Features -->
-                                        <div class="FORM_GROUP">
-                                            <label><i class="fas fa-list"></i> Features</label>
-                                            <div id="PACKAGE_FEATURES">
-                                                <div class="FEATURE_ITEM">
-                                                    <select name="feature1">
-                                                        <option value="" disabled selected>Select Feature 1</option>
-                                                            <option value="" disabled>&#128197; Event Type</option>
-                                                        <option value="Birthday">Birthday</option>
-                                                        <option value="Corporate">Corporate</option>
-                                                        <option value="Wedding">Wedding</option>
-                                                            <option value="" disabled>&#127838; Food Options</option>
-                                                        <option value="Desserts">Desserts</option>
-                                                        <option value="Fast Food">Fast Food</option>
-                                                        <option value="Vegan">Vegan</option>
-                                                            <option value="" disabled>&#127866; Beverage Options</option>
-                                                        <option value="Alcoholic">Alcoholic</option>
-                                                        <option value="Coffee & Tea">Coffee & Tea</option>
-                                                        <option value="Refreshments">Refreshments</option>
-                                                            <option value="" disabled>&#127909; Entertainment Options</option>
-                                                        <option value="Kid-Friendly">Arts & Crafts</option>
-                                                        <option value="Games & Activities">Games & Activities</option>
-                                                        <option value="Games & Activities">Photobooth</option>
-                                                    </select>
-                                                </div>
-                                                <div class="FEATURE_ITEM">
-                                                    <select name="feature2">
-                                                        <option value="" disabled selected>Select Feature 2</option>
-                                                        <option value="" disabled>&#128197; Event Type</option>
-                                                        <option value="Birthday">Birthday</option>
-                                                        <option value="Corporate">Corporate</option>
-                                                        <option value="Wedding">Wedding</option>
-                                                            <option value="" disabled>&#127838; Food Options</option>
-                                                        <option value="Desserts">Desserts</option>
-                                                        <option value="Fast Food">Fast Food</option>
-                                                        <option value="Vegan">Vegan</option>
-                                                            <option value="" disabled>&#127866; Beverage Options</option>
-                                                        <option value="Alcoholic">Alcoholic</option>
-                                                        <option value="Coffee & Tea">Coffee & Tea</option>
-                                                        <option value="Refreshments">Refreshments</option>
-                                                            <option value="" disabled>&#127909; Entertainment Options</option>
-                                                        <option value="Kid-Friendly">Arts & Crafts</option>
-                                                        <option value="Games & Activities">Games & Activities</option>
-                                                        <option value="Games & Activities">Photobooth</option>
-                                                    </select>
-                                                </div>
-                                                <div class="FEATURE_ITEM">
-                                                    <select name="feature3">
-                                                        <option value="" disabled selected>Select Feature 3</option>
-                                                        <option value="" disabled>&#128197; Event Type</option>
-                                                        <option value="Birthday">Birthday</option>
-                                                        <option value="Corporate">Corporate</option>
-                                                        <option value="Wedding">Wedding</option>
-                                                            <option value="" disabled>&#127838; Food Options</option>
-                                                        <option value="Desserts">Desserts</option>
-                                                        <option value="Fast Food">Fast Food</option>
-                                                        <option value="Vegan">Vegan</option>
-                                                            <option value="" disabled>&#127866; Beverage Options</option>
-                                                        <option value="Alcoholic">Alcoholic</option>
-                                                        <option value="Coffee & Tea">Coffee & Tea</option>
-                                                        <option value="Refreshments">Refreshments</option>
-                                                            <option value="" disabled>&#127909; Entertainment Options</option>
-                                                        <option value="Kid-Friendly">Arts & Crafts</option>
-                                                        <option value="Games & Activities">Games & Activities</option>
-                                                        <option value="Games & Activities">Photobooth</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="BESIDE_FIELDS">
-                                    <div class="BESIDE_FIELD">
-                                        <!-- Starting Price -->
+                                            <!-- Starting Price -->
                                         <div class="FORM_GROUP">
                                             <label for="STARTING_PRICE"><i class="fas fa-tag"></i> Starting Price</label>
                                             <input type="number" id="STARTING_PRICE" name="STARTING_PRICE" placeholder="Enter starting price" required>
                                         </div>
-                                    </div>
 
-                                    <div class="BESIDE_FIELD">
                                         <!-- Capacity -->
-                                        <div class="FORM_GROUP">
+                                        <div class="FORM_GROUP" id="CAPACITY">
                                             <label for="CAPACITY"><i class="fas fa-users"></i> Capacity</label>
                                             <input type="number" id="CAPACITY" name="CAPACITY" placeholder="Enter guest capacity (e.g., 50)" required>
                                         </div>
                                     </div>
                                 </div>
+
+
                     </div>
 
                         <div class="RIGHT_MAIN">
