@@ -85,6 +85,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <!-- Profile Container -->
             <div class="PROFILE_CONTAINER">
+
+                <div id="SUCCESSFUL_NOTIF" class="SUCCESSFUL_NOTIF_HIDDEN">
+                    Success!
+                </div>
+
                 <!-- Left Profile Section -->
                 <div class="LEFT_PROFILE">
                     <div class="PROFILE_PIC_CONTAINER"><!-- Profile Picture -->
@@ -202,6 +207,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
+
+    <script src="dashboard.js"></script>
+
 
 </body>
 </html>
