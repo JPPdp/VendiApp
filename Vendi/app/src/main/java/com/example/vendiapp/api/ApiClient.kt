@@ -4,14 +4,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
-    private const val BASE_URL = "http://localhost/vendi-api/api/"
 
-    val instance: ApiService by lazy {
-        val retrofit = Retrofit.Builder()
+    private const val BASE_URL = "http://192.168.68.106/vendi-api/" // Replace with your server URL
+
+    val eventApiService: EventApiService by lazy {
+        Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-
-        retrofit.create(ApiService::class.java)
+            .create(EventApiService::class.java)
     }
 }

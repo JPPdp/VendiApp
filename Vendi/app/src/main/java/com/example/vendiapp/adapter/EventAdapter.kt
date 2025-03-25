@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.vendiapp.R
 import com.example.vendiapp.model.EventModel
 
@@ -64,8 +65,12 @@ class EventAdapter(
             price.text = item.price
             rating.text = item.rating.toString()
 
-            // Directly set the image resource (no need for casting or checking type)
-            itemImage.setImageResource(item.imageRes)
+            // Load image from URL using Glide
+            Glide.with(itemView.context)
+                .load(item.imageUrl)
+                .placeholder(R.drawable.baseline_cloud_download_24) // Optional placeholder
+                .error(R.drawable.error_image) // Optional error image
+                .into(itemImage)
 
             itemView.setOnClickListener { onItemClick(item) }
         }
@@ -78,8 +83,8 @@ class EventAdapter(
         private val itemName: TextView = itemView.findViewById(R.id.tvFeatureEventName)
         private val location: TextView = itemView.findViewById(R.id.tvFeatureEventLocation)
         private val price: TextView = itemView.findViewById(R.id.tvFeatureEventPrice)
-        private val rating: TextView = itemView.findViewById(R.id.tvFeatureEventRating) // Added rating
-        private val starIcon: ImageView = itemView.findViewById(R.id.ivFeatureStar) // Added star icon
+        private val rating: TextView = itemView.findViewById(R.id.tvFeatureEventRating)
+        private val starIcon: ImageView = itemView.findViewById(R.id.ivFeatureStar)
 
         fun bind(item: EventModel) {
             itemName.text = item.title
@@ -87,8 +92,12 @@ class EventAdapter(
             price.text = item.price
             rating.text = item.rating.toString()
 
-            // Directly set the image resource (no need for casting)
-            itemImage.setImageResource(item.imageRes)
+            // Load image from URL using Glide
+            Glide.with(itemView.context)
+                .load(item.imageUrl)
+                .placeholder(R.drawable.baseline_cloud_download_24) // Optional placeholder
+                .error(R.drawable.error_image) // Optional error image
+                .into(itemImage)
 
             itemView.setOnClickListener { onItemClick(item) }
         }

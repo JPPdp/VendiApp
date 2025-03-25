@@ -1,72 +1,77 @@
 package com.example.vendiapp.view.auth
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.LinearLayout
+import android.widget.*
+import androidx.fragment.app.Fragment
 import com.example.vendiapp.R
+import com.example.vendiapp.api.ApiUtils
 
 class RegistrationFragment3 : Fragment() {
 
+    private lateinit var etCreatePassword: EditText
+    private lateinit var cbTerms: CheckBox
+    private lateinit var btnSignIn: Button
+
+    private var username: String? = null
+    private var phone: String? = null
+    private var password: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_registration3, container, false)
 
-        val btnSignIn: Button = view.findViewById(R.id.btnSignIn)
-        val cbTerms: CheckBox = view.findViewById(R.id.cbTerms)
-//        val etCreatePassword: EditText = view.findViewById(R.id.etCreatePassword)
+        etCreatePassword = view.findViewById(R.id.etCreatePassword)
+        cbTerms = view.findViewById(R.id.cbTerms)
+        btnSignIn = view.findViewById(R.id.btnSignIn)
 
-//        btnSignIn.isEnabled = false
+        username = arguments?.getString("username")
+        phone = arguments?.getString("phone")
 
+        // Disable sign-in until terms are checked
+        btnSignIn.isEnabled = false
         cbTerms.setOnCheckedChangeListener { _, isChecked ->
             btnSignIn.isEnabled = isChecked
         }
 
+        // ✅ Handle sign-in click
         btnSignIn.setOnClickListener {
+            password = etCreatePassword.text.toString().trim()
 
-//            val password = etCreatePassword.text.toString()
-
-//            if (!isValidPassword(password)) {
-//                etCreatePassword.error = "Need a strong password!" // Show error if password is weak
-//            } else {
-                // Navigate to previous registration fragment
-                val fragment = LogInFragment()
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.fgtContainer, fragment)
-                    .addToBackStack(null)
-                    .commit()
-//            }
+            if (password.isNullOrEmpty() || password!!.length < 8) {
+                etCreatePassword.error = "Password must be at least 8 characters"
+            } else {
+                registerUser(username!!, phone!!, password!!)
+            }
         }
 
         val llBack = view.findViewById<LinearLayout>(R.id.llBack)
         llBack.setOnClickListener {
-            parentFragmentManager.popBackStack() // Go back to the previous fragment
+            parentFragmentManager.popBackStack()
         }
 
         return view
-
     }
 
-//    fun openPrivacy(view: View) {
-//        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://xxx.com"))
-//        startActivity(intent)
-//    }
-//
-//    fun openTerms(view: View) {
-//        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://xxx.com"))
-//        startActivity(intent)
-//    }
-//
-//    private fun isValidPassword(password: String): Boolean {
-//        return password.length >= 8 // Example rule: At least 8 characters
-//    }
+    // ✅ Register user through API
+    private fun registerUser(username: String, phone: String, password: String) {
+        ApiUtils.registerUserToDB(username, phone, password) { success, message ->
+            requireActivity().runOnUiThread {
+                if (success) {
+                    Toast.makeText(context, "Registration Successful!", Toast.LENGTH_SHORT).show()
 
+                    // Navigate to login after registration
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.fgtContainer, LogInFragment())
+                        .commit()
+                } else {
+                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 }

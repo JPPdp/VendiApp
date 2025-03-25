@@ -1,15 +1,18 @@
 package com.example.vendiapp.utils
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import org.json.JSONObject
 import java.io.IOException
 
 object ApiUtils {
 
-    private const val BASE_URL = "http://localhost/vendi-api/api/" // Replace with your actual API URL
+    // ✅ Use actual IP address instead of localhost
+    private const val BASE_URL = "http://192.168.68.103/vendi-api/api/" // Replace with your IP
 
     // ✅ Register User to Database
     fun registerUserToDB(context: Context, fullName: String, email: String, phone: String, password: String) {
@@ -23,7 +26,7 @@ object ApiUtils {
         }
 
         val requestBody = RequestBody.create(
-            MediaType.parse("application/json; charset=utf-8"),
+            "application/json; charset=utf-8".toMediaTypeOrNull(),
             json.toString()
         )
 
@@ -36,6 +39,7 @@ object ApiUtils {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
+                Log.e("API_ERROR", "Failed to connect: ${e.message}")
                 (context as? AppCompatActivity)?.runOnUiThread {
                     Toast.makeText(context, "Failed to connect to server.", Toast.LENGTH_SHORT).show()
                 }
@@ -44,13 +48,16 @@ object ApiUtils {
             override fun onResponse(call: Call, response: Response) {
                 response.use { res ->
                     if (!res.isSuccessful) {
+                        Log.e("API_ERROR", "Server error: ${res.code}")
                         (context as? AppCompatActivity)?.runOnUiThread {
-                            Toast.makeText(context, "Server error: ${res.code()}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Server error: ${res.code}", Toast.LENGTH_SHORT).show()
                         }
                         return
                     }
 
-                    val responseBody = res.body()?.string()
+                    val responseBody = res.body?.string()
+                    Log.d("API_RESPONSE", "Response: $responseBody")
+
                     if (responseBody != null) {
                         try {
                             val jsonResponse = JSONObject(responseBody)
@@ -88,6 +95,7 @@ object ApiUtils {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
+                Log.e("API_ERROR", "Failed to connect: ${e.message}")
                 (context as? AppCompatActivity)?.runOnUiThread {
                     Toast.makeText(context, "Failed to connect to server.", Toast.LENGTH_SHORT).show()
                 }
@@ -97,14 +105,17 @@ object ApiUtils {
             override fun onResponse(call: Call, response: Response) {
                 response.use { res ->
                     if (!res.isSuccessful) {
+                        Log.e("API_ERROR", "Server error: ${res.code}")
                         (context as? AppCompatActivity)?.runOnUiThread {
-                            Toast.makeText(context, "Server error: ${res.code()}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Server error: ${res.code}", Toast.LENGTH_SHORT).show()
                         }
                         onResult(null)
                         return
                     }
 
-                    val responseBody = res.body()?.string()
+                    val responseBody = res.body?.string()
+                    Log.d("API_RESPONSE", "Response: $responseBody")
+
                     if (responseBody != null) {
                         try {
                             val jsonArray = JSONObject(responseBody).getJSONArray("users")

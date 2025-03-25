@@ -1,6 +1,105 @@
 package com.example.vendiapp.repository
 
-import com.example.vendiapp.R
+import android.util.Log
+import com.example.vendiapp.api.ApiClient
+import com.example.vendiapp.model.EventModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
+class EventRepository {
+
+    // Returns event list based on selected category
+    fun getEvents(category: String): List<EventModel> {
+        return when (category) {
+            "Food" -> getFoodItems()
+            "Beverages" -> getBeverageItems()
+            "Entertainment" -> getEntertainmentItems()
+            "All" -> getAllEvents() // Fetch all categories
+            else -> emptyList()
+        }
+    }
+
+    // Fetch Food Items from API
+    private fun getFoodItems(): List<EventModel> {
+        val foodItems = mutableListOf<EventModel>()
+
+        ApiClient.eventApiService.getEvents("Food").enqueue(object : Callback<List<EventModel>> {
+            override fun onResponse(call: Call<List<EventModel>>, response: Response<List<EventModel>>) {
+                if (response.isSuccessful) {
+                    response.body()?.let { events ->
+                        foodItems.addAll(events)
+                    }
+                } else {
+                    Log.e("API_ERROR", "Error fetching Food items: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<List<EventModel>>, t: Throwable) {
+                Log.e("API_ERROR", "Failed to load Food items: ${t.message}")
+            }
+        })
+
+        return foodItems
+    }
+
+    // Fetch Beverage Items from API
+    private fun getBeverageItems(): List<EventModel> {
+        val beverageItems = mutableListOf<EventModel>()
+
+        ApiClient.eventApiService.getEvents("Beverages").enqueue(object : Callback<List<EventModel>> {
+            override fun onResponse(call: Call<List<EventModel>>, response: Response<List<EventModel>>) {
+                if (response.isSuccessful) {
+                    response.body()?.let { events ->
+                        beverageItems.addAll(events)
+                    }
+                } else {
+                    Log.e("API_ERROR", "Error fetching Beverage items: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<List<EventModel>>, t: Throwable) {
+                Log.e("API_ERROR", "Failed to load Beverage items: ${t.message}")
+            }
+        })
+
+        return beverageItems
+    }
+
+    // Fetch Entertainment Items from API
+    private fun getEntertainmentItems(): List<EventModel> {
+        val entertainmentItems = mutableListOf<EventModel>()
+
+        ApiClient.eventApiService.getEvents("Entertainment").enqueue(object : Callback<List<EventModel>> {
+            override fun onResponse(call: Call<List<EventModel>>, response: Response<List<EventModel>>) {
+                if (response.isSuccessful) {
+                    response.body()?.let { events ->
+                        entertainmentItems.addAll(events)
+                    }
+                } else {
+                    Log.e("API_ERROR", "Error fetching Entertainment items: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<List<EventModel>>, t: Throwable) {
+                Log.e("API_ERROR", "Failed to load Entertainment items: ${t.message}")
+            }
+        })
+
+        return entertainmentItems
+    }
+
+    // Fetch All Events (combines all categories)
+    private fun getAllEvents(): List<EventModel> {
+        val allEvents = mutableListOf<EventModel>()
+        allEvents.addAll(getFoodItems())
+        allEvents.addAll(getBeverageItems())
+        allEvents.addAll(getEntertainmentItems())
+        return allEvents
+    }
+}
+
+/*import com.example.vendiapp.R
 import com.example.vendiapp.model.EventModel
 
 
@@ -250,4 +349,4 @@ class EventRepository {
     )
 
 
-}
+}*/

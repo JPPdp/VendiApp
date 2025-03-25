@@ -1,86 +1,84 @@
 package com.example.vendiapp.view.main.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.vendiapp.PackageAdapter
+import com.bumptech.glide.Glide
 import com.example.vendiapp.R
 import com.example.vendiapp.model.EventModel
-import com.example.vendiapp.viewmodel.EventDetailsViewModel
+import com.example.vendiapp.view.main.ChatFragment
 
 class EventDetailsFragment : Fragment() {
 
-    private val viewModel: EventDetailsViewModel by viewModels()
-    private lateinit var packageAdapter: PackageAdapter
+    private var vendorId: Int = 0
+    private var eventId: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_event_details, container, false)
 
+        // Initialize UI elements
         val eventImage: ImageView = view.findViewById(R.id.ivEventImage)
         val eventName: TextView = view.findViewById(R.id.tvEventName)
-        val tvSubEventName: TextView = view.findViewById(R.id.tvSubEventName)
-        val tvDescription: TextView = view.findViewById(R.id.tvDescription)
         val eventLocation: TextView = view.findViewById(R.id.tvEventLocation)
         val eventPrice: TextView = view.findViewById(R.id.tvEventPrice)
-        val eventRating: TextView = view.findViewById(R.id.tvEventRating)
-        val rvEventPackageDetails: RecyclerView = view.findViewById(R.id.rvEventPackageDetails)
+        val btnChatWithVendor: Button = view.findViewById(R.id.btnChatWithVendor)
 
-        rvEventPackageDetails.layoutManager = LinearLayoutManager(requireContext())
-        packageAdapter = PackageAdapter(emptyList())
-        rvEventPackageDetails.adapter = packageAdapter
+        // Load event data from arguments
+        arguments?.let { bundle ->
+            eventId = bundle.getInt("eventId", 0)
+            vendorId = bundle.getInt("vendorId", 0)
+            eventName.text = bundle.getString("eventTitle", "")
+            eventLocation.text = bundle.getString("eventLocation", "")
+            eventPrice.text = bundle.getString("eventPrice", "")
 
-        // Load event details from arguments if available
-        arguments?.let { bundle -> viewModel.loadEventFromBundle(bundle) }
+            Glide.with(this)
+                .load(bundle.getString("eventImage", ""))
+                .placeholder(R.drawable.baseline_cloud_download_24)
+                .into(eventImage)
 
-        // Observe ViewModel for event data
-        viewModel.event.observe(viewLifecycleOwner) { event ->
-            event?.let {
-                eventName.text = it.title
-                tvSubEventName.text = it.subTitle
-                tvDescription.text = it.description
-                eventLocation.text = it.location
-                eventPrice.text = it.price
-                eventRating.text = it.rating.toString()
-                eventImage.setImageResource(it.imageRes)
-            }
+            Log.d("EventDetailsFragment", "✅ Vendor ID: $vendorId, Event ID: $eventId")
         }
 
-        // Observe ViewModel for package data
-        viewModel.packages.observe(viewLifecycleOwner) { packages ->
-            packageAdapter.updatePackages(packages)
-        }
-
-        val llBack = view.findViewById<LinearLayout>(R.id.llBack)
-        llBack.setOnClickListener {
-            parentFragmentManager.popBackStack() // Go back to the previous fragment
+        // Open chat with vendor
+        btnChatWithVendor.setOnClickListener {
+            openChat(vendorId)
         }
 
         return view
     }
 
+    // Open Chat with Vendor
+    private fun openChat(vendorId: Int) {
+        if (vendorId != 0) {
+            val chatFragment = ChatFragment.newInstance(vendorId)
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, chatFragment)
+                .addToBackStack(null)
+                .commit()
+        } else {
+            Toast.makeText(requireContext(), "❌ Invalid vendor data. Cannot open chat.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    // Create a new instance of EventDetailsFragment with event data
     companion object {
         fun newInstance(event: EventModel): EventDetailsFragment {
             return EventDetailsFragment().apply {
                 arguments = Bundle().apply {
+                    putInt("eventId", event.id)
                     putString("eventTitle", event.title)
-                    putString("eventSubTitle", event.subTitle)
-                    putString("eventDescription", event.description)
                     putString("eventLocation", event.location)
                     putString("eventPrice", event.price)
-                    putDouble("eventRating", event.rating)
-                    putInt("eventImage", event.imageRes)
-                    putBoolean("isFeatured", event.isFeatured)
-                    putString("category", event.category)
+                    putString("eventImage", event.imageUrl)
+                    putInt("vendorId", event.vendorId)  // ✅ Ensure vendorId is passed correctly
                 }
             }
         }
