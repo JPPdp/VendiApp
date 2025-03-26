@@ -1,5 +1,6 @@
 package com.example.vendiapp.model
 
+// ✅ User Data Model
 data class User(
     val userId: Int,
     val full_name: String,

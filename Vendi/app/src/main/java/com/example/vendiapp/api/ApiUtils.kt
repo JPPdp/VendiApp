@@ -1,163 +1,219 @@
 package com.example.vendiapp.api
 
-import android.content.Context
+import android.os.Build
 import android.util.Log
-import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONArray
+import androidx.annotation.RequiresApi
+import com.example.vendiapp.model.*
+import okhttp3.OkHttpClient
 import org.json.JSONObject
-import com.example.vendiapp.model.ChatMessage
-import java.io.IOException
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.net.HttpURLConnection
+import java.net.URL
+import okhttp3.Request
 
 object ApiUtils {
-    private const val BASE_URL = "http://192.168.68.103/VendiApp/api/" // ✅ Change this if needed!
 
-    private val client = OkHttpClient()
+    // ✅ Base URL for all API requests
+    const val BASE_URL = "http://192.168.68.103/vendi-api/api/"
+    const val LOGIN_URL = BASE_URL + "login.php"
+    // ✅ Retrofit instance
+    private val retrofit: Retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
 
-    // ✅ Get chat messages from DB
-    fun getChatMessagesFromDB(chatId: String, callback: (List<ChatMessage>) -> Unit) {
-        val url = "${BASE_URL}get_messages.php?chat_id=$chatId"
-        val request = Request.Builder().url(url).build()
+    // ✅ ApiService instance (Use this for Retrofit calls)
+    val apiService: ApiService by lazy {
+        retrofit.create(ApiService::class.java)
+    }
 
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.e("ApiUtils", "Error loading messages: ${e.message}")
-                callback(emptyList())
+    // ✅ Register User using Retrofit
+    fun registerUserToDB(
+        fullName: String,
+        email: String,
+        phone: String,
+        password: String,
+        callback: (Boolean, String) -> Unit
+    ) {
+        val call = apiService.registerUser(fullName, email, phone, password)
+        call.enqueue(object : Callback<GenericResponse> {
+            override fun onResponse(call: Call<GenericResponse>, response: Response<GenericResponse>) {
+                if (response.isSuccessful) {
+                    callback(true, response.body()?.message ?: "Registration successful!")
+                } else {
+                    callback(false, "Failed to register. Please try again!")
+                }
             }
 
-            override fun onResponse(call: Call, response: Response) {
-                if (response.isSuccessful) {
-                    val messages = mutableListOf<ChatMessage>()
-                    response.body?.string()?.let {
-                        val jsonArray = JSONArray(it)
-                        for (i in 0 until jsonArray.length()) {
-                            val obj = jsonArray.getJSONObject(i)
-                            messages.add(
-                                ChatMessage(
-                                    senderId = obj.getString("sender_id"),
-                                    message = obj.getString("message_text"),
-                                    sentAt = obj.getString("sent_at")
-                                )
-                            )
-                        }
+            override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+                callback(false, "Error: ${t.message}")
+            }
+        })
+    }
+
+    fun loginUserToDB(email: String, password: String, callback: (Boolean, String?, String) -> Unit) {
+        val url = LOGIN_URL
+        val requestBody = "email=$email&password=$password".toByteArray()
+
+        Thread {
+            try {
+                val conn = (URL(url).openConnection() as HttpURLConnection).apply {
+                    requestMethod = "POST"
+                    setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
+                    doOutput = true
+                    outputStream.write(requestBody)
+                }
+
+                val responseCode = conn.responseCode
+                val response = conn.inputStream.bufferedReader().use { it.readText() }
+
+                Log.d("API_RESPONSE", "Response: $response")
+
+                if (responseCode == 200) {
+                    val jsonResponse = JSONObject(response)
+                    if (jsonResponse.getString("status") == "success") {
+                        val userId = jsonResponse.getString("user_id")
+                        callback(true, userId, "Login successful!")
+                    } else {
+                        val message = jsonResponse.getString("message")
+                        callback(false, null, message)
                     }
-                    callback(messages)
                 } else {
-                    Log.e("ApiUtils", "Error retrieving messages: ${response.code}")
+                    callback(false, null, "Error: ${conn.responseMessage}")
+                }
+            } catch (e: Exception) {
+                Log.e("API_ERROR", "Error: ${e.localizedMessage}")
+                callback(false, null, "Network error! Please try again.")
+            }
+        }.start()
+    }
+
+    // ✅ Fetch All Users using Retrofit
+    fun getUsersFromDB(callback: (List<User>?) -> Unit) {
+        val call = apiService.getAllUsers()
+        call.enqueue(object : Callback<List<User>> {
+            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+                if (response.isSuccessful) {
+                    callback(response.body())
+                } else {
+                    callback(null)
+                }
+            }
+
+            override fun onFailure(call: Call<List<User>>, t: Throwable) {
+                Log.e("API_ERROR", "Failed to fetch users: ${t.message}")
+                callback(null)
+            }
+        })
+    }
+
+    // ✅ Fetch All Messages using Retrofit (FIXED)
+    fun getAllMessagesFromDB(callback: (List<MessageModel>?) -> Unit) {
+        val call = apiService.getAllMessages()
+        call.enqueue(object : Callback<List<MessageModel>> {
+            override fun onResponse(call: Call<List<MessageModel>>, response: Response<List<MessageModel>>) {
+                if (response.isSuccessful) {
+                    callback(response.body())
+                } else {
+                    callback(null)
+                }
+            }
+
+            override fun onFailure(call: Call<List<MessageModel>>, t: Throwable) {
+                Log.e("API_ERROR", "Failed to load messages: ${t.message}")
+                callback(null)
+            }
+        })
+    }
+
+    // ✅ Fetch Chat Messages using Retrofit
+    fun getChatMessagesFromDB(chatId: String, callback: (List<ChatMessage>) -> Unit) {
+        val call = apiService.getChatMessages(chatId)
+        call.enqueue(object : Callback<List<ChatMessage>> {
+            override fun onResponse(call: Call<List<ChatMessage>>, response: Response<List<ChatMessage>>) {
+                if (response.isSuccessful) {
+                    callback(response.body() ?: emptyList())
+                } else {
                     callback(emptyList())
                 }
             }
+
+            override fun onFailure(call: Call<List<ChatMessage>>, t: Throwable) {
+                Log.e("ApiUtils", "Error loading messages: ${t.message}")
+                callback(emptyList())
+            }
         })
     }
 
-    // ✅ Send chat message to DB
+    // ✅ Send Chat Message using Retrofit
     fun sendChatMessageToDB(chatId: String, message: ChatMessage, callback: (Boolean) -> Unit) {
-        val url = "${BASE_URL}send_message.php"
-        val requestBody = FormBody.Builder()
-            .add("chat_id", chatId)
-            .add("sender_id", message.senderId)
-            .add("message_text", message.message)
-            .build()
-
-        val request = Request.Builder().url(url).post(requestBody).build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.e("ApiUtils", "Error sending message: ${e.message}")
-                callback(false)
-            }
-
-            override fun onResponse(call: Call, response: Response) {
+        val call = apiService.sendChatMessage(chatId, message.senderId, message.message)
+        call.enqueue(object : Callback<GenericResponse> {
+            override fun onResponse(call: Call<GenericResponse>, response: Response<GenericResponse>) {
                 callback(response.isSuccessful)
             }
+
+            override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+                Log.e("ApiUtils", "Error sending message: ${t.message}")
+                callback(false)
+            }
         })
     }
-    // ✅ Login method
-    fun loginUserToDB(email: String, password: String, callback: (Boolean, String?, String) -> Unit) {
-        val url = "$BASE_URL/login"
-        val json = JSONObject().apply {
-            put("email", email)
-            put("password", password)
-        }
 
-        val requestBody = json.toString().toRequestBody("application/json".toMediaTypeOrNull())
-        val request = Request.Builder().url(url).post(requestBody).build()
+    fun getUserProfile(userId: String, callback: (Boolean, String?, String?, String) -> Unit) {
+        val url = "https://192.168.68.103/vendi-api/api/profile?userId=$userId"
 
         val client = OkHttpClient()
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                callback(false, null, "Network error! Try again.")
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                val body = response.body?.string()
-                if (response.isSuccessful && !body.isNullOrEmpty()) {
-                    val jsonResponse = JSONObject(body)
-                    val userId = jsonResponse.optString("userId")
-                    callback(true, userId, "Login successful!")
-                } else {
-                    callback(false, null, "Invalid credentials. Please try again!")
-                }
-            }
-        })
-    }
-
-    // ✅ Register method
-    fun registerUserToDB(username: String, phone: String, password: String, callback: (Boolean, String) -> Unit) {
-        val url = "$BASE_URL/register"
-        val json = JSONObject().apply {
-            put("username", username)
-            put("phone", phone)
-            put("password", password)
-        }
-
-        val requestBody = json.toString().toRequestBody("application/json".toMediaTypeOrNull())
-        val request = Request.Builder().url(url).post(requestBody).build()
-
-        val client = OkHttpClient()
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                callback(false, "Network error! Please try again.")
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                val body = response.body?.string()
-                if (response.isSuccessful) {
-                    callback(true, "Registration successful!")
-                } else {
-                    callback(false, "Error! ${response.message}")
-                }
-            }
-        })
-    }
-
-    // ✅ Book an event
-    fun bookEventToDB(context: Context, eventId: Int, vendorId: Int, callback: (Boolean, String) -> Unit) {
-        val url = "${BASE_URL}bookEvent.php"
-        val jsonObject = JSONObject().apply {
-            put("event_id", eventId)
-            put("vendor_id", vendorId)
-        }
-
-        val requestBody = jsonObject.toString().toRequestBody("application/json".toMediaTypeOrNull())
 
         val request = Request.Builder()
             .url(url)
-            .post(requestBody)
+            .get()
             .build()
 
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                callback(false, "Booking failed: ${e.message}")
+        Thread {
+            try {
+                val response = client.newCall(request).execute()
+
+                if (response.isSuccessful) {
+                    response.body?.let { responseBody ->
+                        val data = JSONObject(responseBody.string())
+                        val profileName = data.getString("profileName")
+                        val profileEmail = data.getString("profileEmail")
+                        callback(true, profileName, profileEmail, "Profile fetched successfully.")
+                    } ?: run {
+                        callback(false, null, null, "Error: Empty response body.")
+                    }
+                } else {
+                    callback(false, null, null, "Error fetching profile. Code: ${response.code}")
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                callback(false, null, null, "Error: ${e.localizedMessage}")
+            }
+        }.start()
+    }
+
+
+    // ✅ Book an Event using Retrofit
+    fun bookEventToDB(eventId: Int, vendorId: Int, callback: (Boolean, String) -> Unit) {
+        val call = apiService.bookEvent(eventId, vendorId)
+        call.enqueue(object : Callback<GenericResponse> {
+            override fun onResponse(call: Call<GenericResponse>, response: Response<GenericResponse>) {
+                if (response.isSuccessful) {
+                    callback(true, response.body()?.message ?: "Booking successful!")
+                } else {
+                    callback(false, "Failed to book event. Try again!")
+                }
             }
 
-            override fun onResponse(call: Call, response: Response) {
-                response.use { res ->
-                    val message =
-                        if (res.isSuccessful) "Booking successful!" else "Booking failed: ${res.body?.string()}"
-                    callback(res.isSuccessful, message)
-                }
+            override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+                callback(false, "Booking failed: ${t.message}")
             }
         })
     }

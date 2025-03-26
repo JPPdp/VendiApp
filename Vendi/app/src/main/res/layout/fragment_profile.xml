@@ -41,11 +41,11 @@
         app:layout_constraintTop_toBottomOf="@id/rl"
         app:layout_constraintStart_toStartOf="@id/rl"
         app:layout_constraintEnd_toEndOf="@id/rl"
-        app:layout_constraintBottom_toTopOf="@id/profileName"/>
+        app:layout_constraintBottom_toTopOf="@id/tvProfileName"/>
 
     <!-- Profile Name -->
     <TextView
-        android:id="@+id/profileName"
+        android:id="@+id/tvProfileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Janrich Verbo"
@@ -59,13 +59,13 @@
 
     <!-- Profile Email -->
     <TextView
-        android:id="@+id/profileEmail"
+        android:id="@+id/tvProfileEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="j@example.com"
         android:textSize="16sp"
         android:textColor="@color/grey"
-        app:layout_constraintTop_toBottomOf="@id/profileName"
+        app:layout_constraintTop_toBottomOf="@id/tvProfileName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="4dp" />
@@ -73,12 +73,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="280dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintStart_toStartOf="@id/profileEmail"
-        app:layout_constraintEnd_toEndOf="@id/profileEmail"
-        app:layout_constraintTop_toBottomOf="@id/profileEmail">
+        android:layout_marginTop="46dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvProfileEmail">
 
         <RelativeLayout
             android:id="@+id/rlAccountInfo"

@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
 
-    private const val BASE_URL = "http://192.168.68.106/vendi-api/" // Replace with your server URL
+    private const val BASE_URL = "http://192.168.68.103/vendi-api/" // Replace with your server URL
 
     val eventApiService: EventApiService by lazy {
         Retrofit.Builder()
@@ -13,5 +13,13 @@ object ApiClient {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(EventApiService::class.java)
+    }
+    val instance: ApiService by lazy {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        retrofit.create(ApiService::class.java)
     }
 }

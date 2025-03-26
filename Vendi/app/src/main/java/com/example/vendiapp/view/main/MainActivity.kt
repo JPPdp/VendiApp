@@ -8,7 +8,6 @@ import com.example.vendiapp.view.main.home.HomeFragment
 import com.example.vendiapp.view.main.profile.ProfileFragment
 import com.example.vendiapp.view.main.schedule.MyScheduleFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.example.vendiapp.utils.ApiUtils
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,17 +15,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Call this inside onCreate()
-        ApiUtils.registerUserToDB(
-            this,
-            "John Doe",
-            "john@example.com",
-            "1234567890",
-            "password123"
-        )
-
+        // Load HomeFragment by default if no state is saved
         if (savedInstanceState == null) {
-            loadFragment(HomeFragment()) // Load HomeFragment by default
+            loadFragment(HomeFragment())
         }
 
         setupBottomNavigation()
@@ -34,11 +25,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupBottomNavigation() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> loadFragment(HomeFragment())
                 R.id.nav_schedule -> loadFragment(MyScheduleFragment())
                 R.id.nav_profile -> loadFragment(ProfileFragment())
+                else -> false
             }
             true
         }

@@ -1,10 +1,13 @@
 package com.example.vendiapp.view.main.home
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -18,6 +21,7 @@ import com.example.vendiapp.R
 import com.example.vendiapp.adapter.EventAdapter
 import com.example.vendiapp.adapter.ViewPagerAdapter
 import com.example.vendiapp.model.EventModel
+import com.example.vendiapp.view.main.MessagesActivity
 import com.example.vendiapp.viewmodel.EventViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -40,6 +44,13 @@ class HomeFragment : Fragment() {
         val featuredRecyclerView: RecyclerView = view.findViewById(R.id.rvFeaturedEvents)
         val tvTab: TextView = view.findViewById(R.id.tvTab)
 
+        //Button Import & Function - Message
+        val btnViewMessages : ImageButton = view.findViewById(R.id.imageButton)
+        btnViewMessages.setOnClickListener {
+            val intent = Intent(requireContext(), MessagesActivity::class.java)
+            startActivity(intent)
+        }
+
         setupFeaturedEventsRecyclerView(featuredRecyclerView)
         setupTabLayout(tabLayout, viewPager, tvTab)
 
@@ -59,6 +70,7 @@ class HomeFragment : Fragment() {
             featuredAdapter.updateEvents(featuredList)
         }
     }
+
 
     private fun setupTabLayout(tabLayout: TabLayout, viewPager: ViewPager2, tvTab: TextView) {
         val adapter = ViewPagerAdapter(requireActivity())

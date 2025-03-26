@@ -12,9 +12,9 @@ class EventRepository {
     // Returns event list based on selected category
     fun getEvents(category: String): List<EventModel> {
         return when (category) {
-            "Food" -> getFoodItems()
-            "Beverages" -> getBeverageItems()
-            "Entertainment" -> getEntertainmentItems()
+            "1" -> getFoodItems()
+            "2" -> getBeverageItems()
+            "3" -> getEntertainmentItems()
             "All" -> getAllEvents() // Fetch all categories
             else -> emptyList()
         }
@@ -24,7 +24,7 @@ class EventRepository {
     private fun getFoodItems(): List<EventModel> {
         val foodItems = mutableListOf<EventModel>()
 
-        ApiClient.eventApiService.getEvents("Food").enqueue(object : Callback<List<EventModel>> {
+        ApiClient.eventApiService.getEvents("1").enqueue(object : Callback<List<EventModel>> {
             override fun onResponse(call: Call<List<EventModel>>, response: Response<List<EventModel>>) {
                 if (response.isSuccessful) {
                     response.body()?.let { events ->
@@ -47,7 +47,7 @@ class EventRepository {
     private fun getBeverageItems(): List<EventModel> {
         val beverageItems = mutableListOf<EventModel>()
 
-        ApiClient.eventApiService.getEvents("Beverages").enqueue(object : Callback<List<EventModel>> {
+        ApiClient.eventApiService.getEvents("2").enqueue(object : Callback<List<EventModel>> {
             override fun onResponse(call: Call<List<EventModel>>, response: Response<List<EventModel>>) {
                 if (response.isSuccessful) {
                     response.body()?.let { events ->
@@ -70,7 +70,7 @@ class EventRepository {
     private fun getEntertainmentItems(): List<EventModel> {
         val entertainmentItems = mutableListOf<EventModel>()
 
-        ApiClient.eventApiService.getEvents("Entertainment").enqueue(object : Callback<List<EventModel>> {
+        ApiClient.eventApiService.getEvents("3").enqueue(object : Callback<List<EventModel>> {
             override fun onResponse(call: Call<List<EventModel>>, response: Response<List<EventModel>>) {
                 if (response.isSuccessful) {
                     response.body()?.let { events ->

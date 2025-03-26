@@ -11,7 +11,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.vendiapp.R
-
+import com.example.vendiapp.view.auth.PasswordRecoveryFragment
 class RegistrationFragment1 : Fragment() {
 
     private lateinit var etCall: EditText

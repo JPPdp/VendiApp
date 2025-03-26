@@ -1,7 +1,8 @@
 package com.example.vendiapp.model
 
+// ✅ Chat Message Data Model
 data class ChatMessage(
-    val senderId: String,   // Either "user_{userId}" or "vendor_{vendorId}"
-    val message: String,    // Message content
-    val sentAt: String      // Timestamp in "yyyy-MM-dd HH:mm:ss"
+    val senderId: String,
+    val message: String,
+    val sentAt: String
 )

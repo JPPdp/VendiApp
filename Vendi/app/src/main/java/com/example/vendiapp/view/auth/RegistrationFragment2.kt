@@ -25,6 +25,7 @@ class RegistrationFragment2 : Fragment() {
         etPhone = view.findViewById(R.id.etPhone)
         btnNext = view.findViewById(R.id.btnNext)
 
+        // ✅ Get data from RegistrationFragment1
         username = arguments?.getString("username")
 
         // ✅ Handle Next button click

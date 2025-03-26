@@ -49,6 +49,8 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.cardview)
 
+
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
@@ -65,5 +67,5 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2") //
     implementation("androidx.activity:activity-ktx:1.8.0") //
     implementation("androidx.fragment:fragment-ktx:1.6.2")
-
+    implementation("org.bouncycastle:bcprov-jdk18on:1.76")
 }
