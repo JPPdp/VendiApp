@@ -1,12 +1,13 @@
 <?php
-// /auth/login.php
+// /users/update_user.php
 include_once '../api/config.php';
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-if (!empty($data['email']) && !empty($data['password']) && !empty($data['role'])) {
+if (!empty($data['id']) && !empty($data['username']) && !empty($data['email']) && !empty($data['role'])) {
+    $id = $conn->real_escape_string($data['id']);
+    $username = $conn->real_escape_string($data['username']);
     $email = $conn->real_escape_string($data['email']);
-    $password = $data['password'];
     $role = strtolower($data['role']);
 
     $table = '';
@@ -28,20 +29,11 @@ if (!empty($data['email']) && !empty($data['password']) && !empty($data['role'])
             exit();
     }
 
-    $query = "SELECT id, $username_field AS name, email, password FROM $table WHERE email = '$email'";
-    $result = $conn->query($query);
-
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
-        if (password_verify($password, $user['password'])) {
-            unset($user['password']); // Remove password from response
-            $user['role'] = $role;
-            echo json_encode(["success" => true, "message" => "Login successful", "data" => $user]);
-        } else {
-            echo json_encode(["success" => false, "message" => "Invalid password"]);
-        }
+    $query = "UPDATE $table SET $username_field = '$username', email = '$email' WHERE id = $id";
+    if ($conn->query($query)) {
+        echo json_encode(["success" => true, "message" => ucfirst($role) . " updated successfully"]);
     } else {
-        echo json_encode(["success" => false, "message" => ucfirst($role) . " not found"]);
+        echo json_encode(["success" => false, "message" => "Failed to update $role: " . $conn->error]);
     }
 } else {
     echo json_encode(["success" => false, "message" => "Invalid input"]);
