@@ -39,7 +39,7 @@ $admin = $result->fetch_assoc();
 
 if ($admin) {
     $_SESSION['admin_id'] = $admin['admin_id'];
-    $_SESSION['admin_profile'] = $admin['admin_profile'];
+    $_SESSION['admin_profile'] = $admin['admin_profile']?: 'assets/images/default_profile.jpg';
     $_SESSION['admin_description'] = $admin['admin_description'];
     $_SESSION['admin_email'] = $admin['admin_email'];
 }
@@ -101,7 +101,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
             <div class="MENU_HEADER">MANAGEMENT</div>
-            <a href="admin_vendors.php"><i class="fas fa-store"></i> Vendors</a>
+            <a href="admin_vendors.php"><i class="fas fa-store"></i> Vendors Approval</a>
+            <a href="admin_vendors_tab.php"><i class="fas fa-users"></i>Vendors Management</a>
             <a href="admin_clients.php"><i class="fa fa-fw fa-users"></i> Clients</a>
             <a href="admin_feedback.php"><i class="fa fa-fw fa-comment-dots"></i> Feedback</a>
             <div class="MENU_HEADER">SETTINGS</div>

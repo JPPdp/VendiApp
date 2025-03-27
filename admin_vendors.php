@@ -1,10 +1,12 @@
 <?php
 session_start();
 
+// Ensure the admin is logged in
 if (!isset($_SESSION['admin_name'])) {
     header("Location: admin_vendors.php");
     exit();
 }
+
 date_default_timezone_set('Asia/Manila');
 
 // Get the current hour (24-hour format)
@@ -22,11 +24,15 @@ if ($currentHour >= 1 && $currentHour < 4) {
 } else {
     $greeting = '🌙 Good Evening!';
 }
+
+// Connect to the database
 $conn = new mysqli("localhost", "root", "", "janrich_db");
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
+// Fetch admin details
 $sql = "SELECT * FROM admin_console WHERE admin_name = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $_SESSION['admin_name']);
@@ -36,61 +42,38 @@ $admin = $result->fetch_assoc();
 
 if ($admin) {
     $_SESSION['admin_id'] = $admin['admin_id'];
-    $_SESSION['admin_profile'] = $admin['admin_profile'];
+    $_SESSION['admin_profile'] = $admin['admin_profile'] ?: 'assets/images/default_profile.jpg';
     $_SESSION['admin_description'] = $admin['admin_description'];
     $_SESSION['admin_email'] = $admin['admin_email'];
 }
 
+// Handle approval or rejection of vendors
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['approve'])) {
+        $id = intval($_POST['vendor_id']); // Use the correct key 'vendor_id' and ensure it's an integer
 
-if ($_SERVER['REQUEST_METHOD'] === "POST") {
-    // Get the status updates from the form
-    $statusUpdates = $_POST['status'];
+        // Move the vendor to the vendors table, including the password
+        $stmt = $conn->prepare("INSERT INTO vendors (businessname, vendors_email, vendors_mobile, business_documents, password, address, city_municipal, province, business_category) 
+                                SELECT businessname, vendors_email, vendors_mobile, business_documents, password, address, city_municipal, province, business_category 
+                                FROM pending_vendors WHERE vendors_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        // Delete the vendor from the pending_vendors table
+        $stmt = $conn->prepare("DELETE FROM pending_vendors WHERE vendors_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+    } elseif (isset($_POST['reject'])) {
+        $id = intval($_POST['vendor_id']); // Use the correct key 'vendor_id' and ensure it's an integer
 
-    // Example: Loop through the status updates and process them
-    foreach ($statusUpdates as $vendorId => $newStatus) {
-        // Here, you would typically update the database
-        // Example SQL: UPDATE vendors SET status = '$newStatus' WHERE vendor_id = '$vendorId';
-        echo "Updated vendor $vendorId to status: $newStatus<br>";
+        // Remove the vendor from the pending_vendors table
+        $stmt = $conn->prepare("DELETE FROM pending_vendors WHERE vendors_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
     }
-
-    // Redirect back to the vendors page
-    header("Location: vendors.php");
-    exit();
-
-    if (isset($_FILES['admin_profile_pic']) && $_FILES['admin_profile_pic']['error'] == 0) {
-        $profilePic = $_FILES['profile_pic'];
-        $profilePicPath = 'admin_uploads/' . basename($profilePic['name']);
-        
-        if (move_uploaded_file($profilePic['tmp_name'], $profilePicPath)) {
-            $sql = "UPDATE admin_console SET admin_profile = ? WHERE admin_name = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ss", $profilePicPath, $_SESSION['admin_name']);
-            if ($stmt->execute()) {
-                $_SESSION['admin_profile'] = $profilePicPath;
-            } else {
-                echo "Error updating profile picture: " . $conn->error;
-            }
-            $stmt->close();
-        } else {
-            echo "Error uploading profile picture.";
-        }
-    } else {
-        if (isset($_POST['admin_description'])) {
-            $adminDescription = $_POST['admin_description'];
-            $sql = "UPDATE admin_console SET admin_description = ? WHERE admin_name = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ss", $adminDescription, $_SESSION['admin_name']);
-            if ($stmt->execute()) {
-                $_SESSION['admin_description'] = $adminDescription;
-            } else {
-                echo "Error updating admin description: " . $conn->error;
-            }
-            $stmt->close();
-        }
-    }
-
 }
 
+// Fetch pending vendors for approval
+$pendingVendors = $conn->query("SELECT vendors_id, businessname, vendors_email, vendors_mobile, business_documents FROM pending_vendors");
 ?>
 
 <!DOCTYPE html>
@@ -117,7 +100,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             </div>
 
             <div class="MENU_HEADER">ADMINISTRATION</div>
-                    <a href="#" class="NAV_ACTIVE"><i class="fas fa-store"></i> <span>Vendors</span></a>
+                    <a href="#" class="NAV_ACTIVE"><i class="fas fa-store"></i><span>Vendors Approval</span></a>
+                    <a href="admin_vendors_tab.php"><i class="fas fa-users"></i>Vendors Management</a>
                     <a href="admin_clients.php"><i class="fas fa-users"></i> Clients</a>
                     <a href="admin_feedback.php"><i class="fas fa-comment-dots"></i> Feedback</a>
             <div class="MENU_HEADER">SETTINGS</div>
@@ -129,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         <div class="DASHBOARD" id="DASHBOARD">
             <div class="UPPER">
                 <div class="LEFT_UPPER">
-                    <h1 class="DASHBOARD_TITLE">Vendors</h1>
+                    <h1 class="DASHBOARD_TITLE">Pending Vendor Approvals</h1>
                 </div>
 
                 <div class="RIGHT_UPPER">
@@ -146,56 +130,47 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             <!-- Vendor Details Table -->
             <div class="MAIN_CONTAINER">
                 <div class="BOOKING_TABLE">
-                    <h2>Vendor Details</h2>
-                    <form action="update_vendors.php" method="POST">
-                        <table>
-                            <thead>
+                    <h2>Pending Vendors</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Business Documents</th>
+                                <th>Business Name</th>
+                                <th>Email</th>
+                                <th>Mobile</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($row = $pendingVendors->fetch_assoc()): ?>
                                 <tr>
-                                    <th>Business Documents</th>
-                                    <th>Business Name</th>
-                                    <th>Business Email</th>
-                                    <th>Mobile Number</th>
-                                    <th>Address</th>
-                                    <th>City/Municipality</th>
-                                    <th>Province</th>
-                                    <th>Category</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Example Row 1 -->
-                                <tr>
-                                    <td class="VIEW_DOCUMENT">
-                                        <a href="#IMAGE_VIEW" class="VIEW_BUTTON" id="VIEW_BUTTON">View File</a>
-                                    </td>
-                                    <div id="IMAGE_VIEW" class="EXPAND">
-                                        <a href="#" class="CLOSE_BUTTON">&times;</a>
-                                        <img class="EXPANDED_IMAGE" src="assets/images/sample_document.png" alt="Document File">
-                                    </div>
-                                    <td class="CLIENT_NAME">Jollibee</td>
-                                    <td class="CLIENT_EMAIL">jollibee@gmail.com</td>
-                                    <td class="MOBILE_NUMBER">+1234567890</td>
-                                    <td class="ADDRESS">70 Bacayao</td>
-                                    <td class="CITY_MUNICIPALITY">Dagupan City</td>
-                                    <td class="PROVINCE">Pangasinan</td>
-                                    <td class="CATEGORY">Food</td>
-                                    <td class="STATUS_PENDING">Pending</td>
-                                    <td class="ACTION_BUTTONS">
-                                        <select name="status[1]" class="STATUS_DROPDOWN">
-                                            <option value="Pending">Pending</option>
-                                            <option value="Approved">Approve</option>
-                                            <option value="Rejected">Reject</option>
-                                        </select>
+                                <td class="VIEW_DOCUMENT">
+                                    <!-- Button to open the modal -->
+                                    <a href="#IMAGE_VIEW_<?php echo $row['vendors_id']; ?>" class="VIEW_BUTTON" id="VIEW_BUTTON">View File</a>
+                                </td>
+
+                                <!-- Modal to display the image -->
+                                <div id="IMAGE_VIEW_<?php echo $row['vendors_id']; ?>" class="EXPAND">
+                                    <a href="#" class="CLOSE_BUTTON">&times;</a>
+                                    <img class="EXPANDED_IMAGE" src="pending_image_view.php?vendor_id=<?php echo $row['vendors_id']; ?>" alt="Document File">
+                                </div>
+                                    <td><?php echo htmlspecialchars($row['businessname']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['vendors_email']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['vendors_mobile']); ?></td>
+                                    <td>
+                                        <form method="POST" style="display:inline;">
+                                            <input type="hidden" name="vendor_id" value="<?php echo $row['vendors_id']; ?>">
+                                            <button type="submit" name="approve">Approve</button>
+                                        </form>
+                                        <form method="POST" style="display:inline;">
+                                            <input type="hidden" name="vendor_id" value="<?php echo $row['vendors_id']; ?>">
+                                            <button type="submit" name="reject">Reject</button>
+                                        </form>
                                     </td>
                                 </tr>
-                            </tbody>
-                        </table>
-                        <div class="SUBMIT_BUTTON_CONTAINER">
-                            <span id="SUBMIT_TEXT">Update vendor status?</span>
-                            <button type="submit" class="SUBMIT_BUTTON">Submit</button>
-                        </div>                    
-                    </form>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 

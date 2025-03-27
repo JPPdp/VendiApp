@@ -39,7 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['registration_data']['features2'] = $features2;
             $_SESSION['registration_data']['features3'] = $features3;
             $_SESSION['registration_data']['business_documents'] = $file_content;
-
             header("Location: register3.php");
             exit();
         } else {

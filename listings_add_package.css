@@ -170,32 +170,10 @@
     border-radius: 5px;
     min-height: 110px;
     resize: none;
-
 }
 
-/* Feature Input Container */
-#PACKAGE_FEATURES {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.FEATURE_ITEM {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.FEATURE_ITEM select {
-    flex: 1;
-    padding: 10px;
-    border: 2px solid var(--whtShade2);
-    border-radius: 5px;
-    background: var(--gradient_White);
-    font-size: 0.8rem;
-    font-family: 'Inter_Regular';
-    color: var(--blkShade1);
-    outline: none;
+#CAPACITY label{
+    margin-top: 20px;
 }
 
 /* Submit Button Container */
@@ -216,7 +194,7 @@
     align-items: center;
     gap: 8px;
     font-size: 0.8rem;
-    font-family: 'Inter_Medium';
+    font-family: 'Inter_Bold';
     padding: 10px 16px;
     border-radius: 20px;
     cursor: pointer;

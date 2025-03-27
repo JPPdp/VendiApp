@@ -36,17 +36,24 @@ $result = $stmt->get_result();
 $vendor = $result->fetch_assoc();
 
 if ($vendor) {
-    $_SESSION['vendors_profile'] = $vendor['vendors_profile'];
+    $_SESSION['vendors_profile'] = $vendor['vendors_profile'] ?: 'assets/images/default_profile.jpg';
 }
 
 // Fetch customer data from the database
 $sql = "SELECT * FROM clients";
 $result = $conn->query($sql);
 
-$customers = [];
+$clients = [];
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $customers[] = $row;
+        // Convert BLOB data to base64-encoded image
+        if (!empty($row['client_profile'])) {
+            $row['client_profile'] = 'data:image/jpeg;base64,' . base64_encode($row['client_profile']);
+        } else {
+            // Default image if no profile picture is available
+            $row['client_profile'] = 'assets/images/default_profile.jpg';
+        }
+        $clients[] = $row;
     }
 }
 
@@ -159,16 +166,16 @@ if (isset($_GET['delete'])) {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($customers as $customer): ?>
+                            <?php foreach ($clients as $clients): ?>
                                 <tr>
                                     <td class="PROFILE_PIC">
-                                        <img src="<?php echo htmlspecialchars($customer['profile_pic']); ?>" alt="Profile Picture" class="PROFILE_PIC">
+                                        <img src="<?php echo htmlspecialchars($clients['client_profile']); ?>" alt="Profile Picture" class="PROFILE_PIC">
                                     </td>
-                                    <td class="CLIENT_NAME"><?php echo htmlspecialchars($customer['client_name']); ?></td>
-                                    <td class="CLIENT_EMAIL"><?php echo htmlspecialchars($customer['client_email']); ?></td>
-                                    <td class="MOBILE_NUMBER"><?php echo htmlspecialchars($customer['mobile_number']); ?></td>
+                                    <td class="CLIENT_NAME"><?php echo htmlspecialchars($clients['client_name']); ?></td>
+                                    <td class="CLIENT_EMAIL"><?php echo htmlspecialchars($clients['client_email']); ?></td>
+                                    <td class="MOBILE_NUMBER"><?php echo htmlspecialchars($clients['client_mobile']); ?></td>
                                     <td class="ACTION_BUTTONS">
-                                        <a href="customers_history.php?id=<?php echo $customer['id']; ?>" class="VIEW_BUTTON">View</a>
+                                        <a href="customers_history.php?id=<?php echo $clients['client_id']; ?>" class="VIEW_BUTTON">View</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

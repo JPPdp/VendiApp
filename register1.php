@@ -27,9 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mobile = htmlspecialchars($_POST['mobile']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
-    $address = htmlspecialchars($_POST['address']);
-    $city_municipal = htmlspecialchars($_POST['city_municipal']);
-    $province = htmlspecialchars($_POST['province']);
+    $address = htmlspecialchars($_POST['ADDRESS']); // Fixed field name
+    $city_municipal = htmlspecialchars($_POST['CITY']); // Fixed field name
+    $province = htmlspecialchars($_POST['PROVINCE']); // Fixed field name
 
     // Validate email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -51,8 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 session_start();
                 $_SESSION['registration_data'] = [
                     'businessname' => $businessname,
-                    'email' => $email,
-                    'mobile' => $mobile,
+                    'vendors_email' => $email,
+                    'vendors_mobile' => $mobile,
                     'password' => $hashed_password,
                     'address' => $address,
                     'city_municipal' => $city_municipal,

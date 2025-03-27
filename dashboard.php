@@ -37,7 +37,7 @@ $result = $stmt->get_result();
 $vendor = $result->fetch_assoc();
 
 if ($vendor) {
-    $_SESSION['vendors_profile'] = $vendor['vendors_profile'];
+    $_SESSION['vendors_profile'] = $vendor['vendors_profile'] ?: 'assets/images/default_profile.jpg';
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] == 0) {

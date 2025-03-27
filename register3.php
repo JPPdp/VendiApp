@@ -7,29 +7,44 @@ if (!isset($_SESSION['registration_data'])) {
 
 $registration_data = $_SESSION['registration_data'];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['approve'])) {
-    // Connect to the database
-    $conn = new mysqli("localhost", "root", "", "vendi_db");
+// Automatically insert data into the database when the user lands on this page
+$conn = new mysqli("localhost", "root", "", "janrich_db");
 
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    // Insert data into the database
-    $stmt = $conn->prepare("INSERT INTO vendors (businessname, business_description, mobile, email, password, address, city_municipal, province, business_category, features1, features2, features3, business_documents) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssssssssss", $registration_data['businessname'], $registration_data['business_description'], $registration_data['mobile'], $registration_data['email'], $registration_data['password'], $registration_data['address'], $registration_data['city_municipal'], $registration_data['province'], $registration_data['business_category'], $registration_data['features1'], $registration_data['features2'], $registration_data['features3'], $registration_data['business_documents']);
-
-    if ($stmt->execute()) {
-        // Clear session data
-        unset($_SESSION['registration_data']);
-        echo "Registration successful. Await admin approval.";
-    } else {
-        echo "Registration failed. Please try again.";
-    }
-
-    $stmt->close();
-    $conn->close();
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+
+// Insert data into the pending_vendors table
+$stmt = $conn->prepare("INSERT INTO pending_vendors (businessname, business_description, vendors_mobile, vendors_email, password, address, city_municipal, province, business_category, features1, features2, features3, business_documents) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt->bind_param(
+    "sssssssssssss",
+    $registration_data['businessname'],
+    $registration_data['business_description'],
+    $registration_data['vendors_mobile'],
+    $registration_data['vendors_email'],
+    $registration_data['password'],
+    $registration_data['address'],
+    $registration_data['city_municipal'],
+    $registration_data['province'],
+    $registration_data['business_category'],
+    $registration_data['features1'],
+    $registration_data['features2'],
+    $registration_data['features3'],
+    $registration_data['business_documents']
+);
+
+if ($stmt->execute()) {
+    // Clear session data
+    unset($_SESSION['registration_data']);
+    // Redirect to admin_vendors.php for approval
+    header("Location: register3.php");
+    exit();
+} else {
+    $error_message = "Registration failed. Please try again.";
+}
+
+$stmt->close();
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -77,8 +92,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['approve'])) {
                 <p><span id="VENDI">Vendi</span> is currently reviewing your registration. 
                     Please wait a short while, and you will be able to access your dashboard soon.</p>
                 <p>Try logging in again later to access your dashboard once it's ready.</p>  
-                
-                <div class="LOGIN">Return to Login</div>
+
+                <!-- Display error message if any -->
+                <?php if (!empty($error_message)): ?>
+                    <div class="RED_ALERT"><?php echo htmlspecialchars($error_message); ?></div>
+                <?php endif; ?>
+
                 <div class="LOGIN_LINK">
                     <a href="login.php">Back</a>
                 </div>

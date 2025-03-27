@@ -64,37 +64,48 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         header("Location: admin_feedback.php");
         exit();
     }
-    if (isset($_FILES['admin_profile_pic']) && $_FILES['admin_profile_pic']['error'] == 0) {
-        $profilePic = $_FILES['profile_pic'];
-        $profilePicPath = 'admin_uploads/' . basename($profilePic['name']);
-        
-        if (move_uploaded_file($profilePic['tmp_name'], $profilePicPath)) {
-            $sql = "UPDATE admin_console SET admin_profile = ? WHERE admin_name = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ss", $profilePicPath, $_SESSION['admin_name']);
-            if ($stmt->execute()) {
-                $_SESSION['admin_profile'] = $profilePicPath;
-            } else {
-                echo "Error updating profile picture: " . $conn->error;
-            }
-            $stmt->close();
-        } else {
-            echo "Error uploading profile picture.";
-        }
-    } else {
-        if (isset($_POST['admin_description'])) {
-            $adminDescription = $_POST['admin_description'];
-            $sql = "UPDATE admin_console SET admin_description = ? WHERE admin_name = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ss", $adminDescription, $_SESSION['admin_name']);
-            if ($stmt->execute()) {
-                $_SESSION['admin_description'] = $adminDescription;
-            } else {
-                echo "Error updating admin description: " . $conn->error;
-            }
-            $stmt->close();
-        }
+    if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] == 0) {
+    // Get the temporary file path and read the binary data
+    $tmpFilePath = $_FILES['profile_pic']['tmp_name'];
+    $profilePicData = file_get_contents($tmpFilePath);
+    
+    // Validate it's actually an image
+    $imageInfo = getimagesize($tmpFilePath);
+    if ($imageInfo === false) {
+        die("Uploaded file is not a valid image");
     }
+    
+    // Update database with binary data
+    $sql = "UPDATE admin_console SET admin_profile = ? WHERE admin_name = ?";
+    $stmt = $conn->prepare($sql);
+    
+    // Use 'b' for blob type in bind_param
+    $null = null;
+    $stmt->bind_param("bs", $null, $_SESSION['admin_name']);
+    $stmt->send_long_data(0, $profilePicData);
+    
+    if ($stmt->execute()) {
+        // For session, we'll use a data URI
+        $mimeType = $imageInfo['mime'];
+        $_SESSION['admin_profile'] = 'data:' . $mimeType . ';base64,' . base64_encode($profilePicData);
+    } else {
+        echo "Error updating profile picture: " . $conn->error;
+    }
+    $stmt->close();
+} else {
+    if (isset($_POST['admin_description'])) {
+        $adminDescription = $_POST['admin_description'];
+        $sql = "UPDATE admin_console SET admin_description = ? WHERE admin_name = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $adminDescription, $_SESSION['admin_name']);
+        if ($stmt->execute()) {
+            $_SESSION['admin_description'] = $adminDescription;
+        } else {
+            echo "Error updating admin description: " . $conn->error;
+        }
+        $stmt->close();
+    }
+}
 }
 
 ?>
@@ -123,7 +134,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             </div>
 
             <div class="MENU_HEADER">ADMINISTRATION</div>
-                    <a href="admin_vendors.php"><i class="fas fa-store"></i> Vendors</a>
+                    <a href="admin_vendors.php"><i class="fas fa-store"></i> Vendors Approval</a>
+                    <a href="admin_vendors_tab.php"><i class="fas fa-users"></i> Vendors Management</a>
                     <a href="admin_clients.php"><i class="fas fa-users"></i>Clients</a>
                     <a href="#" class="NAV_ACTIVE"><i class="fas fa-comment-dots"></i> <span>Feedback</span> </a>
             <div class="MENU_HEADER">SETTINGS</div>

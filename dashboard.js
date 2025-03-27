@@ -123,4 +123,35 @@ ADD_TASK.addEventListener("click", () => {
         addTask(taskText);
     }
 });
+$(document).ready(function() {
+    // Add Task Modal
+    var addTaskModal = $('#addTaskModal');
+    $('#ADD_TASK').on('click', function() {
+        addTaskModal.show();
+    });
+    $('.close').on('click', function() {
+        addTaskModal.hide();
+        $('#editTaskModal').hide();
+    });
+
+    // Edit Task Modal
+    var editTaskModal = $('#editTaskModal');
+    $('.edit-btn').on('click', function() {
+        var row = $(this).closest('tr');
+        var id = row.data('id');
+        var task = row.find('.task').text();
+        $('#editTaskId').val(id);
+        $('#editTask').val(task);
+        editTaskModal.show();
+    });
+
+    // Delete Task
+    $('.delete-btn').on('click', function() {
+        var row = $(this).closest('tr');
+        var id = row.data('id');
+        $.post('todo_action.php', { delete_task: true, id: id }, function(response) {
+            location.reload();
+        });
+    });
+});
 

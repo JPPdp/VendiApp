@@ -38,10 +38,10 @@ $vendor = $result->fetch_assoc();
 
 if ($vendor) {
     $_SESSION['vendors_id'] = $vendor['vendors_id'];
-    $_SESSION['vendors_profile'] = $vendor['vendors_profile'];
+    $_SESSION['vendors_profile'] = $vendor['vendors_profile'] ?: 'assets/images/default_profile.jpg';
     $_SESSION['business_description'] = $vendor['business_description'];
-    $_SESSION['email'] = $vendor['email'];
-    $_SESSION['mobile'] = $vendor['mobile'];
+    $_SESSION['vendors_email'] = $vendor['vendors_email'];
+    $_SESSION['vendors_mobile'] = $vendor['vendors_mobile'];
     $_SESSION['address'] = $vendor['address'];
     $_SESSION['city_municipal'] = $vendor['city_municipal'];
     $_SESSION['province'] = $vendor['province'];
@@ -156,8 +156,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <!-- Form for Business Description -->
                     <form id="DESCRIPTION_FORM" method="post">
                         <!-- Business Description -->
-                        <label for="VENDOR_DESCRIPTION">Business Description</label>
-                        <textarea id="VENDOR_DESCRIPTION" name="BUSINESS_DESCRIPTION" placeholder="Enter a brief description of your business"><?php echo htmlspecialchars($_SESSION['business_description']); ?></textarea>
+                        <label for="Vendor_Description">Business Description</label>
+                        <textarea id="Vendor_Description" name="BUSINESS_DESCRIPTION" placeholder="Enter a brief description of your business"><?php echo htmlspecialchars($_SESSION['business_description']); ?></textarea>
 
                         <div class="BUTTON_CONTAINER"> <!-- Button -->
                         <button type="submit" class="SUBMIT_BUTTON">Submit</button>
@@ -181,13 +181,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="BESIDE_FIELD">
                                     <!-- Email -->
                                     <label>Email</label>
-                                    <input type="email" id="business_email" name="email" value="<?php echo htmlspecialchars($_SESSION['email']); ?>" readonly>
+                                    <input type="email" id="business_email" name="email" value="<?php echo htmlspecialchars($_SESSION['vendors_email']); ?>" readonly>
                                 </div>
 
                                 <div class="BESIDE_FIELD">
                                     <!-- Mobile Number -->
                                     <label>Mobile Number</label>
-                                    <input type="tel" id="business_mobile" name="mobile" required minlength="10" maxlength="10" value="<?php echo htmlspecialchars($_SESSION['mobile']); ?>" readonly>
+                                    <input type="tel" id="business_mobile" name="mobile" required minlength="10" maxlength="10" value="<?php echo htmlspecialchars($_SESSION['vendors_mobile']); ?>" readonly>
                                 </div>
                             </div>
                         </div>
