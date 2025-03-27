@@ -1,25 +1,21 @@
 package com.example.vendiapp.api
 
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import com.example.vendiapp.model.*
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
+import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.HttpURLConnection
 import java.net.URL
-import okhttp3.Request
 
 object ApiUtils {
 
     // ✅ Base URL for all API requests
-    const val BASE_URL = "http://192.168.68.103/vendi-api/api/"
+    const val BASE_URL = "http://192.168.0.49/vendi-api/api/"
     const val LOGIN_URL = BASE_URL + "login.php"
+
     // ✅ Retrofit instance
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
@@ -31,6 +27,15 @@ object ApiUtils {
     // ✅ ApiService instance (Use this for Retrofit calls)
     val apiService: ApiService by lazy {
         retrofit.create(ApiService::class.java)
+    }
+
+    // ✅ Create new ApiService instance (FIXED)
+    fun createApiService(): ApiService {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        return retrofit.create(ApiService::class.java)
     }
 
     // ✅ Register User using Retrofit
@@ -57,6 +62,7 @@ object ApiUtils {
         })
     }
 
+    // ✅ Login User using HttpURLConnection
     fun loginUserToDB(email: String, password: String, callback: (Boolean, String?, String) -> Unit) {
         val url = LOGIN_URL
         val requestBody = "email=$email&password=$password".toByteArray()
@@ -113,7 +119,7 @@ object ApiUtils {
         })
     }
 
-    // ✅ Fetch All Messages using Retrofit (FIXED)
+    // ✅ Fetch All Messages using Retrofit
     fun getAllMessagesFromDB(callback: (List<MessageModel>?) -> Unit) {
         val call = apiService.getAllMessages()
         call.enqueue(object : Callback<List<MessageModel>> {
@@ -166,8 +172,9 @@ object ApiUtils {
         })
     }
 
+    // ✅ Fetch User Profile using OkHttpClient
     fun getUserProfile(userId: String, callback: (Boolean, String?, String?, String) -> Unit) {
-        val url = "https://192.168.68.103/vendi-api/api/profile?userId=$userId"
+        val url = "${BASE_URL}profile.php?userId=$userId"
 
         val client = OkHttpClient()
 
@@ -198,7 +205,6 @@ object ApiUtils {
             }
         }.start()
     }
-
 
     // ✅ Book an Event using Retrofit
     fun bookEventToDB(eventId: Int, vendorId: Int, callback: (Boolean, String) -> Unit) {

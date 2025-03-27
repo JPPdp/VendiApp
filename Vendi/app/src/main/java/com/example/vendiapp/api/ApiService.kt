@@ -5,6 +5,7 @@ import com.example.vendiapp.model.GenericResponse
 import com.example.vendiapp.model.MessageModel
 import com.example.vendiapp.model.ProfileResponse
 import com.example.vendiapp.model.User
+import com.example.vendiapp.model.UserProfileResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -61,4 +62,7 @@ interface ApiService {
 
     @GET("profile") // Update with your correct endpoint
     fun getProfile(): Call<ProfileResponse>
+
+    @GET("get_user_profile.php")
+    fun getUserProfile(@Query("user_id") userId: String): Call<UserProfileResponse>
 }

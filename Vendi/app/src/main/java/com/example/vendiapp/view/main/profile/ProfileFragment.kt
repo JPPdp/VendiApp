@@ -10,6 +10,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.vendiapp.R
+import com.example.vendiapp.api.ApiUtils
+import com.example.vendiapp.model.UserProfileResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ProfileFragment : Fragment() {
 
@@ -26,7 +31,7 @@ class ProfileFragment : Fragment() {
         // ✅ Initialize views
         initViews(view)
 
-        // ✅ Load profile data locally
+        // ✅ Load profile data from DB using userId
         loadUserProfile()
 
         // ✅ Navigate to Account Info Fragment
@@ -36,7 +41,7 @@ class ProfileFragment : Fragment() {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fgtContainer, fragment)
                 .addToBackStack(null)
-                .commit()
+                .commitAllowingStateLoss()
         }
 
         // ✅ Navigate to Change Password Fragment
@@ -46,7 +51,7 @@ class ProfileFragment : Fragment() {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fgtContainer, fragment)
                 .addToBackStack(null)
-                .commit()
+                .commitAllowingStateLoss()
         }
 
         return view
@@ -59,11 +64,10 @@ class ProfileFragment : Fragment() {
         tvId = view.findViewById(R.id.tvId)
     }
 
-    // ✅ Load profile data locally from SharedPreferences
+    // ✅ Load profile data using userId from DB
     private fun loadUserProfile() {
         val userId = getUserIdFromPrefs()
         val userEmail = getUserEmailFromPrefs()
-        val userName = getUserNameFromPrefs()
 
         if (userId.isNullOrEmpty() || userEmail.isNullOrEmpty()) {
             showToast("Error: User not logged in.")
@@ -71,12 +75,41 @@ class ProfileFragment : Fragment() {
             return
         }
 
-        // ✅ Set profile data locally
-        tvProfileName.text = userName ?: "N/A"
+        // ✅ Fetch full_name using userId from DB
+        fetchUserFullName(userId)
+
+        // ✅ Set email and ID locally
         tvProfileEmail.text = userEmail
-        tvId.text = userId
+        tvId.text = "User ID: $userId"
+
         // 🔥 Log profile info
-        Log.d("ProfileFragment", "Profile loaded locally. Name: $userName, Email: $userEmail")
+        Log.d("ProfileFragment", "Profile loaded locally. Email: $userEmail, ID: $userId")
+    }
+
+    // ✅ Fetch full_name from DB using userId
+    private fun fetchUserFullName(userId: String) {
+        ApiUtils.apiService.getUserProfile(userId).enqueue(object : Callback<UserProfileResponse> {
+            override fun onResponse(
+                call: Call<UserProfileResponse>,
+                response: Response<UserProfileResponse>
+            ) {
+                if (response.isSuccessful && response.body() != null) {
+                    val userProfile = response.body()!!
+                    tvProfileName.text = userProfile.full_name ?: "N/A"
+                    Log.d("ProfileFragment", "Fetched Name: ${userProfile.full_name}")
+                } else {
+                    tvProfileName.text = "N/A"
+                    showToast("Failed to load profile. Please try again.")
+                    Log.e("ProfileFragment", "Error fetching full_name from DB.")
+                }
+            }
+
+            override fun onFailure(call: Call<UserProfileResponse>, t: Throwable) {
+                tvProfileName.text = "N/A"
+                showToast("Failed to load profile. Please check your connection.")
+                Log.e("ProfileFragment", "Network error: ${t.message}")
+            }
+        })
     }
 
     // ✅ Get user ID from SharedPreferences
@@ -101,18 +134,6 @@ class ProfileFragment : Fragment() {
         Log.d("ProfileFragment", "Retrieved email: $email")
 
         return email
-    }
-
-    // ✅ Get user name from SharedPreferences
-    private fun getUserNameFromPrefs(): String? {
-        val sharedPreferences =
-            requireActivity().getSharedPreferences("VendiAppPrefs", android.content.Context.MODE_PRIVATE)
-        val name = sharedPreferences.getString("name", null)
-
-        // 🔥 Log name retrieval
-        Log.d("ProfileFragment", "Retrieved name: $name")
-
-        return name
     }
 
     // ✅ Show toast message
