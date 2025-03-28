@@ -1,0 +1,609 @@
+/* CUSTOM PALLETES */
+:root{
+    --whtShade1: #f7f9fa;
+    --whtShade2: #f0f0f0;
+    --blkShade1: #101010;
+    --gryShade1: #b0b0b0;
+    --gryShade2: #5E5E5E;
+    --gradient_White: linear-gradient(to bottom, #f7f9fa, #ffffff);
+    --gradient_Horizontal: linear-gradient(to left, #d0008b, #3b0053);
+    --gradient_Vertical: linear-gradient(to top, #d0008b, #0F0053);
+    /*--gradient_Vertical: linear-gradient(to bottom, #D000BB, #0F0053);*/
+    --gradient_Green: linear-gradient(to top, #00f70c, #009c31);
+    --gradient_Red: linear-gradient(to top, #fc241d, #c40202);
+    --gradient_Yellow: linear-gradient(to top, #f7b500, #f77b00);
+    --gradient_Blue: linear-gradient(to top, #00b4f7, #0055f7);
+}
+
+/* Font Families */
+@font-face {
+    font-family: 'Machinery';
+    src: url(assets/fonts/machinery_script/MachineryScript_PERSONAL_USE_ONLY.otf);
+  }
+@font-face {
+    font-family: 'Inter_Regular';
+    src: url(assets/fonts/Inter-font/Inter-Regular.otf);
+}
+@font-face {
+    font-family: 'Inter_Medium';
+    src: url(assets/fonts/Inter-font/Inter-Medium.otf);
+}
+@font-face {
+    font-family: 'Inter_SemiBold';
+    src: url(assets/fonts/Inter-font/Inter-SemiBold.otf);
+}
+@font-face {
+    font-family: 'Inter_SemiBoldItalic';
+    src: url(assets/fonts/Inter-font/Inter-SemiBoldItalic.otf);
+}
+@font-face {
+    font-family: 'Inter_Bold';
+    src: url(assets/fonts/Inter-font/Inter-Bold.otf);
+}
+@font-face {
+    font-family: 'Inter_ExtraBold';
+    src: url(assets/fonts/Inter-font/Inter-ExtraBold.otf);
+}
+@font-face {
+    font-family: 'Inter_Black';
+    src: url(assets/fonts/Inter-font/Inter-Black.otf);
+}
+
+
+html, body {
+    margin: 0;
+    padding: 0;
+    color: black;
+    background-color: var(--whtShade2);
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    width: 100%;
+    font-family: 'Inter_Regular';
+    min-width: 960px;
+    max-width: 1920px;
+    height: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.CONTAINER{
+    display: flex;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 14px 17px 40px 4px rgba(112, 144, 176, 0.08);
+    min-height: 100vh;
+}
+
+/* LEFT SECTION */
+.LEFT_SECTION {
+    flex: 50%;
+    background-image: url(assets/images/GradientBackdrop.png);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: cover;
+    border-radius: 0px 0px 275px 0px;
+    /*margin: 5px;*/
+}
+
+.LOGO {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 50px;
+    margin-bottom: 150px;
+}
+
+.LOGO_NAME{
+    font-family: 'Machinery';
+    font-size: 3rem;
+    color: white;
+    text-decoration: none;
+}
+
+.BACK_TO_WEBSITE {
+    font-family: 'Inter_Medium';
+    font-size: 0.9rem;
+    color: white;
+    text-decoration: none;
+    background-color: transparent;
+    margin-left: auto;
+    padding: 5px 20px;
+    border: 1px solid var(--whtShade2);
+    border-radius: 10px;
+    transition: transform 0.5s ease;
+}
+
+.BACK_TO_WEBSITE:hover {
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.VECTOR_ART {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.VECTOR_ART img {
+    width: 350px;
+    height: auto;
+}
+
+.LEFT_SECTION p{
+    font-family: 'Inter_Bold';
+    font-size: 1.5rem;
+    color: white;
+    text-align: center;
+    max-width: 75%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+
+/* RIGHT SECTION */
+.RIGHT_SECTION {
+    flex: 50%;
+    background-color: white;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    overflow-y: auto;
+    /*margin: 5px;*/
+    border-radius: 20px;
+}
+
+.LOGIN_FORM{
+    display: block;
+    background-color: white;
+    border-radius: 10px;
+    padding: 50px 75px 0px 75px;
+    margin: 0 100px;
+    height: 100%;
+}
+
+.LOGIN_FORM input,
+.LOGIN_FORM select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    background: var(--gradient_White);
+    border: 2px solid var(--whtShade2);
+    font-family: 'Inter_Regular';
+    box-sizing: border-box;
+    font-size: 0.8rem;
+    color: var(--blkShade1);
+    transition: border-color 0.3s ease-in-out;
+}
+
+.LOGIN_FORM input:focus,
+.LOGIN_FORM select:focus {
+    border-color: var(--gryShade1);
+    outline: none;
+    background-color: var(--whtShade1);
+}
+
+.LOGIN_FORM input::placeholder{
+    font-family: 'Inter_Regular';
+    font-size: 0.8rem;
+    color: var(--gryShade1);
+}
+
+.LOGIN_FORM input[type="tel"] {
+    width: 100%;
+    padding: 10px 10px 10px 52px;
+    margin-top: 10px;
+    border-radius: 10px;
+    background: var(--gradient_White);
+    border: 2px solid var(--whtShade2);
+    font-family: 'Inter_Regular';
+    box-sizing: border-box;
+    font-size: 0.8rem;
+    color: var(--blkShade1);
+    transition: border-color 0.3s ease-in-out;
+}
+
+.LOGIN_FORM #PHL{
+    font-family: 'Inter_Medium';
+    font-size: 0.8rem;
+    color:white ;
+    background-color: var(--gryShade1);
+    padding: 10.5px;
+    margin-top: 11.25px;
+    border-radius: 10px 0px 0px 10px;
+    z-index: 1;
+    position: absolute;
+}
+
+#VENDOR_DESCRIPTION{
+    min-height: 100px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    background: var(--whtShade1);
+    font-family: 'Inter_Regular';
+    font-size: 0.8rem;
+    border: 1px solid var(--whtShade1);
+    resize: none;
+    outline: none;
+}
+
+.LOGIN_FORM h2{
+    text-align: left;
+    font-family: 'Inter_Black';
+    color: var(--blkShade1);
+    font-size: 1.5rem;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.LOGIN_FORM p {
+    display: inline-block;
+    font-family: 'Inter_Bold';
+    color: var(--blkShade1);
+    font-size: 0.8rem;
+    margin: 0;
+    vertical-align: middle;
+    margin-bottom: 20px;
+}
+
+.LOGIN_FORM #VENDI{
+    font-family: 'Machinery';
+    font-weight: lighter;
+    margin-right: 1px;
+}
+
+.BESIDE_FIELDS{
+    display: flex;
+    gap: 20px;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.BESIDE_FIELD{
+    flex: 1;
+    position: relative;
+}
+
+
+.LOGIN_FORM label {
+    margin-top: 20px;
+    font-family: 'Inter_SemiBold';
+    font-size: 0.8rem;
+    color: var(--blkShade1);
+    display: block;
+}
+
+.LOGIN_FORM button {
+    background: var(--gradient_Vertical);
+    font-family: 'Inter_Bold';
+    font-size: 0.8rem;
+    width: 100%;
+    padding: 15px;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 14px 17px 40px 4px rgba(112, 144, 176, 0.08);
+}
+
+.LOGIN_FORM button:hover{
+    transform: translateY(-1px);
+}
+
+/* Password Input Field */
+.PASSWORD_CONTAINER input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    padding-right: 40px;
+    margin-top: 10px;
+    border-radius: 10px;
+    background: var(--gradient_White);
+    border: 2px solid var(--whtShade2);
+    font-family: 'Inter_Regular';
+    font-size: 0.8rem;
+    color: var(--blkShade1);
+    transition: border-color 0.3s ease-in-out;
+    box-sizing: border-box;
+}
+
+.PASSWORD_CONTAINER .PASSWORD_TOGGLE {
+    position: absolute;
+    top: 75%;
+    right: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--gryShade1);
+    font-size: 1rem;
+}
+
+.PASSWORD_CONTAINER .PASSWORD_TOGGLE:hover{
+    color: var(--gryShade2);
+}
+
+#PASSWORD_REQUIREMENTS ul {
+    list-style-type: disc; 
+    padding-left: 20px;
+    margin-top: 5px; 
+}
+
+#PASSWORD_REQUIREMENTS li {
+    font-size: 0.75rem; 
+    margin-bottom: 3px; 
+}
+/* Password Requirements Dropdown */
+.PASSWORD_REQUIREMENTS_DROPDOWN {
+    display: none; 
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    width: 92%;
+    background-color: white;
+    border: 1px solid var(--whtShade2);
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 2; 
+    margin-top: 5px;
+}
+
+.PASSWORD_REQUIREMENTS_DROPDOWN span{
+    font-family: 'Inter_SemiBold';
+    font-size: 0.8rem;
+    color: var(--gryShade2);
+
+}
+
+/* Show dropdown when input is focused */
+.PASSWORD_CONTAINER:focus-within .PASSWORD_REQUIREMENTS_DROPDOWN {
+    display: block;
+}
+
+/* Password Requirements List */
+.PASSWORD_REQUIREMENTS_DROPDOWN ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-top: 5px;
+}
+
+.PASSWORD_REQUIREMENTS_DROPDOWN li {
+    font-size: 0.8rem;
+    color: var(--gryShade1);
+    margin-bottom: 5px;
+}
+
+
+.LOGIN{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    font-family: 'Inter_SemiBoldItalic';
+    color: var(--gryShade2);
+    font-size: 0.8rem;
+}
+
+.LOGIN::before,
+.LOGIN::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: var(--gryShade1);
+    margin: 0 10px;
+}
+
+.LOGIN_LINK{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.LOGIN_LINK a{
+    color: var(--gryShade2);
+    padding: 15px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.8rem;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+.LOGIN_LINK a:hover{
+    text-decoration: underline;
+}
+
+.EXTRA {
+    font-family: 'Inter_Regular';
+    font-size: 0.8rem;
+    color: var(--gryShade1);
+}
+
+.EXTRA a {
+    color: var(--gryShade1);
+    text-decoration: none;
+    font-family: 'Inter_Bold';
+}
+
+.EXTRA a:hover {
+    color: var(--gryShade2);
+}
+
+#BUSINESS_DOCUMENT {
+    margin-top: 10px;
+    font-family: 'Inter_Regular';
+    font-size: 0.8rem;
+    color: var(--gryShade1);
+    outline: none;
+}
+
+label #FILES {
+    color: var(--gryShade1);
+    font-family: 'Inter_Medium';
+    font-size: 0.75rem;
+}
+
+/* Error Message Style */
+.RED_ALERT {
+    background-color: #ffebee; 
+    color: #c62828; 
+    font-family: 'Inter_Medium';
+    font-size: 0.9rem;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #c62828; 
+    margin-bottom: 20px;
+    display: block; 
+}
+
+
+/*STEPS*/
+.REGISTRATION_STEPS {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: -100px; /* Space between steps and the form */
+    padding: 60px 120px; /* Align with form padding */
+}
+
+.STEP {
+    flex: 1; /* Each step takes equal space */
+    text-align: center;
+    font-family: 'Inter_SemiBold';
+    font-size: 0.8rem;
+    color: var(--gryShade1); 
+    position: relative;
+}
+
+.STEP span {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: var(--whtShade1); /* Default background for inactive steps */
+}
+
+.STEP.active span { /* Highlight active step */
+    background-image: var(--gradient_Vertical); 
+    color: white;
+}
+
+.STEP::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -15px; 
+    transform: translateY(-50%);
+    width: 30px;
+    height: 2px;
+    background-color: var(--gryShade1); 
+}
+
+.STEP.active::after,
+.STEP.completed::after {
+    background-image: var(--gradient_Horizontal);
+}
+
+.STEP:last-child::after {
+    display: none; 
+}
+
+.MESSAGE_BOX{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 0 auto;
+    text-align: left;
+    padding: 50px 75px 0px 75px;
+    margin-top: 40px;
+}
+
+.MESSAGE_BOX h2{
+    font-family: 'Inter_Black';
+    font-size: 1.5rem;
+
+}
+
+.FORM_GROUP {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.FORM_GROUP label {
+    font-size: 0.8rem;
+    font-family: 'Inter_Bold';
+    color: var(--blkShade1);
+}
+
+.FORM_GROUP i {
+    font-size: 0.8rem;
+    color: var(--blkShade1);
+    margin-right: 5px;
+}
+
+.FORM_GROUP input,
+.FORM_GROUP textarea,
+.FORM_GROUP select {
+    font-size: 0.8rem;
+    font-family: 'Inter_Regular';
+    padding: 10px;
+    border: 2px solid var(--whtShade2);
+    border-radius: 5px;
+    background: var(--gradient_White);
+    color: var(--blkShade1);
+    outline: none;
+}
+
+.FORM_GROUP input:focus,
+.FORM_GROUP textarea:focus,
+.FORM_GROUP select:focus {
+    border-color: var(--gryShade1);
+}
+
+#BUSINESS_DESCRIPTION {
+    flex: 1;
+    font-size: 0.8rem;
+    background: var(--gradient_White);
+    border: 2px solid var(--whtShade2);
+    padding: 10px;
+    border-radius: 5px;
+    min-height: 145px;
+    resize: none;
+
+}
+
+/* Feature Input Container */
+#PACKAGE_FEATURES {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.FEATURE_ITEM {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.FEATURE_ITEM select {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid var(--whtShade2);
+    border-radius: 5px;
+    background: var(--gradient_White);
+    font-size: 0.8rem;
+    font-family: 'Inter_Regular';
+    color: var(--blkShade1);
+    outline: none;
+}
+
+#REQUIRED{
+    color: red;
+}

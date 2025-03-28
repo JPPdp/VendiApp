@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="251dp"
+    android:layout_height="240dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:scrollbars="horizontal"
+    android:layout_marginStart="0dp"
+    android:layout_marginEnd="16dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Food Image -->
+        <ImageView
+            android:id="@+id/ivFeatureEventImage"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/img_vanenacue" />
+
+        <!-- Favorite Button -->
+        <ImageButton
+            android:id="@+id/btnFeatureFavorite"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/icon_heart"/>
+
+        <!-- Food Name -->
+        <TextView
+            android:id="@+id/tvFeatureEventName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivFeatureEventImage"
+            android:paddingStart="8dp"
+            android:paddingEnd="0dp"
+            android:text="Potato Corner"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/ivFeatureStar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:scaleType="centerCrop"
+            android:layout_toStartOf="@id/tvFeatureEventRating"
+            android:layout_below="@id/ivFeatureEventImage"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/icon_star_yellow" />
+
+        <!-- Rating -->
+        <TextView
+            android:id="@+id/tvFeatureEventRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivFeatureEventImage"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="8dp"
+            android:text="1.0"
+            android:textSize="16sp" />
+
+        <!-- Location -->
+        <TextView
+            android:id="@+id/tvFeatureEventLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvFeatureEventName"
+            android:text="Bonuan Gueset, Dagupan"
+            android:paddingStart="8dp"
+            android:paddingEnd="0dp"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray" />
+
+
+
+        <TextView
+            android:id="@+id/tvFeatureStartsAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Starts at "
+            android:layout_below="@id/tvFeatureEventLocation"
+            android:layout_alignStart="@id/tvFeatureEventLocation"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray" />
+
+        <!-- Price -->
+        <TextView
+            android:id="@+id/tvFeatureEventPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="₱1,299"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:layout_toEndOf="@id/tvFeatureStartsAt"
+            android:layout_alignBaseline="@id/tvFeatureStartsAt"
+            android:layout_marginStart="4dp" />
+    </RelativeLayout>
+
+</LinearLayout>
