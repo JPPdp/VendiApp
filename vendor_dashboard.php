@@ -2,6 +2,25 @@
 include 'db_connect.php';
 session_start();
 
+// Timezone and Greeting Setup
+date_default_timezone_set('Asia/Manila');
+$currentHour = date('H');
+
+if ($currentHour < 12) {
+    $greeting = '☀️ Good Morning,';
+} elseif ($currentHour < 18) {
+    $greeting = '🌤️ Good Afternoon,';
+} else {
+    $greeting = '🌙 Good Evening,';
+}
+
+// Database connection
+$conn = new mysqli("localhost", "root", "", "vendi_services");
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 // Check if vendor is logged in
 if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != "vendor") {
     header("Location: login.php");
@@ -27,6 +46,26 @@ if ($vendor['status'] == "Approved") {
     $stmt->execute();
     $packages = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] == 0) {
+    $profilePic = $_FILES['profile_pic'];
+    $profilePicPath = 'uploads/' . basename($profilePic['name']);
+    
+    if (move_uploaded_file($profilePic['tmp_name'], $profilePicPath)) {
+        $sql = "UPDATE admins SET profile_picture = ? WHERE admin_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $profilePicPath, $_SESSION['user_id']);
+        if ($stmt->execute()) {
+            $_SESSION['profile_picture'] = $profilePicPath;
+        } else {
+            echo "Error updating profile picture: " . $conn->error;
+        }
+        $stmt->close();
+    } else {
+        echo "Error uploading profile picture.";
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -41,23 +80,39 @@ if ($vendor['status'] == "Approved") {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-<div class="NAV_CONTAINER">
+    <div class="NAV_CONTAINER">
         <!-- Navigation Bar -->
         <div class="NAVIGATION_BAR">
             <div class="LOGO">
                 <div class="LOGO_NAME">Vendi
-                    <span>VENDOR</span>
+                    <span>ADMIN</span>
                 </div>
             </div>
-            <div class="MENU_HEADER">VENDOR PORTAL</div>
-            <a href="vendor_dashboard.php"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
-            <?php if ($vendor['status'] == "Approved"): ?>
-                <a href="vendor_packages.php"><i class="fas fa-box-open"></i> My Packages</a>
-                <a href="vendor_bookings.php"><i class="fas fa-calendar-check"></i> Bookings</a>
-            <?php endif; ?>
+            
+            <div class="MENU_HEADER">ADMINISTRATION</div>
+            <a href="vendor_dashboard.php"><i class="fas fa-stream"></i> Dashboard</a>
+            
+            <!-- Bookings Dropdown -->
+            <div class="NAV_DROPDOWN">
+                <a class="NAV_DROPDOWN_TOGGLE" href="#">
+                    <i class="fa fa-fw fa-calendar"></i> Bookings <i class="fas fa-chevron-down NAV_DROPDOWN_ICON"></i>
+                </a>
+                <div class="NAV_DROPDOWN_CONTENT">
+                    <a href="vendor_bookings_approval.php"><i class="fas fa-calendar-alt"></i> <span id="ITALIC">Pending</span></a>
+                    <a href="vendor_bookings_active.php"><i class="far fa-calendar-check"></i> <span id="ITALIC">Scheduled</span></a>
+                    <a href="vendor_bookings_completed.php"><i class="fas fa-calendar-check"></i> <span id="ITALIC">Completed</span></a>
+                    <a href="vendor_bookings_cancelled.php"><i class="fas fa-calendar-times"></i> <span id="ITALIC">Cancelled</span></a>
+                </div>
+            </div>
+            
+            <a href="vendor_package.php"><i class="fa fa-fw fa-store"></i> Packages</a>
+            
+            <a href="vendor_clients.php"><i class="fas fa-users"></i> Clients</a>
+            
             <div class="MENU_HEADER">SETTINGS</div>
-            <a href="vendor_profile.php" class="NAV_ACTIVE"><i class="fa fa-fw fa-user"></i> <span> Profile</span></a>
-            <a href="logout.php" class="LOGOUT"><i class="fa fa-fw fa-sign-out-alt"></i> Log Out</a>
+            <a href="vendor_profile.php" class="NAV_ACTIVE"><i class="fa fa-fw fa-user"></i> <span>Profile</span></a>
+            <a href="vendor_help.php"><i class="fas fa-question-circle"></i> Help</a>
+            <a href="logout.php" class="LOGOUT"><i class="fas fa-sign-out-alt"></i> Log Out</a>
         </div>
         
         <!-- Dashboard Content -->
@@ -70,9 +125,9 @@ if ($vendor['status'] == "Approved") {
                     <div class="ACCOUNT">
                         <div class="GREETING"><?php echo $greeting; ?></div>
                         <a href="vendor_profile.php">
-                            <img src="<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="Profile Picture" class="PROFILE_PIC">
+                            <img src="<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="" class="PROFILE_PIC">
                         </a>    
-                        <span class="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['business_name']); ?>!</span>             
+                        <span class="BUSINESS_NAME"><?php echo htmlspecialchars($vendor['business_name']); ?>!</span>             
                     </div>
                 </div>
             </div>
@@ -82,7 +137,7 @@ if ($vendor['status'] == "Approved") {
                 <!-- Left Profile Section -->
                 <div class="LEFT_PROFILE">
                     <div class="PROFILE_PIC_CONTAINER">
-                        <img src="<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="Profile Picture" class="PROFILE_PIC2">
+                        <img src="<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="" class="PROFILE_PIC2">
                         <div class="EDIT_ICON_CONTAINER" title="Change Profile Picture">
                             <form id="PROFILE_PIC_FORM" method="post" enctype="multipart/form-data">
                                 <label for="VENDOR_PROFILE_PIC" class="EDIT_ICON_LABEL">
@@ -92,50 +147,95 @@ if ($vendor['status'] == "Approved") {
                             </form>
                         </div>
                     </div>
-                    <h2 id="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['business_name']); ?></h2>
-                    <p class="USER_ID">ID: <?php echo htmlspecialchars($_SESSION['vendor_id']); ?></p>
-                    <p class="STATUS <?php echo strtolower($_SESSION['status']); ?>"><?php echo htmlspecialchars($_SESSION['status']); ?></p>
+                    <h2 id="BUSINESS_NAME"><?php echo htmlspecialchars($vendor['business_name']); ?></h2>
+                    <p class="USER_ID">ID: <?php echo htmlspecialchars($vendor['vendor_id']); ?></p>
                 </div>
 
                 <!-- Right Profile Section -->
-                <div class="RIGHT_PROFILE">
-                    <div class="PROF_CONTAINER">
-                        <div class="PROF_HEADER">
-                            <h2>Business Details</h2>
+                <div class="RIGHT_PROFILE"> 
+                    <div class="STACK3" id="FIRST_STACK">
+                        <h3>Account Information</h3>
+
+                        <div class="BESIDE_FIELDS">
+                            <div class="BESIDE_FIELD">
+                            <label>Business Name</label>
+                            <input type="text" value="<?php echo htmlspecialchars($vendor['business_name']); ?>" id="business_name" readonly>
+                            </div>
+
+                            <div class="BESIDE_FIELD">
+                            <label>Email</label>
+                            <input type="email" value="<?php echo htmlspecialchars($vendor['email']); ?>" id="business_email" readonly>
+                            </div>
                         </div>
-                    </div>    
-                    <div class="STACK">
+
+                        <div class="BESIDE_FIELDS">
+                            <div class="BESIDE_FIELD">
+                            <label>Mobile Number</label>
+                            <input type="text" value="<?php echo htmlspecialchars($vendor['mobile_number']); ?>" id="business_mobile" readonly>
+                            </div>
+
+                            <div class="BESIDE_FIELD">
+                            <label>Business Address</label>
+                            <input type="text" id="business_address" readonly value="<?php echo htmlspecialchars($vendor['address']); ?>">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="STACK3">
                         <h3>Business Information</h3>
-                        <label>Business Name</label>
-                        <input type="text" value="<?php echo htmlspecialchars($vendor['business_name']); ?>" readonly>
 
-                        <label>Email</label>
-                        <input type="email" value="<?php echo htmlspecialchars($vendor['email']); ?>" readonly>
-                        
-                        <label>Service Type</label>
-                        <input type="text" value="<?php echo htmlspecialchars($vendor['service_option']); ?>" readonly>
+                        <div class="BESIDE_FIELDS">
+                            <div class="BESIDE_FIELD">
+                            <label>Service Type</label>
+                            <input type="text" value="<?php echo htmlspecialchars($vendor['service_option']); ?>" id="business_service" readonly>
 
-                        <label>Mobile Number</label>
-                        <input type="text" value="<?php echo htmlspecialchars($vendor['mobile_number']); ?>" readonly>
+                            <label>Business Features</label>
+                            <input type="text" value="<?php echo htmlspecialchars($vendor['business_description_short']); ?>" id="business_service" readonly>
 
-                        <label>Business Address</label>
-                        <textarea readonly><?php echo htmlspecialchars($vendor['address']); ?></textarea>
+                            <label>Business Documents</label>
+                                <a href="#IMAGE_VIEW_<?php echo $vendor['vendor_id']; ?>" class="VIEW_BUTTON" id="VIEW_BUTTON">
+                                    <i class="fas fa-file-alt"></i> View File
+                                </a>
+                                <!-- Modal to display the image -->
+                                <div id="IMAGE_VIEW_<?php echo $vendor['vendor_id']; ?>" class="EXPAND">
+                                    <a href="#" class="CLOSE_BUTTON">&times;</a>
+                                    <img class="EXPANDED_IMAGE" src="<?php echo $vendor['business_document']; ?>" alt="Document File">
+                                </div>
 
-                        <label>Vendor ID</label>
-                        <input type="text" value="<?php echo htmlspecialchars($vendor['vendor_id']); ?>" readonly>
+                            </div>
+
+                            <div class="BESIDE_FIELD">
+                            <label>Business Description Summary</label>
+                            <textarea id="VENDOR_DESCRIPTION" placeholder="<?php echo htmlspecialchars($vendor['business_description_long']); ?>"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class="STACK3">
+                        <h3>Account Management</h3>
+                            <div class="BESIDE_FIELDS">
+                                <div class="BESIDE_FIELD">
+                                    <button id="CHANGE_PASSWORD" class="ACCOUNT_MANAGE" onclick="window.location.href='forgot_password.php'">
+                                        <i class="fas fa-key"></i> Change Password
+                                    </button>
+                                </div>
+                                <div class="BESIDE_FIELD">
+                                    <button id="DELETE_ACCOUNT" class="ACCOUNT_MANAGE" onclick="confirmDelete()">
+                                        <i class="fas fa-trash-alt"></i> Delete Account
+                                    </button>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <h2>Welcome, <?php echo $vendor['business_name']; ?></h2>
-    
-    <h3>Business Information</h3>
-    <p><strong>Email:</strong> <?php echo $vendor['email']; ?></p>
-    <p><strong>Service Type:</strong> <?php echo $vendor['service_option']; ?></p>
-    <p><strong>Mobile:</strong> <?php echo $vendor['mobile_number']; ?></p>
-    <p><strong>Address:</strong> <?php echo $vendor['address']; ?></p>
-    <p><strong>Status:</strong> <?php echo $vendor['status']; ?></p>
+
+
+
+
 
     <?php if ($vendor['status'] == "Pending"): ?>
         <p>Your account is awaiting approval from the admin.</p>
