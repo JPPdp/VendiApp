@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="108dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Food Image -->
+        <ImageView
+            android:id="@+id/ivEventImage"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:layout_centerVertical="true"
+            android:scaleType="centerCrop"
+            android:layout_margin="8dp"
+            android:src="@drawable/img_potatocorner" />
+
+        <!-- Food Name -->
+        <TextView
+            android:id="@+id/tvEventName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Potato Corner"
+            android:layout_toEndOf="@id/ivEventImage"
+            android:layout_alignTop="@id/ivEventImage"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <!-- Star -->
+        <ImageView
+            android:id="@+id/ivStar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:scaleType="centerCrop"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="8dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_star_yellow" />
+
+        <!-- Rating -->
+        <TextView
+            android:id="@+id/tvRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5.0"
+            android:layout_toStartOf="@id/ivStar"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="4dp"
+            android:textSize="16sp" />
+
+        <!-- Location -->
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bonuan Gueset, Dagupan"
+            android:layout_below="@id/tvEventName"
+            android:layout_alignStart="@id/tvEventName"
+            android:paddingTop="4dp"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray" />
+
+        <!-- Starts at -->
+        <TextView
+            android:id="@+id/tvStartsAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Starts at "
+            android:layout_below="@id/tvLocation"
+            android:layout_alignStart="@id/tvLocation"
+            android:paddingTop="4dp"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray" />
+
+        <!-- Price -->
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="₱1,299"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_toEndOf="@id/tvStartsAt"
+            android:layout_alignBaseline="@id/tvStartsAt"
+            android:layout_marginStart="4dp" />
+    </RelativeLayout>
+
+</LinearLayout>
