@@ -45,29 +45,80 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Login | Vendi </title>
+    <link rel="icon" href="assets/images/VendiBLK2_NoBG.png" type="image/icon type">
+    <link rel="stylesheet" href="login.css?v=<?php echo date('his'); ?>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <h2>Login</h2>
 
-    <?php if ($message): ?>
-        <p><?php echo $message; ?></p>
-    <?php endif; ?>
+<div class="CONTAINER">
+    <!-- LEFT SECTION -->
+    <div class="LEFT_SECTION">
+        <div class="LOGO">
+            <div class="LOGO_NAME">Vendi.</div>
+        </div>
+        <div class="VECTOR_ART">
+            <img src="assets/images/Visualizing_Vector.png" alt="Vector_Art">
+        </div>
+        <p>Collaborate and create.</p>
+    </div>
 
-    <form action="" method="POST">
-        <label>Email:</label>
-        <input type="email" name="email" required><br>
+    <!-- RIGHT SECTION -->
+    <div class="RIGHT_SECTION">
+
+        <?php if ($message): ?>
+            <p><?php echo $message; ?></p>
+        <?php endif; ?>
+
+        <!-- LOGIN FORM -->
+        <form id="LOGIN_FORM" class="LOGIN_FORM" method="post" action="">
+            <h2>CONNECT WITH EVENT PLANNERS</h2>
+            <p> Welcome back to <span id="VENDI">Vendi</span>! Access your dashboard to manage your listings, organize your schedule, and maximize your event bookings. </p>
+
+            <!-- Display error message if any -->
+            <?php if (!empty($error_message)): ?>
+                <div class="RED_ALERT"><?php echo $error_message; ?></div>
+            <?php endif; ?>
+
+            <h2>LOG IN</h2>
+            <label for="email">Email</label>
+            <input type="email" name="email" placeholder="Enter email" required><br>
+
+            <label>User Type</label>
+            <select name="user_type">
+                <option value="admin" selected disabled>Choose user type</option>
+                <option value="admin">Admin</option>
+                <option value="vendor">Vendor</option>
+            </select>
+        
+            <div class="BESIDE_FIELD">
+                <div class="PASSWORD_CONTAINER">
+                    <label for="PASSWORD">Password</label>
+                    <input type="password" id="PASSWORD" name="password" placeholder="Enter Password" required minlength="8">
+                    <i class="fas fa-eye PASSWORD_TOGGLE" id="password-toggle"></i>
+                </div>
+            </div>
+            
+            <span class="EXTRA">Forgot password? <a href="forgot_password.html">Click here</a></span>
+
+            <button type="submit">Log In</button>
+
+            <div class="LOGIN">Not registered yet?</div>
+            <div class="LOGIN_LINK">
+                <a href="register_vendor.php">Sign Up</a>
+            </div>
+        </form>
+    </div>
+
+</div>
 
         <label>Password:</label>
         <input type="password" name="password" required><br>
 
-        <label>Login as:</label>
-        <select name="user_type">
-            <option value="admin">Admin</option>
-            <option value="vendor">Vendor</option>
-        </select><br>
 
-        <button type="submit">Login</button>
-    </form>
+    <script src="password.js"></script>
 </body>
 </html>
