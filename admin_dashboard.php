@@ -1,185 +1,321 @@
 <?php
+// Database and Session Initialization
 include 'db_connect.php';
 session_start();
 
-// Check if admin is logged in
+// Authentication Check
 if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != "admin") {
     header("Location: login.php");
     exit;
 }
 
-// Handle vendor approval/denial
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $vendor_id = $_POST['vendor_id'];
-    $action = $_POST['action']; // "Approve" or "Deny"
+// Timezone and Greeting Setup
+date_default_timezone_set('Asia/Manila');
+$currentHour = date('H');
 
-    if ($action == "Approve") {
-        $status = "Approved";
-    } else {
-        $status = "Denied";
-    }
+if ($currentHour < 12) {
+    $greeting = '☀️ Good Morning,';
+} elseif ($currentHour < 18) {
+    $greeting = '🌤️ Good Afternoon,';
+} else {
+    $greeting = '🌙 Good Evening,';
+}
 
-    $sql = "UPDATE vendors SET status = ? WHERE vendor_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("si", $status, $vendor_id);
+// Admin Data Fetch
+$sql = "SELECT * FROM admins WHERE admin_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $_SESSION['user_id']);
+$stmt->execute();
+$result = $stmt->get_result();
+$admin = $result->fetch_assoc();
 
-    if ($stmt->execute()) {
-        $message = "Vendor has been $status successfully.";
-    } else {
-        $message = "Error: " . $conn->error;
+// Dashboard Statistics
+// Vendor Statistics
+$stats = [];
+$sql = "SELECT COUNT(*) as count FROM vendors WHERE status = 'Pending'";
+$result = $conn->query($sql);
+$stats['pending_vendors'] = $result->fetch_assoc()['count'];
+
+$sql = "SELECT COUNT(*) as count FROM vendors WHERE status = 'Approved'";
+$result = $conn->query($sql);
+$stats['active_vendors'] = $result->fetch_assoc()['count'];
+
+$sql = "SELECT COUNT(*) as count FROM vendors";
+$result = $conn->query($sql);
+$stats['total_vendors'] = $result->fetch_assoc()['count'];
+
+// Client Statistics
+$sql = "SELECT COUNT(*) as count FROM clients";
+$result = $conn->query($sql);
+$stats['total_clients'] = $result->fetch_assoc()['count'];
+
+// Recent Data Fetch
+$sql = "SELECT * FROM clients ORDER BY client_id DESC LIMIT 5";
+$recent_clients = $conn->query($sql);
+
+// Vendor Status Breakdown
+$status_counts = [
+    'Pending' => 0,
+    'Approved' => 0,
+    'Denied' => 0
+];
+
+$sql = "SELECT status, COUNT(*) as count FROM vendors GROUP BY status";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        if (array_key_exists($row['status'], $status_counts)) {
+            $status_counts[$row['status']] = (int)$row['count'];
+        }
     }
 }
 
-// Get list of pending vendors
-$sql = "SELECT * FROM vendors WHERE status = 'Pending'";
-$result = $conn->query($sql);
+$total_vendors = array_sum($status_counts);
+
+// Recent Vendors Data
+$sql = "SELECT * FROM vendors WHERE status IN ('Approved', 'Pending') ORDER BY vendor_id DESC LIMIT 5";
+$active_vendors = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | Vendi</title>
-    <link rel="icon" href="assets/images/VendiBLK2_NoBG.png" type="image/icon type">
+    <link rel="icon" href="assets/images/VendiBLK_NoBG.png" type="image/icon type">
     <link rel="stylesheet" href="bookings.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="dashboard.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="notifications.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body>
 
-<div class="NAV_CONTAINER">
-        <!-- Navigation Bar -->
+<body>
+    <!-- Navigation Structure -->
+    <div class="NAV_CONTAINER">
+        <!-- Navigation Bar Content -->
         <div class="NAVIGATION_BAR">
+            <!-- Logo and Menu Items -->
             <div class="LOGO">
-                <div class="LOGO_NAME">Vendi
-                    <span>ADMIN</span>
-                </div>
+                <div class="LOGO_NAME">Vendi <span>ADMIN</span></div>
             </div>
 
             <div class="MENU_HEADER">ADMINISTRATION</div>
-                    <a href="#" class="NAV_ACTIVE"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
-                    <a href="admin_vendors_approval.php"><i class="fas fa-user-check"></i>Vendors Management</a>
-                    <a href="admin_vendors_tab.php"><i class="fas fa-users"></i>Clients (App)</a>
-                    <a href="admin_feedback.php"><i class="fas fa-comment-dots"></i> Feedback</a>
+            <a href="#DASHBOARD" class="NAV_ACTIVE"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="admin_vendors_active.php"><i class="fas fa-user-tie"></i> Vendors <span id="ITALIC">(Active)</span></a>
+            <a href="admin_vendors_approval.php"><i class="fas fa-user-check"></i> Vendors <span id="ITALIC">(Pending)</span></a>
+            <a href="admin_clients.php"><i class="fas fa-users"></i> Clients</a>
+            <a href="admin_feedback.php"><i class="fas fa-comment-dots"></i> Feedback</a>
+            
             <div class="MENU_HEADER">SETTINGS</div>
-                    <a href="admin_profile.php"><i class="fa fa-fw fa-user"></i> <span>Profile</span></a>            
-                    <a href="logout.php" class="LOGOUT"><i class="fa fa-fw fa-sign-out-alt"></i> Log Out</a>
+            <a href="admin_profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
+            <a href="logout.php" class="LOGOUT"><i class="fa fa-fw fa-sign-out-alt"></i> Log Out</a>
         </div>
         
-        <!-- Dashboard Content -->
+        <!-- Main Dashboard Content -->
         <div class="DASHBOARD" id="DASHBOARD">
+            <!-- Dashboard Header -->
             <div class="UPPER">
                 <div class="LEFT_UPPER">
                     <h1 class="DASHBOARD_TITLE">Admin Dashboard</h1>
                 </div>
-
-                    <?php if (isset($message)): ?>
-                        <p><?php echo $message; ?></p>
-                    <?php endif; ?>
-
                 <div class="RIGHT_UPPER">
                     <div class="ACCOUNT">
                         <span class="HELLO"><?php echo $greeting; ?></span>
-                        <a href="profile.php">
-                            <img src="<?php echo htmlspecialchars($_SESSION['admin_profile']); ?>" alt="Profile Picture" class="PROFILE_PIC">
+                        <a href="admin_profile.php">
+                            <img src="<?php echo htmlspecialchars($admin['profile_picture'] ?? 'assets/images/default_profile.jpg'); ?>" alt="Profile Picture" class="PROFILE_PIC">
                         </a>    
-                        <span class="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['admin_name']); ?></span>             
+                        <span class="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['admin_name']); ?>!</span>             
                     </div>
                 </div>
             </div>
             
-            <!-- Vendor Details Table -->
-            <div class="MAIN_CONTAINER">
-                <div class="BOOKING_TABLE">
-                    <h2>Pending Vendors</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Business Documents</th>
-                                <th>Business Name</th>
-                                <th>Email</th>
-                                <th>Mobile</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while ($row = $pendingVendors->fetch_assoc()): ?>
-                                <tr>
-                                <td class="VIEW_DOCUMENT">
-                                    <!-- Button to open the modal -->
-                                    <a href="#IMAGE_VIEW_<?php echo $row['vendors_id']; ?>" class="VIEW_BUTTON" id="VIEW_BUTTON">View File</a>
-                                </td>
-
-                                <!-- Modal to display the image -->
-                                <div id="IMAGE_VIEW_<?php echo $row['vendors_id']; ?>" class="EXPAND">
-                                    <a href="#" class="CLOSE_BUTTON">&times;</a>
-                                    <img class="EXPANDED_IMAGE" src="pending_image_view.php?vendor_id=<?php echo $row['vendors_id']; ?>" alt="Document File">
-                                </div>
-                                    <td><?php echo htmlspecialchars($row['businessname']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['vendors_email']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['vendors_mobile']); ?></td>
-                                    <td>
-                                        <form method="POST" style="display:inline;">
-                                            <input type="hidden" name="vendor_id" value="<?php echo $row['vendors_id']; ?>">
-                                            <button type="submit" name="approve">Approve</button>
-                                        </form>
-                                        <form method="POST" style="display:inline;">
-                                            <input type="hidden" name="vendor_id" value="<?php echo $row['vendors_id']; ?>">
-                                            <button type="submit" name="reject">Reject</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            <?php endwhile; ?>
-                        </tbody>
-                    </table>
+            <!-- Stats Boxes -->
+            <div class="CONTENT">
+                <div class="BOX PENDING">
+                    <h3><i class="fas fa-user-clock"></i> Pending Vendors</h3>
+                    <p><?php echo $stats['pending_vendors']; ?></p>
+                    <i class="fas fa-user-clock"></i>
+                </div>
+                <div class="BOX SCHEDULED">
+                    <h3><i class="fas fa-user-tie"></i> Approved Vendors</h3>
+                    <p><?php echo $stats['active_vendors']; ?></p>
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="BOX COMPLETED">
+                    <h3><i class="fas fa-user-tie"></i> Total Vendors</h3>
+                    <p><?php echo $stats['total_vendors']; ?></p>
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="BOX CANCELLED">
+                    <h3><i class="fas fa-users"></i> Total Clients</h3>
+                    <p><?php echo $stats['total_clients']; ?></p>
+                    <i class="fas fa-users"></i>
                 </div>
             </div>
 
+            <!-- Main Content Container -->
+            <div class="MAIN_CONTAINER">
+                <!-- Left Column -->
+                <div class="LEFT_MAIN">
+                    <!-- Recent Clients and Vendor Chart -->
+                    <div class="FLEX_CONTAINER">
+                        <!-- Recent Clients Table -->
+                        <div class="PACKAGE_OVERVIEW">
+                            <h2>Recent Clients 
+                            <a href="admin_clients.php"><i class="DIRECT fas fa-angle-right"></i></a>
+                            </h2>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th><i class="fas fa-image"></i> Profile</th>
+                                        <th><i class="fas fa-user"></i> Name</th>
+                                        <th><i class="fas fa-envelope"></i> Email</th>
+                                        <th><i class="fas fa-phone"></i> Mobile Number</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if ($recent_clients->num_rows > 0): ?>
+                                        <?php while ($client = $recent_clients->fetch_assoc()): ?>
+                                            <tr>
+                                                <td><img src="<?php echo htmlspecialchars($client['profile_picture']); ?>" alt="" class="CLIENT_PROFILE_PIC"></td>
+                                                <td><b><?php echo htmlspecialchars($client['name']); ?></b></td>
+                                                <td><?php echo htmlspecialchars($client['email']); ?></td>
+                                                <td><?php echo htmlspecialchars($client['mobile_number']); ?></td>
+                                            </tr>
+                                        <?php endwhile; ?>
+                                    <?php else: ?>
+                                        <tr><td colspan="4">No recent clients found</td></tr>
+                                    <?php endif; ?>
+                                </tbody>   
+                            </table>  
+                        </div>
+
+                        <!-- Vendor Status Chart -->
+                        <div class="VENDOR_CHART">
+                            <h2>Vendor Status Overview</h2>
+                            <div class="CHART_CONTAINER">
+                                <?php foreach ($status_counts as $status => $count): 
+                                    $percentage = $total_vendors > 0 ? ($count / $total_vendors) * 100 : 0;
+                                    $gradient = '';
+                                    switch($status) {
+                                        case 'Pending': 
+                                            $gradient = 'linear-gradient(to top, #f7b500, #f77b00)'; 
+                                            break;
+                                        case 'Approved': 
+                                            $gradient = 'linear-gradient(to top, #00f70c, #009c31)'; 
+                                            break;
+                                        case 'Denied': 
+                                            $gradient = 'linear-gradient(to top, #fc241d, #c40202)'; 
+                                            break;
+                                    }
+                                ?>
+                                <div class="chart-row">
+                                    <div class="chart-label"><?php echo $status; ?></div>
+                                    <div class="chart-bar-container">
+                                        <div class="chart-bar" style="width: <?php echo $percentage; ?>%; background: <?php echo $gradient; ?>;">
+                                            <span class="chart-value"><?php echo $count; ?> (<?php echo round($percentage); ?>%)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+                            <div class="chart-legend">
+                                <div class="legend-item"><span class="legend-color" style="background: var(--gradient_Yellow)"></span><span class="legend-text">Pending</span></div>
+                                <div class="legend-item"><span class="legend-color" style="background: var(--gradient_Green)"></span><span class="legend-text">Approved</span></div>
+                                <div class="legend-item"><span class="legend-color" style="background: var(--gradient_Red);"></span><span class="legend-text">Denied</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vendors Summary Table -->
+                    <div class="BOOKING_TABLE">
+                        <h2>Vendors Summary<a href="admin_vendors_approval.php"><i class="DIRECT fas fa-angle-right"></i></a></h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th><i class="fas fa-store"></i> Business</th>
+                                    <th><i class="fas fa-envelope"></i> Email</th>
+                                    <th><i class="fas fa-phone"></i> Contact</th>
+                                    <th><i class="fas fa-map-marker-alt"></i> Address</th>
+                                    <th><i class="fas fa-tag"></i> Service</th>
+                                    <th><i class="fas fa-info-circle"></i> Features</th>
+                                    <th><i class="fas fa-clipboard-check"></i> Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if ($active_vendors->num_rows > 0): ?>
+                                    <?php while ($vendor = $active_vendors->fetch_assoc()): ?>
+                                        <tr>
+                                            <td><b><?php echo htmlspecialchars($vendor['business_name']); ?></b></td>
+                                            <td><?php echo htmlspecialchars($vendor['email']); ?></td>
+                                            <td><?php echo htmlspecialchars($vendor['mobile_number']); ?></td>
+                                            <td><?php echo htmlspecialchars($vendor['address']); ?></td>
+                                            <td><?php echo htmlspecialchars($vendor['service_option']); ?></td>
+                                            <td><?php echo htmlspecialchars($vendor['business_description_short']); ?></td>
+                                            <td>
+                                                <span class="status-badge <?php echo strtolower(htmlspecialchars($vendor['status'])); ?>">
+                                                    <?php echo htmlspecialchars($vendor['status']); ?>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    <?php endwhile; ?>
+                                <?php else: ?>
+                                    <tr><td colspan="7">No active vendors found</td></tr>
+                                <?php endif; ?>
+                            </tbody>   
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="RIGHT_MAIN">
+                    <!-- Calendar Widget -->
+                    <div class="CALENDAR">
+                        <h2>Calendar</h2>
+                        <div class="CALENDAR_PLACEHOLDER">
+                            <div class="WRAPPER">
+                                <header>
+                                    <div class="ICONS">
+                                        <span id="PREV" class="ICON_CLASS"><i class="fa fa-caret-left"></i></span>
+                                        <p class="CURRENT_DATE"></p>
+                                        <span id="NEXT" class="ICON_CLASS"><i class="fa fa-caret-right"></i></span>
+                                    </div>
+                                </header>
+                                <div class="CALENDAR_BODY">
+                                    <ul class="WEEKS">
+                                        <li>Sun</li><li>Mon</li><li>Tue</li><li>Wed</li><li>Thu</li><li>Fri</li><li>Sat</li>
+                                    </ul>
+                                    <ul class="DAYS"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- To-Do List Widget -->
+                    <div class="TODO_LIST">
+                        <div class="TODO_HEADER">
+                            <h2>To-Do List</h2>
+                            <span class="ADD_TASK" id="ADD_TASK"><i class="fas fa-plus"></i></span>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Task</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="TODO_BODY">
+                                <!-- Tasks will be added here via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script src="dashboard.js"></script>
-
-
-
-
-    <?php if ($result->num_rows > 0): ?>
-        <table border="1">
-            <tr>
-                <th>Business Name</th>
-                <th>Email</th>
-                <th>Mobile</th>
-                <th>Address</th>
-                <th>Service</th>
-                <th>Business Document</th>
-                <th>Action</th>
-            </tr>
-            <?php while ($vendor = $result->fetch_assoc()): ?>
-                <tr>
-                    <td><?php echo $vendor['business_name']; ?></td>
-                    <td><?php echo $vendor['email']; ?></td>
-                    <td><?php echo $vendor['mobile_number']; ?></td>
-                    <td><?php echo $vendor['address']; ?></td>
-                    <td><?php echo $vendor['service_option']; ?></td>
-                    <td>
-                        <a href="<?php echo $vendor['business_document']; ?>" target="_blank">View Document</a>
-                    </td>
-                    <td>
-                        <form method="POST">
-                            <input type="hidden" name="vendor_id" value="<?php echo $vendor['vendor_id']; ?>">
-                            <button type="submit" name="action" value="Approve">Approve</button>
-                            <button type="submit" name="action" value="Deny">Deny</button>
-                        </form>
-                    </td>
-                </tr>
-            <?php endwhile; ?>
-        </table>
-    <?php else: ?>
-        <p>No pending vendors.</p>
-    <?php endif; ?>
-
-    <br>
-    <a href="logout.php">Logout</a>
 </body>
 </html>

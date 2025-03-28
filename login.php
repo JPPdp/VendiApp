@@ -112,12 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </form>
     </div>
-
 </div>
-
-        <label>Password:</label>
-        <input type="password" name="password" required><br>
-
 
     <script src="password.js"></script>
 </body>

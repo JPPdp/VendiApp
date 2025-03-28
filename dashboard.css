@@ -333,6 +333,8 @@ body{
     transition: transform 0.5s ease-in-out;
     position: relative;
     overflow: hidden;
+    min-height: 75px;
+    max-height: 75px;
 }
 
 .BOX h3 {
@@ -705,7 +707,7 @@ body{
 }
 
 /* Trending Packages Bar Chart */
-.TRENDING_CHART {
+.PENDING_VENDORS {
     flex: 50%;
     background-color: white;
     padding: 20px;
@@ -720,7 +722,7 @@ body{
     overflow-x: auto;
 }
 
-.TRENDING_CHART h2 {
+.PENDING_VENDORS h2 {
     font-size: 1rem;
     font-family: 'Inter_Bold';
     color: var(--blkShade1);
@@ -728,73 +730,132 @@ body{
     padding-bottom: 20px;
 }
 
-
-/* Chart Container */
-.CHART_CONTAINER {
-    flex-grow: 1;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-start; 
-    gap: 60px; 
-    padding: 0;
-    background: repeating-linear-gradient(
-        to top,
-        transparent,
-        transparent 24%,
-        var(--whtShade2) 25%,
-        var(--whtShade2) 25%
-    ); /* Grid lines */
-    height: 100%;
-    position: relative;
-    margin-bottom: 40px;
-    border-bottom: 2px solid var(--whtShade2);
-}
-
-/* Bars */
-.BAR {
-    min-width: 50px;
-    background: var(--gradient_Vertical); 
-    border-radius: 25px 25px 0 0;
-    position: relative;
-    transition: height 0.3s ease; 
-}
-
-.BAR::after {
-    content: attr(data-label);
-    position: absolute;
-    bottom: -45px; 
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.6rem;
-    font-family: 'Inter_Bold';
-    color: var(--blkShade1);
-    text-align: center;
-}
-
-.BAR:hover {
-    filter: brightness(110%); 
-}
-
-/* No Packages Available Bar */
-.BAR.NO_PACKAGES {
-    width: 100%; 
-    height: 100%; 
-    background: transparent; 
-    position: absolute; 
-    top: 25%; 
-    left: 50%;
-    transform: translate(-50%, -50%); 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.8rem;
-    font-family: 'Inter_Medium';
-    color: var(--gryShade1);
-    text-align: center;
-    white-space: nowrap;
-    padding: 10px;
-}
-
 #ITALIC {
     font-style: italic;
+}
+
+/* Status badge styles */
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+    display: inline-block;
+}
+
+.status-badge.pending {
+    background-color: #FFF3E0;
+    color: #FF9800;
+    border: 1px solid #FFE0B2;
+}
+
+.status-badge.approved {
+    background-color: #E8F5E9;
+    color: #4CAF50;
+    border: 1px solid #C8E6C9;
+}
+
+.status-badge.denied {
+    background-color: #FFEBEE;
+    color: #F44336;
+    border: 1px solid #FFCDD2;
+}
+
+.DIRECT{
+    font-size: 0.75rem;
+    color: var(--gryShade1);
+    margin-left: 5px;
+}
+
+/* Vendor Chart Styles */
+.VENDOR_CHART {
+    flex: 25%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    min-height: 410px;
+    max-height: 410px;
+    display: flex;
+    flex-direction: column;
+    overflow-x: auto;
+}
+
+.VENDOR_CHART h2 {
+    font-size: 1rem;
+    font-family: 'Inter_Bold';
+    color: var(--blkShade1);
+    margin: 0;
+    padding-bottom: 20px;
+}
+
+.CHART_CONTAINER {
+    margin-top: 20px;
+}
+
+.chart-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.chart-label {
+    width: 80px;
+    font-weight: bold;
+    color: #555;
+}
+
+.chart-bar-container {
+    flex-grow: 1;
+    background-color: var(--whtShade2);
+    border-radius: 4px;
+    height: 30px;
+    overflow: hidden;
+    position: relative;
+}
+
+.chart-bar {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s ease;
+    position: relative;
+    opacity: 90%;
+}
+
+.chart-value {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    text-shadow: 0 0 2px rgba(0,0,0,0.5);
+}
+
+.chart-legend {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 15px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.legend-color {
+    width: 15px;
+    height: 15px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.legend-text {
+    font-size: 0.75rem;
+    color: var(--gryShade2);
 }
