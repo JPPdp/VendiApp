@@ -77,10 +77,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- LEFT SECTION -->
     <div class="LEFT_SECTION">
         <div class="LOGO">
-            <div class="LOGO_NAME">Vendi.</div>
-            <a href="index.htm" class="BACK_TO_WEBSITE">
-                Back to Website <i class="fas fa-arrow-right"></i>
-            </a>
         </div>
         <div class="VECTOR_ART">
             <img src="assets/images/Visualizing_Vector.png" alt="Vector_Art">
@@ -111,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
             
-            <span class="EXTRA">Forgot password? <a href="forgot_password.html">Click here</a></span>
+            <span class="EXTRA">Forgot password? <a href="reset_password.php">Click here</a></span>
 
             <button type="submit">Log In</button>
 
