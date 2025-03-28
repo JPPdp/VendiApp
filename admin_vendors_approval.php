@@ -8,14 +8,19 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != "admin") {
     exit;
 }
 
+date_default_timezone_set('Asia/Manila');
+// Get current hour for greeting
+$currentHour = date('G');
+
 // Determine the greeting based on the time
 if ($currentHour >= 1 && $currentHour < 4) {
+    $greeting = '🌙 Good Evening,';
 } elseif ($currentHour < 12) {
-    $greeting = '☀️ Good Morning!';
+    $greeting = '☀️ Good Morning,';
 } elseif ($currentHour < 18) {
-    $greeting = '🌤️ Good Afternoon!';
+    $greeting = '🌤️ Good Afternoon,';
 } else {
-    $greeting = '🌙 Good Evening!';
+    $greeting = '🌙 Good Evening,';
 }
 
 // Handle vendor approval/denial
@@ -70,8 +75,8 @@ $result = $conn->query($sql);
             <div class="MENU_HEADER">ADMINISTRATION</div>
                     <a href="admin_dashboard.php"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
                     <a href="#" class="NAV_ACTIVE"><i class="fas fa-user-check"></i> <span>Vendor Management</span></a>
-                    <a href="admin_vendors_active.php"><i class="fas fa-user-tie"></i> Active Vendors</a>
-                    <a href="admin_vendors_tab.php"><i class="fas fa-users"></i>Clients (App)</a>
+                    <a href="admin_vendors_active.php"><i class="fas fa-user-tie"></i> Vendors <span id="ITALIC">(Active)</span></a>
+                    <a href="admin_clients.php"><i class="fas fa-users"></i>Clients <span id="ITALIC">(App)</span></a>
                     <a href="admin_feedback.php"><i class="fas fa-comment-dots"></i> Feedback</a>
             <div class="MENU_HEADER">SETTINGS</div>
                     <a href="admin_profile.php"><i class="fa fa-fw fa-user"></i> <span>Profile</span></a>            
@@ -95,7 +100,7 @@ $result = $conn->query($sql);
                         <a href="profile.php">
                             <img src="<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="Profile Picture" class="PROFILE_PIC">
                         </a>    
-                        <span class="BUSINESS_NAME">Admin</span>             
+                        <span class="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['admin_name']); ?>!</span>             
                     </div>
                 </div>
             </div>

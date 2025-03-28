@@ -121,7 +121,7 @@
 
 .BOOKING_TABLE td {
     background-color: white;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-family: 'Inter_Regular';
     color: var(--blkShade1);
     padding-left: 20px;
