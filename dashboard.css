@@ -918,3 +918,16 @@ body{
 .NAVIGATION_BAR > a:not(.NAV_DROPDOWN_TOGGLE) {
     transition: all 0.3s ease;
 }
+
+.GREETING {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+}
+
+.RIGHT_UPPER .GREETING{
+    color: white;
+    font-size: 0.8rem;
+    margin-right: -10px;
+}

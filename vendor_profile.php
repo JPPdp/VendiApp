@@ -199,7 +199,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['profile_pic']) && $_F
                                 <!-- Modal to display the image -->
                                 <div id="IMAGE_VIEW_<?php echo $vendor['vendor_id']; ?>" class="EXPAND">
                                     <a href="#" class="CLOSE_BUTTON">&times;</a>
-                                    <img class="EXPANDED_IMAGE" src="<?php echo $vendor['business_document']; ?>" alt="Document File">
+                                    <img class="EXPANDED_IMAGE" src="<?php echo $vendor['business_document']; ?>" alt="">
                                 </div>
 
                             </div>
