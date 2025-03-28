@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="blue">#1E90FF</color>
+    <color name="bright">#6200EE</color>
+    <color name="dark">#0F0053</color>
+    <color name="forgot">#FFDD00</color>
+    <color name="grey">#9E9E9E</color>
+    <color name="lightGrey">#939393</color>
+    <color name="textColor">#FFFBFB</color>
+    <color name="trans">#00FFFFFF</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="app_name">Vendi App</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <style name="Theme.VendiApp" parent="Theme.MaterialComponents.Light.NoActionBar">
+
+        
+        <item name="android:statusBarColor">@color/black</item>
+    </style>
+</resources>
