@@ -20,30 +20,28 @@ if ($currentHour < 12) {
     $greeting = '🌙 Good Evening,';
 }
 
-// Handle vendor approval/denial
+// Handle vendor restoration
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $vendor_id = $_POST['vendor_id'];
-    $action = $_POST['action']; // "Approve" or "Deny"
+    $action = $_POST['action']; // "Restore"
 
-    if ($action == "Approve") {
-        $status = "Approved";
-    } else {
-        $status = "Denied";
-    }
+    if ($action == "Restore") {
+        $status = "Pending"; // Change status back to Pending for review
 
-    $sql = "UPDATE vendors SET status = ? WHERE vendor_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("si", $status, $vendor_id);
+        $sql = "UPDATE vendors SET status = ? WHERE vendor_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $status, $vendor_id);
 
-    if ($stmt->execute()) {
-        $message = "Vendor has been $status successfully.";
-    } else {
-        $message = "Error: " . $conn->error;
+        if ($stmt->execute()) {
+            $message = "Vendor has been restored successfully and is pending review.";
+        } else {
+            $message = "Error: " . $conn->error;
+        }
     }
 }
 
-// Get list of pending vendors
-$sql = "SELECT * FROM vendors WHERE status = 'Pending'";
+// Get list of denied vendors
+$sql = "SELECT * FROM vendors WHERE status = 'Denied'";
 $result = $conn->query($sql);
 ?>
 
@@ -52,7 +50,7 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vendor Management | Vendi</title>
+    <title>Denied Vendors | Vendi</title>
     <link rel="icon" href="/assets/images/VendiBLK_NoBG.png" type="image/icon type">
     <link rel="stylesheet" href="bookings.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="dashboard.css?v=<?php echo time(); ?>">
@@ -72,8 +70,8 @@ $result = $conn->query($sql);
             <div class="MENU_HEADER">ADMINISTRATION</div>
                     <a href="admin_dashboard.php"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
                     <a href="admin_vendors_active.php"><i class="fas fa-user-tie"></i> Vendors <span id="ITALIC">(Active)</span></a>
-                    <a href="#" class="NAV_ACTIVE"><i class="fas fa-user-check"></i> <span>Vendors <span id="ITALIC">(Pending)</span></span></a>
-                    <a href="admin_vendors_denied.php"><i class="fas fa-user-times"></i> <span>Vendors <span id="ITALIC">(Denied)</span></span></a>
+                    <a href="admin_vendors_approval.php"><i class="fas fa-user-check"></i> Vendors <span id="ITALIC">(Pending)</span></a>
+                    <a href="#" class="NAV_ACTIVE"><i class="fas fa-user-times"></i> <span>Vendors <span id="ITALIC">(Denied)</span></span></a>
                     <a href="admin_clients.php"><i class="fas fa-users"></i> Clients</a>
                     <a href="admin_feedback.php"><i class="fas fa-comment-dots"></i> Feedback</a>
             <div class="MENU_HEADER">SETTINGS</div>
@@ -85,7 +83,7 @@ $result = $conn->query($sql);
         <div class="DASHBOARD" id="DASHBOARD">
             <div class="UPPER">
                 <div class="LEFT_UPPER">
-                    <h1 class="DASHBOARD_TITLE">Vendor Management</h1>
+                    <h1 class="DASHBOARD_TITLE">Denied Vendors</h1>
                 </div>
 
                     <?php if (isset($message)): ?>
@@ -105,12 +103,13 @@ $result = $conn->query($sql);
             
             <!-- Vendor Details Table -->
             <div class="BOOKINGS_CONTAINER">
-                <?php if ($result->num_rows > 0): ?>
-                    <header class="BOOKINGS_HEADER">
-                    <h2>Pending Vendors</h2>
+                <header class="BOOKINGS_HEADER">
+                    <h2>Denied Vendors</h2>
                 </header>
             </div>
-                    <div class="BOOKING_TABLE">
+
+                <div class="BOOKING_TABLE">
+                    <?php if ($result->num_rows > 0): ?>
                         <table>
                             <thead>
                                 <tr>
@@ -148,14 +147,8 @@ $result = $conn->query($sql);
                                         <td>
                                             <form method="POST" style="display: inline;">
                                                 <input type="hidden" name="vendor_id" value="<?php echo $vendor['vendor_id']; ?>">
-                                                <button type="submit" name="action" value="Approve" class="ACTION_BUTTON" id="APPROVE_BUTTON">
-                                                    <i class="fas fa-check"></i>
-                                                </button>
-                                            </form>
-                                            <form method="POST" style="display: inline;">
-                                                <input type="hidden" name="vendor_id" value="<?php echo $vendor['vendor_id']; ?>">
-                                                <button type="submit" name="action" value="Deny" class="ACTION_BUTTON" id="DENY_BUTTON">
-                                                    <i class="fas fa-times"></i>
+                                                <button type="submit" name="action" value="Restore" class="ACTION_BUTTON" id="RESTORE_BUTTON">
+                                                    <i class="fas fa-undo"></i> Restore
                                                 </button>
                                             </form>
                                         </td>
@@ -163,18 +156,21 @@ $result = $conn->query($sql);
                                 <?php endwhile; ?>
                             </tbody>
                         </table>
-                    </div>
-                <?php else: ?>
-                    <div class="BOOKING_TABLE">
-                        <h2>Pending Vendors</h2>
-                        <p>No pending vendors.</p>
-                    </div>
-                <?php endif; ?>
+                    <?php else: ?>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td colspan="8" class="NO_DATA_CELL">
+                                        <p>No denied vendors found.</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    <?php endif; ?>
+                </div>
         </div>
     </div>
 
     <script src="dashboard.js"></script>
-
-    <a href="logout.php">Logout</a>
 </body>
 </html>

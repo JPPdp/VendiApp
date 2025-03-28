@@ -68,8 +68,9 @@ $result = $conn->query($sql);
         <div class="MENU_HEADER">ADMINISTRATION</div>
         <a href="admin_dashboard.php"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
         <a href="admin_vendors_active.php"><i class="fas fa-user-tie"></i> Vendors <span id="ITALIC">(Active)</span></a>
-        <a href="admin_vendors_approval.php"><i class="fas fa-user-check"></i> Vendor <span id="ITALIC">(Pending)</span></a>
-        <a href="#" class="NAV_ACTIVE"><i class="fas fa-users"></i> <span>Clients <span id="ITALIC">(App)</span></span></a>
+        <a href="admin_vendors_approval.php"><i class="fas fa-user-check"></i> Vendors <span id="ITALIC">(Pending)</span></a>
+        <a href="admin_vendors_denied.php"><i class="fas fa-user-times"></i> <span>Vendors <span id="ITALIC">(Denied)</span></span></a>
+        <a href="#" class="NAV_ACTIVE"><i class="fas fa-users"></i> <span>Clients</span></a>
         <a href="admin_feedback.php"><i class="fas fa-comment-dots"></i> Feedback</a>
         <div class="MENU_HEADER">SETTINGS</div>
         <a href="admin_profile.php"><i class="fa fa-fw fa-user"></i> <span>Profile</span></a>            
@@ -80,7 +81,7 @@ $result = $conn->query($sql);
     <div class="DASHBOARD" id="DASHBOARD">
         <div class="UPPER">
             <div class="LEFT_UPPER">
-                <h1 class="DASHBOARD_TITLE">Clients (App)</h1>
+                <h1 class="DASHBOARD_TITLE">Clients</h1>
             </div>
 
             <?php if (isset($message)): ?>
@@ -101,7 +102,7 @@ $result = $conn->query($sql);
         <!-- Client Details Table -->
         <div class="BOOKINGS_CONTAINER">
             <header class="BOOKINGS_HEADER">
-                <h2>Registered Clients</h2>
+                <h2>Active Clients</h2>
             </header>
         </div>
             
@@ -143,7 +144,7 @@ $result = $conn->query($sql);
                 </div>
             <?php else: ?>
                 <div class="BOOKING_TABLE">
-                    <p>No active clients <span id="ITALIC">(app)</span> found.</p>
+                    <td>No active clients <span id="ITALIC">(app)</span> found.</td>
                 </div>
             <?php endif; ?>
         </div>

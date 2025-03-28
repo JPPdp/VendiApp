@@ -96,9 +96,10 @@ try {
         <div class="MENU_HEADER">ADMINISTRATION</div>
             <a href="admin_dashboard.php"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
             <a href="admin_vendors_active.php"><i class="fas fa-user-tie"></i> Vendors <span id="ITALIC">(Active)</span></a>
-            <a href="admin_vendors_approval.php"><i class="fas fa-user-check"></i> Vendor <span id="ITALIC">(Pending)</span></a>
-            <a href="admin_clients.php"><i class="fas fa-users"></i>Clients <span id="ITALIC">(App)</span></a>
-            <a href="admin_feedback.php" class="NAV_ACTIVE"><i class="fas fa-comment-dots"></i> <span>Feedback</span></a>
+            <a href="admin_vendors_approval.php"><i class="fas fa-user-check"></i> Vendors <span id="ITALIC">(Pending)</span></a>
+            <a href="admin_vendors_denied.php"><i class="fas fa-user-times"></i> <span>Vendors <span id="ITALIC">(Denied)</span></span></a>
+            <a href="admin_clients.php"><i class="fas fa-users"></i> Clients</a>
+            <a href="admin_feedback.php" class="NAV_ACTIVE"><i class="fas fa-comment-dots"></i> <span> Feedback</span></a>
             <div class="MENU_HEADER">SETTINGS</div>
             <a href="admin_profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
             <a href="logout.php" class="LOGOUT"><i class="fa fa-fw fa-sign-out-alt"></i> Log Out</a>

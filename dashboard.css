@@ -746,22 +746,21 @@ body{
 
 .status-badge.pending {
     background-color: #FFF3E0;
-    color: #FF9800;
+    color: #f78d00;
     border: 1px solid #FFE0B2;
 }
 
 .status-badge.approved {
     background-color: #E8F5E9;
-    color: #4CAF50;
+    color: #00b81f;
     border: 1px solid #C8E6C9;
 }
 
 .status-badge.denied {
     background-color: #FFEBEE;
-    color: #F44336;
+    color: #e81212;
     border: 1px solid #FFCDD2;
 }
-
 .DIRECT{
     font-size: 0.75rem;
     color: var(--gryShade1);
@@ -798,7 +797,7 @@ body{
 .chart-row {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .chart-label {
@@ -830,9 +829,8 @@ body{
     top: 50%;
     transform: translateY(-50%);
     color: white;
-    font-size: 12px;
-    font-weight: bold;
-    text-shadow: 0 0 2px rgba(0,0,0,0.5);
+    font-size: 0.8rem;
+    font-family: 'Inter_Medium';
 }
 
 .chart-legend {

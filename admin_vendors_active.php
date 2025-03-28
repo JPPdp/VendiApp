@@ -68,8 +68,9 @@ $result = $conn->query($sql);
         <div class="MENU_HEADER">ADMINISTRATION</div>
         <a href="admin_dashboard.php"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
         <a href="#" class="NAV_ACTIVE"><i class="fas fa-user-tie"></i> <span>Vendors <span id="ITALIC">(Active)</span></span</a>
-        <a href="admin_vendors_approval.php"><i class="fas fa-user-check"></i> Vendor <span id="ITALIC">(Pending)</span></a>
-        <a href="admin_clients.php"><i class="fas fa-users"></i>Clients <span id="ITALIC">(App)</span></a>
+        <a href="admin_vendors_approval.php"><i class="fas fa-user-check"></i> Vendors <span id="ITALIC">(Pending)</span></a>
+        <a href="admin_vendors_denied.php"><i class="fas fa-user-times"></i> <span>Vendors <span id="ITALIC">(Denied)</span></span></a>
+        <a href="admin_clients.php"><i class="fas fa-users"></i> Clients</a>
         <a href="admin_feedback.php"><i class="fas fa-comment-dots"></i> Feedback</a>
         <div class="MENU_HEADER">SETTINGS</div>
         <a href="admin_profile.php"><i class="fa fa-fw fa-user"></i> <span>Profile</span></a>            

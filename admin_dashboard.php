@@ -102,9 +102,10 @@ $active_vendors = $conn->query($sql);
             </div>
 
             <div class="MENU_HEADER">ADMINISTRATION</div>
-            <a href="#DASHBOARD" class="NAV_ACTIVE"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="#DASHBOARD" class="NAV_ACTIVE"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
             <a href="admin_vendors_active.php"><i class="fas fa-user-tie"></i> Vendors <span id="ITALIC">(Active)</span></a>
             <a href="admin_vendors_approval.php"><i class="fas fa-user-check"></i> Vendors <span id="ITALIC">(Pending)</span></a>
+            <a href="admin_vendors_denied.php"><i class="fas fa-user-times"></i> <span>Vendors <span id="ITALIC">(Denied)</span></span></a>
             <a href="admin_clients.php"><i class="fas fa-users"></i> Clients</a>
             <a href="admin_feedback.php"><i class="fas fa-comment-dots"></i> Feedback</a>
             
