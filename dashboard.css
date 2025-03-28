@@ -74,7 +74,7 @@ body{
 }
 
 .LOGO_NAME span{
-    font-family: 'Inter_Bold';
+    font-family: 'Inter_SemiBoldItalic';
     /*background: white;
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;*/
@@ -82,7 +82,7 @@ body{
     font-size: 0.8rem;
     position: absolute;
     margin-top: 27.5px;
-    margin-left: -55px;
+    margin-left: -45px;
 }
 
 .NAVIGATION_BAR{
