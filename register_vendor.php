@@ -2,36 +2,65 @@
 include 'db_connect.php';
 session_start();
 
+function validatePassword($password) {
+    // Check length
+    if (strlen($password) < 8) {
+        return "Password must be at least 8 characters long.";
+    }
+    
+    // Check for symbols/special characters
+    if (preg_match('/[^a-zA-Z0-9]/', $password)) {
+        return "Password must not contain any symbols or special characters.";
+    }
+    
+    // Check for spaces
+    if (strpos($password, ' ') !== false) {
+        return "Password must not contain spaces.";
+    }
+    
+    return true;
+}
+
+$error_message = '';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $business_name = $_POST['business_name'];
     $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
     $mobile_number = $_POST['mobile_number'];
     $address = $_POST['address'];
-    $service_option = $_POST['service_option'];
-    $business_description_short = $_POST['business_description_short'];
-    $business_description_long = $_POST['business_description_long'];
 
-    // Handle Business Document Upload
-    $target_dir = "uploads/vendors/";
-    if (!is_dir($target_dir)) {
-        mkdir($target_dir, 0777, true);
-    }
-
-    $business_document = $target_dir . basename($_FILES["business_document"]["name"]);
-    move_uploaded_file($_FILES["business_document"]["tmp_name"], $business_document);
-
-    // Insert Vendor into Database (Status set to Pending)
-    $sql = "INSERT INTO vendors (business_name, email, password, mobile_number, address, service_option, business_description_short, business_description_long, business_document, status) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending')";
-    
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssssss", $business_name, $email, $password, $mobile_number, $address, $service_option, $business_description_short, $business_description_long, $business_document);
-
-    if ($stmt->execute()) {
-        echo "<script>alert('Vendor Registered Successfully! Waiting for Admin Approval.');</script>";
+    // Validate email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error_message = "Invalid email format.";
     } else {
-        echo "<script>alert('Error: " . $conn->error . "');</script>";
+        // Validate password match
+        if ($password !== $confirm_password) {
+            $error_message = "Passwords do not match.";
+        } else {
+            // Validate password strength
+            $passwordValidation = validatePassword($password);
+            if ($passwordValidation !== true) {
+                $error_message = $passwordValidation;
+            } else {
+                // Hash the password
+                $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+                // Store data in session
+                $_SESSION['reg_data'] = [
+                    'business_name' => $business_name,
+                    'email' => $email,
+                    'password' => $hashed_password,
+                    'mobile_number' => $mobile_number,
+                    'address' => $address
+                ];
+                
+                // Redirect to step 2
+                header("Location: register_vendor2.php");
+                exit();
+            }
+        }
     }
 }
 ?>
@@ -75,23 +104,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <span>Confirmation</span>
             </div>
         </div>
-        <!-- VENDOR SIGN-UP FORM -->
-        <form id="VENDOR_FORM" class="LOGIN_FORM" method="post" action="" enctype="multipart/form-data">
+        
+        <form id="VENDOR_FORM" class="LOGIN_FORM" method="post" action="">
             <h2>CONNECT WITH EVENT PLANNERS</h2>
             <p>Welcome to <span id="VENDI">Vendi</span>! Create your vendor account to showcase your products and services, 
             organize your schedule and maximize your event bookings with our dashboard.</p>
 
-            <!-- Display error message if any -->
+                        <!-- Display error message if any -->
             <?php if (!empty($error_message)): ?>
                 <div class="RED_ALERT"><?php echo htmlspecialchars($error_message); ?></div>
             <?php endif; ?>
-
+            
             <h2>SIGN UP</h2>
             
             <!-- Business Name -->
             <label for="VENDOR_USERNAME">Business Name <span id="REQUIRED">*</span></label>
             <input type="text" id="businessname" name="business_name" placeholder="Enter Business Name" required>
-
 
             <div class="BESIDE_FIELDS">
                 <div class="BESIDE_FIELD">
@@ -107,7 +135,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="tel" id="VENDOR_MOBILE" name="mobile_number" placeholder="Enter Mobile Number" required minlength="10" maxlength="10">
                 </div>
             </div>
-
 
             <!-- Password -->
             <div class="BESIDE_FIELDS">
@@ -138,25 +165,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="BESIDE_FIELD">
-                    <label for="ADDRESS">Address <span id="REQUIRED">*</span></label> 
-                    <input type="text" id="ADDRESS" name="address" placeholder="Enter complete address" required>
-                </div>
-
-            <div class="BESIDE_FIELDS">
-                <div class="BESIDE_FIELD">
-                    <label>Service Option:</label>
-                    <select name="service_option">
-                        <option value="Food">Food</option>
-                        <option value="Beverages">Beverages</option>
-                        <option value="Entertainment">Entertainment</option>
-                    </select>
-                </div>
+                <label for="ADDRESS">Address <span id="REQUIRED">*</span></label> 
+                <input type="text" id="ADDRESS" name="address" placeholder="Enter complete address" required>
             </div>
 
-            <!-- Submit Button -->
-            <button type="submit">Next</button>
+            <button type="submit" name="next">Next</button>
 
-            <!-- Login Link -->
             <div class="LOGIN">Already have an account?</div>
             <div class="LOGIN_LINK">
                 <a href="login.php">Log In</a>
@@ -164,43 +178,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
 </div>
-
-
-
-
-    <h2>Register as Vendor</h2>
-        <label>Business Name:</label>
-        <input type="text" name="business_name" required><br>
-
-        <label>Email:</label>
-        <input type="email" name="email" required><br>
-
-        <label>Password:</label>
-        <input type="password" name="password" required><br>
-
-        <label>Mobile Number:</label>
-        <input type="text" name="mobile_number" required><br>
-
-        <label>Address:</label>
-        <textarea name="address" required></textarea><br>
-
-        <label>Service Option:</label>
-        <select name="service_option">
-            <option value="Food">Food</option>
-            <option value="Beverages">Beverages</option>
-            <option value="Entertainment">Entertainment</option>
-        </select><br>
-
-        <label>Short Description:</label>
-        <input type="text" name="business_description_short" required><br>
-
-        <label>Long Description:</label>
-        <textarea name="business_description_long" required></textarea><br>
-
-        <label>Business Document (PDF or Image):</label>
-        <input type="file" name="business_document" accept=".pdf,.jpg,.jpeg,.png" required><br>
-
-        <button type="submit">Register</button>
-    </form>
 </body>
 </html>

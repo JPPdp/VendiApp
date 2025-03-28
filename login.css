@@ -218,6 +218,19 @@ html, body {
     position: absolute;
 }
 
+#VENDOR_DESCRIPTION{
+    min-height: 100px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    background: var(--whtShade1);
+    font-family: 'Inter_Regular';
+    font-size: 0.8rem;
+    border: 1px solid var(--whtShade1);
+    resize: none;
+    outline: none;
+}
+
 .LOGIN_FORM h2{
     text-align: left;
     font-family: 'Inter_Black';
@@ -501,19 +514,6 @@ label #FILES {
     display: none; 
 }
 
-#VENDOR_DESCRIPTION{
-    min-height: 200px;
-    width: 100%;
-    padding: 10px;
-    border-radius: 10px;
-    background: var(--whtShade1);
-    font-family: 'Inter_Regular';
-    font-size: 0.8rem;
-    border: 1px solid var(--whtShade1);
-    resize: none;
-    outline: none;
-}
-
 .MESSAGE_BOX{
     display: flex;
     flex-direction: column;
@@ -567,7 +567,7 @@ label #FILES {
     border-color: var(--gryShade1);
 }
 
-#PACKAGE_DESCRIPTION {
+#BUSINESS_DESCRIPTION {
     flex: 1;
     font-size: 0.8rem;
     background: var(--gradient_White);
