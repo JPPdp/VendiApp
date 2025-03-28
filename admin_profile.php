@@ -83,11 +83,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['profile_pic']) && $_F
                 </div>
             </div>
             <div class="MENU_HEADER">ADMINISTRATION</div>
-            <a href="admin_dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-            <a href="admin_vendors_approval.php"><i class="fas fa-user-check"></i> Vendor Management</a>
-            <a href="admin_vendors_active.php"><i class="fas fa-user-tie"></i> Active Vendors</a>
-            <a href="admin_clients.php"><i class="fas fa-users"></i> Clients</a>
-            <a href="admin_feedback.php"><i class="fas fa-comment-dots"></i> Feedback</a>
+            <a href="admin_dashboard.php"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                    <a href="admin_vendors_approval.php"><i class="fas fa-user-check"></i> Vendor <span id="ITALIC">(Pending)</span></a>
+                    <a href="admin_vendors_active.php"><i class="fas fa-user-tie"></i> Vendors <span id="ITALIC">(Active)</span></a>
+                    <a href="admin_clients.php"><i class="fas fa-users"></i>Clients <span id="ITALIC">(App)</span></a>
+                    <a href="admin_feedback.php"><i class="fas fa-comment-dots"></i> Feedback</a>
             <div class="MENU_HEADER">SETTINGS</div>
             <a href="admin_profile.php" class="NAV_ACTIVE"><i class="fa fa-fw fa-user"></i> <span> Profile</span></a>
             <a href="logout.php" class="LOGOUT"><i class="fa fa-fw fa-sign-out-alt"></i> Log Out</a>
@@ -131,20 +131,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['profile_pic']) && $_F
 
                 <!-- Right Profile Section -->
                 <div class="RIGHT_PROFILE">
-                    <div class="RIGHT_PART">
-                        <h2>Account Details</h2>
-                        <div class="STACK">
-                            <h3>Admin Information</h3>
-                                    <label>Name</label>
-                                    <input type="text" value="<?php echo htmlspecialchars($_SESSION['admin_name']); ?>" id="admin_name" readonly>
+                        <div class="PROF_CONTAINER">
+                            <div class="PROF_HEADER">
+                                    <h2>Account Details</h2>
+                            </div>
+                        </div>    
+                            <div class="STACK">
+                                <h3>Admin Information</h3>
+                                        <label>Name</label>
+                                        <input type="text" value="<?php echo htmlspecialchars($_SESSION['admin_name']); ?>" id="admin_name" readonly>
 
-                                    <label>Email</label>
-                                    <input type="email" value="<?php echo htmlspecialchars($_SESSION['admin_email']); ?>" id="admin_email" readonly>
-                                    
-                                    <label>Admin ID</label>
-                                    <input type="text" value="<?php echo htmlspecialchars($_SESSION['admin_id']); ?>" id="admin_id" readonly>
+                                        <label>Email</label>
+                                        <input type="email" value="<?php echo htmlspecialchars($_SESSION['admin_email']); ?>" id="admin_email" readonly>
+                                        
+                                        <label>Admin ID</label>
+                                        <input type="text" value="<?php echo htmlspecialchars($_SESSION['admin_id']); ?>" id="admin_id" readonly>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>

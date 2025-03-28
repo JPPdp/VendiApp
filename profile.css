@@ -34,6 +34,30 @@
     min-height: 500px;
 }
 
+.PROF_CONTAINER {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    padding: 20px;
+    border-radius: 50px;
+    height: auto;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.PROF_HEADER {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0px;
+}
+
+.PROF_HEADER h2 {
+    font-size: 1rem;
+    font-family: 'Inter_Bold';
+    color: var(--blkShade1);
+}
+
 /* Left Profile Section */
 .LEFT_PROFILE {
     flex: 1; /* Takes 25% of the container */
@@ -254,6 +278,9 @@ label{
 .STACK{
     background-color: white;
     min-height: 400px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
 }
 
 .STACK img {
