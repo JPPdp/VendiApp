@@ -35,35 +35,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error_message = "Invalid email format.";
     } else {
-        // Validate password match
-        if ($password !== $confirm_password) {
-            $error_message = "Passwords do not match.";
+        // Validate business name uniqueness
+        $check_business_name = $conn->query("SELECT business_name FROM vendors WHERE business_name = '$business_name'");
+        if ($check_business_name->num_rows > 0) {
+            $error_message = "Business name already exists. Please choose another business name.";
         } else {
-            // Validate password strength
-            $passwordValidation = validatePassword($password);
-            if ($passwordValidation !== true) {
-                $error_message = $passwordValidation;
+            // Validate email uniqueness
+            $check_email = $conn->query("SELECT email FROM vendors WHERE email = '$email'");
+            if ($check_email->num_rows > 0) {
+                $error_message = "Email address already exists. Please use a different email.";
             } else {
-                // Hash the password
-                $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+                // Validate password match
+                if ($password !== $confirm_password) {
+                    $error_message = "Passwords do not match.";
+                } else {
+                    // Validate password strength
+                    $passwordValidation = validatePassword($password);
+                    if ($passwordValidation !== true) {
+                        $error_message = $passwordValidation;
+                    } else {
+                        // Hash the password
+                        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
-                // Store data in session
-                $_SESSION['reg_data'] = [
-                    'business_name' => $business_name,
-                    'email' => $email,
-                    'password' => $hashed_password,
-                    'mobile_number' => $mobile_number,
-                    'address' => $address
-                ];
-                
-                // Redirect to step 2
-                header("Location: register_vendor2.php");
-                exit();
+                        // Store data in session
+                        $_SESSION['reg_data'] = [
+                            'business_name' => $business_name,
+                            'email' => $email,
+                            'password' => $hashed_password,
+                            'mobile_number' => $mobile_number,
+                            'address' => $address
+                        ];
+                        
+                        // Redirect to step 2
+                        header("Location: register_vendor2.php");
+                        exit();
+                    }
+                }
             }
         }
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -114,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php if (!empty($error_message)): ?>
                 <div class="RED_ALERT"><?php echo htmlspecialchars($error_message); ?></div>
             <?php endif; ?>
-            
+
             <h2>SIGN UP</h2>
             
             <!-- Business Name -->

@@ -22,32 +22,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     move_uploaded_file($_FILES["business_document"]["tmp_name"], $business_document);
 
     // Combine multiple business_description_short values into a single string
-    $business_description_short = implode(', ', (array)$_POST['business_description_short']);
+    $business_description_short = implode(', ', $_POST['business_description_short']);
     
-    // Insert Vendor into Database (Status set to Pending)
-    $sql = "INSERT INTO vendors (business_name, email, password, mobile_number, address, service_option, business_description_short, business_description_long, business_document, status) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending')";
+    // Store all data in session for database insertion
+    $_SESSION['complete_reg_data'] = [
+        'business_name' => $reg_data['business_name'],
+        'email' => $reg_data['email'],
+        'password' => $reg_data['password'],
+        'mobile_number' => $reg_data['mobile_number'],
+        'address' => $reg_data['address'],
+        'service_option' => $_POST['service_option'],
+        'business_description_short' => $business_description_short,
+        'business_description_long' => $_POST['business_description_long'],
+        'business_document' => $business_document
+    ];
     
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssssss", 
-        $reg_data['business_name'], 
-        $reg_data['email'], 
-        $reg_data['password'], 
-        $reg_data['mobile_number'], 
-        $reg_data['address'],
-        $_POST['service_option'],
-        $business_description_short, // Combined string
-        $_POST['business_description_long'],
-        $business_document
-    );
-
-    if ($stmt->execute()) {
-        // Clear session data
-        unset($_SESSION['reg_data']);
-        echo "<script>alert('Vendor Registered Successfully! Waiting for Admin Approval.'); window.location.href='login.php';</script>";
-    } else {
-        echo "<script>alert('Error: " . $conn->error . "');</script>";
-    }
+    // Redirect to the confirmation page
+    header("Location: register_vendor3.php");
+    exit();
 }
 ?>
 
@@ -114,16 +106,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <!-- Modified section with 3 selects -->
             <label>Events Covered <span id="REQUIRED">*</span></label>
             <div class="SELECT_CONTAINER">
-                <select name="business_description_short" required>
+                <select name="business_description_short[]" required>
                 <option value="" disabled selected>Select Feature 1</option>
                                     <option value="" disabled>&#128197; Event Type</option>
                                     <option value="Birthday">Birthday</option>
                                     <option value="Corporate">Corporate</option>
                                     <option value="Wedding">Wedding</option>
-                </select>
-                <select name="business_description_short" required>
-                    <option value="" disabled selected>Select Feature 2</option>
-                    <option value="" disabled>&#127838; Food Options</option>
+                                    <option value="" disabled>&#127838; Food Options</option>
                                     <option value="Desserts">Desserts</option>
                                     <option value="Fast Food">Fast Food</option>
                                     <option value="Vegan">Vegan</option>
@@ -132,13 +121,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <option value="Coffee & Tea">Coffee & Tea</option>
                                     <option value="Refreshments">Refreshments</option>
                                     <option value="" disabled>&#127909; Entertainment Options</option>
-                                    <option value="Kid-Friendly">Arts & Crafts</option>
+                                    <option value="Arts & Crafts">Arts & Crafts</option>
                                     <option value="Games & Activities">Games & Activities</option>
                                     <option value="Photobooth">Photobooth</option>
                 </select>
-                <select name="business_description_short" required>
-                    <option value="" disabled selected>Select Feature 3</option>
-                    <option value="" disabled>&#127838; Food Options</option>
+                <select name="business_description_short[]" required>
+                    <option value="" disabled selected>Select Feature 2</option>
+                    <option value="" disabled>&#128197; Event Type</option>
+                                    <option value="Birthday">Birthday</option>
+                                    <option value="Corporate">Corporate</option>
+                                    <option value="Wedding">Wedding</option>
+                                    <option value="" disabled>&#127838; Food Options</option>
                                     <option value="Desserts">Desserts</option>
                                     <option value="Fast Food">Fast Food</option>
                                     <option value="Vegan">Vegan</option>
@@ -147,7 +140,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <option value="Coffee & Tea">Coffee & Tea</option>
                                     <option value="Refreshments">Refreshments</option>
                                     <option value="" disabled>&#127909; Entertainment Options</option>
-                                    <option value="Kid-Friendly">Arts & Crafts</option>
+                                    <option value="Arts & Crafts">Arts & Crafts</option>
+                                    <option value="Games & Activities">Games & Activities</option>
+                                    <option value="Photobooth">Photobooth</option>
+                </select>
+                <select name="business_description_short[]" required>
+                    <option value="" disabled selected>Select Feature 3</option>
+                    <option value="" disabled>&#128197; Event Type</option>
+                                    <option value="Birthday">Birthday</option>
+                                    <option value="Corporate">Corporate</option>
+                                    <option value="Wedding">Wedding</option>
+                                    <option value="" disabled>&#127838; Food Options</option>
+                                    <option value="Desserts">Desserts</option>
+                                    <option value="Fast Food">Fast Food</option>
+                                    <option value="Vegan">Vegan</option>
+                                    <option value="" disabled>&#127866; Beverage Options</option>
+                                    <option value="Alcoholic">Alcoholic</option>
+                                    <option value="Coffee & Tea">Coffee & Tea</option>
+                                    <option value="Refreshments">Refreshments</option>
+                                    <option value="" disabled>&#127909; Entertainment Options</option>
+                                    <option value="Arts & Crafts">Arts & Crafts</option>
                                     <option value="Games & Activities">Games & Activities</option>
                                     <option value="Photobooth">Photobooth</option>
                 </select>

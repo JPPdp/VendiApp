@@ -315,7 +315,7 @@ html, body {
 
 .PASSWORD_CONTAINER .PASSWORD_TOGGLE {
     position: absolute;
-    top: 72.5%;
+    top: 75%;
     right: 15px;
     transform: translateY(-50%);
     cursor: pointer;
