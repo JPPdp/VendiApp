@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="VECTOR_ART">
             <img src="assets/images/Visualizing_Vector.png" alt="Vector_Art">
         </div>
-        <p>Collaborate and create.</p>
+        <p>Collaborate & create.</p>
     </div>
 
     <!-- RIGHT SECTION -->
