@@ -283,3 +283,15 @@
     color: var(--blkShade1);
     margin-bottom: 10px;
 }
+
+#BUSINESS_DOCUMENT {
+    margin-top: 10px;
+    font-family: 'Inter_Regular';
+    font-size: 0.8rem;
+    color: var(--gryShade1);
+    outline: none;
+}
+
+#REQUIRED{
+    color: red;
+}

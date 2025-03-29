@@ -85,11 +85,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['profile_pic']) && $_F
         <div class="NAVIGATION_BAR">
             <div class="LOGO">
                 <div class="LOGO_NAME">Vendi
-                    <span>ADMIN</span>
+                    <span id="VENDORS">VENDORS</span>
                 </div>
             </div>
             
-            <div class="MENU_HEADER">ADMINISTRATION</div>
+            <div class="MENU_HEADER">MANAGEMENT</div>
             <a href="vendor_dashboard.php"><i class="fas fa-stream"></i> Dashboard</a>
             
             <!-- Bookings Dropdown -->

@@ -46,7 +46,7 @@ if ($vendor['status'] == "Approved") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Packages | Vendi</title>
+    <title>Packages | Vendi</title>
     <link rel="icon" href="assets/images/VendiBLK2_NoBG.png" type="image/icon type">
     <link rel="stylesheet" href="dashboard.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="listings.css?v=<?php echo time(); ?>">
@@ -58,11 +58,11 @@ if ($vendor['status'] == "Approved") {
         <div class="NAVIGATION_BAR">
             <div class="LOGO">
                 <div class="LOGO_NAME">Vendi
-                    <span>VENDOR</span>
+                <span id="VENDORS">VENDORS</span>
                 </div>
             </div>
             
-            <div class="MENU_HEADER">ADMINISTRATION</div>
+            <div class="MENU_HEADER">MANAGEMENT</div>
             <a href="vendor_dashboard.php"><i class="fas fa-stream"></i> Dashboard</a>
             
             <!-- Bookings Dropdown -->

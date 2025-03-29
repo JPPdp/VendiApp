@@ -106,8 +106,8 @@ $result = $conn->query($sql);
             </header>
         </div>
             
-            <?php if ($result->num_rows > 0): ?>
                 <div class="BOOKING_TABLE">
+                <?php if ($result->num_rows > 0): ?>
                     <table>
                         <thead>
                             <tr>
@@ -143,9 +143,15 @@ $result = $conn->query($sql);
                     </table>
                 </div>
             <?php else: ?>
-                <div class="BOOKING_TABLE">
-                    <td>No active clients <span id="ITALIC">(app)</span> found.</td>
-                </div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td colspan="2" class="NO_DATA_CELL">
+                            <td>No active clients <span id="ITALIC">(app)</span> found.</td>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             <?php endif; ?>
         </div>
     </div>

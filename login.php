@@ -24,18 +24,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
 
-    if ($user && password_verify($password, $user['password'])) {
-        $_SESSION['user_id'] = ($user_type == "admin") ? $user['admin_id'] : $user['vendor_id'];
-        $_SESSION['user_type'] = $user_type;
-        $_SESSION['user_name'] = ($user_type == "admin") ? $user['name'] : $user['business_name']; // Name for Admin, Business Name for Vendor
-        
-        // Redirect based on user type
-        if ($user_type == "admin") {
-            header("Location: admin_dashboard.php");
+    if ($user) {
+        // Check if vendor is approved (only for vendors)
+        if ($user_type == "vendor" && $user['status'] != 'Approved') {
+            $message = "Your account is not yet approved. Please wait for admin approval.";
+        } elseif (password_verify($password, $user['password'])) {
+            $_SESSION['user_id'] = ($user_type == "admin") ? $user['admin_id'] : $user['vendor_id'];
+            $_SESSION['user_type'] = $user_type;
+            $_SESSION['user_name'] = ($user_type == "admin") ? $user['name'] : $user['business_name'];
+            
+            // Store profile picture in session if exists
+            if ($user_type == "vendor" && isset($user['vendors_profile'])) {
+                $_SESSION['profile_picture'] = $user['vendors_profile'];
+            } elseif ($user_type == "admin" && isset($user['profile_picture'])) {
+                $_SESSION['profile_picture'] = $user['profile_picture'];
+            }
+            
+            // Redirect based on user type
+            if ($user_type == "admin") {
+                header("Location: admin_dashboard.php");
+            } else {
+                header("Location: vendor_dashboard.php");
+            }
+            exit;
         } else {
-            header("Location: vendor_dashboard.php");
+            $message = "Invalid email or password.";
         }
-        exit;
     } else {
         $message = "Invalid email or password.";
     }
@@ -69,27 +83,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- RIGHT SECTION -->
     <div class="RIGHT_SECTION">
 
-        <?php if ($message): ?>
-            <p><?php echo $message; ?></p>
-        <?php endif; ?>
-
         <!-- LOGIN FORM -->
         <form id="LOGIN_FORM" class="LOGIN_FORM" method="post" action="">
             <h2>CONNECT WITH EVENT PLANNERS</h2>
             <p> Welcome back to <span id="VENDI">Vendi</span>! Access your dashboard to manage your listings, organize your schedule, and maximize your event bookings. </p>
 
-            <!-- Display error message if any -->
-            <?php if (!empty($error_message)): ?>
-                <div class="RED_ALERT"><?php echo $error_message; ?></div>
-            <?php endif; ?>
-
+        <?php if ($message): ?>
+            <div class="RED_ALERT"><?php echo $message; ?></div>
+        <?php endif; ?>
+        
             <h2>LOG IN</h2>
             <label for="email">Email</label>
             <input type="email" name="email" placeholder="Enter email" required><br>
 
             <label>User Type</label>
-            <select name="user_type">
-                <option value="admin" selected disabled>Choose user type</option>
+            <select name="user_type" required>
+                <option value="" selected disabled>Choose user type</option>
                 <option value="admin">Admin</option>
                 <option value="vendor">Vendor</option>
             </select>
@@ -114,6 +123,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 </div>
 
-    <script src="password.js"></script>
+<script src="password.js"></script>
 </body>
 </html>

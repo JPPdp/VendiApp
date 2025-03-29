@@ -85,6 +85,18 @@ body{
     margin-left: -45px;
 }
 
+.LOGO_NAME #VENDORS{
+    font-family: 'Inter_SemiBoldItalic';
+    /*background: white;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;*/
+    color: white;
+    font-size: 0.75rem;
+    position: absolute;
+    margin-top: 28px;
+    margin-left: -58.5px;
+}
+
 .NAVIGATION_BAR{
     width: 250px;
     min-height: 100vh;

@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['package_image']) && $
                 </div>
             </div>
             
-            <div class="MENU_HEADER">ADMINISTRATION</div>
+            <div class="MENU_HEADER">MANAGEMENT</div>
             <a href="vendor_dashboard.php"><i class="fas fa-stream"></i> Dashboard</a>
             
             <!-- Bookings Dropdown -->
@@ -147,7 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['package_image']) && $
                     <form class="PACKAGE_FORM" action="add_package.php" method="POST" enctype="multipart/form-data">
                         <!-- Package Thumbnail -->
                         <div class="FORM_GROUP">
-                            <label for="package_image"><i class="fas fa-image"></i> Package Image</label>
+                            <label for="package_image"><i class="fas fa-image"></i> Package Image <span id="REQUIRED">*</span></label>
                             <div class="THUMBNAIL_PREVIEW_CONTAINER">
                                 <img id="thumbnailPreview" src="#" alt="Preview">
                                 <div class="PLACEHOLDER_TEXT">
@@ -157,7 +157,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['package_image']) && $
                             </div>
                             <div class="FILE_INPUT_CONTAINER">
                                 <input type="file" id="PACKAGE_THUMBNAIL" name="package_image" accept="image/*" required>
-                                <small>Max file size: 2MB | Supported formats: JPG, PNG</small>
                             </div>
                         </div>
                 </div>
@@ -165,7 +164,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['package_image']) && $
                 <div class="LEFT_MAIN">
                     <!-- Package Name -->
                     <div class="FORM_GROUP">
-                        <label for="PACKAGE_NAME"><i class="fas fa-box"></i> Package Name</label>
+                        <label for="PACKAGE_NAME"><i class="fas fa-box"></i> Package Name <span id="REQUIRED">*</span></label>
                         <input type="text" id="PACKAGE_NAME" name="package_name" placeholder="Enter package name" required>
                     </div>
 
@@ -173,25 +172,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['package_image']) && $
                         <div class="BESIDE_FIELD">
                             <!-- Package Description -->
                             <div class="FORM_GROUP" id="DESC">
-                                <label for="PACKAGE_DESCRIPTION"><i class="fas fa-info-circle"></i> Description</label>
+                                <label for="PACKAGE_DESCRIPTION"><i class="fas fa-info-circle"></i> Description <span id="REQUIRED">*</span></label>
                                 <textarea id="PACKAGE_DESCRIPTION" name="package_description" maxlength="400" placeholder="Enter package description" required></textarea>
-                                <small id="charCount">400 characters remaining</small>
                             </div>
                         </div>
 
                         <div class="BESIDE_FIELD">
                             <!-- Starting Price -->
                             <div class="FORM_GROUP" id="PRAYS">
-                                <label for="STARTING_PRICE"><i class="fas fa-tag"></i> Starting Price</label>
-                                <div class="PRICE_INPUT">
-                                    <span>₱</span>
-                                    <input type="number" id="STARTING_PRICE" name="price" placeholder="0.00" min="0" step="0.01" required>
-                                </div>
+                                <label for="STARTING_PRICE"><i class="fas fa-tag"></i> Starting Price (₱) </label>
+                                    <input type="number" id="STARTING_PRICE" name="price" placeholder="₱ 0.00" min="0" step="0.01" required>
                             </div>
 
                             <!-- Capacity -->
                             <div class="FORM_GROUP" id="CAPACITEE">
-                                <label for="CAPACITY"><i class="fas fa-users"></i> Capacity</label>
+                                <label for="CAPACITY"><i class="fas fa-users"></i> Capacity <span id="REQUIRED">*</span></label>
                                 <input type="number" id="CAPACITY" name="package_size" placeholder="Enter guest capacity (e.g., 50)" min="1" required>
                             </div>
                         </div>
@@ -200,13 +195,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['package_image']) && $
 
                     <!-- Submit Button -->
                     <div class="FORM_GROUP_SUBMIT">
-                        <div class="LEFT_BUTTON">
                             <a href="vendor_package.php" id="CANCEL_PACKAGE" class="CANCEL_BUTTON"><i class="fas fa-times"></i> Cancel</a>
-                        </div>
-                        <div class="RIGHT_BUTTONS">
-                            <button type="reset" id="RESET_PACKAGE"><i class="fas fa-undo"></i> Reset</button>
                             <button type="submit" id="SUBMIT_PACKAGE"><i class="fas fa-upload"></i> Publish</button>
-                        </div>
                     </div>
                 </div>
                     </form>

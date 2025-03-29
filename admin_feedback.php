@@ -8,15 +8,11 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != "admin") {
     exit;
 }
 
+// Timezone and Greeting Setup
 date_default_timezone_set('Asia/Manila');
 $currentHour = date('H');
 
-// Greeting logic
-if ($currentHour >= 1 && $currentHour < 4) {
-    $greeting = '🌄 Good Dawn,';
-} elseif ($currentHour >= 16 && $currentHour < 18.5) {
-    $greeting = '🌅 Good Dusk,';
-} elseif ($currentHour < 12) {
+if ($currentHour < 12) {
     $greeting = '☀️ Good Morning,';
 } elseif ($currentHour < 18) {
     $greeting = '🌤️ Good Afternoon,';
@@ -27,7 +23,6 @@ if ($currentHour >= 1 && $currentHour < 4) {
 // Handle message actions
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['mark_resolved'])) {
-        // Update message status if you have that column
         $message_id = $_POST['message_id'];
         $sql = "UPDATE messages SET status = 'Resolved' WHERE message_id = ?";
         $stmt = $conn->prepare($sql);
@@ -51,24 +46,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Get messages data
+// Get messages data with vendor information
 $messages_data = [];
 try {
-    $sql = "SELECT m.*, v.business_name, v.email 
+    $sql = "SELECT m.message_id, m.message, m.sent_at, 
+                   v.vendor_id, v.business_name, v.email 
             FROM messages m
             JOIN vendors v ON m.vendor_id = v.vendor_id
-            WHERE m.admin_id = ? OR m.admin_id IS NULL
             ORDER BY m.sent_at DESC";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $_SESSION['user_id']);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result) {
+    
+    $result = $conn->query($sql);
+    
+    if ($result && $result->num_rows > 0) {
         $messages_data = $result->fetch_all(MYSQLI_ASSOC);
     }
 } catch (mysqli_sql_exception $e) {
-    $error = "Messages system not available. Please try again later.";
+    $error = "Error loading messages: " . $e->getMessage();
 }
+
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -137,8 +133,8 @@ try {
             </header>
         </div>
 
-            <?php if (!empty($messages_data)): ?>
                 <div class="BOOKING_TABLE">
+                <?php if (!empty($messages_data)): ?>
                     <table>
                         <thead>
                             <tr>
@@ -175,9 +171,15 @@ try {
                     </table>
                 </div>
             <?php else: ?>
-                <div class="BOOKING_TABLE">
-                    <p>No messages received yet.</p>
-                </div>
+                <table>
+                        <tbody>
+                            <tr>
+                                <td colspan="8" class="NO_DATA_CELL">
+                                    <p>No messages received yet.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
             <?php endif; ?>
     </div>
 </div>
