@@ -76,6 +76,42 @@ $total_vendors = array_sum($status_counts);
 // Recent Vendors Data
 $sql = "SELECT * FROM vendors WHERE status IN ('Approved', 'Pending') ORDER BY vendor_id DESC LIMIT 5";
 $active_vendors = $conn->query($sql);
+
+// Handle admin task submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_admin_task'])) {
+    $task = trim($_POST['admin_task']);
+    if (!empty($task)) {
+        $stmt = $conn->prepare("INSERT INTO admin_todos (admin_id, task) VALUES (?, ?)");
+        $stmt->bind_param("is", $_SESSION['user_id'], $task);
+        
+        if ($stmt->execute()) {
+            header("Location: admin_dashboard.php");
+            exit();
+        } else {
+            $admin_todo_error = "Error adding task: " . $conn->error;
+        }
+    } else {
+        $admin_todo_error = "Task cannot be empty";
+    }
+}
+
+// Handle admin task deletion
+if (isset($_GET['delete_admin_task'])) {
+    $task_id = (int)$_GET['delete_admin_task'];
+    $stmt = $conn->prepare("DELETE FROM admin_todos WHERE id = ? AND admin_id = ?");
+    $stmt->bind_param("ii", $task_id, $_SESSION['user_id']);
+    $stmt->execute();
+    header("Location: admin_dashboard.php");
+    exit();
+}
+
+// Fetch admin's tasks
+$admin_todos = [];
+$sql = "SELECT * FROM admin_todos WHERE admin_id = ? ORDER BY created_at DESC";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $_SESSION['user_id']);
+$stmt->execute();
+$admin_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -297,9 +333,19 @@ $active_vendors = $conn->query($sql);
                     <!-- To-Do List Widget -->
                     <div class="TODO_LIST">
                         <div class="TODO_HEADER">
-                            <h2>To-Do List</h2>
-                            <span class="ADD_TASK" id="ADD_TASK"><i class="fas fa-plus"></i></span>
+                            <h2>Admin Tasks</h2>
+                            <form method="POST" class="ADD_TASK_FORM">
+                                <input type="text" name="admin_task" placeholder="Add admin task..." required>
+                                <button type="submit" name="add_admin_task" class="ADD_TASK">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </form>
                         </div>
+                        
+                        <?php if (!empty($admin_todo_error)): ?>
+                            <div class="alert alert-error"><?php echo $admin_todo_error; ?></div>
+                        <?php endif; ?>
+                        
                         <table>
                             <thead>
                                 <tr>
@@ -307,8 +353,25 @@ $active_vendors = $conn->query($sql);
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody id="TODO_BODY">
-                                <!-- Tasks will be added here via JavaScript -->
+                            <tbody>
+                                <?php if (!empty($admin_todos)): ?>
+                                    <?php foreach ($admin_todos as $todo): ?>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($todo['task']); ?></td>
+                                            <td>
+                                                <a href="admin_dashboard.php?delete_admin_task=<?php echo $todo['id']; ?>" 
+                                                class="DELETE_TASK"
+                                                onclick="return confirm('Delete this task?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="2">No admin tasks yet</td>
+                                    </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>

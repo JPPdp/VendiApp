@@ -137,11 +137,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['profile_pic']) && $_F
                 <!-- Left Profile Section -->
                 <div class="LEFT_PROFILE">
                     <div class="PROFILE_PIC_CONTAINER">
-                        <img src="<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="" class="PROFILE_PIC2">
+                        <img src="<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="" class="PROFILE_PIC_BUSINESS">
                         <div class="EDIT_ICON_CONTAINER" title="Change Profile Picture">
                             <form id="PROFILE_PIC_FORM" method="post" enctype="multipart/form-data">
                                 <label for="VENDOR_PROFILE_PIC" class="EDIT_ICON_LABEL">
-                                    <i class="EDIT_ICON fas fa-camera" aria-hidden="true"></i>
+                                    <i class="EDIT_ICON_BUSINESS fas fa-camera" aria-hidden="true"></i>
                                     <input type="file" id="VENDOR_PROFILE_PIC" name="profile_pic" accept="image/*" style="display: none;" onchange="document.getElementById('PROFILE_PIC_FORM').submit();">
                                 </label>
                             </form>

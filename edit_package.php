@@ -114,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="NAVIGATION_BAR">
             <div class="LOGO">
                 <div class="LOGO_NAME">Vendi
-                    <span>VENDOR</span>
+                <span id="VENDORS">VENDORS</span>
                 </div>
             </div>
             

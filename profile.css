@@ -89,6 +89,14 @@
     border: 2px solid white;
 }
 
+.PROFILE_PIC_BUSINESS {
+    width: 350px;
+    height: 200px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 2px solid red;
+}
+
 .LEFT_PROFILE h2{
     font-size: 1.25rem;
     font-family: 'Inter_Bold';
@@ -202,6 +210,25 @@
     position: absolute;
     bottom: 25px; 
     left: 20px; 
+    width: 12.5px; /* Size of the icon */
+    height: 12.5px; /* Size of the icon */
+    border-radius: 50%; 
+    border: 3px solid white;
+    background: var(--gradient_Vertical); 
+    padding: 10px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.8rem; /* Icon size */
+    color: white; /* Icon color */
+    cursor: pointer;
+}
+
+.EDIT_ICON_BUSINESS {
+    position: absolute;
+    bottom: 25px; 
+    left: 75px; 
     width: 12.5px; /* Size of the icon */
     height: 12.5px; /* Size of the icon */
     border-radius: 50%; 

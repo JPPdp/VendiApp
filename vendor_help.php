@@ -130,7 +130,9 @@ $conn->close();
 
             <!-- Help Content -->
             <div class="HELP_CONTAINER">
-
+                <div class="HELP_HEADER">
+                    <h2>Submit Your Feedback</h2>
+                </div>
             </div>
 
             <div class="HELP_FORM">
@@ -150,7 +152,7 @@ $conn->close();
                     <div class="BESIDE_FIELDS">
                         <div class="BESIDE_FIELD">
                                 <label for="MESSAGE">Message</label>
-                                <textarea id="MESSAGE" name="MESSAGE" rows="5" placeholder="Enter your message here..." required></textarea>
+                                <textarea id="MESSAGE" name="MESSAGE" rows="5" placeholder="Enter your message here..." maxlength="500" required></textarea>
                         </div>
                         <div class="BESIDE_FIELD">
                                 <label for="NAME">Business Name</label>

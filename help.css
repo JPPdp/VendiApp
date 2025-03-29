@@ -10,6 +10,20 @@
     border: 1px solid var(--whtShade1);
 }
 
+.HELP_HEADER {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0px;
+}
+
+.HELP_HEADER h2 {
+    font-size: 1rem;
+    font-family: 'Inter_Bold';
+    color: var(--blkShade1);
+    margin: 0;
+}
+
 .HELP_FORM{
     position: relative;
     gap: 20px;
