@@ -105,12 +105,12 @@ $result = $conn->query($sql);
             
             <!-- Vendor Details Table -->
             <div class="BOOKINGS_CONTAINER">
-                <?php if ($result->num_rows > 0): ?>
                     <header class="BOOKINGS_HEADER">
                     <h2>Pending Vendors</h2>
                 </header>
             </div>
                     <div class="BOOKING_TABLE">
+                    <?php if ($result->num_rows > 0): ?>
                         <table>
                             <thead>
                                 <tr>
@@ -165,16 +165,19 @@ $result = $conn->query($sql);
                         </table>
                     </div>
                 <?php else: ?>
-                    <div class="BOOKING_TABLE">
-                        <h2>Pending Vendors</h2>
-                        <p>No pending vendors.</p>
-                    </div>
+                    <table>
+                            <tbody>
+                                <tr>
+                                    <td colspan="8" class="NO_DATA_CELL">
+                                        <p>No pending vendors found.</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                 <?php endif; ?>
         </div>
     </div>
 
     <script src="dashboard.js"></script>
-
-    <a href="logout.php">Logout</a>
 </body>
 </html>
