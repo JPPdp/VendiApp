@@ -5,14 +5,12 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != "admin") {
     header("Location: login.php");
     exit();
 }
-date_default_timezone_set('Asia/Manila');
 
+// Timezone and Greeting Setup
+date_default_timezone_set('Asia/Manila');
 $currentHour = date('H');
 
-// Determine the greeting based on the time
-if ($currentHour >= 1 && $currentHour < 4) {
-    $greeting = '🌙 Good Evening,';
-} elseif ($currentHour < 12) {
+if ($currentHour < 12) {
     $greeting = '☀️ Good Morning,';
 } elseif ($currentHour < 18) {
     $greeting = '🌤️ Good Afternoon,';

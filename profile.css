@@ -292,9 +292,16 @@ label{
     margin-top: 20px;
 }
 
+#FIRST_STACK{
+    margin-top: 0px;
+}
+
 .STACK3{
     background-color: white;
-    margin-bottom: -20px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
 }
 
 .STACK h3,
@@ -306,7 +313,7 @@ label{
 }
 
 /* Input Fields Readonly */
-#businessname,
+#business_name,
 #VENDOR_EMAIL,
 #business_email,
 #business_mobile,
@@ -317,6 +324,7 @@ label{
 #VIEW_BUTTON,
 #DESCRIPTION_FORM,
 #ADMIN_NAME,
+#BUSINESS_NAME,
 #ADMIN_EMAIL,
 .ACCOUNT_MANAGE, 
 #admin_name,
@@ -335,12 +343,31 @@ label{
     cursor: not-allowed;
 }
 
-#ADMIN_NAME{
+#ADMIN_NAME,
+#BUSINESS_NAME{
     font-family: 'Inter_Bold';
     font-size: 1rem;
     border: none;
+    color: var(--blkShade1);
 }
 
+/* Textarea Styling */
+#VENDOR_DESCRIPTION {
+    width: 100%; /* Ensure it takes up all available space */
+    min-height: 200px;
+    padding: 10px;
+    border-radius: 10px;
+    background: var(--gradient_White);
+    color: var(--blkShade1);
+    font-family: 'Inter_Regular';
+    font-size: 0.8rem;
+    border: 2px solid var(--whtShade2);
+    resize: none;
+    outline: none;
+    box-sizing: border-box;
+    margin-bottom: 0px;
+    margin-top: 10px;
+}
 
 /*PARTNER THINGS*/
 .BESIDE_FIELDS{
@@ -463,7 +490,6 @@ label{
 
 .ACCOUNT_MANAGE {
     display: inline-block;
-    padding: 10px;
     background: var(--whtShade1);
     color: var(--gryShade1);
     font-family: 'Inter_Bold';
@@ -471,10 +497,16 @@ label{
     border-radius: 10px;
     border: 1px solid var(--whtShade2);
     text-decoration: none;
-    margin-top: 10px;
+    margin-top: 20px;
     cursor: pointer;
     text-align: center;
 }
+
+.ACCOUNT_MANAGE i,
+.VIEW_BUTTON i{
+    margin-right: 5px;
+}
+
 .GREETING {
     display: flex;
     align-items: center;
@@ -551,3 +583,4 @@ label{
 .CANCEL_BTN:hover {
     filter: brightness(110%);
 }
+

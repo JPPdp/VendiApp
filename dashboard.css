@@ -74,7 +74,7 @@ body{
 }
 
 .LOGO_NAME span{
-    font-family: 'Inter_Bold';
+    font-family: 'Inter_SemiBoldItalic';
     /*background: white;
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;*/
@@ -82,7 +82,7 @@ body{
     font-size: 0.8rem;
     position: absolute;
     margin-top: 27.5px;
-    margin-left: -55px;
+    margin-left: -45px;
 }
 
 .NAVIGATION_BAR{
@@ -856,4 +856,78 @@ body{
 .legend-text {
     font-size: 0.75rem;
     color: var(--gryShade2);
+}
+
+/* Dropdown styles */
+.NAV_DROPDOWN {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.NAV_DROPDOWN_TOGGLE {
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+}
+
+.NAV_DROPDOWN_CONTENT {
+    display: block;
+    width: 100%;
+    box-shadow: none;
+    z-index: 1;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background-color: rgba(0,0,0,0.05); /* Slight background for dropdown */
+    border-radius: 20px;
+}
+
+.NAV_DROPDOWN_CONTENT a {
+    padding: 12px 16px 12px 40px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+    transform: translateY(-10px);
+}
+
+.NAV_DROPDOWN:hover .NAV_DROPDOWN_CONTENT {
+    max-height: 500px; /* Adjust based on your content height */
+    transition: max-height 0.5s ease-in;
+}
+
+.NAV_DROPDOWN:hover .NAV_DROPDOWN_CONTENT a {
+    transform: translateY(0);
+    transition-delay: 0.1s;
+}
+
+.NAV_DROPDOWN_ICON {
+    float: right;
+    transition: transform 0.3s;
+}
+
+.NAV_DROPDOWN:hover .NAV_DROPDOWN_ICON {
+    transform: rotate(180deg);
+}
+
+/* Smooth transition for the main nav items */
+.NAVIGATION_BAR > a:not(.NAV_DROPDOWN_TOGGLE) {
+    transition: all 0.3s ease;
+}
+
+.GREETING {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+}
+
+.RIGHT_UPPER .GREETING{
+    color: white;
+    font-size: 0.8rem;
+    margin-right: -10px;
 }

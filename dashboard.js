@@ -1,15 +1,4 @@
-// Get all navigation links
-const navLinks = document.querySelectorAll('.NAVIGATION_BAR a');
 
-// Get current URL path
-const currentPath = window.location.pathname;
-
-// Loop through links and match with current path
-navLinks.forEach(link => {
-    if (link.href.includes(currentPath)) {
-        link.classList.add('NAV_ACTIVE');
-    }
-});
 
 
 // Calendar

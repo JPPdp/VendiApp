@@ -1,0 +1,285 @@
+/* Custom Colors */
+:root{
+    --whtShade1: #f7f9fa;
+    --whtShade2: #f0f0f0;
+    --blkShade1: #101010;
+    --gryShade1: #b0b0b0;
+    --gryShade2: #5E5E5E;
+    --gradient_White: linear-gradient(to bottom, #f7f9fa, #ffffff);
+    --gradient_Horizontal: linear-gradient(to left, #d0008b, #3b0053);
+    --gradient_Vertical: linear-gradient(to top, #d0008b, #0F0053);
+    --gradient_Green: linear-gradient(to top, #00f70c, #009c31);
+    --gradient_Red: linear-gradient(to top, #fc241d, #c40202);
+    --gradient_Yellow: linear-gradient(to top, #f7b500, #f77b00);
+    --gradient_Blue: linear-gradient(to top, #00b4f7, #0055f7);
+}
+
+/* Font Families */
+@font-face {font-family: 'Machinery'; src: url(assets/fonts/machinery_script/MachineryScript_PERSONAL_USE_ONLY.otf);}
+@font-face { font-family: 'Inter_Regular'; src: url(assets/fonts/Inter-font/Inter-Regular.otf);}
+@font-face { font-family: 'Inter_Medium'; src: url(assets/fonts/Inter-font/Inter-Medium.otf);}
+@font-face {font-family: 'Inter_SemiBold'; src: url(assets/fonts/Inter-font/Inter-SemiBold.otf);}
+@font-face {font-family: 'Inter_SemiBoldItalic'; src: url(assets/fonts/Inter-font/Inter-SemiBoldItalic.otf);}
+@font-face {font-family: 'Inter_Bold'; src: url(assets/fonts/Inter-font/Inter-Bold.otf);}
+@font-face {font-family: 'Inter_ExtraBold'; src: url(assets/fonts/Inter-font/Inter-ExtraBold.otf);}
+@font-face {font-family: 'Inter_Black'; src: url(assets/fonts/Inter-font/Inter-Black.otf);}
+
+.LISTINGS_CONTAINER {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    padding: 20px;
+    border-radius: 50px;
+    height: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.LISTINGS_HEADER {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0px;
+}
+
+.LISTINGS_HEADER h2 {
+    font-size: 1rem;
+    font-family: 'Inter_Bold';
+    color: var(--blkShade1);
+    margin: 0;
+}
+
+.LISTINGS_HEADER #ADD_PACKAGE {
+    display: inline;
+    padding: 7.5px 10px;
+    color: var(--gryShade2);
+    font-family: 'Inter_Bold';
+    font-size: 0.75rem;
+    border-radius: 20px;
+    border: 2px solid var(--whtShade2); 
+    background: var(--gradient_White);
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+    justify-content: center;
+}
+
+.LISTINGS_HEADER #ADD_PACKAGE i{
+    margin-right: 5px;
+}
+
+.LISTINGS_HEADER #ADD_PACKAGE:hover {
+    border: 2px solid var(--gryShade1);
+}
+
+
+/* Package List Box */
+.PACKAGE {
+    position: relative;
+    display: flex;
+    gap: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Left Section of Each Package */
+.LEFT_PART {
+    flex: 10%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.PACKAGE_THUMBNAIL img {
+    width: 100%;
+    max-width: 300px;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* Right Section of Each Package */
+.RIGHT_PART{
+    flex: 70%;
+}
+
+/* Package Right Section Header */
+.PACKAGE_HEADER {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.PACKAGE_NAME {
+    flex: 1;
+    margin-bottom: -10px;
+}
+
+.PACKAGE_NAME #PACKAGE_NAME{
+    font-size: 1rem;
+    font-family: 'Inter_Bold';
+    color: var(--blkShade1);
+    text-align: center;
+    border-bottom: 2px solid var(--whtShade2);
+    padding-bottom: 10px;
+}
+
+/* Package Content */
+.PACKAGE_CONTENT {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 0px;
+}
+
+.PACKAGE_DESCRIPTION {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    background: var(--gradient_White);
+    border: 2px solid var(--whtShade2);
+    font-family: 'Inter_Regular';
+    box-sizing: border-box;
+    font-size: 0.8rem;
+    color: var(--gryShade2);
+    cursor: not-allowed;
+    min-height: 140px;
+    max-height: 140px;
+}
+
+.PACKAGE_FEATURES {
+    flex: 1;
+    font-size: 0.8rem;
+    background: var(--gradient_White);
+    border: 2px solid var(--whtShade2);
+    padding: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-radius: 5px;
+    max-height: 100px;
+    cursor: pointer;
+    overflow-y: auto;
+}
+
+.PACKAGE_FEATURES h3 {
+    font-size: 0.8rem;
+    font-family: 'Inter_Bold';
+    color: var(--blkShade1);
+    margin-bottom: 10px;
+}
+
+.PACKAGE_FEATURES ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.PACKAGE_FEATURES li {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8rem;
+    color: var(--gryShade2);
+    margin-bottom: 5px;
+}
+
+.PACKAGE_FEATURES i {
+    margin-right: 5px;
+}
+
+.PACKAGE_DETAIL{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 10px;
+    border-radius: 10px;
+    background: var(--gradient_White);
+    border: 2px solid var(--whtShade2);
+    font-family: 'Inter_Regular';
+    box-sizing: border-box;
+    font-size: 0.8rem;
+    color: var(--gryShade2);
+    cursor: not-allowed;
+}
+
+.PACKAGE_DETAIL i {
+    margin-right: 5px;
+}
+
+.PACKAGE_ACTIONS{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0px;
+    border-radius: 10px;
+    gap: 20px;
+    font-family: 'Inter_Regular';
+    box-sizing: border-box;
+    font-size: 0.8rem;
+    color: var(--gryShade2);
+    cursor: not-allowed;
+}
+
+.PACK_BTN {
+    display: inline;
+    padding: 7.5px 10px;
+    width: 100%;
+    color: var(--gryShade2);
+    font-family: 'Inter_Bold';
+    font-size: 0.75rem;
+    border-radius: 10px;
+    border: 2px solid var(--whtShade2); 
+    background: var(--gradient_White);
+    text-decoration: none;
+    margin-top: 10px;
+    cursor: pointer;
+    text-align: center;
+    justify-content: center;
+}
+
+.PACK_BTN i{
+    margin-right: 5px;
+}
+
+#EDIT_BUTTON:hover {
+    color: white;
+    background: var(--gradient_Blue);
+}
+
+#DELETE_BUTTON:hover {
+    color: white;
+    background: var(--gradient_Red);
+}
+
+
+/*PARTNER THINGS*/
+.BESIDE_FIELDS{
+    display: flex;
+    gap: 20px;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.BESIDE_FIELD{
+    flex: 1;
+    position: relative;
+}
+
+#label{
+    font-size: 0.8rem;
+    font-family: 'Inter_Bold';
+    color: var(--blkShade1);
+    margin-bottom: 10px;
+}
+

@@ -26,6 +26,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-header("Location: vendor_dashboard.php"); // Redirect back to the dashboard
+header("Location: vendor_package.php"); // Redirect back to the dashboard
 exit;
 ?>
