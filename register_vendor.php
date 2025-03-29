@@ -8,9 +8,11 @@ function validatePassword($password) {
         return "Password must be at least 8 characters long.";
     }
     
-    // Check for symbols/special characters
-    if (preg_match('/[^a-zA-Z0-9]/', $password)) {
-        return "Password must not contain any symbols or special characters.";
+    // Check for at least one special character and its position
+    if (!preg_match('/[^a-zA-Z0-9]/', $password)) {
+        return "Password must contain at least one special character.";
+    } elseif (preg_match('/^[^a-zA-Z0-9]/', $password)) {
+        return "Special characters are not allowed at the beginning of the password.";
     }
     
     // Check for spaces
@@ -160,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <span>Password must meet the following requirements:</span>
                             <ul>
                                 <li>At least <strong>8 characters</strong> long</li>
-                                <li>Must <strong>not contain any symbols or special characters</strong></li>
+                                <li>Must <strong>contain at least one (1) symbol or special characters</strong></li>
                                 <li>No spaces allowed</li>
                             </ul>
                         </div>
