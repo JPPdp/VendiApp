@@ -166,14 +166,14 @@ $result = $conn->query($sql);
                     </div>
                 <?php else: ?>
                     <table>
-                            <tbody>
-                                <tr>
-                                    <td colspan="8" class="NO_DATA_CELL">
-                                        <p>No pending vendors found.</p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <tbody>
+                            <tr>
+                                <td colspan="8" class="NO_DATA_CELL">
+                                    <p>No pending vendors found.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 <?php endif; ?>
         </div>
     </div>
