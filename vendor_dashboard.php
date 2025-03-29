@@ -60,6 +60,33 @@ $stmt->bind_param("i", $vendor_id);
 $stmt->execute();
 $pending_bookings = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
+// Fetch active bookings (Approved but not yet completed)
+$sql = "SELECT b.booking_id, b.reference_id, c.name AS client_name, c.email, vp.package_name, 
+               b.status, b.service_datetime
+        FROM bookings b
+        JOIN clients c ON b.client_id = c.client_id
+        JOIN vendor_packages vp ON b.package_id = vp.package_id
+        WHERE b.vendor_id = ? AND b.status = 'Approved'";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $vendor_id);
+$stmt->execute();
+$active_bookings = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+// Fetch Booking History (Completed & Canceled)
+$sql = "SELECT b.booking_id, b.reference_id, c.name AS client_name, c.email, vp.package_name, 
+               b.status, b.service_datetime
+        FROM bookings b
+        JOIN clients c ON b.client_id = c.client_id
+        JOIN vendor_packages vp ON b.package_id = vp.package_id
+        WHERE b.vendor_id = ? AND (b.status = 'Completed' OR b.status = 'Canceled')
+        ORDER BY b.service_datetime DESC";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $vendor_id);
+$stmt->execute();
+$booking_history = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
 // Count pending bookings
 $sql = "SELECT COUNT(*) AS pending_count FROM bookings WHERE vendor_id = ? AND status = 'Pending'";
 $stmt = $conn->prepare($sql);
@@ -67,6 +94,20 @@ $stmt->bind_param("i", $vendor_id);
 $stmt->execute();
 $pending_summary = $stmt->get_result()->fetch_assoc();
 $pending_count = $pending_summary['pending_count'];
+
+// Fetch Booking History (Approved & Completed)
+$sql = "SELECT b.booking_id, b.reference_id, c.name AS client_name, c.email, vp.package_name, 
+               b.status, b.service_datetime
+        FROM bookings b
+        JOIN clients c ON b.client_id = c.client_id
+        JOIN vendor_packages vp ON b.package_id = vp.package_id
+        WHERE b.vendor_id = ? AND (b.status = 'Approved' OR b.status = 'Completed')
+        ORDER BY b.service_datetime DESC";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $vendor_id);
+$stmt->execute();
+$booking_history = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -127,8 +168,73 @@ $pending_count = $pending_summary['pending_count'];
             <p>No pending bookings.</p>
         <?php endif; ?>
 
+        <!-- Active Bookings (Approved) -->
+        <h3>Active Bookings</h3>
+        <?php if (!empty($active_bookings)): ?>
+            <table border="1">
+                <tr>
+                    <th>Reference ID</th>
+                    <th>Email</th>
+                    <th>Schedule On</th>
+                    <th>Client Name</th>
+                    <th>Package</th>
+                    <th>Status</th>
+                    <th>Update</th>
+                </tr>
+                <?php foreach ($active_bookings as $booking): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($booking['reference_id']); ?></td>
+                        <td><?php echo htmlspecialchars($booking['email']); ?></td>
+                        <td><?php echo date("F j, Y g:i A", strtotime($booking['service_datetime'])); ?></td>
+                        <td><?php echo htmlspecialchars($booking['client_name']); ?></td>
+                        <td><?php echo htmlspecialchars($booking['package_name']); ?></td>
+                        <td><?php echo htmlspecialchars($booking['status']); ?></td>
+                        <td>
+                            <form action="update_booking_status.php" method="POST">
+                                <input type="hidden" name="booking_id" value="<?php echo $booking['booking_id']; ?>">
+                                <button type="submit" name="action" value="complete">✅ Mark as Completed</button>
+                                <button type="submit" name="action" value="cancel">🚫 Cancel Booking</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        <?php else: ?>
+            <p>No active bookings.</p>
+        <?php endif; ?>
+
+        <!-- Booking History -->
+        <h3>Booking History</h3>
+        <?php if (!empty($booking_history)): ?>
+            <table border="1">
+                <tr>
+                    <th>Reference ID</th>
+                    <th>Email</th>
+                    <th>Schedule On</th>
+                    <th>Client Name</th>
+                    <th>Package</th>
+                    <th>Status</th>
+                </tr>
+                <?php foreach ($booking_history as $history): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($history['reference_id']); ?></td>
+                        <td><?php echo htmlspecialchars($history['email']); ?></td>
+                        <td><?php echo date("F j, Y g:i A", strtotime($history['service_datetime'])); ?></td>
+                        <td><?php echo htmlspecialchars($history['client_name']); ?></td>
+                        <td><?php echo htmlspecialchars($history['package_name']); ?></td>
+                        <td><?php echo htmlspecialchars($history['status']); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        <?php else: ?>
+            <p>No past bookings found.</p>
+        <?php endif; ?>
+
         <!-- Vendor Packages -->
         <h3>Your Packages</h3>
+        <a href="add_package.php">➕ Add Package</a>
+        <br><br>
+
         <?php if (!empty($packages)): ?>
             <table border="1">
                 <tr>
@@ -141,13 +247,10 @@ $pending_count = $pending_summary['pending_count'];
                     <tr>
                         <td><?php echo $package['package_name']; ?></td>
                         <td><?php echo $package['package_size']; ?> people</td>
-                        <td>$<?php echo $package['price']; ?></td>
+                        <td>₱<?php echo number_format($package['price'], 2); ?></td>
                         <td>
-                            <a href="edit_package.php?id=<?php echo $package['package_id']; ?>">Edit</a> | 
-                            <a href="delete_package.php?id=<?php echo $package['package_id']; ?>" 
-                               onclick="return confirm('Are you sure you want to delete this package?');">
-                                Delete
-                            </a>
+                            <a href="edit_package.php?id=<?php echo $package['package_id']; ?>">✏ Edit</a> |
+                            <a href="delete_package.php?id=<?php echo $package['package_id']; ?>" onclick="return confirm('Are you sure?');">🗑 Delete</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -156,21 +259,6 @@ $pending_count = $pending_summary['pending_count'];
             <p>No packages added yet.</p>
         <?php endif; ?>
 
-        <!-- Add New Package -->
-        <h3>Add New Package</h3>
-        <form action="add_package.php" method="POST">
-            <label>Package Name:</label>
-            <input type="text" name="package_name" required><br>
-
-            <label>Package Size (people):</label>
-            <input type="number" name="package_size" required><br>
-
-            <label>Price ($):</label>
-            <input type="number" step="0.01" name="price" required><br>
-
-            <input type="hidden" name="vendor_id" value="<?php echo $vendor_id; ?>">
-            <button type="submit">Add Package</button>
-        </form>
     <?php endif; ?>
 
     <br>
