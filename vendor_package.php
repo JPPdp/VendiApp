@@ -117,7 +117,7 @@ if ($vendor['status'] == "Approved") {
                         <div class="PACKAGE">
                             <div class="LEFT_PART">
                                 <div class="PACKAGE_THUMBNAIL">
-                                    <img src="<?php echo htmlspecialchars($package['package_image'] ?: 'assets/images/default_package.jpg'); ?>" alt="Package Thumbnail">
+                                    <img src="<?php echo htmlspecialchars($package['package_image'] ?: 'assets/images/default_package.jpg'); ?>" alt="">
                                 </div>
                             </div>
                             <div class="RIGHT_PART">

@@ -40,8 +40,8 @@ if ($admin) {
     $_SESSION['admin_email'] = $admin['email'];
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] == 0) {
-    $profilePic = $_FILES['profile_pic'];
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == 0) {
+    $profilePic = $_FILES['profile_picture'];
     $profilePicPath = 'uploads/' . basename($profilePic['name']);
     
     if (move_uploaded_file($profilePic['tmp_name'], $profilePicPath)) {
@@ -114,12 +114,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['profile_pic']) && $_F
                 <!-- Left Profile Section -->
                 <div class="LEFT_PROFILE">
                     <div class="PROFILE_PIC_CONTAINER">
-                        <img src="<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="Profile Picture" class="PROFILE_PIC2">
+                        <img src="<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="assets/images/VendiBLK2_NoBG.png" class="PROFILE_PIC2">
                         <div class="EDIT_ICON_CONTAINER" title="Change Profile Picture">
                             <form id="PROFILE_PIC_FORM" method="post" enctype="multipart/form-data">
                                 <label for="ADMIN_PROFILE_PIC" class="EDIT_ICON_LABEL">
                                     <i class="EDIT_ICON fas fa-camera" aria-hidden="true"></i>
-                                    <input type="file" id="ADMIN_PROFILE_PIC" name="profile_pic" accept="image/*" style="display: none;" onchange="document.getElementById('PROFILE_PIC_FORM').submit();">
+                                    <input type="file" id="ADMIN_PROFILE_PIC" name="profile_picture" accept="image/*" style="display: none;" onchange="document.getElementById('PROFILE_PIC_FORM').submit();">
                                 </label>
                             </form>
                         </div>

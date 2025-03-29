@@ -39,6 +39,35 @@ if ($vendor['status'] == "Approved") {
     $stmt->execute();
     $packages = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['PACKAGE_THUMBNAIL']) && $_FILES['PACKAGE_THUMBNAIL']['error'] == 0) {
+    $packageThumbnail = $_FILES['PACKAGE_THUMBNAIL'];
+    $thumbnailPath = 'uploads/' . basename($packageThumbnail['name']);
+    
+    if (move_uploaded_file($packageThumbnail['tmp_name'], $thumbnailPath)) {
+        $sql = "INSERT INTO package_image (vendor_id, package_name, package_description, package_size, price, package_image) VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param(
+            "issdis", 
+            $vendor_id, 
+            $_POST['package_name'], 
+            $_POST['PACKAGE_DESCRIPTION'], 
+            $_POST['price'], 
+            $_POST['package_size'], 
+            $thumbnailPath
+        );
+        if ($stmt->execute()) {
+            header("Location: vendor_package.php");
+            exit;
+        } else {
+            echo "Error adding package: " . $conn->error;
+        }
+        $stmt->close();
+    } else {
+        echo "Error uploading package thumbnail.";
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -146,7 +175,7 @@ if ($vendor['status'] == "Approved") {
                                             <!-- Package Description -->
                                             <div class="FORM_GROUP" id="DESC">
                                                 <label for="PACKAGE_DESCRIPTION"><i class="fas fa-info-circle"></i> Description</label>
-                                                <textarea id="PACKAGE_DESCRIPTION" name="PACKAGE_DESCRIPTION" maxlength="400" placeholder="Enter package description" required></textarea>
+                                                <textarea id="PACKAGE_DESCRIPTION" name="package_image" maxlength="400" placeholder="Enter package description" required></textarea>
                                             </div>
                                         </div>
 
