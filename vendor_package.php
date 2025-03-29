@@ -117,7 +117,7 @@ if ($vendor['status'] == "Approved") {
                         <div class="PACKAGE">
                             <div class="LEFT_PART">
                                 <div class="PACKAGE_THUMBNAIL">
-                                    <img src="<?php echo htmlspecialchars($package['package_image'] ?: 'assets/images/default_package.jpg'); ?>" alt="">
+                                    <img src="<?php echo !empty($package['package_image']) ? htmlspecialchars($package['package_image']) : 'assets/images/default_package.jpg'; ?>" alt="">
                                 </div>
                             </div>
                             <div class="RIGHT_PART">
@@ -155,13 +155,23 @@ if ($vendor['status'] == "Approved") {
                                     </div>
                             </div>
                         </div>
-                    <?php endforeach; ?>
-
-                <?php else: ?>
-                    <div class="NO_PACKAGES">
-                        <p>No packages added yet. <a href="vendor_add_package.php">Create your first package</a></p>
-                    </div>
-                <?php endif; ?>
+                        <?php endforeach; ?>
+<?php else: ?>
+    <div class="PACKAGE">
+        <div class="RIGHT_PART">
+            <div class="PACKAGE_HEADER">
+                <div class="PACKAGE_NAME">
+                    <h3 id="PACKAGE_NAME">No Packages Yet!</h3>
+                </div>
+            </div>
+                <div class="PACKAGE_ACTIONS" style="margin-top: 75px;">
+                    <a href="vendor_add_package.php" id="EDIT_BUTTON" class="PACK_BTN" style="padding: 10px; margin-left:150px; margin-right: 150px; border-radius: 20px;">
+                        <i class="fas fa-plus"></i> Create First Package
+                    </a>
+                </div>
+        </div>
+    </div>
+<?php endif; ?>
         </div>
     </div>
 </body>

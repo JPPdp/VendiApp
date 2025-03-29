@@ -37,16 +37,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error_message = "Invalid email format.";
     } else {
-        // Validate business name uniqueness
-        $check_business_name = $conn->query("SELECT business_name FROM vendors WHERE business_name = '$business_name'");
-        if ($check_business_name->num_rows > 0) {
-            $error_message = "Business name already exists. Please choose another business name.";
-        } else {
-            // Validate email uniqueness
-            $check_email = $conn->query("SELECT email FROM vendors WHERE email = '$email'");
-            if ($check_email->num_rows > 0) {
-                $error_message = "Email address already exists. Please use a different email.";
-            } else {
+// Validate business name uniqueness
+$stmt = $conn->prepare("SELECT business_name FROM vendors WHERE business_name = ?");
+$stmt->bind_param("s", $business_name);
+$stmt->execute();
+$check_business_name = $stmt->get_result();
+if ($check_business_name->num_rows > 0) {
+    $error_message = "Business name already exists. Please choose another business name.";
+} else {
+    // Validate email uniqueness
+    $stmt = $conn->prepare("SELECT email FROM vendors WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $check_email = $stmt->get_result();
+    if ($check_email->num_rows > 0) {
+        $error_message = "Email address already exists. Please use a different email.";
+    } else {
                 // Validate password match
                 if ($password !== $confirm_password) {
                     $error_message = "Passwords do not match.";
@@ -193,5 +199,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
 </div>
+
+<script src="password.js"></script>
 </body>
 </html>

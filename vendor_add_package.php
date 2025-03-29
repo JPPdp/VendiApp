@@ -40,12 +40,12 @@ if ($vendor['status'] == "Approved") {
     $packages = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['PACKAGE_THUMBNAIL']) && $_FILES['PACKAGE_THUMBNAIL']['error'] == 0) {
-    $packageThumbnail = $_FILES['PACKAGE_THUMBNAIL'];
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['package_image']) && $_FILES['package_image']['error'] == 0) {
+    $packageThumbnail = $_FILES['package_image'];
     $thumbnailPath = 'uploads/' . basename($packageThumbnail['name']);
     
     if (move_uploaded_file($packageThumbnail['tmp_name'], $thumbnailPath)) {
-        $sql = "INSERT INTO package_image (vendor_id, package_name, package_description, package_size, price, package_image) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO vendor_packages (vendor_id, package_name, package_description, package_size, price, package_image) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
             "issdis", 
@@ -143,75 +143,75 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['PACKAGE_THUMBNAIL']) 
             </div>
 
             <div class="MAIN_CONTAINER">
-
-                        <div class="RIGHT_MAIN">
-                    <form class="PACKAGE_FORM" action="add_package.php" method="POST" enctype="multipart/form-data" >
-
-                                <!-- Package Thumbnail -->
-                                <div class="FORM_GROUP">
-                                    <label for="PACKAGE_THUMBNAIL"><i class="fas fa-image"></i> Package Image</label>
-                                    <div class="THUMBNAIL_PREVIEW_CONTAINER">
-                                        <img id="thumbnailPreview" src="#" alt="Preview">
-                                        <div class="PLACEHOLDER_TEXT">
-                                            <i class="fas fa-image"></i>
-                                            <span>Package Image</span>
-                                        </div>
-                                    </div>
-                                    <div class="FILE_INPUT_CONTAINER">
-                                        <input type="file" id="PACKAGE_THUMBNAIL" name="PACKAGE_THUMBNAIL" accept="image/*" required>
-                                    </div>
+                <div class="RIGHT_MAIN">
+                    <form class="PACKAGE_FORM" action="add_package.php" method="POST" enctype="multipart/form-data">
+                        <!-- Package Thumbnail -->
+                        <div class="FORM_GROUP">
+                            <label for="package_image"><i class="fas fa-image"></i> Package Image</label>
+                            <div class="THUMBNAIL_PREVIEW_CONTAINER">
+                                <img id="thumbnailPreview" src="#" alt="Preview">
+                                <div class="PLACEHOLDER_TEXT">
+                                    <i class="fas fa-image"></i>
+                                    <span>Package Image</span>
                                 </div>
+                            </div>
+                            <div class="FILE_INPUT_CONTAINER">
+                                <input type="file" id="PACKAGE_THUMBNAIL" name="package_image" accept="image/*" required>
+                                <small>Max file size: 2MB | Supported formats: JPG, PNG</small>
+                            </div>
+                        </div>
+                </div>
+
+                <div class="LEFT_MAIN">
+                    <!-- Package Name -->
+                    <div class="FORM_GROUP">
+                        <label for="PACKAGE_NAME"><i class="fas fa-box"></i> Package Name</label>
+                        <input type="text" id="PACKAGE_NAME" name="package_name" placeholder="Enter package name" required>
+                    </div>
+
+                    <div class="BESIDE_FIELDS">
+                        <div class="BESIDE_FIELD">
+                            <!-- Package Description -->
+                            <div class="FORM_GROUP" id="DESC">
+                                <label for="PACKAGE_DESCRIPTION"><i class="fas fa-info-circle"></i> Description</label>
+                                <textarea id="PACKAGE_DESCRIPTION" name="package_description" maxlength="400" placeholder="Enter package description" required></textarea>
+                                <small id="charCount">400 characters remaining</small>
+                            </div>
                         </div>
 
-                        <div class="LEFT_MAIN">
-                                    <!-- Package Name -->
-                                    <div class="FORM_GROUP">
-                                        <label for="PACKAGE_NAME"><i class="fas fa-box"></i> Package Name</label>
-                                        <input type="text" id="PACKAGE_NAME" name="package_name" placeholder="Enter package name" required>
-                                    </div>
-
-                                    <div class="BESIDE_FIELDS">
-                                        <div class="BESIDE_FIELD">
-                                            <!-- Package Description -->
-                                            <div class="FORM_GROUP" id="DESC">
-                                                <label for="PACKAGE_DESCRIPTION"><i class="fas fa-info-circle"></i> Description</label>
-                                                <textarea id="PACKAGE_DESCRIPTION" name="package_image" maxlength="400" placeholder="Enter package description" required></textarea>
-                                            </div>
-                                        </div>
-
-                                        <div class="BESIDE_FIELD">
-                                                <!-- Starting Price -->
-                                            <div class="FORM_GROUP" id="PRAYS">
-                                                <label for="STARTING_PRICE"><i class="fas fa-tag"></i> Starting Price</label>
-                                                <input type="number" id="STARTING_PRICE" name="price" placeholder="Enter starting price" required>
-                                            </div>
-
-                                            <!-- Capacity -->
-                                            <div class="FORM_GROUP" id="CAPACITEE">
-                                                <label for="CAPACITY"><i class="fas fa-users"></i> Capacity</label>
-                                                <input type="number" id="CAPACITY" name="package_size" placeholder="Enter guest capacity (e.g., 50)" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <input type="hidden" name="vendor_id" value="<?php echo $vendor_id; ?>">
-
-                                <!-- Submit Button -->
-                                <div class="FORM_GROUP_SUBMIT">
-                                    <div class="LEFT_BUTTON">
-                                        <a href="vendor_package.php" id="CANCEL_PACKAGE" class="CANCEL_BUTTON"><i class="fas fa-times"></i> Cancel</a>
-                                    </div>
-                                    <div class="RIGHT_BUTTONS">
-                                        <button type="reset" id="RESET_PACKAGE"><i class="fas fa-undo"></i> Reset</button>
-                                        <button type="submit" id="SUBMIT_PACKAGE"><i class="fas fa-upload"></i> Publish</button>
-                                    </div>
+                        <div class="BESIDE_FIELD">
+                            <!-- Starting Price -->
+                            <div class="FORM_GROUP" id="PRAYS">
+                                <label for="STARTING_PRICE"><i class="fas fa-tag"></i> Starting Price</label>
+                                <div class="PRICE_INPUT">
+                                    <span>₱</span>
+                                    <input type="number" id="STARTING_PRICE" name="price" placeholder="0.00" min="0" step="0.01" required>
                                 </div>
+                            </div>
+
+                            <!-- Capacity -->
+                            <div class="FORM_GROUP" id="CAPACITEE">
+                                <label for="CAPACITY"><i class="fas fa-users"></i> Capacity</label>
+                                <input type="number" id="CAPACITY" name="package_size" placeholder="Enter guest capacity (e.g., 50)" min="1" required>
+                            </div>
                         </div>
+                    </div>
+                    <input type="hidden" name="vendor_id" value="<?php echo htmlspecialchars($vendor_id); ?>">
+
+                    <!-- Submit Button -->
+                    <div class="FORM_GROUP_SUBMIT">
+                        <div class="LEFT_BUTTON">
+                            <a href="vendor_package.php" id="CANCEL_PACKAGE" class="CANCEL_BUTTON"><i class="fas fa-times"></i> Cancel</a>
+                        </div>
+                        <div class="RIGHT_BUTTONS">
+                            <button type="reset" id="RESET_PACKAGE"><i class="fas fa-undo"></i> Reset</button>
+                            <button type="submit" id="SUBMIT_PACKAGE"><i class="fas fa-upload"></i> Publish</button>
+                        </div>
+                    </div>
+                </div>
                     </form>
                 </div>
             </div>
-
-
-
         </div>
     </div>
     <script>

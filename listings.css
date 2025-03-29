@@ -84,6 +84,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
     margin-top: 20px;
     margin-bottom: 20px;
+    min-height: 200px;
 }
 
 /* Left Section of Each Package */
@@ -282,4 +283,3 @@
     color: var(--blkShade1);
     margin-bottom: 10px;
 }
-

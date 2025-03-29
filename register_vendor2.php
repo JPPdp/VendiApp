@@ -125,7 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <option value="Games & Activities">Games & Activities</option>
                                     <option value="Photobooth">Photobooth</option>
                 </select>
-                <select name="business_description_short[]" required>
+                <select name="business_description_short[]">
                     <option value="" disabled selected>Select Feature 2 <span id="REQUIRED">*</span></option>
                     <option value="" disabled>&#128197; Event Type</option>
                                     <option value="Birthday">Birthday</option>
@@ -144,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <option value="Games & Activities">Games & Activities</option>
                                     <option value="Photobooth">Photobooth</option>
                 </select>
-                <select name="business_description_short[]" required>
+                <select name="business_description_short[]">
                     <option value="" disabled selected>Select Feature 3 <span id="REQUIRED">*</span></option>
                     <option value="" disabled>&#128197; Event Type</option>
                                     <option value="Birthday">Birthday</option>

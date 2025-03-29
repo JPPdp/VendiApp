@@ -19,7 +19,7 @@ if (isset($_GET['id'])) {
     $stmt->bind_param("ii", $package_id, $vendor_id);
 
     if ($stmt->execute()) {
-        header("Location: vendor_dashboard.php");
+        header("Location: vendor_package.php");
         exit;
     } else {
         echo "Error: " . $conn->error;
