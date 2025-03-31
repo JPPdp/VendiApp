@@ -377,6 +377,11 @@ $admin_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                     </div>
                 </div>
             </div>
+                <footer class="DASHBOARD_FOOTER">
+                    <div class="FOOTER_CONTENT">
+                        <span class="COPYRIGHT">&copy; 2025 GitRat</span>
+                    </div>
+                </footer>
         </div>
     </div>
 

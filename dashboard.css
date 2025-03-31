@@ -128,7 +128,8 @@ body{
     background-color: var(--whtShade2);
 }
 
-.NAVIGATION_BAR a{
+.NAVIGATION_BAR a,
+.LOGOUT{
     display: block;
     font-size: 0.8rem;
     text-decoration: none;
@@ -138,7 +139,15 @@ body{
     border-radius: 15px 0 0 15px;
     align-items: center;
     margin-right: -22.5px;
+    cursor: pointer;
+}
 
+.LOGOUT{
+    margin-top: -10px;
+}
+
+.LOGOUT:hover{
+    color: var(--whtShade2);
 }
 
 .NAVIGATION_BAR a:hover{
@@ -154,14 +163,6 @@ body{
 
 .NAVIGATION_BAR i:hover{
     color: white;
-}
-
-.NAVIGATION_BAR .LOGOUT{
-    color: var(--gryShade1);    
-    padding: 10px;
-    border-radius: 15px;
-    text-align: left;
-    cursor: pointer;
 }
 
 .NAVIGATION_BAR a.NAV_ACTIVE, 
@@ -181,6 +182,106 @@ body{
     padding: 5px;
     border-radius: 25%;
     background: var(--gradient_Horizontal);
+}
+
+/* LOGOUT MODAL */
+.MODAL_TOGGLE {
+    display: none;
+}
+
+.LOGOUT_MODAL {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.MODAL_TOGGLE:checked ~ .LOGOUT_MODAL {
+    display: flex;
+}
+
+.LOGOUT_MODAL_CONTENT {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.LOGOUT_MODAL h3 {
+    font-size: 1.25rem;
+    margin-bottom: -10px;
+    color: var(--blkShade1);
+    font-family: 'Inter_Black';
+    text-transform: uppercase;
+}
+
+.LOGOUT_MODAL p {
+    font-size: 0.8rem;
+    color: var(--gryShade2);
+    margin-bottom: 20px;
+    font-family: 'Inter_SemiBoldItalic';
+}
+
+.BUTTON_ACTIONS {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.BUTTON_CONFIRM {
+    display: inline;
+    padding: 7.5px 10px;
+    color: white;
+    font-family: 'Inter_Bold';
+    font-size: 0.8rem;
+    border-radius: 10px;
+    border: 2px solid var(--whtShade2); 
+    background: var(--gradient_Horizontal);
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+    justify-content: center;
+    transition: 0.5s ease-in-out;
+}
+
+.BUTTON_CONFIRM:hover {
+    filter: brightness(120%);
+}
+
+.BUTTON_CONFIRM i {
+    margin-right: 5px;
+}
+
+.BUTTON_CANCEL {
+    display: inline;
+    padding: 7.5px 10px;
+    color: var(--gryShade2);
+    font-family: 'Inter_Bold';
+    font-size: 0.8rem;
+    border-radius: 10px;
+    border: 2px solid var(--whtShade2); 
+    background: var(--gradient_White);
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+    justify-content: center;
+    transition: 0.5s ease-in-out;
+}
+
+.BUTTON_CANCEL:hover {
+    border: 2px solid var(--gryShade1);
+}
+
+.BUTTON_CANCEL i {
+    margin-right: 5px;
 }
 
 
@@ -588,6 +689,11 @@ body{
     border-bottom: 1px solid var(--gryShade1); /* Added line below th */
 }
 
+.ACTION_WIDTH{
+    width: 20%;
+
+}
+
 .TODO_LIST td {
     font-size: 0.8rem;
     font-family: 'Inter_Regular';
@@ -597,24 +703,11 @@ body{
     border-bottom: 1px solid var(--whtShade2); /* Added line below th */
 }
 
-.TODO_LIST .ACTIONS {
-    display: flex;
-    gap: 20px;
-    align-items: center;
+#TODO_ACTIONS {
     justify-content: center;
+    text-align: center;
 }
 
-.TODO_LIST .ACTIONS i {
-    cursor: pointer;
-    font-size: 0.8rem;
-    color: var(--gryShade1);
-    line-height: 1;
-    margin: 0;
-}
-
-.TODO_LIST .ACTIONS i:hover {
-    color: var(--gryShade2);
-}
 
 .TODO_LIST td:first-child {
     width: 80%; 
@@ -623,29 +716,45 @@ body{
 }
 
 .DELETE_TASK{
-    color: var(--gryShade1);
+    color: var(--gryShade2);
+    font-size: 0.75rem;
+    background: var(--gradient_White);
+    border: 2px solid var(--whtShade2); 
     text-decoration: none;
+    text-align: center;
+    align-items: center;
+    font-family: 'Inter_Bold';
+    padding: 5px 7.5px;
+    border-radius: 5px;
 }
+
+.DELETE_TASK:hover{
+    color: #c40202;
+}
+
+
 /* Modal Styles */
 .MODAL {
     display: none;
     position: fixed;
-    z-index: 1000;
-    left: 0;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
 }
 
 .MODAL_CONTENT {
-    background-color: white;
-    margin: 10% auto;
-    padding: 25px;
-    border-radius: 10px;
-    width: 25%;
-    min-width: 300px; /* Added minimum width */
-    box-sizing: border-box; /* Include padding in width calculation */
+    background: white;
+    margin: 15% auto;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 20px;
+    width: 500px;
 }
 
 .MODAL_HEADER {
@@ -658,7 +767,7 @@ body{
 }
 
 .MODAL_HEADER h3 {
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     font-family: 'Inter_Bold';
     color: var(--blkShade1);
     margin: 0;
@@ -669,6 +778,7 @@ body{
     font-size: 1.5rem;
     font-weight: bold;
     cursor: pointer;
+    transition: 0.5s ease-out;
 }
 
 .MODAL_CLOSE:hover {
@@ -684,13 +794,14 @@ body{
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
-    border: 1px solid var(--whtShade2);
+    border: 2px solid var(--whtShade2);
+    background: var(--gradient_White);
     border-radius: 5px;
     font-size: 0.8rem;
     font-family: 'Inter_Regular';
     box-sizing: border-box; /* Include padding in width calculation */
-    min-height: 50px;
-    max-height: 50px;
+    min-height: 75px;
+    max-height: 75px;
     resize: none;
 }
 
@@ -709,16 +820,16 @@ body{
     font-size: 0.9rem;
     font-family: 'Inter_Bold';
     cursor: pointer;
-    transition: opacity 0.2s;
     box-sizing: border-box;
+    transition: 0.5s ease-out;
 }
 
 .MODAL_SUBMIT:hover {
-    opacity: 0.9;
+    filter: brightness(120%);
 }
 
 .MODAL_SUBMIT i {
-    margin-right: 8px;
+    margin-right: 5px;
 }
 
 /* Add Task Button */
@@ -735,7 +846,7 @@ body{
     cursor: pointer;
     text-align: center;
     justify-content: center;
-    transition: 0.5s ease-in-out;
+    transition: 0.5s ease-out;
 }
 
 .ADD_TASK_BTN:hover {

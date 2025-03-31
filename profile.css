@@ -546,7 +546,7 @@ label{
     background: var(--gradient_White);
     color: #c40202; 
     border: 2px solid var(--whtShade2); 
-    transition: background-color 02 ease;
+    transition: 0.5s ease-out;
 }
 
 #DELETE_ACCOUNT:hover {
