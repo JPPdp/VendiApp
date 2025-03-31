@@ -1,6 +1,10 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 include 'db_connect.php';
-session_start();
+
 
 // Timezone and Greeting Setup
 date_default_timezone_set('Asia/Manila');

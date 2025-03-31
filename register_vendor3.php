@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Check if complete registration data exists
 if (!isset($_SESSION['complete_reg_data'])) {
@@ -7,37 +9,40 @@ if (!isset($_SESSION['complete_reg_data'])) {
     exit();
 }
 
-// Insert data into database (this could be moved to a separate processing script if needed)
-include 'db_connect.php';
-
-$reg_data = $_SESSION['complete_reg_data'];
-
-$sql = "INSERT INTO vendors (business_name, email, password, mobile_number, address, service_option, business_description_short, business_description_long, business_document, status) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending')";
-
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("sssssssss", 
-    $reg_data['business_name'], 
-    $reg_data['email'], 
-    $reg_data['password'], 
-    $reg_data['mobile_number'], 
-    $reg_data['address'],
-    $reg_data['service_option'],
-    $reg_data['business_description_short'],
-    $reg_data['business_description_long'],
-    $reg_data['business_document']
-);
-
-if ($stmt->execute()) {
-    // Clear session data after successful insertion
-    unset($_SESSION['reg_data']);
-    unset($_SESSION['complete_reg_data']);
+// Validate category_id
+if (!isset($_SESSION['complete_reg_data']['category_id']) || !is_numeric($_SESSION['complete_reg_data']['category_id'])) {
+    $error_message = "Error: category_id is missing or invalid.";
 } else {
-    $error_message = "Registration failed. Please try again.";
-}
+    include 'db_connect.php';
 
-$stmt->close();
-$conn->close();
+    $reg_data = $_SESSION['complete_reg_data'];
+
+    $sql = "INSERT INTO vendors (category_id, business_name, email, password, mobile_number, address, business_description_short, business_description_long, business_document, status) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending')";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("issssssss", 
+        $reg_data['category_id'],
+        $reg_data['business_name'], 
+        $reg_data['email'], 
+        $reg_data['password'], 
+        $reg_data['mobile_number'], 
+        $reg_data['address'],
+        $reg_data['business_description_short'],
+        $reg_data['business_description_long'],
+        $reg_data['business_document']
+    );
+
+    if ($stmt->execute()) {
+        // Clear session data after successful registration
+        unset($_SESSION['complete_reg_data']);
+    } else {
+        $error_message = "Registration failed: " . $stmt->error;
+    }
+
+    $stmt->close();
+    $conn->close();
+}
 ?>
 
 <!DOCTYPE html>

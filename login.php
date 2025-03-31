@@ -1,6 +1,10 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 include 'db_connect.php';
-session_start();
+
 
 $message = ""; // Store login messages
 
