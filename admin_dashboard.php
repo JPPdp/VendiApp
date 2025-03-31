@@ -120,7 +120,7 @@ $admin_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | Vendi</title>
-    <link rel="icon" href="assets/images/VendiBLK_NoBG.png" type="image/icon type">
+    <link rel="icon" href="assets/images/Vendi_Icon.png" type="image/icon type">
     <link rel="stylesheet" href="bookings.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="dashboard.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="notifications.css?v=<?php echo time(); ?>">

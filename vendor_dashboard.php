@@ -152,7 +152,7 @@ $vendor_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vendor Dashboard | Vendi</title>
-    <link rel="icon" href="assets/images/VendiBLK_NoBG.png" type="image/icon type">
+    <link rel="icon" href="assets/images/Vendi_Icon.png" type="image/icon type">
     <link rel="stylesheet" href="bookings.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="dashboard.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="notifications.css?v=<?php echo time(); ?>">
@@ -397,12 +397,9 @@ $vendor_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                     <div class="TODO_LIST">
                         <div class="TODO_HEADER">
                             <h2>Vendor Tasks</h2>
-                            <form method="POST" class="ADD_TASK_FORM">
-                                <input type="text" name="vendor_task" placeholder="Add vendor task..." required>
-                                <button type="submit" name="add_vendor_task" class="ADD_TASK">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            </form>
+                            <button class="ADD_TASK_BTN" onclick="document.getElementById('todoModal').style.display='block'">
+                                <i class="fas fa-plus"></i> Add Task
+                            </button>
                         </div>
                         
                         <?php if (!empty($vendor_todo_error)): ?>
@@ -437,6 +434,22 @@ $vendor_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                                 <?php endif; ?>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+
+                <!-- Todo Modal Popup -->
+                <div id="todoModal" class="MODAL">
+                    <div class="MODAL_CONTENT">
+                        <div class="MODAL_HEADER">
+                            <h3>Add New Task</h3>
+                            <span class="MODAL_CLOSE" onclick="document.getElementById('todoModal').style.display='none'">&times;</span>
+                        </div>
+                        <form method="POST" class="MODAL_BODY">
+                            <input type="text" name="vendor_task" placeholder="Enter your task..." required>
+                            <button type="submit" name="add_vendor_task" class="MODAL_SUBMIT">
+                                <i class="fas fa-plus"></i> Add Task
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

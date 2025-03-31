@@ -622,6 +622,112 @@ body{
     white-space: normal; /* Text wrap */
 }
 
+/* Modal Styles */
+.MODAL {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.MODAL_CONTENT {
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.MODAL_HEADER {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--whtShade2);
+}
+
+.MODAL_HEADER h3 {
+    font-size: 1.1rem;
+    font-family: 'Inter_Bold';
+    color: var(--blkShade1);
+    margin: 0;
+}
+
+.MODAL_CLOSE {
+    color: var(--gryShade1);
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.MODAL_CLOSE:hover {
+    color: var(--gryShade2);
+}
+
+.MODAL_BODY input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid var(--whtShade2);
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-family: 'Inter_Regular';
+}
+
+.MODAL_BODY input[type="text"]:focus {
+    outline: none;
+    border-color: var(--gryShade1);
+}
+
+.MODAL_SUBMIT {
+    width: 100%;
+    padding: 10px;
+    background: var(--gradient_Horizontal);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-family: 'Inter_Bold';
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.MODAL_SUBMIT:hover {
+    opacity: 0.9;
+}
+
+.MODAL_SUBMIT i {
+    margin-right: 8px;
+}
+
+/* Add Task Button */
+.ADD_TASK_BTN {
+    background: var(--gradient_Horizontal);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-size: 0.8rem;
+    font-family: 'Inter_Bold';
+    cursor: pointer;
+    transition: 0.3s ease-in;
+}
+
+.ADD_TASK_BTN:hover {
+    filter: brightness(120%);
+}
+
+.ADD_TASK_BTN i {
+    margin-right: 5px;
+}
+
 /* Package Overview (70%) */
 .PACKAGE_OVERVIEW {
     flex: 50%;
@@ -943,3 +1049,4 @@ body{
 .COPYRIGHT:hover {
     opacity: 100%;
 }
+

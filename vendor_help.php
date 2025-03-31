@@ -67,7 +67,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Help | Vendi</title>
-    <link rel="icon" href="assets/images/VendiBLK2_NoBG.png" type="image/icon type">
+    <link rel="icon" href="assets/images/Vendi_Icon.png" type="image/icon type">
     <link rel="stylesheet" href="dashboard.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="notifications.css">
     <link rel="stylesheet" href="profile.css?v=<?php echo time(); ?>">
