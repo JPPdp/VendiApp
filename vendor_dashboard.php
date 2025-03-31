@@ -152,7 +152,7 @@ $vendor_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vendor Dashboard | Vendi</title>
-    <link rel="icon" href="assets/images/Vendi_Icon.png" type="image/icon type">
+    <link rel="icon" href="assets/images/VendiEnhanced.png" type="image/icon type">
     <link rel="stylesheet" href="bookings.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="dashboard.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="notifications.css?v=<?php echo time(); ?>">
@@ -422,7 +422,7 @@ $vendor_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                                                 <a href="vendor_dashboard.php?delete_vendor_task=<?php echo $todo['id']; ?>" 
                                                 class="DELETE_TASK"
                                                 onclick="return confirm('Delete this task?')">
-                                                    <i class="fas fa-trash"></i>
+                                                    <i class="fas fa-trash"></i> Delete
                                                 </a>
                                             </td>
                                         </tr>
@@ -445,7 +445,7 @@ $vendor_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                             <span class="MODAL_CLOSE" onclick="document.getElementById('todoModal').style.display='none'">&times;</span>
                         </div>
                         <form method="POST" class="MODAL_BODY">
-                            <input type="text" name="vendor_task" placeholder="Enter your task..." required>
+                            <textarea name="vendor_task" placeholder="Enter your task..." required id="VENDOR_TASK"></textarea>
                             <button type="submit" name="add_vendor_task" class="MODAL_SUBMIT">
                                 <i class="fas fa-plus"></i> Add Task
                             </button>

@@ -76,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['package_image']) && $
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Packages | Vendi</title>
-    <link rel="icon" href="assets/images/Vendi_Icon.png" type="image/icon type">
+    <link rel="icon" href="assets/images/VendiEnhanced.png" type="image/icon type">
     <link rel="stylesheet" href="dashboard.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="listings_add_package.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="listings.css?v=<?php echo time(); ?>">

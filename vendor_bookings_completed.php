@@ -59,7 +59,7 @@ $completed_bookings = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Completed Bookings | Vendi</title>
-    <link rel="icon" href="assets/images/Vendi_Icon.png" type="image/icon type">
+    <link rel="icon" href="assets/images/VendiEnhanced.png" type="image/icon type">
     <link rel="stylesheet" href="dashboard.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="bookings.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
