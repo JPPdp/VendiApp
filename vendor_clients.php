@@ -12,16 +12,12 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != "vendor") {
 date_default_timezone_set('Asia/Manila');
 $currentHour = date('H');
 
-if ($currentHour >= 1 && $currentHour < 4) {
-    $greeting = '🌄 Good Dawn!';
-} elseif ($currentHour >= 16 && $currentHour < 18.5) {
-    $greeting = '🌅 Good Dusk!';
-} elseif ($currentHour < 12) {
-    $greeting = '☀️ Good Morning!';
+if ($currentHour < 12) {
+    $greeting = '☀️ Good Morning,';
 } elseif ($currentHour < 18) {
-    $greeting = '🌤️ Good Afternoon!';
+    $greeting = '🌤️ Good Afternoon,';
 } else {
-    $greeting = '🌙 Good Evening!';
+    $greeting = '🌙 Good Evening,';
 }
 
 $vendor_id = $_SESSION['user_id'];
@@ -58,32 +54,6 @@ $clients = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     <link rel="stylesheet" href="dashboard.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="customers.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        .PROFILE_PIC {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-        .VIEW_BUTTON {
-            display: inline-block;
-            padding: 5px 10px;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-        .VIEW_BUTTON:hover {
-            background-color: #45a049;
-        }
-        .TRANSACTION_COUNT {
-            background-color: #f0f0f0;
-            padding: 2px 6px;
-            border-radius: 10px;
-            font-size: 0.8em;
-        }
-    </style>
 </head>
 
 <body>
@@ -93,19 +63,34 @@ $clients = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         <div class="NAVIGATION_BAR">
             <div class="LOGO">
                 <div class="LOGO_NAME">Vendi
-                    <span>DASHBOARD</span>
+                    <span id="VENDORS">VENDORS</span>
                 </div>
             </div>
-
+            
             <div class="MENU_HEADER">MANAGEMENT</div>
-                    <a href="vendor_dashboard.php"><i class="fas fa-stream"></i> Dashboard</a>
-                    <a href="vendor_packages.php"><i class="fa fa-fw fa-store"></i> Packages</a>
-                    <a href="vendor_bookings.php"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
-                    <a href="vendor_clients.php" class="NAV_ACTIVE"><i class="fa fa-fw fa-users"></i> <span> Clients</span></a>
+            <a href="vendor_dashboard.php"><i class="fas fa-stream"></i> Dashboard</a>
+            
+            <!-- Bookings Dropdown -->
+            <div class="NAV_DROPDOWN">
+                <a class="NAV_DROPDOWN_TOGGLE" href="#">
+                    <i class="fa fa-fw fa-calendar"></i> Bookings <i class="fas fa-chevron-down NAV_DROPDOWN_ICON"></i>
+                </a>
+                <div class="NAV_DROPDOWN_CONTENT">
+                    <a href="vendor_bookings_approval.php"><i class="fas fa-calendar-alt"></i> <span id="ITALIC">Pending Bookings</span></a>
+                    <a href="vendor_bookings_active.php"><i class="far fa-calendar-check"></i> <span id="ITALIC">Scheduled Bookings</span></a>
+                    <a href="vendor_bookings_completed.php"><i class="fas fa-calendar-check"></i> <span id="ITALIC">Completed Bookings</span></a>
+                    <a href="vendor_bookings_cancelled.php"><i class="fas fa-calendar-times"></i> <span id="ITALIC">Cancelled Bookings</span></a>
+                </div>
+            </div>
+            
+            <a href="vendor_package.php"><i class="fa fa-fw fa-store"></i> Packages</a>
+            
+            <a href="vendor_clients.php" class="NAV_ACTIVE"><i class="fas fa-users"></i> <span>Clients</span></a>
+            
             <div class="MENU_HEADER">SETTINGS</div>
-                    <a href="vendor_profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
-                    <a href="help.php"><i class="fa fa-fw fa-question-circle"></i> Help</a>
-                    <a href="logout.php" class="LOGOUT"><i class="fa fa-fw fa-sign-out-alt"></i> Log Out</a>
+            <a href="vendor_profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
+            <a href="vendor_help.php"><i class="fas fa-question-circle"></i> Help</a>
+            <a href="logout.php" class="LOGOUT"><i class="fas fa-sign-out-alt"></i> Log Out</a>
         </div>
         
         <!-- Dashboard Content -->
@@ -117,11 +102,11 @@ $clients = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
                 <div class="RIGHT_UPPER">
                     <div class="ACCOUNT">
-                        <span class="HELLO"><?php echo $greeting; ?></span>
+                        <div class="GREETING"><?php echo $greeting; ?></div>
                         <a href="vendor_profile.php">
-                            <img src="<?php echo htmlspecialchars($vendor['profile_pic'] ?? 'assets/images/default_profile.jpg'); ?>" alt="Profile Picture" class="PROFILE_PIC">
+                            <img src="<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="" class="PROFILE_PIC">
                         </a>    
-                        <span class="BUSINESS_NAME"><?php echo htmlspecialchars($vendor['business_name']); ?></span>             
+                        <span class="BUSINESS_NAME"><?php echo htmlspecialchars($vendor['business_name']); ?>!</span>             
                     </div>
                 </div>
             </div>
@@ -137,7 +122,7 @@ $clients = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                 <table>
                     <thead>
                         <tr>
-                            <th><i class="fas fa-image"></i> Profile</th>
+                            <th id="PROFILE_PIC_HEADER"><i class="fas fa-image"></i> Profile</th>
                             <th><i class="fas fa-user"></i> Client Name</th>
                             <th><i class="fas fa-envelope"></i> Email</th>
                             <th><i class="fas fa-phone"></i> Mobile</th>
@@ -149,7 +134,7 @@ $clients = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                         <?php if (!empty($clients)): ?>
                             <?php foreach ($clients as $client): ?>
                                 <tr>
-                                    <td class="PROFILE_PIC">
+                                    <td id="PROFILE_PIC_CELL">
                                         <img src="<?php echo htmlspecialchars($client['profile_picture'] ?? 'assets/images/default_profile.jpg'); ?>" alt="Profile Picture" class="PROFILE_PIC">
                                     </td>
                                     <td class="CLIENT_NAME"><?php echo htmlspecialchars($client['name']); ?></td>

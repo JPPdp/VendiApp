@@ -924,3 +924,22 @@ body{
     font-size: 0.8rem;
     margin-right: -10px;
 }
+
+.DASHBOARD_FOOTER {
+    background-color: transparent;
+    padding: 10px;
+    font-size: 0.8rem;
+    color: var(--gryShade1);
+    text-align: center;
+    position: relative;
+    margin-top: 20px;
+}
+
+.COPYRIGHT {
+    opacity: 75%;
+    transition: opacity 0.2s;
+}
+
+.COPYRIGHT:hover {
+    opacity: 100%;
+}

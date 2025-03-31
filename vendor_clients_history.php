@@ -12,16 +12,12 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != "vendor") {
 date_default_timezone_set('Asia/Manila');
 $currentHour = date('H');
 
-if ($currentHour >= 1 && $currentHour < 4) {
-    $greeting = '🌄 Good Dawn!';
-} elseif ($currentHour >= 16 && $currentHour < 18.5) {
-    $greeting = '🌅 Good Dusk!';
-} elseif ($currentHour < 12) {
-    $greeting = '☀️ Good Morning!';
+if ($currentHour < 12) {
+    $greeting = '☀️ Good Morning,';
 } elseif ($currentHour < 18) {
-    $greeting = '🌤️ Good Afternoon!';
+    $greeting = '🌤️ Good Afternoon,';
 } else {
-    $greeting = '🌙 Good Evening!';
+    $greeting = '🌙 Good Evening,';
 }
 
 $vendor_id = $_SESSION['user_id'];
@@ -73,55 +69,6 @@ $transactions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     <link rel="stylesheet" href="dashboard.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="customers.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        .PROFILE_PIC {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-        .CLIENT_INFO {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #f9f9f9;
-            border-radius: 8px;
-        }
-        .CLIENT_DETAILS h3 {
-            margin: 0;
-            font-size: 1.5em;
-        }
-        .CLIENT_DETAILS p {
-            margin: 5px 0;
-            color: #555;
-        }
-        #BREADCRUMB {
-            color: #333;
-            text-decoration: none;
-        }
-        #BREADCRUMB:hover {
-            text-decoration: underline;
-        }
-        #GO_BACK {
-            color: #333;
-            text-decoration: none;
-            font-size: 14px;
-            padding: 5px 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            transition: all 0.3s;
-        }
-        #GO_BACK:hover {
-            background: #f0f0f0;
-            text-decoration: none;
-        }
-        .TRANSACTION_DETAILS {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-    </style>
 </head>
 
 <body>
@@ -131,10 +78,9 @@ $transactions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         <div class="NAVIGATION_BAR">
             <div class="LOGO">
                 <div class="LOGO_NAME">Vendi
-                    <span>DASHBOARD</span>
+                    <span id="VENDORS">VENDORS</span>
                 </div>
             </div>
-
             <div class="MENU_HEADER">MANAGEMENT</div>
                     <a href="vendor_dashboard.php"><i class="fas fa-stream"></i> Dashboard</a>
                     <a href="vendor_packages.php"><i class="fa fa-fw fa-store"></i> Packages</a>
@@ -150,16 +96,16 @@ $transactions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         <div class="DASHBOARD" id="DASHBOARD">
             <div class="UPPER">
                 <div class="LEFT_UPPER">
-                    <h1 class="DASHBOARD_TITLE"><a href="vendor_clients.php" id="BREADCRUMB">Clients /</a> History</h1>
+                    <h1 class="DASHBOARD_TITLE"><a href="vendor_clients.php" id="BREADCRUMB">Clients /</a> History: <?php echo htmlspecialchars($client['name']); ?></h1>
                 </div>
 
                 <div class="RIGHT_UPPER">
                     <div class="ACCOUNT">
-                        <span class="HELLO"><?php echo $greeting; ?></span>
+                        <div class="GREETING"><?php echo $greeting; ?></div>
                         <a href="vendor_profile.php">
-                            <img src="<?php echo htmlspecialchars($vendor['profile_pic'] ?? 'assets/images/default_profile.jpg'); ?>" alt="Profile Picture" class="PROFILE_PIC">
+                            <img src="<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="" class="PROFILE_PIC">
                         </a>    
-                        <span class="BUSINESS_NAME"><?php echo htmlspecialchars($vendor['business_name']); ?></span>             
+                        <span class="BUSINESS_NAME"><?php echo htmlspecialchars($vendor['business_name']); ?>!</span>             
                     </div>
                 </div>
             </div>
@@ -167,7 +113,7 @@ $transactions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             <!-- Client Information Section -->
             <div class="CUSTOMERS_CONTAINER">
                 <header class="CUSTOMERS_HEADER">
-                    <h2>Client: <?php echo htmlspecialchars($client['name']); ?></h2>
+                    <h2>View Client Transaction History</h2>
                     <a href="vendor_clients.php" id="GO_BACK"><i class="fas fa-arrow-left"></i> Go Back</a>
                 </header>
                 
