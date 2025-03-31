@@ -159,7 +159,7 @@ $admin_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                 </div>
                 <div class="RIGHT_UPPER">
                     <div class="ACCOUNT">
-                        <span class="HELLO"><?php echo $greeting; ?></span>
+                        <span class="GREETING"><?php echo $greeting; ?></span>
                         <a href="admin_profile.php">
                             <img src="<?php echo htmlspecialchars($admin['profile_picture'] ?? 'assets/images/default_profile.jpg'); ?>" alt="Profile Picture" class="PROFILE_PIC">
                         </a>    
@@ -206,7 +206,7 @@ $admin_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                             <table>
                                 <thead>
                                     <tr>
-                                        <th><i class="fas fa-image"></i> Profile</th>
+                                        <th id="PROFILE_PIC_HEADER"><i class="fas fa-image"></i> Profile</th>
                                         <th><i class="fas fa-user"></i> Name</th>
                                         <th><i class="fas fa-envelope"></i> Email</th>
                                         <th><i class="fas fa-phone"></i> Mobile Number</th>
@@ -216,7 +216,7 @@ $admin_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                                     <?php if ($recent_clients->num_rows > 0): ?>
                                         <?php while ($client = $recent_clients->fetch_assoc()): ?>
                                             <tr>
-                                                <td><img src="<?php echo htmlspecialchars($client['profile_picture']); ?>" alt="" class="CLIENT_PROFILE_PIC"></td>
+                                                <td id="PROFILE_PIC_CELL"><img src="<?php echo htmlspecialchars($client['profile_picture']); ?>" alt="" class="CLIENT_PROFILE_PIC"></td>
                                                 <td><b><?php echo htmlspecialchars($client['name']); ?></b></td>
                                                 <td><?php echo htmlspecialchars($client['email']); ?></td>
                                                 <td><?php echo htmlspecialchars($client['mobile_number']); ?></td>

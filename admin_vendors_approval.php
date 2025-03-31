@@ -94,7 +94,7 @@ $result = $conn->query($sql);
 
                 <div class="RIGHT_UPPER">
                     <div class="ACCOUNT">
-                        <span class="HELLO"><?php echo $greeting; ?></span>
+                        <span class="GREETING"><?php echo $greeting; ?></span>
                         <a href="profile.php">
                             <img src="<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="Profile Picture" class="PROFILE_PIC">
                         </a>    
