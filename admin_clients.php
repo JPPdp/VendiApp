@@ -111,7 +111,7 @@ $result = $conn->query($sql);
                     <table>
                         <thead>
                             <tr>
-                                <th>Profile Picture</th>
+                                <th id="PROFILE_PIC_HEADER">Profile Picture</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Mobile Number</th>
@@ -122,7 +122,7 @@ $result = $conn->query($sql);
                         <tbody>
                             <?php while ($client = $result->fetch_assoc()): ?>
                                 <tr>
-                                    <td>
+                                    <td id="PROFILE_PIC_CELL">
                                         <img src="<?php echo htmlspecialchars($client['profile_picture']); ?>" alt="Profile Picture" class="CLIENT_PROFILE_PIC">
                                     </td>
                                     <td><b><?php echo htmlspecialchars($client['name']); ?></b></td>

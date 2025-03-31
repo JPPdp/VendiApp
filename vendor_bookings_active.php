@@ -154,7 +154,7 @@ $approved_bookings = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                     <table>
                         <thead>
                             <tr>
-                                <th><i class="fas fa-hashtag"></i> Reference ID</th>
+                                <th><i class="fas fa-hashtag"></i> Booking ID</th>
                                 <th><i class="fas fa-user"></i> Client Name</th>
                                 <th><i class="fas fa-phone"></i> Mobile Number</th>
                                 <th><i class="fas fa-calendar-alt"></i> Scheduled On</th>
@@ -167,7 +167,7 @@ $approved_bookings = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                         <tbody>
                         <?php foreach ($approved_bookings as $booking): ?>
                             <tr>
-                                <td><?php echo htmlspecialchars($booking['reference_id']); ?></td>
+                                <td><?php echo htmlspecialchars($booking['booking_id']); ?></td>
                                 <td><b><?php echo htmlspecialchars($booking['client_name']); ?></b></td>
                                 <td><?php echo htmlspecialchars($booking['mobile_number']); ?></td>
                                 <td>

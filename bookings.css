@@ -383,37 +383,17 @@
     vertical-align: middle; /* Aligns the content vertically */
 }
 
-.CIRCULAR_IMAGE_CONTAINER {
-    width: 60px; /* Adjust the size as needed */
-    height: 60px; /* Adjust the size as needed */
-    border-radius: 50%; /* Makes the container circular */
-    overflow: hidden; /* Ensures the image stays within the circular container */
-    display: inline-flex; /* Allows centering of the image */
-    align-items: center; /* Centers the image vertically */
-    justify-content: center; /* Centers the image horizontally */
-    border: 2px solid #ccc; /* Optional: Add a border around the image */
-    margin: auto; /* Ensures the container is centered */
+#PROFILE_PIC_HEADER,
+#PROFILE_PIC_CELL{
+    width: 5%;
 }
 
-.CIRCULAR_IMAGE {
-    width: 100%; /* Ensures the image fills the container */
-    height: 100%; /* Ensures the image fills the container */
-    object-fit: cover; /* Ensures the image fits within the circle without distortion */
-}
-.Admin_Circular_Image_Container {
-    width: 60px; /* Adjust the size as needed */
-    height: 60px; /* Adjust the size as needed */
-    border-radius: 50%; /* Makes the container circular */
-    overflow: hidden; /* Ensures the image stays within the circular container */
-    display: inline-flex; /* Allows centering of the image */
-    align-items: center; /* Centers the image vertically */
-    justify-content: center; /* Centers the image horizontally */
-    border: 2px solid #ccc; /* Optional: Add a border around the image */
-    margin: auto; /* Ensures the container is centered */
-}
-
-.Admin_Circular_Image {
-    width: 100%; /* Ensures the image fills the container */
-    height: 100%; /* Ensures the image fills the container */
-    object-fit: cover; /* Ensures the image fits within the circle without distortion */
+.CLIENT_PROFILE_PIC {
+    width: 40px; /* Make the actual image smaller */
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #f0f0f0;
+    margin: 0 auto; /* Center the image in the cell */
+    display: block; /* Needed for margin auto to work */
 }

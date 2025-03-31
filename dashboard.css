@@ -42,7 +42,7 @@ body{
 
 .NAV_CONTAINER{
     display: flex;
-    background: var(--whtShade1);
+    background: white;
 }
 
 .LOGO{
@@ -90,8 +90,8 @@ body{
     /*background: white;
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;*/
-    color: white;
-    font-size: 0.75rem;
+    color: yellow;
+    font-size: 0.725rem;
     position: absolute;
     margin-top: 28px;
     margin-left: -58.5px;
@@ -166,7 +166,7 @@ body{
 
 .NAVIGATION_BAR a.NAV_ACTIVE, 
 .NAVIGATION_BAR a.NAV_ACTIVE:hover {
-    background: var(--whtShade2);
+    background: var(--whtShade1);
     font-family: 'Inter_Bold';  
 }
 
@@ -188,7 +188,7 @@ body{
 .DASHBOARD{
     flex: 1;
     padding: 20px;
-    background: var(--whtShade1);
+    background: white;
 }
 
 .DASHBOARD2{
@@ -238,33 +238,17 @@ body{
     margin: 0;
 }
 
-.RIGHT_UPPER .HELLO{
-    color: white;
-    font-size: 0.8rem;
-    margin-right: -10px;
-}
-
-.SEARCH_BAR {
+.GREETING {
     display: flex;
     align-items: center;
     gap: 20px;
     position: relative;
 }
 
-.SEARCH_BAR input {
-    padding: 10px 40px 10px 10px; /* right padding for the button */
-    border: none;
-    border-radius: 20px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
-    color: white;
-    font-family: 'Inter_Regular';
+.RIGHT_UPPER .GREETING{
+    color: black;
     font-size: 0.8rem;
-    width: 220px;
-    height: 10px;
-    outline: none;
+    margin-right: -10px;
 }
 
 /* ACCOUNT CONTAINER */
@@ -288,6 +272,15 @@ body{
     cursor: pointer;
 }
 
+.PROFILE_PIC_BUSINESS2 {
+    width: 40px;
+    height: 25px;
+    border-radius: 5px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+
 .BUSINESS_NAME{
     font-size: 0.8rem;
     font-family: 'Inter_Bold';
@@ -295,6 +288,12 @@ body{
     margin-left: -10px;
 }
 
+.BUSINESS_NAME2{
+    font-size: 0.8rem;
+    font-family: 'Inter_Bold';
+    color: white;
+    margin-left: -7.5px;
+}
 
 /* Booking Boxes */
 .CONTENT {
@@ -350,6 +349,8 @@ body{
     color: white; 
     z-index: 1; 
     pointer-events: none;
+    opacity: 75%;
+
 }
 
 /* BACKGROUND AND BORDER COLORS */
@@ -430,6 +431,7 @@ body{
     align-items: center;
     border-radius: 20px;
     margin: -20px -40px 0 -40px;
+    min-height: 445px;
 }
 
 .WRAPPER {
@@ -466,7 +468,7 @@ body{
     font-size: 0.9rem;
     font-family: 'Inter_Bold';
     color: var(--blkShade1);
-    width: 120px; 
+    width: 100px; 
     text-align: center; 
     flex-shrink: 0; 
 }
@@ -510,6 +512,8 @@ body{
     cursor: pointer;
     box-sizing: border-box;
     border: 0.5px solid var(--whtShade2);
+    border-radius: 10px;
+    transition: 0.2s ease-in;
 }
 
 .CALENDAR_BODY .DAYS li.INACTIVE {
@@ -780,9 +784,10 @@ body{
 }
 
 .chart-label {
-    width: 80px;
-    font-weight: bold;
-    color: #555;
+    width: 75px;
+    font-size: 0.8rem;
+    font-family: 'Inter_SemiBold';
+    color: var(--gryShade2);
 }
 
 .chart-bar-container {

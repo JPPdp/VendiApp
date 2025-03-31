@@ -1,6 +1,13 @@
 <?php
+// Database and Session Initialization
 include 'db_connect.php';
 session_start();
+
+// Authentication Check
+if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != "vendor") {
+    header("Location: login.php");
+    exit;
+}
 
 // Timezone and Greeting Setup
 date_default_timezone_set('Asia/Manila');
@@ -14,83 +21,156 @@ if ($currentHour < 12) {
     $greeting = '🌙 Good Evening,';
 }
 
-// Database connection
-$conn = new mysqli("localhost", "root", "", "vendi_services");
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Check if vendor is logged in
-if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != "vendor") {
-    header("Location: login.php");
-    exit;
-}
-
-$vendor_id = $_SESSION['user_id'];
-
-// Fetch vendor details
+// Vendor Data Fetch
 $sql = "SELECT * FROM vendors WHERE vendor_id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $vendor_id);
+$stmt->bind_param("i", $_SESSION['user_id']);
 $stmt->execute();
 $result = $stmt->get_result();
 $vendor = $result->fetch_assoc();
 
-// Fetch vendor packages if approved
-$packages = [];
-if ($vendor['status'] == "Approved") {
-    $sql = "SELECT * FROM vendor_packages WHERE vendor_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $vendor_id);
-    $stmt->execute();
-    $packages = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-}
+// Dashboard Statistics - Booking Statistics
+$stats = [];
+$sql = "SELECT COUNT(*) as count FROM bookings WHERE vendor_id = ? AND status = 'Pending'";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $_SESSION['user_id']);
+$stmt->execute();
+$result = $stmt->get_result();
+$stats['pending_bookings'] = $result->fetch_assoc()['count'];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] == 0) {
-    $profilePic = $_FILES['profile_pic'];
-    $profilePicPath = 'uploads/' . basename($profilePic['name']);
-    
-    if (move_uploaded_file($profilePic['tmp_name'], $profilePicPath)) {
-        $sql = "UPDATE admins SET profile_picture = ? WHERE admin_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("si", $profilePicPath, $_SESSION['user_id']);
-        if ($stmt->execute()) {
-            $_SESSION['profile_picture'] = $profilePicPath;
-        } else {
-            echo "Error updating profile picture: " . $conn->error;
+$sql = "SELECT COUNT(*) as count FROM bookings WHERE vendor_id = ? AND status = 'Approved'";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $_SESSION['user_id']);
+$stmt->execute();
+$result = $stmt->get_result();
+$stats['scheduled_bookings'] = $result->fetch_assoc()['count'];
+
+$sql = "SELECT COUNT(*) as count FROM bookings WHERE vendor_id = ? AND status = 'Completed'";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $_SESSION['user_id']);
+$stmt->execute();
+$result = $stmt->get_result();
+$stats['completed_bookings'] = $result->fetch_assoc()['count'];
+
+$sql = "SELECT COUNT(*) as count FROM bookings WHERE vendor_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $_SESSION['user_id']);
+$stmt->execute();
+$result = $stmt->get_result();
+$stats['total_bookings'] = $result->fetch_assoc()['count'];
+
+// Recent Bookings Data
+$sql = "SELECT b.*, c.name as client_name, c.profile_picture as client_picture, 
+               vp.package_name, vp.price
+        FROM bookings b
+        JOIN clients c ON b.client_id = c.client_id
+        JOIN vendor_packages vp ON b.package_id = vp.package_id
+        WHERE b.vendor_id = ?
+        ORDER BY b.booking_id DESC LIMIT 5";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $_SESSION['user_id']);
+$stmt->execute();
+$recent_bookings = $stmt->get_result();
+
+// Booking Status Breakdown
+$status_counts = [
+    'Pending' => 0,
+    'Approved' => 0,
+    'Completed' => 0,
+    'Cancelled' => 0
+];
+
+$sql = "SELECT status, COUNT(*) as count FROM bookings WHERE vendor_id = ? GROUP BY status";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $_SESSION['user_id']);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        if (array_key_exists($row['status'], $status_counts)) {
+            $status_counts[$row['status']] = (int)$row['count'];
         }
-        $stmt->close();
-    } else {
-        echo "Error uploading profile picture.";
     }
 }
 
+$total_bookings = array_sum($status_counts);
+
+// Active Bookings Data (Pending and Approved)
+$sql = "SELECT b.*, c.name as client_name, c.email, c.mobile_number, 
+               vp.package_name, vp.price
+        FROM bookings b
+        JOIN clients c ON b.client_id = c.client_id
+        JOIN vendor_packages vp ON b.package_id = vp.package_id
+        WHERE b.vendor_id = ? AND b.status IN ('Approved', 'Pending')
+        ORDER BY b.booking_id DESC LIMIT 5";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $_SESSION['user_id']);
+$stmt->execute();
+$active_bookings = $stmt->get_result();
+
+// Handle vendor task submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_vendor_task'])) {
+    $task = trim($_POST['vendor_task']);
+    if (!empty($task)) {
+        $stmt = $conn->prepare("INSERT INTO vendor_todos (vendor_id, task) VALUES (?, ?)");
+        $stmt->bind_param("is", $_SESSION['user_id'], $task);
+        
+        if ($stmt->execute()) {
+            header("Location: vendor_dashboard.php");
+            exit();
+        } else {
+            $vendor_todo_error = "Error adding task: " . $conn->error;
+        }
+    } else {
+        $vendor_todo_error = "Task cannot be empty";
+    }
+}
+
+// Handle vendor task deletion
+if (isset($_GET['delete_vendor_task'])) {
+    $task_id = (int)$_GET['delete_vendor_task'];
+    $stmt = $conn->prepare("DELETE FROM vendor_todos WHERE id = ? AND vendor_id = ?");
+    $stmt->bind_param("ii", $task_id, $_SESSION['user_id']);
+    $stmt->execute();
+    header("Location: vendor_dashboard.php");
+    exit();
+}
+
+// Fetch vendor's tasks
+$vendor_todos = [];
+$sql = "SELECT * FROM vendor_todos WHERE vendor_id = ? ORDER BY created_at DESC";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $_SESSION['user_id']);
+$stmt->execute();
+$vendor_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vendor Dashboard | Vendi</title>
-    <link rel="icon" href="assets/images/VendiBLK2_NoBG.png" type="image/icon type">
+    <link rel="icon" href="assets/images/VendiBLK_NoBG.png" type="image/icon type">
+    <link rel="stylesheet" href="bookings.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="dashboard.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="profile.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="notifications.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+
 <body>
+    <!-- Navigation Structure -->
     <div class="NAV_CONTAINER">
-        <!-- Navigation Bar -->
+        <!-- Navigation Bar Content -->
         <div class="NAVIGATION_BAR">
+            <!-- Logo and Menu Items -->
             <div class="LOGO">
-                <div class="LOGO_NAME">Vendi
-                    <span>ADMIN</span>
-                </div>
+                <div class="LOGO_NAME">Vendi <span id="VENDORS">VENDORS</span></div>
             </div>
-            
-            <div class="MENU_HEADER">ADMINISTRATION</div>
-            <a href="vendor_dashboard.php"><i class="fas fa-stream"></i> Dashboard</a>
+
+            <div class="MENU_HEADER">MANAGEMENT</div>
+            <a href="#DASHBOARD" class="NAV_ACTIVE"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
             
             <!-- Bookings Dropdown -->
             <div class="NAV_DROPDOWN">
@@ -98,28 +178,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['profile_pic']) && $_F
                     <i class="fa fa-fw fa-calendar"></i> Bookings <i class="fas fa-chevron-down NAV_DROPDOWN_ICON"></i>
                 </a>
                 <div class="NAV_DROPDOWN_CONTENT">
-                    <a href="vendor_bookings_approval.php"><i class="fas fa-calendar-alt"></i> <span id="ITALIC">Pending</span></a>
-                    <a href="vendor_bookings_active.php"><i class="far fa-calendar-check"></i> <span id="ITALIC">Scheduled</span></a>
-                    <a href="vendor_bookings_completed.php"><i class="fas fa-calendar-check"></i> <span id="ITALIC">Completed</span></a>
-                    <a href="vendor_bookings_cancelled.php"><i class="fas fa-calendar-times"></i> <span id="ITALIC">Cancelled</span></a>
+                    <a href="vendor_bookings_approval.php"><i class="fas fa-calendar-alt"></i> <span id="ITALIC">Pending Bookings</span></a>
+                    <a href="vendor_bookings_active.php"><i class="far fa-calendar-check"></i> <span id="ITALIC">Scheduled Bookings</span></a>
+                    <a href="vendor_bookings_completed.php"><i class="fas fa-calendar-check"></i> <span id="ITALIC">Completed Bookings</span></a>
+                    <a href="vendor_bookings_cancelled.php"><i class="fas fa-calendar-times"></i> <span id="ITALIC">Cancelled Bookings</span></a>
                 </div>
             </div>
             
             <a href="vendor_package.php"><i class="fa fa-fw fa-store"></i> Packages</a>
-            
             <a href="vendor_clients.php"><i class="fas fa-users"></i> Clients</a>
             
             <div class="MENU_HEADER">SETTINGS</div>
-            <a href="vendor_profile.php" class="NAV_ACTIVE"><i class="fa fa-fw fa-user"></i> <span>Profile</span></a>
+            <a href="vendor_profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
             <a href="vendor_help.php"><i class="fas fa-question-circle"></i> Help</a>
-            <a href="logout.php" class="LOGOUT"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+            <a href="logout.php" class="LOGOUT"><i class="fa fa-fw fa-sign-out-alt"></i> Log Out</a>
         </div>
         
-        <!-- Dashboard Content -->
+        <!-- Main Dashboard Content -->
         <div class="DASHBOARD" id="DASHBOARD">
+            <!-- Dashboard Header -->
             <div class="UPPER">
                 <div class="LEFT_UPPER">
-                    <h1 class="DASHBOARD_TITLE">Vendor Profile</h1>
+                    <h1 class="DASHBOARD_TITLE">Vendor Dashboard</h1>
                 </div>
                 <div class="RIGHT_UPPER">
                     <div class="ACCOUNT">
@@ -131,162 +211,238 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['profile_pic']) && $_F
                     </div>
                 </div>
             </div>
+            
+            <!-- Stats Boxes -->
+            <div class="CONTENT">
+                <div class="BOX PENDING">
+                    <h3><i class="fas fa-calendar-alt"></i> Pending Bookings</h3>
+                    <p><?php echo $stats['pending_bookings']; ?></p>
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="BOX SCHEDULED">
+                    <h3><i class="far fa-calendar-check"></i> Scheduled Bookings</h3>
+                    <p><?php echo $stats['scheduled_bookings']; ?></p>
+                    <i class="far fa-calendar-check"></i>
+                </div>
+                <div class="BOX COMPLETED">
+                    <h3><i class="fas fa-calendar-check"></i> Completed Bookings</h3>
+                    <p><?php echo $stats['completed_bookings']; ?></p>
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="BOX CANCELLED">
+                    <h3><i class="fas fa-calendar-times"></i> Total Bookings</h3>
+                    <p><?php echo $stats['total_bookings']; ?></p>
+                    <i class="fas fa-calendar-times"></i>
+                </div>
+            </div>
 
-            <!-- Profile Container -->
-            <div class="PROFILE_CONTAINER">
-                <!-- Left Profile Section -->
-                <div class="LEFT_PROFILE">
-                    <div class="PROFILE_PIC_CONTAINER">
-                        <img src="<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="" class="PROFILE_PIC2">
-                        <div class="EDIT_ICON_CONTAINER" title="Change Profile Picture">
-                            <form id="PROFILE_PIC_FORM" method="post" enctype="multipart/form-data">
-                                <label for="VENDOR_PROFILE_PIC" class="EDIT_ICON_LABEL">
-                                    <i class="EDIT_ICON fas fa-camera" aria-hidden="true"></i>
-                                    <input type="file" id="VENDOR_PROFILE_PIC" name="profile_pic" accept="image/*" style="display: none;" onchange="document.getElementById('PROFILE_PIC_FORM').submit();">
-                                </label>
-                            </form>
+            <!-- Main Content Container -->
+            <div class="MAIN_CONTAINER">
+                <!-- Left Column -->
+                <div class="LEFT_MAIN">
+                    <!-- Recent Bookings and Booking Chart -->
+                    <div class="FLEX_CONTAINER">
+                        <!-- Recent Bookings Table -->
+                        <div class="PACKAGE_OVERVIEW">
+                            <h2>Recent Bookings 
+                            <a href="vendor_bookings_approval.php"><i class="DIRECT fas fa-angle-right"></i></a>
+                            </h2>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th><i class="fas fa-user"></i> Client</th>
+                                        <th><i class="fas fa-box"></i> Package</th>
+                                        <th><i class="fas fa-calendar-alt"></i> Date</th>
+                                        <th><i class="fas fa-peso-sign"></i> Price</th>
+                                        <th><i class="fas fa-info-circle"></i> Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if ($recent_bookings->num_rows > 0): ?>
+                                        <?php while ($booking = $recent_bookings->fetch_assoc()): ?>
+                                            <tr>
+                                                <td>
+                                                    <b><?php echo htmlspecialchars($booking['client_name']); ?></b>
+                                                </td>
+                                                <td><?php echo htmlspecialchars($booking['package_name']); ?></td>
+                                                <td>
+                                                    <?php echo date('M d, Y', strtotime($booking['service_date'])); ?> <br>
+                                                    <small><?php echo date('h:i A', strtotime($booking['service_time'])); ?></small>
+                                                </td>
+                                                
+                                                <td>₱<?php echo number_format($booking['price'], 2); ?></td>
+                                                <td>
+                                                    <span class="status-badge <?php echo strtolower(htmlspecialchars($booking['status'])); ?>">
+                                                        <?php echo htmlspecialchars($booking['status']); ?>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        <?php endwhile; ?>
+                                    <?php else: ?>
+                                        <tr><td colspan="5">No recent bookings found</td></tr>
+                                    <?php endif; ?>
+                                </tbody>   
+                            </table>  
+                        </div>
+
+                        <!-- Booking Status Chart -->
+                        <div class="VENDOR_CHART">
+                            <h2>Bookings Overview</h2>
+                            <div class="CHART_CONTAINER">
+                                <?php foreach ($status_counts as $status => $count): 
+                                    $percentage = $total_bookings > 0 ? ($count / $total_bookings) * 100 : 0;
+                                    $gradient = '';
+                                    switch($status) {
+                                        case 'Pending': 
+                                            $gradient = 'linear-gradient(to top, #f7b500, #f77b00)'; 
+                                            break;
+                                        case 'Approved': 
+                                            $gradient = 'linear-gradient(to top, #00f70c, #009c31)'; 
+                                            break;
+                                        case 'Completed': 
+                                            $gradient = 'linear-gradient(to top, #00b4f7, #0055f7)'; 
+                                            break;
+                                        case 'Cancelled': 
+                                            $gradient = 'linear-gradient(to top, #fc241d, #c40202)'; 
+                                            break;
+                                    }
+                                ?>
+                                <div class="chart-row">
+                                    <div class="chart-label"><?php echo $status; ?></div>
+                                    <div class="chart-bar-container">
+                                        <div class="chart-bar" style="width: <?php echo $percentage; ?>%; background: <?php echo $gradient; ?>;">
+                                            <span class="chart-value"><?php echo $count; ?> (<?php echo round($percentage); ?>%)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+                            <div class="chart-legend">
+                                <div class="legend-item"><span class="legend-color" style="background: var(--gradient_Yellow)"></span><span class="legend-text">Pending</span></div>
+                                <div class="legend-item"><span class="legend-color" style="background: var(--gradient_Green)"></span><span class="legend-text">Approved</span></div>
+                                <div class="legend-item"><span class="legend-color" style="background: var(--gradient_Blue) "></span><span class="legend-text">Completed</span></div>
+                                <div class="legend-item"><span class="legend-color" style="background: var(--gradient_Red);"></span><span class="legend-text">Cancelled</span></div>
+                            </div>
                         </div>
                     </div>
-                    <h2 id="BUSINESS_NAME"><?php echo htmlspecialchars($vendor['business_name']); ?></h2>
-                    <p class="USER_ID">ID: <?php echo htmlspecialchars($vendor['vendor_id']); ?></p>
+
+                    <!-- Bookings Summary Table -->
+                    <div class="BOOKING_TABLE">
+                        <h2>Active Bookings<a href="vendor_bookings_active.php"><i class="DIRECT fas fa-angle-right"></i></a></h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th><i class="fas fa-user"></i> Client</th>
+                                    <th><i class="fas fa-envelope"></i> Email</th>
+                                    <th><i class="fas fa-phone"></i> Contact</th>
+                                    <th><i class="fas fa-box"></i> Package</th>
+                                    <th><i class="fas fa-calendar-alt"></i> Date & Time</th>
+                                    <th><i class="fas fa-map-marker-alt"></i> Location</th>
+                                    <th><i class="fas fa-info-circle"></i> Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if ($active_bookings->num_rows > 0): ?>
+                                    <?php while ($booking = $active_bookings->fetch_assoc()): ?>
+                                        <tr>
+                                            <td><b><?php echo htmlspecialchars($booking['client_name']); ?></b></td>
+                                            <td><?php echo htmlspecialchars($booking['email']); ?></td>
+                                            <td><?php echo htmlspecialchars($booking['mobile_number']); ?></td>
+                                            <td><?php echo htmlspecialchars($booking['package_name']); ?></td>
+                                            <td>
+                                                <?php echo date('M d, Y', strtotime($booking['service_date'])); ?><br>
+                                                <small><?php echo date('h:i A', strtotime($booking['service_time'])); ?></small>
+                                            </td>
+                                            <td><?php echo htmlspecialchars($booking['booking_location']); ?></td>
+                                            <td>
+                                                <span class="status-badge <?php echo strtolower(htmlspecialchars($booking['status'])); ?>">
+                                                    <?php echo htmlspecialchars($booking['status']); ?>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    <?php endwhile; ?>
+                                <?php else: ?>
+                                    <tr><td colspan="7">No active bookings found</td></tr>
+                                <?php endif; ?>
+                            </tbody>   
+                        </table>
+                    </div>
                 </div>
 
-                <!-- Right Profile Section -->
-                <div class="RIGHT_PROFILE"> 
-                    <div class="STACK3" id="FIRST_STACK">
-                        <h3>Account Information</h3>
-
-                        <div class="BESIDE_FIELDS">
-                            <div class="BESIDE_FIELD">
-                            <label>Business Name</label>
-                            <input type="text" value="<?php echo htmlspecialchars($vendor['business_name']); ?>" id="business_name" readonly>
-                            </div>
-
-                            <div class="BESIDE_FIELD">
-                            <label>Email</label>
-                            <input type="email" value="<?php echo htmlspecialchars($vendor['email']); ?>" id="business_email" readonly>
-                            </div>
-                        </div>
-
-                        <div class="BESIDE_FIELDS">
-                            <div class="BESIDE_FIELD">
-                            <label>Mobile Number</label>
-                            <input type="text" value="<?php echo htmlspecialchars($vendor['mobile_number']); ?>" id="business_mobile" readonly>
-                            </div>
-
-                            <div class="BESIDE_FIELD">
-                            <label>Business Address</label>
-                            <input type="text" id="business_address" readonly value="<?php echo htmlspecialchars($vendor['address']); ?>">
+                <!-- Right Column -->
+                <div class="RIGHT_MAIN">
+                    <!-- Calendar Widget -->
+                    <div class="CALENDAR">
+                        <h2>Calendar</h2>
+                        <div class="CALENDAR_PLACEHOLDER">
+                            <div class="WRAPPER">
+                                <header>
+                                    <div class="ICONS">
+                                        <span id="PREV" class="ICON_CLASS"><i class="fa fa-caret-left"></i></span>
+                                        <p class="CURRENT_DATE"></p>
+                                        <span id="NEXT" class="ICON_CLASS"><i class="fa fa-caret-right"></i></span>
+                                    </div>
+                                </header>
+                                <div class="CALENDAR_BODY">
+                                    <ul class="WEEKS">
+                                        <li>Sun</li><li>Mon</li><li>Tue</li><li>Wed</li><li>Thu</li><li>Fri</li><li>Sat</li>
+                                    </ul>
+                                    <ul class="DAYS"></ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="STACK3">
-                        <h3>Business Information</h3>
-
-                        <div class="BESIDE_FIELDS">
-                            <div class="BESIDE_FIELD">
-                            <label>Service Type</label>
-                            <input type="text" value="<?php echo htmlspecialchars($vendor['service_option']); ?>" id="business_service" readonly>
-
-                            <label>Business Features</label>
-                            <input type="text" value="<?php echo htmlspecialchars($vendor['business_description_short']); ?>" id="business_service" readonly>
-
-                            <label>Business Documents</label>
-                                <a href="#IMAGE_VIEW_<?php echo $vendor['vendor_id']; ?>" class="VIEW_BUTTON" id="VIEW_BUTTON">
-                                    <i class="fas fa-file-alt"></i> View File
-                                </a>
-                                <!-- Modal to display the image -->
-                                <div id="IMAGE_VIEW_<?php echo $vendor['vendor_id']; ?>" class="EXPAND">
-                                    <a href="#" class="CLOSE_BUTTON">&times;</a>
-                                    <img class="EXPANDED_IMAGE" src="<?php echo $vendor['business_document']; ?>" alt="Document File">
-                                </div>
-
-                            </div>
-
-                            <div class="BESIDE_FIELD">
-                            <label>Business Description Summary</label>
-                            <textarea id="VENDOR_DESCRIPTION" placeholder="<?php echo htmlspecialchars($vendor['business_description_long']); ?>"></textarea>
-                            </div>
+                    
+                    <!-- To-Do List Widget -->
+                    <div class="TODO_LIST">
+                        <div class="TODO_HEADER">
+                            <h2>Vendor Tasks</h2>
+                            <form method="POST" class="ADD_TASK_FORM">
+                                <input type="text" name="vendor_task" placeholder="Add vendor task..." required>
+                                <button type="submit" name="add_vendor_task" class="ADD_TASK">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </form>
                         </div>
-                    </div>
-
-                        <div class="STACK3">
-                        <h3>Account Management</h3>
-                            <div class="BESIDE_FIELDS">
-                                <div class="BESIDE_FIELD">
-                                    <button id="CHANGE_PASSWORD" class="ACCOUNT_MANAGE" onclick="window.location.href='forgot_password.php'">
-                                        <i class="fas fa-key"></i> Change Password
-                                    </button>
-                                </div>
-                                <div class="BESIDE_FIELD">
-                                    <button id="DELETE_ACCOUNT" class="ACCOUNT_MANAGE" onclick="confirmDelete()">
-                                        <i class="fas fa-trash-alt"></i> Delete Account
-                                    </button>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
+                        
+                        <?php if (!empty($vendor_todo_error)): ?>
+                            <div class="alert alert-error"><?php echo $vendor_todo_error; ?></div>
+                        <?php endif; ?>
+                        
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Task</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if (!empty($vendor_todos)): ?>
+                                    <?php foreach ($vendor_todos as $todo): ?>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($todo['task']); ?></td>
+                                            <td>
+                                                <a href="vendor_dashboard.php?delete_vendor_task=<?php echo $todo['id']; ?>" 
+                                                class="DELETE_TASK"
+                                                onclick="return confirm('Delete this task?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="2">No vendor tasks yet</td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-
-
-
-
-    <?php if ($vendor['status'] == "Pending"): ?>
-        <p>Your account is awaiting approval from the admin.</p>
-    <?php elseif ($vendor['status'] == "Denied"): ?>
-        <p>Your registration was denied. Contact admin for more details.</p>
-    <?php else: ?>
-        <h3>Your Packages</h3>
-        <?php if (!empty($packages)): ?>
-            <table border="1">
-                <tr>
-                    <th>Package Name</th>
-                    <th>Size</th>
-                    <th>Price</th>
-                    <th>Actions</th>
-                </tr>
-                <?php foreach ($packages as $package): ?>
-                    <tr>
-                        <td><?php echo $package['package_name']; ?></td>
-                        <td><?php echo $package['package_size']; ?> people</td>
-                        <td>$<?php echo $package['price']; ?></td>
-                        <td>
-                            <a href="edit_package.php?id=<?php echo $package['package_id']; ?>">Edit</a> | 
-                            <a href="delete_package.php?id=<?php echo $package['package_id']; ?>" 
-                               onclick="return confirm('Are you sure you want to delete this package?');">
-                                Delete
-                            </a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </table>
-        <?php else: ?>
-            <p>No packages added yet.</p>
-        <?php endif; ?>
-
-        <h3>Add New Package</h3>
-        <form action="add_package.php" method="POST">
-            <label>Package Name:</label>
-            <input type="text" name="package_name" required><br>
-
-            <label>Package Size (people):</label>
-            <input type="number" name="package_size" required><br>
-
-            <label>Price ($):</label>
-            <input type="number" step="0.01" name="price" required><br>
-
-            <input type="hidden" name="vendor_id" value="<?php echo $vendor_id; ?>">
-            <button type="submit">Add Package</button>
-        </form>
-    <?php endif; ?>
-
-    <br>
-    <a href="logout.php">Logout</a>
+    <script src="dashboard.js"></script>
 </body>
 </html>
