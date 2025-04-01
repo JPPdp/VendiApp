@@ -132,9 +132,11 @@ $admin_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     <div class="NAV_CONTAINER">
         <!-- Navigation Bar Content -->
         <div class="NAVIGATION_BAR">
-            <!-- Logo and Menu Items -->
             <div class="LOGO">
-                <div class="LOGO_NAME">Vendi <span>ADMIN</span></div>
+                <img src="assets/images/Vendi_Icon.png" alt="Logo Icon" class="LOGO_ICON">
+                <div class="LOGO_NAME">Vendi
+                <span>ADMIN</span>
+                </div>
             </div>
 
             <div class="MENU_HEADER">ADMINISTRATION</div>

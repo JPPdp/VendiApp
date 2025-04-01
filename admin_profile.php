@@ -76,10 +76,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['profile_picture']) &&
         <!-- Navigation Bar -->
         <div class="NAVIGATION_BAR">
             <div class="LOGO">
+                <img src="assets/images/Vendi_Icon.png" alt="Logo Icon" class="LOGO_ICON">
                 <div class="LOGO_NAME">Vendi
-                    <span>ADMIN</span>
+                <span>ADMIN</span>
                 </div>
             </div>
+
             <div class="MENU_HEADER">ADMINISTRATION</div>
             <a href="admin_dashboard.php"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
             <a href="admin_vendors_active.php"><i class="fas fa-user-tie"></i> Vendors <span id="ITALIC">(Active)</span></a>

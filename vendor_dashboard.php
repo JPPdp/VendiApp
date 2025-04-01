@@ -166,7 +166,10 @@ $vendor_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         <div class="NAVIGATION_BAR">
             <!-- Logo and Menu Items -->
             <div class="LOGO">
-                <div class="LOGO_NAME">Vendi <span id="VENDORS">VENDORS</span></div>
+                <img src="assets/images/Vendi_Icon.png" alt="Logo Icon" class="LOGO_ICON">
+                <div class="LOGO_NAME">Vendi
+                <span id="VENDORS">VENDORS</span>
+                </div>
             </div>
 
             <div class="MENU_HEADER">MANAGEMENT</div>

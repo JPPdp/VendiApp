@@ -62,8 +62,9 @@ $clients = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         <!-- Navigation Bar -->
         <div class="NAVIGATION_BAR">
             <div class="LOGO">
+                <img src="assets/images/Vendi_Icon.png" alt="Logo Icon" class="LOGO_ICON">
                 <div class="LOGO_NAME">Vendi
-                    <span id="VENDORS">VENDORS</span>
+                <span id="VENDORS">VENDORS</span>
                 </div>
             </div>
             
@@ -174,7 +175,7 @@ $clients = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             </div>
         </div>
     </div>
-    
+
     <script src="dashboard.js"></script>
 </body>
 </html>

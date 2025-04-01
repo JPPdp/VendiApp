@@ -64,8 +64,9 @@ $result = $conn->query($sql);
         <!-- Navigation Bar -->
         <div class="NAVIGATION_BAR">
             <div class="LOGO">
+                <img src="assets/images/Vendi_Icon.png" alt="Logo Icon" class="LOGO_ICON">
                 <div class="LOGO_NAME">Vendi
-                    <span>ADMIN</span>
+                <span>ADMIN</span>
                 </div>
             </div>
 

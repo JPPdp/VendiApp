@@ -59,11 +59,12 @@ $result = $conn->query($sql);
 <div class="NAV_CONTAINER">
     <!-- Navigation Bar -->
     <div class="NAVIGATION_BAR">
-        <div class="LOGO">
-            <div class="LOGO_NAME">Vendi
+            <div class="LOGO">
+                <img src="assets/images/Vendi_Icon.png" alt="Logo Icon" class="LOGO_ICON">
+                <div class="LOGO_NAME">Vendi
                 <span>ADMIN</span>
+                </div>
             </div>
-        </div>
 
         <div class="MENU_HEADER">ADMINISTRATION</div>
         <a href="admin_dashboard.php"><i class="fas fa-tachometer-alt"></i>Dashboard</a>

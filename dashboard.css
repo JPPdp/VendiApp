@@ -52,8 +52,9 @@ body{
 }
 
 .LOGO_ICON{
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
+    margin-left: 50px;
 }
 
 .LOGO_ICON img{
@@ -68,7 +69,7 @@ body{
     font-size: 2rem;
     color: white;
     margin-top: -5px;
-    margin-left: 75px;
+    margin-left: 10px;
     margin-bottom: -5px;
     position: relative;
 }
@@ -145,12 +146,10 @@ body{
 .LOGOUT{
     margin-top: -10px;
     margin-right: 0;
-    color: #c40202;
     transition: 0.5s ease-out;
 }
 
 .LOGOUT:hover{
-    color: var(--whtShade2);
     color: red;
 }
 

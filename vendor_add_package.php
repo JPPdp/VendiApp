@@ -87,8 +87,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['package_image']) && $
         <!-- Navigation Bar -->
         <div class="NAVIGATION_BAR">
             <div class="LOGO">
+                <img src="assets/images/Vendi_Icon.png" alt="Logo Icon" class="LOGO_ICON">
                 <div class="LOGO_NAME">Vendi
-                    <span>VENDOR</span>
+                <span id="VENDORS">VENDORS</span>
                 </div>
             </div>
             
@@ -245,6 +246,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['package_image']) && $
             </div>
         </div>
     </div>
-    
+
 </body>
 </html>
