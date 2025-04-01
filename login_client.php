@@ -1,7 +1,10 @@
 <?php
-include 'db_connect.php'; // Include database connection
 
 header("Content-Type: application/json");
+
+include 'db_connect.php'; // Include database connection
+
+
 
 $data = json_decode(file_get_contents("php://input"), true);
 
