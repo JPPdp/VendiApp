@@ -5,12 +5,11 @@ header("Content-Type: application/json"); // Set JSON response
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-if (isset($data['name'], $data['email'], $data['password'], $data['mobile_number'], $data['address'])) {
+if (isset($data['name'], $data['email'], $data['password'], $data['mobile_number'])) {
     $name = $data['name'];
     $email = $data['email'];
     $password = password_hash($data['password'], PASSWORD_BCRYPT); // Hash password
     $mobile_number = $data['mobile_number'];
-    $address = $data['address'];
 
     // Check if email exists
     $checkEmail = $conn->prepare("SELECT * FROM clients WHERE email = ?");
@@ -24,8 +23,8 @@ if (isset($data['name'], $data['email'], $data['password'], $data['mobile_number
     }
 
     // Insert new client
-    $stmt = $conn->prepare("INSERT INTO clients (name, email, password, mobile_number, address) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $name, $email, $password, $mobile_number, $address);
+    $stmt = $conn->prepare("INSERT INTO clients (name, email, password, mobile_number) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $name, $email, $password, $mobile_number);
 
     if ($stmt->execute()) {
         echo json_encode(["status" => "success", "message" => "Client registered successfully"]);
