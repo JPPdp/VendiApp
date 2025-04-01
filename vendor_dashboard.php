@@ -170,7 +170,7 @@ $vendor_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             </div>
 
             <div class="MENU_HEADER">MANAGEMENT</div>
-            <a href="#DASHBOARD" class="NAV_ACTIVE"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
+            <a href="#DASHBOARD" class="NAV_ACTIVE"><i class="fas fa-stream"></i> <span>Dashboard</span></a>
             
             <!-- Bookings Dropdown -->
             <div class="NAV_DROPDOWN">

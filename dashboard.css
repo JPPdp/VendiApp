@@ -144,10 +144,14 @@ body{
 
 .LOGOUT{
     margin-top: -10px;
+    margin-right: 0;
+    color: #c40202;
+    transition: 0.5s ease-out;
 }
 
 .LOGOUT:hover{
     color: var(--whtShade2);
+    color: red;
 }
 
 .NAVIGATION_BAR a:hover{
@@ -196,7 +200,7 @@ body{
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.25);
     z-index: 1000;
     align-items: center;
     justify-content: center;
@@ -208,40 +212,42 @@ body{
 
 .LOGOUT_MODAL_CONTENT {
     background: white;
-    padding: 25px;
+    padding: 20px;
     border-radius: 20px;
-    width: 300px;
+    width: 350px;
+    height: 175px;
     text-align: center;
     box-shadow: 0 4px 20px rgba(0,0,0,0.15);
 }
 
 .LOGOUT_MODAL h3 {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     margin-bottom: -10px;
     color: var(--blkShade1);
     font-family: 'Inter_Black';
     text-transform: uppercase;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--whtShade2);
 }
 
 .LOGOUT_MODAL p {
-    font-size: 0.8rem;
+    font-size: 1rem;
     color: var(--gryShade2);
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     font-family: 'Inter_SemiBoldItalic';
 }
 
 .BUTTON_ACTIONS {
-    display: flex;
     gap: 20px;
-    justify-content: center;
+    justify-content: space-around;
 }
 
 .BUTTON_CONFIRM {
     display: inline;
-    padding: 7.5px 10px;
+    padding: 8px 10px;
     color: white;
     font-family: 'Inter_Bold';
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     border-radius: 10px;
     border: 2px solid var(--whtShade2); 
     background: var(--gradient_Horizontal);
@@ -250,6 +256,7 @@ body{
     text-align: center;
     justify-content: center;
     transition: 0.5s ease-in-out;
+    margin-right: 20px;
 }
 
 .BUTTON_CONFIRM:hover {
@@ -262,10 +269,10 @@ body{
 
 .BUTTON_CANCEL {
     display: inline;
-    padding: 7.5px 10px;
+    padding: 8px 10px;
     color: var(--gryShade2);
     font-family: 'Inter_Bold';
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     border-radius: 10px;
     border: 2px solid var(--whtShade2); 
     background: var(--gradient_White);
@@ -274,6 +281,7 @@ body{
     text-align: center;
     justify-content: center;
     transition: 0.5s ease-in-out;
+    margin-right: 20px;
 }
 
 .BUTTON_CANCEL:hover {

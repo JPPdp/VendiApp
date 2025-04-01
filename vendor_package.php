@@ -85,7 +85,9 @@ if ($vendor['status'] == "Approved") {
             <div class="MENU_HEADER">SETTINGS</div>
             <a href="vendor_profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
             <a href="vendor_help.php"><i class="fas fa-question-circle"></i> Help</a>
-            <a href="logout.php" class="LOGOUT"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+            <label for="LOGOUT_MODAL_TOGGLE" class="LOGOUT">
+                <i class="fa fa-fw fa-sign-out-alt"></i> Log Out
+            </label>        
         </div>
         
         <!-- Dashboard Content -->
@@ -172,6 +174,22 @@ if ($vendor['status'] == "Approved") {
         </div>
     </div>
 <?php endif; ?>
+        </div>
+    </div>
+
+    <input type="checkbox" id="LOGOUT_MODAL_TOGGLE" class="MODAL_TOGGLE">
+    <div class="LOGOUT_MODAL">
+        <div class="LOGOUT_MODAL_CONTENT">
+            <h3>CONFIRM LOGOUT</h3>
+            <p>Are you sure you want to log out?</p>
+            <div class="BUTTON_ACTIONS">
+                <a href="logout.php" class="BUTTON_CONFIRM">
+                    <i class="fas fa-sign-out-alt"></i> LOG OUT
+                </a>
+                <label for="LOGOUT_MODAL_TOGGLE" class="BUTTON_CANCEL">
+                    <i class="fas fa-times"></i> CANCEL
+                </label>
+            </div>
         </div>
     </div>
 </body>

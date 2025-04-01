@@ -81,15 +81,33 @@ $transactions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                     <span id="VENDORS">VENDORS</span>
                 </div>
             </div>
+            
             <div class="MENU_HEADER">MANAGEMENT</div>
-                    <a href="vendor_dashboard.php"><i class="fas fa-stream"></i> Dashboard</a>
-                    <a href="vendor_packages.php"><i class="fa fa-fw fa-store"></i> Packages</a>
-                    <a href="vendor_bookings.php"><i class="fa fa-fw fa-calendar"></i> Bookings</a>
-                    <a href="vendor_clients.php" class="NAV_ACTIVE"><i class="fa fa-fw fa-users"></i> <span> Clients</span></a>
+            <a href="vendor_dashboard.php"><i class="fas fa-stream"></i> Dashboard</a>
+            
+            <!-- Bookings Dropdown -->
+            <div class="NAV_DROPDOWN">
+                <a class="NAV_DROPDOWN_TOGGLE" href="#">
+                    <i class="fa fa-fw fa-calendar"></i> Bookings <i class="fas fa-chevron-down NAV_DROPDOWN_ICON"></i>
+                </a>
+                <div class="NAV_DROPDOWN_CONTENT">
+                    <a href="vendor_bookings_approval.php"><i class="fas fa-calendar-alt"></i> <span id="ITALIC">Pending Bookings</span></a>
+                    <a href="vendor_bookings_active.php"><i class="far fa-calendar-check"></i> <span id="ITALIC">Scheduled Bookings</span></a>
+                    <a href="vendor_bookings_completed.php"><i class="fas fa-calendar-check"></i> <span id="ITALIC">Completed Bookings</span></a>
+                    <a href="vendor_bookings_cancelled.php"><i class="fas fa-calendar-times"></i> <span id="ITALIC">Cancelled Bookings</span></a>
+                </div>
+            </div>
+            
+            <a href="vendor_package.php"><i class="fa fa-fw fa-store"></i> Packages</a>
+            
+            <a href="vendor_clients.php" class="NAV_ACTIVE"><i class="fas fa-users"></i> <span>Clients</span></a>
+            
             <div class="MENU_HEADER">SETTINGS</div>
-                    <a href="vendor_profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
-                    <a href="help.php"><i class="fa fa-fw fa-question-circle"></i> Help</a>
-                    <a href="logout.php" class="LOGOUT"><i class="fa fa-fw fa-sign-out-alt"></i> Log Out</a>
+            <a href="vendor_profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
+            <a href="vendor_help.php"><i class="fas fa-question-circle"></i> Help</a>
+            <label for="LOGOUT_MODAL_TOGGLE" class="LOGOUT">
+                <i class="fa fa-fw fa-sign-out-alt"></i> Log Out
+            </label>
         </div>
         
         <!-- Dashboard Content -->
@@ -156,6 +174,22 @@ $transactions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="checkbox" id="LOGOUT_MODAL_TOGGLE" class="MODAL_TOGGLE">
+    <div class="LOGOUT_MODAL">
+        <div class="LOGOUT_MODAL_CONTENT">
+            <h3>CONFIRM LOGOUT</h3>
+            <p>Are you sure you want to log out?</p>
+            <div class="BUTTON_ACTIONS">
+                <a href="logout.php" class="BUTTON_CONFIRM">
+                    <i class="fas fa-sign-out-alt"></i> LOG OUT
+                </a>
+                <label for="LOGOUT_MODAL_TOGGLE" class="BUTTON_CANCEL">
+                    <i class="fas fa-times"></i> CANCEL
+                </label>
             </div>
         </div>
     </div>
