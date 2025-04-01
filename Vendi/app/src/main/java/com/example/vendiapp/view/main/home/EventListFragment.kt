@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vendiapp.R
 import com.example.vendiapp.adapter.EventAdapter
-import com.example.vendiapp.model.EventModel
+import com.example.vendiapp.model.VendorModel
 import com.example.vendiapp.viewmodel.EventViewModel
 
 class EventListFragment : Fragment() {
@@ -44,7 +44,7 @@ class EventListFragment : Fragment() {
             val filteredEvents = if (category == "all") {
                 events
             } else {
-                events.filter { it.category.equals(category, ignoreCase = true) }
+                events.filter { it.category_id.equals(category, ignoreCase = true) }
             }
             eventAdapter.updateEvents(filteredEvents)
         }
@@ -59,7 +59,7 @@ class EventListFragment : Fragment() {
     }
 
     // Navigate to EventDetailsFragment instead of EventDetailsActivity
-    private fun navigateToDetails(event: EventModel) {
+    private fun navigateToDetails(event: VendorModel) {
         parentFragmentManager.commit {
             replace(R.id.fgtContainer, EventDetailsFragment.newInstance(event))
             addToBackStack(null) // Allows going back to the event list

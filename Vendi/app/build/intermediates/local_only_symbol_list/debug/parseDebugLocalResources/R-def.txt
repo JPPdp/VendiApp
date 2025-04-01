@@ -112,16 +112,15 @@ id calendarView
 id cbTerms
 id cl
 id cl2
-id etCall
 id etConfirmPassword
 id etCreatePassword
 id etEmail
 id etMessage
+id etName
 id etNewPassword
 id etPassword
 id etPhone
 id fgtContainer
-id fragment_container
 id imageButton
 id imageButton2
 id imageView
@@ -236,7 +235,6 @@ id tvTitle
 id tvVenue
 id viewPager
 layout activity_auth
-layout activity_booking
 layout activity_main
 layout activity_messages
 layout activity_onboarding

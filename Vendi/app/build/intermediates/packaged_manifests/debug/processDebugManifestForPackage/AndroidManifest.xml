@@ -34,15 +34,6 @@
         android:theme="@style/Theme.VendiApp"
         android:usesCleartextTraffic="true" >
         <activity
-            android:name="com.example.vendiapp.view.main.MessagesActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.example.vendiapp.view.booking.BookingActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.example.vendiapp.view.vendor.VendorActivity"
-            android:exported="false" />
-        <activity
             android:name="com.example.vendiapp.OnboardingActivity"
             android:exported="true" >
             <intent-filter>

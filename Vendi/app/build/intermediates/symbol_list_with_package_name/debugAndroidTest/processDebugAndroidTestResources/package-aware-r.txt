@@ -1,3 +1,0 @@
-com.example.vendiapp.test
-style WhiteBackgroundDialogTheme
-style WhiteBackgroundTheme

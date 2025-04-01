@@ -4,13 +4,13 @@ import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.vendiapp.model.EventModel
+import com.example.vendiapp.model.VendorModel
 import com.example.vendiapp.model.PackageModel
 
 class EventDetailsViewModel : ViewModel() {
 
-    private val _event = MutableLiveData<EventModel?>()
-    val event: LiveData<EventModel?> = _event
+    private val _event = MutableLiveData<VendorModel?>()
+    val event: LiveData<VendorModel?> = _event
 
     private val _packages = MutableLiveData<List<PackageModel>>()
     val packages: LiveData<List<PackageModel>> = _packages
@@ -29,19 +29,18 @@ class EventDetailsViewModel : ViewModel() {
         val isFeatured = bundle.getBoolean("isFeatured", false)
         val category = bundle.getString("category", "") ?: ""
 
-        // ✅ Corrected to match EventModel
-        val eventModel = EventModel(
-            id = id,
-            title = title,
-            subTitle = subTitle,
-            description = description,
-            location = location,
+        // ✅ Corrected to match VendorModel
+        val eventModel = VendorModel(
+            vendor_id = id,
+            business_name = title,
+            short_desc = subTitle,
+            long_desc = description,
+            address = location,
             price = price,
             rating = rating,
-            imageUrl = imageUrl,
-            vendorId = vendorId,
+            //imageUrl = imageUrl,
             isFeatured = isFeatured,
-            category = category
+            category_id = category
         )
 
         _event.value = eventModel

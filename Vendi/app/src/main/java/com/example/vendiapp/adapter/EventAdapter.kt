@@ -8,11 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.vendiapp.R
-import com.example.vendiapp.model.EventModel
+import com.example.vendiapp.model.VendorModel
 
 class EventAdapter(
-    private var itemList: List<EventModel>,
-    private val onItemClick: (EventModel) -> Unit // Click listener
+    private var itemList: List<VendorModel>,
+    private val onItemClick: (VendorModel) -> Unit // Click listener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -45,12 +45,12 @@ class EventAdapter(
 
     override fun getItemCount() = itemList.size
 
-    fun updateEvents(newList: List<EventModel>) {
+    fun updateEvents(newList: List<VendorModel>) {
         itemList = newList
         notifyDataSetChanged()
     }
 
-    class CategoryViewHolder(itemView: View, private val onItemClick: (EventModel) -> Unit) :
+    class CategoryViewHolder(itemView: View, private val onItemClick: (VendorModel) -> Unit) :
         RecyclerView.ViewHolder(itemView) {
 
         private val itemImage: ImageView = itemView.findViewById(R.id.ivEventImage)
@@ -59,24 +59,24 @@ class EventAdapter(
         private val price: TextView = itemView.findViewById(R.id.tvPrice)
         private val rating: TextView = itemView.findViewById(R.id.tvRating)
 
-        fun bind(item: EventModel) {
-            itemName.text = item.title
-            location.text = item.location
+        fun bind(item: VendorModel) {
+            itemName.text = item.business_name
+            location.text = item.address
             price.text = item.price
             rating.text = item.rating.toString()
 
-            // Load image from URL using Glide
+            /*/ Load image from URL using Glide
             Glide.with(itemView.context)
                 .load(item.imageUrl)
                 .placeholder(R.drawable.baseline_cloud_download_24) // Optional placeholder
                 .error(R.drawable.error_image) // Optional error image
                 .into(itemImage)
-
+            */
             itemView.setOnClickListener { onItemClick(item) }
         }
     }
 
-    class FeaturedItemViewHolder(itemView: View, private val onItemClick: (EventModel) -> Unit) :
+    class FeaturedItemViewHolder(itemView: View, private val onItemClick: (VendorModel) -> Unit) :
         RecyclerView.ViewHolder(itemView) {
 
         private val itemImage: ImageView = itemView.findViewById(R.id.ivFeatureEventImage)
@@ -86,19 +86,19 @@ class EventAdapter(
         private val rating: TextView = itemView.findViewById(R.id.tvFeatureEventRating)
         private val starIcon: ImageView = itemView.findViewById(R.id.ivFeatureStar)
 
-        fun bind(item: EventModel) {
-            itemName.text = item.title
-            location.text = item.location
+        fun bind(item: VendorModel) {
+            itemName.text = item.business_name
+            location.text = item.address
             price.text = item.price
             rating.text = item.rating.toString()
 
-            // Load image from URL using Glide
+            /*/ Load image from URL using Glide
             Glide.with(itemView.context)
                 .load(item.imageUrl)
                 .placeholder(R.drawable.baseline_cloud_download_24) // Optional placeholder
                 .error(R.drawable.error_image) // Optional error image
                 .into(itemImage)
-
+            */
             itemView.setOnClickListener { onItemClick(item) }
         }
     }

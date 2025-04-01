@@ -1,6 +1,0 @@
-com.example.vendiapp.test.app-core-1.6.1-0 C:\Users\ASUS\.gradle\caches\8.10.2\transforms\35067c98f331d15278a299a265ac4ac3\transformed\core-1.6.1\res
-com.example.vendiapp.test.app-tracing-1.2.0-1 C:\Users\ASUS\.gradle\caches\8.10.2\transforms\d6bfbb90bf789d3061a7f71919f35f60\transformed\tracing-1.2.0\res
-com.example.vendiapp.test.app-androidTest-2 C:\Users\ASUS\Desktop\2S2425FinalProject\Vendi\app\build\generated\res\resValues\androidTest\debug
-com.example.vendiapp.test.app-mergeDebugAndroidTestResources-3 C:\Users\ASUS\Desktop\2S2425FinalProject\Vendi\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
-com.example.vendiapp.test.app-mergeDebugAndroidTestResources-4 C:\Users\ASUS\Desktop\2S2425FinalProject\Vendi\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
-com.example.vendiapp.test.app-debugAndroidTest-5 C:\Users\ASUS\Desktop\2S2425FinalProject\Vendi\app\build\intermediates\merged_res\debugAndroidTest\mergeDebugAndroidTestResources
