@@ -5,20 +5,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.vendiapp.repository.EventRepository
-import com.example.vendiapp.model.EventModel
+import com.example.vendiapp.model.VendorModel
 
 class EventViewModel : ViewModel() {
 
     private val eventRepository = EventRepository()
 
-    private val _events = MutableLiveData<List<EventModel>>()
-    private val events: LiveData<List<EventModel>> get() = _events
+    private val _events = MutableLiveData<List<VendorModel>>()
+    private val events: LiveData<List<VendorModel>> get() = _events
 
-    private val _nonFeaturedEvents = MutableLiveData<List<EventModel>>()
-    val nonFeaturedEvents: LiveData<List<EventModel>> get() = _nonFeaturedEvents
+    private val _nonFeaturedEvents = MutableLiveData<List<VendorModel>>()
+    val nonFeaturedEvents: LiveData<List<VendorModel>> get() = _nonFeaturedEvents
 
-    private val _featuredEvents = MutableLiveData<List<EventModel>>()
-    val featuredEvents: LiveData<List<EventModel>> get() = _featuredEvents
+    private val _featuredEvents = MutableLiveData<List<VendorModel>>()
+    val featuredEvents: LiveData<List<VendorModel>> get() = _featuredEvents
 
     private var lastFetchedCategory: String? = null
     private var isLoading = false // Prevent multiple simultaneous loads

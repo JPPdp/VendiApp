@@ -14,8 +14,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.vendiapp.R
-import com.example.vendiapp.api.ApiUtils
+import com.example.vendiapp.api.RetrofitClient
+import com.example.vendiapp.model.LoginRequest
+import com.example.vendiapp.model.LoginResponse
 import com.example.vendiapp.view.main.MainActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LogInFragment : Fragment() {
 
@@ -32,39 +37,15 @@ class LogInFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_log_in, container, false)
 
-        // ✅ Initialize views
-        initViews(view)
-
-        // ✅ Initialize SharedPreferences
-        sharedPreferences = requireActivity().getSharedPreferences("VendiAppPrefs", Context.MODE_PRIVATE)
-
-        // ✅ Check if user is already logged in
-        if (isUserLoggedIn()) {
-            Log.d("LogInFragment", "User already logged in. Redirecting to MainActivity.")
-            navigateToMainActivity()
-        }
-
-        // ✅ Set click listeners
-        setClickListeners()
-
-        return view
-    }
-
-    // ✅ Initialize views
-    private fun initViews(view: View) {
         etEmail = view.findViewById(R.id.etEmail)
         etPassword = view.findViewById(R.id.etPassword)
         btnSignIn = view.findViewById(R.id.btnSignIn)
         btnSignUp = view.findViewById(R.id.btnSignUp)
         tvForgotPassword = view.findViewById(R.id.tvForgotPassword)
-    }
 
-    // ✅ Set button click listeners
-    private fun setClickListeners() {
         btnSignIn.setOnClickListener {
             val email = etEmail.text.toString().trim()
             val password = etPassword.text.toString().trim()
-
             if (validateInputs(email, password)) {
                 loginUser(email, password)
             }
@@ -83,9 +64,12 @@ class LogInFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
+
+        return view
     }
 
-    // ✅ Validate user inputs
+
+
     private fun validateInputs(email: String, password: String): Boolean {
         return when {
             email.isEmpty() -> {
@@ -100,37 +84,45 @@ class LogInFragment : Fragment() {
         }
     }
 
-    // ✅ Login user using API
     private fun loginUser(email: String, password: String) {
-        ApiUtils.loginUserToDB(email, password) { success, userId, message ->
-            requireActivity().runOnUiThread {
-                if (success && !userId.isNullOrEmpty()) {
-                    saveUserSession(userId, email, password)
-                    navigateToMainActivity()
+        val loginRequest = LoginRequest(email, password) // Create a LoginRequest object
+
+        RetrofitClient.instance.loginUser(loginRequest).enqueue(object : Callback<LoginResponse> {
+            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                if (response.isSuccessful && response.body() != null) {
+                    val loginResponse = response.body()!!
+                    if (loginResponse.success) {
+                        saveUserSession(loginResponse.clientId, email, password) // FIXED
+                        navigateToMainActivity()
+                    } else {
+                        showToast(loginResponse.message ?: "Login failed")
+                    }
                 } else {
-                    showToast(message)
+                    showToast("Error: ${response.errorBody()?.string()}")
                 }
             }
-        }
+
+
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                showToast("Network error: ${t.message}")
+            }
+        })
     }
 
-    // ✅ Save user session with email and password
-    private fun saveUserSession(userId: String, email: String, password: String) {
+    private fun saveUserSession(clientId: String, email: String, password: String) {
         sharedPreferences.edit().apply {
             putBoolean("isLoggedIn", true)
-            putString("userId", userId)
+            putString("clientId", clientId)
             putString("email", email)
             putString("password", password)
             apply()
         }
     }
 
-    // ✅ Check if user is logged in
     private fun isUserLoggedIn(): Boolean {
         return sharedPreferences.getBoolean("isLoggedIn", false)
     }
 
-    // ✅ Navigate to MainActivity after login
     private fun navigateToMainActivity() {
         val intent = Intent(requireActivity(), MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -139,7 +131,6 @@ class LogInFragment : Fragment() {
         requireActivity().finish()
     }
 
-    // ✅ Show toast message
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }

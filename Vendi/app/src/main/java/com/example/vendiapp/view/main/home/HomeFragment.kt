@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -20,8 +19,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.vendiapp.R
 import com.example.vendiapp.adapter.EventAdapter
 import com.example.vendiapp.adapter.ViewPagerAdapter
-import com.example.vendiapp.model.EventModel
-import com.example.vendiapp.view.main.MessagesActivity
+import com.example.vendiapp.model.VendorModel
 import com.example.vendiapp.viewmodel.EventViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -44,12 +42,7 @@ class HomeFragment : Fragment() {
         val featuredRecyclerView: RecyclerView = view.findViewById(R.id.rvFeaturedEvents)
         val tvTab: TextView = view.findViewById(R.id.tvTab)
 
-        //Button Import & Function - Message
-        val btnViewMessages : ImageButton = view.findViewById(R.id.imageButton)
-        btnViewMessages.setOnClickListener {
-            val intent = Intent(requireContext(), MessagesActivity::class.java)
-            startActivity(intent)
-        }
+
 
         setupFeaturedEventsRecyclerView(featuredRecyclerView)
         setupTabLayout(tabLayout, viewPager, tvTab)
@@ -135,7 +128,7 @@ class HomeFragment : Fragment() {
     }
 
     // Open EventDetailsFragment instead of Activity
-    private fun openEventDetails(event: EventModel) {
+    private fun openEventDetails(event: VendorModel) {
         parentFragmentManager.commit {
             replace(R.id.fgtContainer, EventDetailsFragment.newInstance(event))
             addToBackStack(null) // Enables back navigation

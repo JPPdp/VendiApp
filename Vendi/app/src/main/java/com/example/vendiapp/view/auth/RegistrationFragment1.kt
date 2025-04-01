@@ -14,7 +14,7 @@ import com.example.vendiapp.R
 import com.example.vendiapp.view.auth.PasswordRecoveryFragment
 class RegistrationFragment1 : Fragment() {
 
-    private lateinit var etCall: EditText
+    private lateinit var etName: EditText
     private var username: String? = null
 
     override fun onCreateView(
@@ -23,11 +23,13 @@ class RegistrationFragment1 : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_registration1, container, false)
 
-        etCall = view.findViewById(R.id.etCall)
+        etName = view.findViewById(R.id.etName)
         val btnNext: Button = view.findViewById(R.id.btnNext)
 
         btnNext.setOnClickListener {
-            username = etCall.text.toString().trim()
+            username = etName.text.toString().trim()
+
+
 
             if (username.isNullOrEmpty()) {
                 Toast.makeText(context, "Enter a username!", Toast.LENGTH_SHORT).show()

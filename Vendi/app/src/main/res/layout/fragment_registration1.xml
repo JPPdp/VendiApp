@@ -49,7 +49,7 @@
                     android:textColor="@color/textColor"
                     android:textSize="24sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/etCall"
+                    app:layout_constraintBottom_toTopOf="@+id/etName"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +57,7 @@
                     app:layout_constraintVertical_bias="0.5" />
 
                 <EditText
-                    android:id="@+id/etCall"
+                    android:id="@+id/etName"
                     android:layout_width="327dp"
                     android:layout_height="56dp"
                     android:layout_marginBottom="32dp"
@@ -85,8 +85,8 @@
                     android:textSize="16sp"
                     android:textAllCaps="false"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@id/etCall"
-                    app:layout_constraintStart_toStartOf="@id/etCall" />
+                    app:layout_constraintEnd_toEndOf="@id/etName"
+                    app:layout_constraintStart_toStartOf="@id/etName" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
