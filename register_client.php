@@ -36,7 +36,7 @@ if (!preg_match('/^[0-9]{10,15}$/', $mobile_number)) {
 }
 
 // Check if email exists
-$checkEmail = $conn->prepare("SELECT id FROM clients WHERE email = ?");
+$checkEmail = $conn->prepare("SELECT client_id FROM clients WHERE email = ?");
 $checkEmail->bind_param("s", $email);
 $checkEmail->execute();
 
