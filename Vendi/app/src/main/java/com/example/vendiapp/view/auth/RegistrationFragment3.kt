@@ -14,6 +14,7 @@ import com.example.vendiapp.model.ClientRequest
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
 
 class RegistrationFragment3 : Fragment() {
 
@@ -60,15 +61,13 @@ class RegistrationFragment3 : Fragment() {
         }
 
         // Handle back button click
-        val llBack = view.findViewById<LinearLayout>(R.id.llBack)
-        llBack?.setOnClickListener {
+        view.findViewById<LinearLayout>(R.id.llBack)?.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
         return view
     }
 
-    // Validate email and password inputs
     private fun validateInputs(email: String, password: String): Boolean {
         return when {
             email.isEmpty() || !isValidEmail(email) -> {
@@ -83,12 +82,10 @@ class RegistrationFragment3 : Fragment() {
         }
     }
 
-    // Function to check email validity
     private fun isValidEmail(email: String): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    // Register user through API
     private fun registerUser(email: String, password: String) {
         val request = ClientRequest(
             name = username ?: "",
@@ -97,44 +94,68 @@ class RegistrationFragment3 : Fragment() {
             password = password
         )
 
+        showLoading(true)
+
         RetrofitClient.instance.createClient(request).enqueue(object : Callback<ClientResponse> {
             override fun onResponse(call: Call<ClientResponse>, response: Response<ClientResponse>) {
-                if (response.isSuccessful) {
-                    // Log the raw response body to debug what the server is sending back
-                    Log.d("API_RESPONSE", "Response body: ${response.body()}")
+                showLoading(false)
 
-                    // Continue with your existing logic
-                    if (response.body() != null) {
-                        val signupResponse = response.body()!!
-                        if (signupResponse.success) {
-                            Toast.makeText(requireContext(), "Signup successful!", Toast.LENGTH_SHORT).show()
-                            parentFragmentManager.beginTransaction()
-                                .replace(R.id.fgtContainer, LogInFragment())
-                                .commit()
-                        } else {
-                            Toast.makeText(requireContext(), signupResponse.message ?: "Signup failed", Toast.LENGTH_SHORT).show()
+                try {
+                    if (response.isSuccessful) {
+                        response.body()?.let { apiResponse ->
+                            if (apiResponse.success) {
+                                handleSuccess()
+                            } else {
+                                showError(apiResponse.message ?: "Registration failed")
+                            }
+                        } ?: showError("Empty response from server")
+                    } else {
+                        // Try to parse error response
+                        val errorBody = response.errorBody()?.string()
+                        Log.e("API_ERROR", "Status code: ${response.code()}, Error: $errorBody")
+
+                        try {
+                            // If your server returns consistent error format
+                            val errorResponse = RetrofitClient.gson.fromJson(errorBody, ClientResponse::class.java)
+                            showError(errorResponse.message ?: "Error: ${response.code()}")
+                        } catch (e: Exception) {
+                            // Fallback to raw error message
+                            showError(errorBody ?: "Error: ${response.code()}")
                         }
                     }
-                } else {
-                    // Log the error body to debug the error response
-                    val errorBody = response.errorBody()?.string()
-                    Log.e("API_ERROR", "Error response body: $errorBody")
-                    handleErrorResponse(errorBody)
+                } catch (e: Exception) {
+                    Log.e("API_ERROR", "Response processing error", e)
+                    showError("Error processing response")
                 }
             }
 
-
-
             override fun onFailure(call: Call<ClientResponse>, t: Throwable) {
-                Log.e("NETWORK_ERROR", "Failed to make request: ${t.message}")
-                Toast.makeText(requireContext(), "Network error: ${t.message}", Toast.LENGTH_LONG).show()
+                showLoading(false)
+                Log.e("NETWORK_ERROR", "API call failed", t)
+                showError(
+                    when (t) {
+                        is IOException -> "Network error. Please check your connection"
+                        else -> "Error: ${t.localizedMessage}"
+                    }
+                )
             }
         })
     }
 
-    // Handle error response from API
-    private fun handleErrorResponse(error: String?) {
-        Log.e("API_ERROR", "Error Response: $error")
-        Toast.makeText(requireContext(), "Error: $error", Toast.LENGTH_LONG).show()
+    private fun handleSuccess() {
+        Toast.makeText(requireContext(), "Registration successful!", Toast.LENGTH_SHORT).show()
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fgtContainer, LogInFragment())
+            .commit()
+    }
+
+    private fun showError(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+    }
+
+    private fun showLoading(show: Boolean) {
+        btnSignIn.isEnabled = !show
+        btnSignIn.text = if (show) "Processing..." else "Sign In"
+        // You can add a progress bar here if needed
     }
 }
