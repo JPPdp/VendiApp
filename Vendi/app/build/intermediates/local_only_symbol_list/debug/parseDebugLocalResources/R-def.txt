@@ -103,7 +103,6 @@ id btnCreateNewPassword
 id btnFeatureFavorite
 id btnNext
 id btnReservation
-id btnSend
 id btnSignIn
 id btnSignUp
 id btnStart
@@ -115,7 +114,6 @@ id cl2
 id etConfirmPassword
 id etCreatePassword
 id etEmail
-id etMessage
 id etName
 id etNewPassword
 id etPassword
@@ -149,7 +147,6 @@ id llDeleteAccount
 id llEndTime
 id llLocation
 id llLogOutIcon
-id llMessage
 id llRedirectToAccountInfo
 id llStartTime
 id llTime
@@ -167,11 +164,9 @@ id rlAccountInfo
 id rlChangePassword
 id rlDeleteAccount
 id rlLogOut
-id rvChat
 id rvEventPackageDetails
 id rvEvents
 id rvFeaturedEvents
-id rvMessages
 id rvScheduledEvents
 id searchView
 id tabLayout
@@ -236,14 +231,11 @@ id tvVenue
 id viewPager
 layout activity_auth
 layout activity_main
-layout activity_messages
 layout activity_onboarding
 layout activity_vendor
-layout chat_bubble
 layout custom_tab
 layout fragment_account_info
 layout fragment_change_password
-layout fragment_chat
 layout fragment_create_new_password
 layout fragment_create_new_password2
 layout fragment_event_details

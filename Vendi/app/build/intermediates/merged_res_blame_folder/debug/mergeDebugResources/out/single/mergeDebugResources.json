@@ -1,11 +1,11 @@
 [
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-debug-41:\\drawable_bg_chat_received.xml.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-main-43:\\drawable\\bg_chat_received.xml"
-    },
-    {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-debug-41:\\drawable_icon_current_location.png.flat",
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-main-43:\\drawable\\icon_current_location.png"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-debug-41:\\drawable_bg_chat_received.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-main-43:\\drawable\\bg_chat_received.xml"
     },
     {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-debug-41:\\layout_fragment_registration1.xml.flat",
@@ -60,12 +60,12 @@
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-main-43:\\menu\\bottom_nav_menu.xml"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-debug-41:\\drawable_img_matcha_latte.jpg.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-main-43:\\drawable\\img_matcha_latte.jpg"
-    },
-    {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-debug-41:\\drawable_bg_chat_sent.xml.flat",
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-main-43:\\drawable\\bg_chat_sent.xml"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-debug-41:\\drawable_img_matcha_latte.jpg.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-main-43:\\drawable\\img_matcha_latte.jpg"
     },
     {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-debug-41:\\drawable_img_gaming_tournament.jpg.flat",
@@ -100,12 +100,12 @@
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-main-43:\\layout\\fragment_event_details.xml"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-debug-41:\\drawable_img_lemonology_package3.png.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-main-43:\\drawable\\img_lemonology_package3.png"
-    },
-    {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-debug-41:\\drawable_bg_message.xml.flat",
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-main-43:\\drawable\\bg_message.xml"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-debug-41:\\drawable_img_lemonology_package3.png.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-main-43:\\drawable\\img_lemonology_package3.png"
     },
     {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-debug-41:\\drawable_icon_dialogue_black.png.flat",
@@ -212,6 +212,10 @@
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-main-43:\\drawable\\icon_noodle_white.png"
     },
     {
+        "merged": "com.example.vendiapp-debug-41:/layout_custom_tab.xml.flat",
+        "source": "com.example.vendiapp-main-43:/layout/custom_tab.xml"
+    },
+    {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-debug-41:\\mipmap-hdpi_ic_launcher_round.webp.flat",
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-main-43:\\mipmap-hdpi\\ic_launcher_round.webp"
     },
@@ -250,10 +254,6 @@
     {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-debug-41:\\drawable_border.xml.flat",
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-main-43:\\drawable\\border.xml"
-    },
-    {
-        "merged": "com.example.vendiapp-debug-41:/xml_network_security_config.xml.flat",
-        "source": "com.example.vendiapp-main-43:/xml/network_security_config.xml"
     },
     {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\8.11.1\\com.example.vendiapp-debug-41:\\drawable_img_pumpkin_pie.jpg.flat",

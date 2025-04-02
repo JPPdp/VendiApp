@@ -3275,7 +3275,6 @@ int id btnCreateNewPassword 0x7f080065
 int id btnFeatureFavorite 0x7f080066
 int id btnNext 0x7f080067
 int id btnReservation 0x7f080068
-int id btnSend 0x7f080069
 int id btnSignIn 0x7f08006a
 int id btnSignUp 0x7f08006b
 int id btnStart 0x7f08006c
@@ -3368,7 +3367,6 @@ int id enterAlwaysCollapsed 0x7f0800c2
 int id etConfirmPassword 0x7f0800c3
 int id etCreatePassword 0x7f0800c4
 int id etEmail 0x7f0800c5
-int id etMessage 0x7f0800c6
 int id etName 0x7f0800c7
 int id etNewPassword 0x7f0800c8
 int id etPassword 0x7f0800c9
@@ -3465,7 +3463,6 @@ int id llDeleteAccount 0x7f080123
 int id llEndTime 0x7f080124
 int id llLocation 0x7f080125
 int id llLogOutIcon 0x7f080126
-int id llMessage 0x7f080127
 int id llRedirectToAccountInfo 0x7f080128
 int id llStartTime 0x7f080129
 int id llTime 0x7f08012a
@@ -3610,11 +3607,9 @@ int id rlDeleteAccount 0x7f0801b4
 int id rlLogOut 0x7f0801b5
 int id rounded 0x7f0801b6
 int id row_index_key 0x7f0801b7
-int id rvChat 0x7f0801b8
 int id rvEventPackageDetails 0x7f0801b9
 int id rvEvents 0x7f0801ba
 int id rvFeaturedEvents 0x7f0801bb
-int id rvMessages 0x7f0801bc
 int id rvScheduledEvents 0x7f0801bd
 int id save_non_transition_alpha 0x7f0801be
 int id save_overlay_view 0x7f0801bf
@@ -3924,10 +3919,8 @@ int layout abc_select_dialog_material 0x7f0b001a
 int layout abc_tooltip 0x7f0b001b
 int layout activity_auth 0x7f0b001c
 int layout activity_main 0x7f0b001d
-int layout activity_messages 0x7f0b001e
 int layout activity_onboarding 0x7f0b001f
 int layout activity_vendor 0x7f0b0020
-int layout chat_bubble 0x7f0b0021
 int layout custom_dialog 0x7f0b0022
 int layout custom_tab 0x7f0b0023
 int layout design_bottom_navigation_item 0x7f0b0024
@@ -3947,7 +3940,6 @@ int layout design_text_input_end_icon 0x7f0b0031
 int layout design_text_input_start_icon 0x7f0b0032
 int layout fragment_account_info 0x7f0b0033
 int layout fragment_change_password 0x7f0b0034
-int layout fragment_chat 0x7f0b0035
 int layout fragment_create_new_password 0x7f0b0036
 int layout fragment_create_new_password2 0x7f0b0037
 int layout fragment_event_details 0x7f0b0038

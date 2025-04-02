@@ -1,6 +1,7 @@
 package com.example.vendiapp.view.main.profile
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,15 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.example.vendiapp.R
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.vendiapp.model.ClientRequest
+import com.example.vendiapp.view.auth.AuthActivity
 
 class ProfileFragment : Fragment() {
 
+    private lateinit var llLogOutIcon: LinearLayout
     private lateinit var tvProfileName: TextView
     private lateinit var tvProfileEmail: TextView
     private lateinit var tvId: TextView
@@ -24,109 +25,74 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
-
-        // ✅ Initialize views
         initViews(view)
-
-        // ✅ Load profile data from DB using clientId
-        loadUserProfile()
-
-        // ✅ Navigate to Account Info Fragment
-        val llRedirectToAccountInfo = view.findViewById<LinearLayout>(R.id.llRedirectToAccountInfo)
-        llRedirectToAccountInfo.setOnClickListener {
-            val fragment = AccountInfoFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fgtContainer, fragment)
-                .addToBackStack(null)
-                .commitAllowingStateLoss()
-        }
-
-        // ✅ Navigate to Change Password Fragment
-        val llChangePasswordNext = view.findViewById<LinearLayout>(R.id.llChangePasswordNext)
-        llChangePasswordNext.setOnClickListener {
-            val fragment = ChangePasswordFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fgtContainer, fragment)
-                .addToBackStack(null)
-                .commitAllowingStateLoss()
-        }
-
+        setupLogoutButton()
+        updateProfileData() // Load data immediately
         return view
     }
 
-    // ✅ Initialize views
+    override fun onResume() {
+        super.onResume()
+        updateProfileData() // Reload data when fragment resumes
+    }
+
     private fun initViews(view: View) {
         tvProfileName = view.findViewById(R.id.tvProfileName)
         tvProfileEmail = view.findViewById(R.id.tvProfileEmail)
         tvId = view.findViewById(R.id.tvId)
+        llLogOutIcon = view.findViewById(R.id.llLogOutIcon)
     }
 
-    // ✅ Load profile data using clientId from DB
-    private fun loadUserProfile() {
-        val clientId = getClientIdFromPrefs()
-        val userEmail = getUserEmailFromPrefs()
-        val userName = getUserNameFromPrefs()
+    private fun setupLogoutButton() {
+        llLogOutIcon.setOnClickListener { showLogoutDialog() }
+    }
 
-        if (clientId.isNullOrEmpty() || userEmail.isNullOrEmpty()) {
-            showToast("Error: User not logged in.")
-            Log.e("ProfileFragment", "Error: clientId or email is null or empty.")
-            return
+    private fun updateProfileData() {
+        val userData = getUserDataFromPreferences()
+        Log.d("ProfileFragment", "Retrieved data: $userData") // Debug log
+
+        userData?.let {
+            tvProfileName.text = it.name.ifEmpty { "No name available" }
+            tvProfileEmail.text = it.email.ifEmpty { "No email available" }
+            tvId.text = it.mobile_number.ifEmpty { "No mobile number available" }
+        } ?: run {
+            tvProfileName.text = "No name available"
+            tvProfileEmail.text = "No email available"
+            tvId.text = "No mobile number available"
         }
-
-
-        // ✅ Set email and ID locally
-
-        tvProfileEmail.text = userEmail
-        tvId.text = clientId
-        tvProfileName.text = userName
-
-
-        // 🔥 Log profile info
-        Log.d("ProfileFragment", "Profile loaded locally. Email: $userEmail, ID: $clientId")
     }
 
-
-    // ✅ Get user ID from SharedPreferences
-    private fun getClientIdFromPrefs(): String? {
-        val sharedPreferences =
-            requireActivity().getSharedPreferences("VendiAppPrefs", android.content.Context.MODE_PRIVATE)
-        val clientId = sharedPreferences.getString("clientId", null)
-
-        // 🔥 Log clientId retrieval
-        Log.d("ProfileFragment", "Retrieved clientId: $clientId")
-
-        return clientId
+    private fun showLogoutDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Log Out")
+            .setMessage("Are you sure you want to log out?")
+            .setPositiveButton("Yes") { _, _ -> logoutUser() }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
-    // ✅ Get user email from SharedPreferences
-    private fun getUserEmailFromPrefs(): String? {
-        val sharedPreferences =
-            requireActivity().getSharedPreferences("VendiAppPrefs", android.content.Context.MODE_PRIVATE)
-        val email = sharedPreferences.getString("email", null)
+    private fun logoutUser() {
+        val sharedPreferences = requireContext().getSharedPreferences("UserSession", Context.MODE_PRIVATE)
+        sharedPreferences.edit().clear().apply()
 
-        // 🔥 Log email retrieval
-        Log.d("ProfileFragment", "Retrieved email: $email")
-
-        return email
+        val intent = Intent(requireContext(), AuthActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        requireActivity().finish()
     }
 
-    // ✅ Get user email from SharedPreferences
-    private fun getUserNameFromPrefs(): String? {
-        val sharedPreferences =
-            requireActivity().getSharedPreferences("VendiAppPrefs", android.content.Context.MODE_PRIVATE)
-        val name = sharedPreferences.getString("name", null)
+    private fun getUserDataFromPreferences(): ClientRequest? {
+        val sharedPreferences = requireContext().getSharedPreferences("UserSession", Context.MODE_PRIVATE)
+        val name = sharedPreferences.getString("name", "") ?: ""
+        val email = sharedPreferences.getString("email", "") ?: ""
+        val mobileNumber = sharedPreferences.getString("mobile_number", "") ?: ""
 
-        // 🔥 Log email retrieval
-        Log.d("ProfileFragment", "Retrieved : $name")
-
-        return name
-    }
-
-
-    // ✅ Show toast message
-    private fun showToast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        return if (name.isNotEmpty() || email.isNotEmpty()) {
+            ClientRequest(name, email, mobileNumber, "")
+        } else {
+            null
+        }
     }
 }

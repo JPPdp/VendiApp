@@ -58,7 +58,7 @@ class EventDetailsFragment : Fragment() {
                     putInt("eventId", event.vendor_id)
                     putString("eventTitle", event.business_name)
                     putString("eventLocation", event.address)
-                    putString("eventPrice", event.price)
+                    putString("eventPrice", event.lowest_price)
                     //putString("eventImage", event.imageUrl)
                 }
             }

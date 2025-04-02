@@ -1,65 +1,53 @@
 package com.example.vendiapp.repository
 
+import android.util.Log
+import com.example.vendiapp.api.RetrofitClient
 import com.example.vendiapp.model.VendorModel
-
+import com.example.vendiapp.model.VendorResponse
+import retrofit2.HttpException
+import retrofit2.Response
+import java.io.IOException
 
 class EventRepository {
+    private val vendorApiService = RetrofitClient.vendorApiService
 
-    // Returns event list based on selected category
-    fun getEvents(category: String): List<VendorModel> {
+    suspend fun getVendorsFromApi(category: String): List<VendorModel> {
+        return try {
+            Log.d("EventRepository", "Fetching vendors for category: $category")
 
-        return when (category) {
-            "Food" -> getFoodItems()
-            "Beverages" -> getBeverageItems()
-            "Entertainment" -> getEntertainmentItems()
-            "All" -> getFoodItems() + getBeverageItems() + getEntertainmentItems() // Fetch all
-            else -> emptyList()
+            // Make the API call and get the Response object
+            val response: Response<VendorResponse> = vendorApiService.getVendorsByCategory(category)
+
+            // Check if the response was successful (HTTP 200-299)
+            if (response.isSuccessful) {
+                val body: VendorResponse? = response.body()
+
+                if (body?.status == "success") {
+                    body.vendors?.let {
+                        Log.d("EventRepository", "Fetched ${it.size} vendors")
+                        return it
+                    } ?: run {
+                        Log.e("EventRepository", "Vendors list was null")
+                        emptyList()
+                    }
+                } else {
+                    Log.e("EventRepository", "API returned error status: ${body?.message}")
+                    emptyList()
+                }
+            } else {
+                Log.e("EventRepository",
+                    "API call failed with code: ${response.code()}, message: ${response.errorBody()?.string()}")
+                emptyList()
+            }
+        } catch (e: HttpException) {
+            Log.e("EventRepository", "HTTP error: ${e.message()}", e)
+            emptyList()
+        } catch (e: IOException) {
+            Log.e("EventRepository", "Network error: ${e.message}", e)
+            emptyList()
+        } catch (e: Exception) {
+            Log.e("EventRepository", "Unexpected error: ${e.message}", e)
+            emptyList()
         }
     }
-
-    // Sample Events for Food Category
-    private fun getFoodItems(): List<VendorModel> = listOf(
-        VendorModel(1,
-            "Potato Corner",
-            "Crispy Flavored Fries",
-            "Enjoy the world-famous flavored fries from Potato Corner! Choose from a variety of flavors and experience the ultimate snack-time delight.",
-            "Bunuan Guset, Dagupan",
-            "₱1299",
-            5.0,
-            //R.drawable.img_potatocorner,
-            isFeatured = true, "food"
-        )
-        )
-
-
-    // Sample Events for Beverages Category
-    private fun getBeverageItems(): List<VendorModel> = listOf(
-        VendorModel(
-            2,
-            "Lemonology",
-            "Non-Alcoholic",
-            "From parties to markets and special gatherings, we serve up refreshing, zesty drinks that your guests won’t forget. Ready to add a burst of flavor to your event?",
-            "Malued District, Dagupan City",
-            "₱799",
-            5.0,
-            //R.drawable.img_lemonology,
-            isFeatured = true, "beverages"
-        )
-    )
-
-
-    // Sample Events for Entertainment Category
-    private fun getEntertainmentItems(): List<VendorModel> = listOf(
-        VendorModel(
-            3,
-            "EZ Band PH",
-            "Live Acoustic Sessions",
-            "Experience soulful live performances from EZ Band PH. Perfect for intimate gatherings, corporate events, and special celebrations.",
-            "Upang, Dagupan City",
-            "₱1299",
-            5.0,
-            //R.drawable.img_ezbandph,
-            isFeatured = true, "entertainment"
-        )
-    )
 }

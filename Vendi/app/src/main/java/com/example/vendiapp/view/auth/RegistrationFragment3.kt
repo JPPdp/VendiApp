@@ -11,6 +11,7 @@ import com.example.vendiapp.R
 import com.example.vendiapp.api.RetrofitClient
 import com.example.vendiapp.model.ClientResponse
 import com.example.vendiapp.model.ClientRequest
+import com.google.gson.JsonSyntaxException
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -102,6 +103,9 @@ class RegistrationFragment3 : Fragment() {
 
                 try {
                     if (response.isSuccessful) {
+                        val responseBody = response.body()?.toString() ?: "null"
+                        Log.d("API_RESPONSE", "Raw response body: $responseBody")
+
                         response.body()?.let { apiResponse ->
                             if (apiResponse.success) {
                                 handleSuccess()
@@ -110,22 +114,11 @@ class RegistrationFragment3 : Fragment() {
                             }
                         } ?: showError("Empty response from server")
                     } else {
-                        // Try to parse error response
-                        val errorBody = response.errorBody()?.string()
-                        Log.e("API_ERROR", "Status code: ${response.code()}, Error: $errorBody")
-
-                        try {
-                            // If your server returns consistent error format
-                            val errorResponse = RetrofitClient.gson.fromJson(errorBody, ClientResponse::class.java)
-                            showError(errorResponse.message ?: "Error: ${response.code()}")
-                        } catch (e: Exception) {
-                            // Fallback to raw error message
-                            showError(errorBody ?: "Error: ${response.code()}")
-                        }
+                        handleErrorResponse(response)
                     }
                 } catch (e: Exception) {
                     Log.e("API_ERROR", "Response processing error", e)
-                    showError("Error processing response")
+                    showError("Error processing response: ${e.localizedMessage}")
                 }
             }
 
@@ -135,27 +128,49 @@ class RegistrationFragment3 : Fragment() {
                 showError(
                     when (t) {
                         is IOException -> "Network error. Please check your connection"
-                        else -> "Error: ${t.localizedMessage}"
+                        is JsonSyntaxException -> "Server sent malformed response. Please try again."
+                        else -> "Unexpected error: ${t.localizedMessage}"
                     }
                 )
             }
         })
     }
 
+    private fun handleErrorResponse(response: Response<ClientResponse>) {
+        try {
+            val errorBody = response.errorBody()?.string()
+            Log.e("API_ERROR", "Status ${response.code()}: $errorBody")
+
+            // Try to parse as our standard error format first
+            try {
+                val errorResponse = RetrofitClient.gson.fromJson(errorBody, ClientResponse::class.java)
+                showError(errorResponse.message ?: "Error ${response.code()}")
+            } catch (e: JsonSyntaxException) {
+                // If not JSON, show raw error with status code
+                showError(errorBody ?: "Error ${response.code()}")
+            }
+        } catch (e: Exception) {
+            Log.e("API_ERROR", "Error processing error response", e)
+            showError("Error ${response.code()}")
+        }
+    }
+
     private fun handleSuccess() {
         Toast.makeText(requireContext(), "Registration successful!", Toast.LENGTH_SHORT).show()
         parentFragmentManager.beginTransaction()
             .replace(R.id.fgtContainer, LogInFragment())
+            .addToBackStack(null)  // Optional: Add to back stack
             .commit()
     }
 
     private fun showError(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+        // You could also show this in a TextView if you prefer
     }
 
     private fun showLoading(show: Boolean) {
         btnSignIn.isEnabled = !show
         btnSignIn.text = if (show) "Processing..." else "Sign In"
-        // You can add a progress bar here if needed
+        // You could add a progress bar here if needed
     }
 }

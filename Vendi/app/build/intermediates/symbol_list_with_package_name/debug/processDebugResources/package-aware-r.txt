@@ -3276,7 +3276,6 @@ id btnCreateNewPassword
 id btnFeatureFavorite
 id btnNext
 id btnReservation
-id btnSend
 id btnSignIn
 id btnSignUp
 id btnStart
@@ -3369,7 +3368,6 @@ id enterAlwaysCollapsed
 id etConfirmPassword
 id etCreatePassword
 id etEmail
-id etMessage
 id etName
 id etNewPassword
 id etPassword
@@ -3466,7 +3464,6 @@ id llDeleteAccount
 id llEndTime
 id llLocation
 id llLogOutIcon
-id llMessage
 id llRedirectToAccountInfo
 id llStartTime
 id llTime
@@ -3611,11 +3608,9 @@ id rlDeleteAccount
 id rlLogOut
 id rounded
 id row_index_key
-id rvChat
 id rvEventPackageDetails
 id rvEvents
 id rvFeaturedEvents
-id rvMessages
 id rvScheduledEvents
 id save_non_transition_alpha
 id save_overlay_view
@@ -3925,10 +3920,8 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_auth
 layout activity_main
-layout activity_messages
 layout activity_onboarding
 layout activity_vendor
-layout chat_bubble
 layout custom_dialog
 layout custom_tab
 layout design_bottom_navigation_item
@@ -3948,7 +3941,6 @@ layout design_text_input_end_icon
 layout design_text_input_start_icon
 layout fragment_account_info
 layout fragment_change_password
-layout fragment_chat
 layout fragment_create_new_password
 layout fragment_create_new_password2
 layout fragment_event_details

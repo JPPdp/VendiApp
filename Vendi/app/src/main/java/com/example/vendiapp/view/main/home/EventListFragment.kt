@@ -44,7 +44,14 @@ class EventListFragment : Fragment() {
             val filteredEvents = if (category == "all") {
                 events
             } else {
-                events.filter { it.category_id.equals(category, ignoreCase = true) }
+                try {
+                    // Try converting category to an integer if it might be a numeric category ID
+                    val categoryInt = category.toInt()
+                    events.filter { it.category_id == categoryInt }
+                } catch (e: NumberFormatException) {
+                    // If it's not a valid integer, fallback to string comparison
+                    events.filter { it.category_id.toString().equals(category, ignoreCase = true) }
+                }
             }
             eventAdapter.updateEvents(filteredEvents)
         }
@@ -77,4 +84,3 @@ class EventListFragment : Fragment() {
         }
     }
 }
-

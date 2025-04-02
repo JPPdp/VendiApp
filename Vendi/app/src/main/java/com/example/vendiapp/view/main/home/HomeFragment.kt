@@ -1,12 +1,10 @@
 package com.example.vendiapp.view.main.home
 
-import android.content.Intent
-import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -42,11 +40,12 @@ class HomeFragment : Fragment() {
         val featuredRecyclerView: RecyclerView = view.findViewById(R.id.rvFeaturedEvents)
         val tvTab: TextView = view.findViewById(R.id.tvTab)
 
-
+        Log.d("HomeFragment", "onCreateView: Setting up RecyclerView and TabLayout")
 
         setupFeaturedEventsRecyclerView(featuredRecyclerView)
         setupTabLayout(tabLayout, viewPager, tvTab)
 
+        Log.d("HomeFragment", "onCreateView: Loading events for category: $lastLoadedCategory")
         eventViewModel.loadEventsIfNeeded(lastLoadedCategory)
 
         return view
@@ -55,15 +54,19 @@ class HomeFragment : Fragment() {
     private fun setupFeaturedEventsRecyclerView(recyclerView: RecyclerView) {
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         featuredAdapter = EventAdapter(emptyList()) { event ->
-            openEventDetails(event) // Use fragment instead of activity
+            openEventDetails(event)
         }
         recyclerView.adapter = featuredAdapter
 
+        // Observe LiveData to detect changes
         eventViewModel.featuredEvents.observe(viewLifecycleOwner) { featuredList ->
+            Log.d("HomeFragment", "setupFeaturedEventsRecyclerView: Received ${featuredList.size} featured events")
+            if (featuredList.isEmpty()) {
+                Log.w("HomeFragment", "setupFeaturedEventsRecyclerView: No data received!")
+            }
             featuredAdapter.updateEvents(featuredList)
         }
     }
-
 
     private fun setupTabLayout(tabLayout: TabLayout, viewPager: ViewPager2, tvTab: TextView) {
         val adapter = ViewPagerAdapter(requireActivity())
@@ -84,7 +87,6 @@ class HomeFragment : Fragment() {
             tab.customView = tabView
         }.attach()
 
-        // Set default selected tab appearance
         updateTabAppearance(tabLayout.getTabAt(0), isSelected = true)
         tvTab.text = ""
 
@@ -94,11 +96,13 @@ class HomeFragment : Fragment() {
                 val position = tab?.position ?: 0
                 val category = tabTexts.getOrNull(position) ?: "Food"
 
+                Log.d("HomeFragment", "Tab Selected: $category")
+
                 viewPager.setCurrentItem(position, false)
                 tvTab.text = category
 
-                // Fetch data only if category changed
                 if (lastLoadedCategory != category) {
+                    Log.d("HomeFragment", "Loading new events for category: $category")
                     eventViewModel.loadEventsIfNeeded(category)
                     lastLoadedCategory = category
                 }
@@ -108,9 +112,7 @@ class HomeFragment : Fragment() {
                 updateTabAppearance(tab, isSelected = false)
             }
 
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-                // Avoid unnecessary reloads on re-selection
-            }
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
     }
 
@@ -123,15 +125,15 @@ class HomeFragment : Fragment() {
             val iconColor = if (isSelected) R.color.bright else R.color.black
 
             tabText.setTextColor(ContextCompat.getColor(requireContext(), textColor))
-            tabIcon.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), iconColor))
+            tabIcon.imageTintList = ContextCompat.getColorStateList(requireContext(), iconColor)
         }
     }
 
-    // Open EventDetailsFragment instead of Activity
     private fun openEventDetails(event: VendorModel) {
+        Log.d("HomeFragment", "Opening Event Details for: ${event.business_name}")
         parentFragmentManager.commit {
             replace(R.id.fgtContainer, EventDetailsFragment.newInstance(event))
-            addToBackStack(null) // Enables back navigation
+            addToBackStack(null)
         }
     }
 }

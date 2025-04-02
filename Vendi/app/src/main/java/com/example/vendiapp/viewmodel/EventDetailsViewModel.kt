@@ -9,48 +9,51 @@ import com.example.vendiapp.model.PackageModel
 
 class EventDetailsViewModel : ViewModel() {
 
-    private val _event = MutableLiveData<VendorModel?>()
-    val event: LiveData<VendorModel?> = _event
+    private val _vendor = MutableLiveData<VendorModel?>()
+    val vendor: LiveData<VendorModel?> = _vendor
 
     private val _packages = MutableLiveData<List<PackageModel>>()
     val packages: LiveData<List<PackageModel>> = _packages
 
-    // ✅ Load event data from bundle
-    fun loadEventFromBundle(bundle: Bundle) {
-        val id = bundle.getInt("eventId", 0)
-        val title = bundle.getString("eventTitle", "") ?: ""
-        val subTitle = bundle.getString("eventSubTitle", "") ?: ""
-        val description = bundle.getString("eventDescription", "") ?: ""
-        val location = bundle.getString("eventLocation", "") ?: ""
-        val price = bundle.getString("eventPrice", "") ?: ""
-        val rating = bundle.getDouble("eventRating", 0.0)
-        val imageUrl = bundle.getString("eventImage", "") ?: ""  // ✅ Fixed
+    // Load vendor data from bundle
+    fun loadVendorFromBundle(bundle: Bundle) {
         val vendorId = bundle.getInt("vendorId", 0)
+        val businessName = bundle.getString("businessName", "") ?: ""
+        val profilePicture = bundle.getString("profilePicture") // Can be null
+        val email = bundle.getString("email", "") ?: ""
+        val mobileNumber = bundle.getString("mobileNumber", "") ?: ""
+        val address = bundle.getString("address", "") ?: ""
+        val shortDesc = bundle.getString("businessShortDesc") // Can be null
+        val longDesc = bundle.getString("businessLongDesc") // Can be null
+        val lowestPrice = bundle.getString("lowestPrice") // Can be null
+        val rating = bundle.getDouble("rating", 0.0)
         val isFeatured = bundle.getBoolean("isFeatured", false)
-        val category = bundle.getString("category", "") ?: ""
+        val categoryId = bundle.getInt("categoryId", 0) // Ensuring it's an Int
 
-        // ✅ Corrected to match VendorModel
-        val eventModel = VendorModel(
-            vendor_id = id,
-            business_name = title,
-            short_desc = subTitle,
-            long_desc = description,
-            address = location,
-            price = price,
+        // Construct VendorModel with correct attributes
+        val vendorModel = VendorModel(
+            vendor_id = vendorId,
+            business_name = businessName,
+            profile_picture = profilePicture,
+            email = email,
+            mobile_number = mobileNumber,
+            address = address,
+            business_description_short = shortDesc,
+            business_description_long = longDesc,
+            lowest_price = lowestPrice,
             rating = rating,
-            //imageUrl = imageUrl,
-            isFeatured = isFeatured,
-            category_id = category
+            is_featured = isFeatured,
+            category_id = categoryId
         )
 
-        _event.value = eventModel
+        _vendor.value = vendorModel
     }
 
-    // ✅ Load packages (mock data or from API)
-    fun loadEventPackages() {
+    // Load sample packages (Mock data or API call)
+    fun loadVendorPackages() {
         val samplePackages = listOf(
-            PackageModel(1, "Basic Package", "Description 1", 5000),
-            PackageModel(2, "Premium Package", "Description 2", 10000)
+            PackageModel(1, "Basic Package", "Includes basic services", 5000),
+            PackageModel(2, "Premium Package", "Includes premium services", 10000)
         )
         _packages.value = samplePackages
     }

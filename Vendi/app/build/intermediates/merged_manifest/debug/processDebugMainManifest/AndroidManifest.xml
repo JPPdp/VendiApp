@@ -8,9 +8,9 @@
         android:minSdkVersion="24"
         android:targetSdkVersion="35" />
 
+    <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
 
     <permission
         android:name="com.example.vendiapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
@@ -33,6 +33,8 @@
         android:testOnly="true"
         android:theme="@style/Theme.VendiApp"
         android:usesCleartextTraffic="true" >
+
+        <!-- Onboarding Activity (First Screen) -->
         <activity
             android:name="com.example.vendiapp.OnboardingActivity"
             android:exported="true" >
@@ -42,9 +44,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Authentication Activity (Login/Register) -->
         <activity
             android:name="com.example.vendiapp.view.auth.AuthActivity"
             android:exported="true" />
+
+        <!-- Main Activity (After Login) -->
         <activity
             android:name="com.example.vendiapp.view.main.MainActivity"
             android:exported="true" />

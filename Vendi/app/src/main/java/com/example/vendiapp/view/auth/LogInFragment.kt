@@ -18,9 +18,11 @@ import com.example.vendiapp.api.RetrofitClient
 import com.example.vendiapp.model.LoginRequest
 import com.example.vendiapp.model.LoginResponse
 import com.example.vendiapp.view.main.MainActivity
+import com.google.gson.JsonSyntaxException
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
 
 class LogInFragment : Fragment() {
 
@@ -30,6 +32,11 @@ class LogInFragment : Fragment() {
     private lateinit var btnSignUp: Button
     private lateinit var tvForgotPassword: TextView
     private lateinit var sharedPreferences: SharedPreferences
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        sharedPreferences = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,16 +75,22 @@ class LogInFragment : Fragment() {
         return view
     }
 
-
-
     private fun validateInputs(email: String, password: String): Boolean {
         return when {
             email.isEmpty() -> {
-                showToast("Please enter your email.")
+                etEmail.error = "Please enter your email"
+                false
+            }
+            !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                etEmail.error = "Please enter a valid email"
                 false
             }
             password.isEmpty() -> {
-                showToast("Please enter your password.")
+                etPassword.error = "Please enter your password"
+                false
+            }
+            password.length < 6 -> {
+                etPassword.error = "Password must be at least 6 characters"
                 false
             }
             else -> true
@@ -85,42 +98,77 @@ class LogInFragment : Fragment() {
     }
 
     private fun loginUser(email: String, password: String) {
-        val loginRequest = LoginRequest(email, password) // Create a LoginRequest object
+        val request = LoginRequest(email, password)
 
-        RetrofitClient.instance.loginUser(loginRequest).enqueue(object : Callback<LoginResponse> {
+        RetrofitClient.instance.getClient(request).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-                if (response.isSuccessful && response.body() != null) {
-                    val loginResponse = response.body()!!
-                    if (loginResponse.success) {
-                        saveUserSession(loginResponse.clientId, email, password) // FIXED
-                        navigateToMainActivity()
-                    } else {
-                        showToast(loginResponse.message ?: "Login failed")
+                try {
+                    if (response.isSuccessful) {
+                        response.body()?.let { loginResponse ->
+                            when (loginResponse.status) {
+                                "success" -> {
+                                    loginResponse.client_id?.let { clientId ->
+                                        // Save ALL user data (add name + mobile_number if available)
+                                        saveUserSession(
+                                            clientId = clientId,
+                                            email = email,
+                                            name = loginResponse.name ?: "", // Get from API
+                                            mobileNumber = loginResponse.mobile_number ?: "" // Get from API
+                                        )
+                                        navigateToMainActivity()
+                                    } ?: showToast("Login successful but missing client ID")
+                                }
+                                // ... rest of your code
+                            }
+                        }
                     }
-                } else {
-                    showToast("Error: ${response.errorBody()?.string()}")
+                } catch (e: Exception) {
+                    Log.e("LOGIN_ERROR", "Response processing error", e)
+                    showToast("Error processing login response")
                 }
             }
 
-
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                showToast("Network error: ${t.message}")
+                Log.e("LOGIN_ERROR", "Login failed", t)
+                showToast(
+                    when (t) {
+                        is IOException -> "Network error. Please check your connection"
+                        is JsonSyntaxException -> "Server sent malformed response. Please try again."
+                        else -> "Unexpected error: ${t.localizedMessage}"
+                    }
+                )
             }
         })
     }
 
-    private fun saveUserSession(clientId: String, email: String, password: String) {
+    private fun handleErrorResponse(response: Response<LoginResponse>) {
+        try {
+            val errorBody = response.errorBody()?.string()
+            Log.e("LOGIN_ERROR", "Status ${response.code()}: $errorBody")
+
+            try {
+                // Try to parse as standard error format
+                val errorResponse = RetrofitClient.gson.fromJson(errorBody, LoginResponse::class.java)
+                showToast(errorResponse.message ?: "Error ${response.code()}")
+            } catch (e: JsonSyntaxException) {
+                // Fallback to raw error message
+                showToast(errorBody ?: "Error ${response.code()}")
+            }
+        } catch (e: Exception) {
+            Log.e("LOGIN_ERROR", "Error processing error response", e)
+            showToast("Error ${response.code()}")
+        }
+    }
+
+    private fun saveUserSession(clientId: String, email: String, name: String, mobileNumber: String) {
         sharedPreferences.edit().apply {
             putBoolean("isLoggedIn", true)
             putString("clientId", clientId)
             putString("email", email)
-            putString("password", password)
+            putString("name", name)               // Save name
+            putString("mobile_number", mobileNumber) // Save mobile number
             apply()
         }
-    }
-
-    private fun isUserLoggedIn(): Boolean {
-        return sharedPreferences.getBoolean("isLoggedIn", false)
     }
 
     private fun navigateToMainActivity() {
@@ -133,5 +181,15 @@ class LogInFragment : Fragment() {
 
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun saveUserData(name: String, email: String, mobileNumber: String) {
+        val sharedPreferences = requireContext().getSharedPreferences("UserSession", Context.MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            putString("name", name)
+            putString("email", email)
+            putString("mobile_number", mobileNumber)
+            apply() // Save the data
+        }
     }
 }
