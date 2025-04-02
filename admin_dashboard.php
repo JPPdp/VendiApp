@@ -77,41 +77,12 @@ $total_vendors = array_sum($status_counts);
 $sql = "SELECT * FROM vendors WHERE status IN ('Approved', 'Pending') ORDER BY vendor_id DESC LIMIT 5";
 $active_vendors = $conn->query($sql);
 
-// Handle admin task submission
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_admin_task'])) {
-    $task = trim($_POST['admin_task']);
-    if (!empty($task)) {
-        $stmt = $conn->prepare("INSERT INTO admin_todos (admin_id, task) VALUES (?, ?)");
-        $stmt->bind_param("is", $_SESSION['user_id'], $task);
-        
-        if ($stmt->execute()) {
-            header("Location: admin_dashboard.php");
-            exit();
-        } else {
-            $admin_todo_error = "Error adding task: " . $conn->error;
-        }
-    } else {
-        $admin_todo_error = "Task cannot be empty";
-    }
-}
-
-// Handle admin task deletion
-if (isset($_GET['delete_admin_task'])) {
-    $task_id = (int)$_GET['delete_admin_task'];
-    $stmt = $conn->prepare("DELETE FROM admin_todos WHERE id = ? AND admin_id = ?");
-    $stmt->bind_param("ii", $task_id, $_SESSION['user_id']);
-    $stmt->execute();
-    header("Location: admin_dashboard.php");
-    exit();
-}
-
-// Fetch admin's tasks
-$admin_todos = [];
-$sql = "SELECT * FROM admin_todos WHERE admin_id = ? ORDER BY created_at DESC";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $_SESSION['user_id']);
-$stmt->execute();
-$admin_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+// Add this with your other database queries
+// Fetch top 5 vendors by rating
+$sql = "SELECT vendor_id, business_name, rating FROM vendors 
+        WHERE status = 'Approved' AND rating > 0 
+        ORDER BY rating DESC LIMIT 5";
+$top_vendors = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -353,46 +324,60 @@ $admin_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                         </div>
                     </div>
                     
-                    <!-- To-Do List Widget -->
-                    <div class="TODO_LIST">
-                        <div class="TODO_HEADER">
-                            <h2>Admin Tasks</h2>
-                            <form method="POST" class="ADD_TASK_FORM">
-                                <input type="text" name="admin_task" placeholder="Add admin task..." required>
-                                <button type="submit" name="add_admin_task" class="ADD_TASK">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            </form>
+                    <!-- Top Vendors Widget -->
+                    <div class="VENDOR_RATINGS">
+                        <div class="RATINGS_HEADER">
+                            <h2>Top Performing Vendors</h2>
                         </div>
-                        
-                        <?php if (!empty($admin_todo_error)): ?>
-                            <div class="alert alert-error"><?php echo $admin_todo_error; ?></div>
-                        <?php endif; ?>
                         
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Task</th>
-                                    <th>Action</th>
+                                    <th><i class="fas fa-store"></i> Vendor</th>
+                                    <th><i class="fas fa-star"></i> Rating</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if (!empty($admin_todos)): ?>
-                                    <?php foreach ($admin_todos as $todo): ?>
+                                <?php if ($top_vendors->num_rows > 0): ?>
+                                    <?php while ($vendor = $top_vendors->fetch_assoc()): ?>
                                         <tr>
-                                            <td><?php echo htmlspecialchars($todo['task']); ?></td>
-                                            <td>
-                                                <a href="admin_dashboard.php?delete_admin_task=<?php echo $todo['id']; ?>" 
-                                                class="DELETE_TASK"
-                                                onclick="return confirm('Delete this task?')">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
+                                            <td> <b>
+                                                <a href="admin_vendor_details.php?id=<?php echo $vendor['vendor_id']; ?>" 
+                                                class="VENDOR_LINK">
+                                                    <?php echo htmlspecialchars($vendor['business_name']); ?>
+                                                </a></b>
+                                            </td>
+                                            <td class="STAR_RATING">
+                                                <?php
+                                                $rating = $vendor['rating'];
+                                                $fullStars = floor($rating);
+                                                $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                                                $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
+                                                
+                                                // Full stars
+                                                for ($i = 0; $i < $fullStars; $i++) {
+                                                    echo '<i class="fas fa-star"></i>';
+                                                }
+                                                
+                                                // Half star
+                                                if ($hasHalfStar) {
+                                                    echo '<i class="fas fa-star-half-alt"></i>';
+                                                }
+                                                
+                                                // Empty stars
+                                                for ($i = 0; $i < $emptyStars; $i++) {
+                                                    echo '<i class="far fa-star"></i>';
+                                                }
+                                                
+                                                // Numeric value
+                                                echo '<span class="RATING_VALUE">'.number_format($rating, 1).'</span>';
+                                                ?>
                                             </td>
                                         </tr>
-                                    <?php endforeach; ?>
+                                    <?php endwhile; ?>
                                 <?php else: ?>
                                     <tr>
-                                        <td colspan="2">No admin tasks yet</td>
+                                        <td colspan="2">No rated vendors yet</td>
                                     </tr>
                                 <?php endif; ?>
                             </tbody>

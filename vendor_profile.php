@@ -138,21 +138,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['profile_pic']) && $_F
             <!-- Profile Container -->
             <div class="PROFILE_CONTAINER">
                 <!-- Left Profile Section -->
-                <div class="LEFT_PROFILE">
-                    <div class="PROFILE_PIC_CONTAINER">
-                        <img src="<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="" class="PROFILE_PIC_BUSINESS">
-                        <div class="EDIT_ICON_CONTAINER" title="Change Profile Picture">
-                            <form id="PROFILE_PIC_FORM" method="post" enctype="multipart/form-data">
-                                <label for="VENDOR_PROFILE_PIC" class="EDIT_ICON_LABEL">
-                                    <i class="EDIT_ICON_BUSINESS fas fa-camera" aria-hidden="true"></i>
-                                    <input type="file" id="VENDOR_PROFILE_PIC" name="profile_pic" accept="image/*" style="display: none;" onchange="document.getElementById('PROFILE_PIC_FORM').submit();">
-                                </label>
-                            </form>
-                        </div>
-                    </div>
-                    <h2 id="BUSINESS_NAME"><?php echo htmlspecialchars($vendor['business_name']); ?></h2>
-                    <p class="USER_ID">ID: <?php echo htmlspecialchars($vendor['vendor_id']); ?></p>
-                </div>
+<div class="LEFT_PROFILE">
+    <div class="PROFILE_PIC_CONTAINER">
+        <img src="<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="" class="PROFILE_PIC_BUSINESS">
+        <div class="EDIT_ICON_CONTAINER" title="Change Profile Picture">
+            <form id="PROFILE_PIC_FORM" method="post" enctype="multipart/form-data">
+                <label for="VENDOR_PROFILE_PIC" class="EDIT_ICON_LABEL">
+                    <i class="EDIT_ICON_BUSINESS fas fa-camera" aria-hidden="true"></i>
+                    <input type="file" id="VENDOR_PROFILE_PIC" name="profile_pic" accept="image/*" style="display: none;" onchange="document.getElementById('PROFILE_PIC_FORM').submit();">
+                </label>
+            </form>
+        </div>
+    </div>
+    <h2 id="BUSINESS_NAME"><?php echo htmlspecialchars($vendor['business_name']); ?></h2>
+    
+    <!-- Add this rating display section -->
+    <div class="VENDOR_RATING">
+        <?php
+        $rating = $vendor['rating'];
+        $fullStars = floor($rating);
+        $hasHalfStar = ($rating - $fullStars) >= 0.5;
+        $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
+        ?>
+        
+        <div class="STARS">
+            <?php for ($i = 0; $i < $fullStars; $i++): ?>
+                <i class="fas fa-star"></i>
+            <?php endfor; ?>
+            
+            <?php if ($hasHalfStar): ?>
+                <i class="fas fa-star-half-alt"></i>
+            <?php endif; ?>
+            
+            <?php for ($i = 0; $i < $emptyStars; $i++): ?>
+                <i class="far fa-star"></i>
+            <?php endfor; ?>
+        </div>
+        
+        <span class="RATING_VALUE"><?php echo number_format($rating, 1); ?>/5.0</span>
+    </div>
+    
+    <p class="USER_ID">ID: <?php echo htmlspecialchars($vendor['vendor_id']); ?></p>
+</div>
 
                 <!-- Right Profile Section -->
                 <div class="RIGHT_PROFILE"> 

@@ -1257,3 +1257,83 @@ body{
     opacity: 100%;
 }
 
+/* Top Vendors Ratings Widget */
+.VENDOR_RATINGS {
+    background-color: white;
+    min-height: 375px;
+    max-height: 375px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
+    overflow-y: auto;
+}
+
+.RATINGS_HEADER {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.VENDOR_RATINGS h2 {
+    font-size: 1rem;
+    font-family: 'Inter_Bold';
+    color: var(--blkShade1);
+    margin: 0;
+}
+
+.VENDOR_RATINGS table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.VENDOR_RATINGS th {
+    font-size: 0.8rem;
+    color: var(--blkShade1);
+    font-family: 'Inter_Bold';
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid var(--gryShade1);
+    text-align: center;
+}
+
+.VENDOR_RATINGS th i {
+    margin-right: 5px;
+}
+
+.VENDOR_RATINGS td {
+    font-size: 0.8rem;
+    font-family: 'Inter_Regular';
+    color: var(--blkShade1);
+    padding: 10px;
+    border-bottom: 1px solid var(--whtShade2);
+    text-align: center;
+}
+
+.VENDOR_LINK {
+    color: var(--blkShade1);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.VENDOR_LINK:hover {
+    color: var(--gradient_Horizontal);
+    text-decoration: underline;
+}
+
+.STAR_RATING {
+    color: #FFD700 !important; /* Gold color for stars */
+    white-space: nowrap;
+}
+
+.STAR_RATING i {
+    margin-right: 2px;
+}
+
+.RATING_VALUE {
+    margin-left: 8px;
+    font-family: 'Inter_SemiBold';
+    color: var(--gryShade2) !important;
+    display: inline-block;
+    min-width: 30px;
+}

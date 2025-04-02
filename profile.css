@@ -611,3 +611,22 @@ label{
     filter: brightness(110%);
 }
 
+
+/* Vendor Rating Styles */
+.VENDOR_RATING {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.STARS {
+    color: #FFD700; /* Gold color for stars */
+    font-size: 1rem;
+}
+
+.RATING_VALUE {
+    font-family: 'Inter_SemiBold';
+    font-size: 0.9rem;
+    color: var(--gryShade2);
+}

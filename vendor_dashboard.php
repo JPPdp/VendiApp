@@ -205,7 +205,7 @@ $vendor_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             <div class="UPPER">
                 <div class="LEFT_UPPER">
                     <h1 class="DASHBOARD_TITLE">
-                        <i class="fas fa-store"></i> <?php echo htmlspecialchars($vendor['business_name']); ?>'s Dashboard
+                        <i class="fas fa-store"></i> <?php echo htmlspecialchars($vendor['business_name']); ?> Dashboard
                     </h1>
                 </div>
                     <div class="RIGHT_UPPER">
