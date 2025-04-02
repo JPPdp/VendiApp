@@ -24,6 +24,7 @@ $name = trim($data['name']);
 $email = trim($data['email']);
 $password = trim($data['password']);
 $mobile_number = trim($data['mobile_number']);
+$address = isset($data['address']) ? trim($data['address']) : null; // Optional field
 
 // Validate email format
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -46,9 +47,21 @@ if ($checkEmail->get_result()->num_rows > 0) {
 
 // Hash password and create user
 $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-$stmt = $conn->prepare("INSERT INTO clients (name, email, password, mobile_number) VALUES (?, ?, ?, ?)");
-$stmt->bind_param("ssss", $name, $email, $hashedPassword, $mobile_number);
 
+// Handle image upload and convert it to binary
+$profile_picture = null;
+if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == 0) {
+    $profile_picture = file_get_contents($_FILES['profile_picture']['tmp_name']);
+} else {
+    // Optional: Handle if no profile picture is uploaded
+    $profile_picture = null; // Can be set to NULL if not provided
+}
+
+// Prepare the insert query
+$stmt = $conn->prepare("INSERT INTO clients (name, email, password, mobile_number, profile_picture, address) VALUES (?, ?, ?, ?, ?, ?)");
+$stmt->bind_param("ssssss", $name, $email, $hashedPassword, $mobile_number, $profile_picture, $address);
+
+// Execute the query
 if ($stmt->execute()) {
     sendJsonResponse(true, "Registration successful", 201);
 } else {
