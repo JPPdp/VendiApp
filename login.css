@@ -631,3 +631,27 @@ label #FILES {
     color: var(--gryShade2);
     text-decoration: none;
 }
+
+/* Style for User Type Select */
+.LOGIN_FORM select {
+    background: var(--gradient_White);
+    cursor: pointer;
+    color: var(--blkShade1);
+    font-family: 'Inter_Regular';
+    font-size: 0.8rem;
+}
+
+.LOGIN_FORM select option {
+    padding: 10px;
+    font-family: 'Inter_Medium';
+    font-size: 0.8rem;
+    color: var(--blkShade1);
+    background-color: white;
+    text-indent: 5px;
+}
+
+/* Focus state for select */
+.LOGIN_FORM select:focus {
+    border-color: var(--gryShade1);
+    outline: none;
+}

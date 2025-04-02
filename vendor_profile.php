@@ -250,9 +250,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['profile_pic']) && $_F
                                     </button>
                                 </div>
                                 <div class="BESIDE_FIELD">
-                                    <button id="DELETE_ACCOUNT" class="ACCOUNT_MANAGE" onclick="confirmDelete()">
+                                    <label for="DELETE_MODAL_TOGGLE" class="ACCOUNT_MANAGE" id="DELETE_ACCOUNT">
                                         <i class="fas fa-trash-alt"></i> Delete Account
-                                    </button>
+                                    </label>
                                 </div>
                                 </div>
                             </div>
@@ -263,20 +263,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['profile_pic']) && $_F
         </div>
     </div>
 
+    <!-- Logout Modal Structure -->
     <input type="checkbox" id="LOGOUT_MODAL_TOGGLE" class="MODAL_TOGGLE">
-    <div class="LOGOUT_MODAL">
-        <div class="LOGOUT_MODAL_CONTENT">
-            <h3>CONFIRM LOGOUT</h3>
-            <p>Are you sure you want to log out?</p>
-            <div class="BUTTON_ACTIONS">
-                <a href="logout.php" class="BUTTON_CONFIRM">
-                    <i class="fas fa-sign-out-alt"></i> LOG OUT
-                </a>
-                <label for="LOGOUT_MODAL_TOGGLE" class="BUTTON_CANCEL">
-                    <i class="fas fa-times"></i> CANCEL
-                </label>
+    <div id="LOGOUT_MODAL_WRAPPER">
+        <div class="LOGOUT_MODAL">
+            <div class="LOGOUT_MODAL_CONTENT">
+                <h3>CONFIRM LOGOUT</h3>
+                <p>Are you sure you want to log out?</p>
+                <div class="BUTTON_ACTIONS">
+                    <a href="logout.php" class="BUTTON_CONFIRM">
+                        <i class="fas fa-sign-out-alt"></i> LOG OUT
+                    </a>
+                    <label for="LOGOUT_MODAL_TOGGLE" class="BUTTON_CANCEL">
+                        <i class="fas fa-times"></i> CANCEL
+                    </label>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Delete Account Modal Structure -->
+    <input type="checkbox" id="DELETE_MODAL_TOGGLE" class="MODAL_TOGGLE">
+    <div id="DELETE_MODAL_WRAPPER">
+        <div class="DELETE_MODAL">
+            <div class="DELETE_MODAL_CONTENT">
+                <h3>DELETE ACCOUNT</h3>
+                <p>Are you sure you want to delete your account?</p>
+                <div class="DELETE_BUTTON_ACTIONS">
+                    <a href="delete_account.php" class="BUTTON_DELETE">
+                        <i class="fas fa-trash-alt"></i> DELETE ACCOUNT
+                    </a>
+                    <label for="DELETE_MODAL_TOGGLE" class="BUTTON_CANCEL">
+                        <i class="fas fa-times"></i> CANCEL
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
 </body>
 </html>

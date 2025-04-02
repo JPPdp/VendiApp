@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <label>User Type</label>
             <select name="user_type" required>
-                <option value="" selected disabled>Choose user type</option>
+                <option value="" selected disabled>Choose User Type</option>
                 <option value="admin">Admin</option>
                 <option value="vendor">Vendor</option>
             </select>

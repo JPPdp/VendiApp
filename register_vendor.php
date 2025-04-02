@@ -103,9 +103,6 @@ if ($check_business_name->num_rows > 0) {
     <div class="LEFT_SECTION">
         <div class="LOGO">
             <div class="LOGO_NAME">Vendi.</div>
-            <a href="index.htm" class="BACK_TO_WEBSITE">
-                Back to Website <i class="fas fa-arrow-right"></i>
-            </a>
         </div>
         <div class="VECTOR_ART">
             <img src="assets/images/Event_Vector.png" alt="Vector_Art">

@@ -632,3 +632,87 @@ label{
     font-size: 0.9rem;
     color: var(--gryShade2);
 }
+
+
+/* DELETE MODAL STYLES */
+.DELETE_MODAL {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.25);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.MODAL_TOGGLE:checked ~ .DELETE_MODAL {
+    display: flex;
+}
+
+.DELETE_MODAL_CONTENT {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    width: 350px;
+    height: 175px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.DELETE_MODAL h3 {
+    font-size: 1.5rem;
+    margin-bottom: -10px;
+    color: var(--blkShade1);
+    font-family: 'Inter_Black';
+    text-transform: uppercase;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--whtShade2);
+}
+
+.DELETE_MODAL p {
+    font-size: 1rem;
+    color: var(--gryShade2);
+    margin-bottom: 30px;
+    font-family: 'Inter_SemiBoldItalic';
+}
+
+.DELETE_BUTTON_ACTIONS {
+    gap: 20px;
+    justify-content: space-around;
+}
+
+.BUTTON_DELETE {
+    display: inline;
+    padding: 8px 10px;
+    color: white;
+    font-family: 'Inter_Bold';
+    font-size: 0.9rem;
+    border-radius: 10px;
+    border: 2px solid var(--whtShade2); 
+    background: var(--gradient_Red);
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+    justify-content: center;
+    transition: 0.5s ease-in-out;
+    margin-right: 20px;
+}
+
+.BUTTON_DELETE:hover {
+    filter: brightness(120%);
+}
+
+.BUTTON_DELETE i {
+    margin-right: 5px;
+}
+
+#LOGOUT_MODAL_TOGGLE:checked ~ #LOGOUT_MODAL_WRAPPER .LOGOUT_MODAL {
+    display: flex;
+}
+
+#DELETE_MODAL_TOGGLE:checked ~ #DELETE_MODAL_WRAPPER .DELETE_MODAL {
+    display: flex;
+}

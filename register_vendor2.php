@@ -9,37 +9,45 @@ if (!isset($_SESSION['reg_data'])) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get data from session and current form
-    $reg_data = $_SESSION['reg_data'];
+    // Validate business features - no duplicates allowed
+    $features = $_POST['business_description_short'] ?? [];
+    $unique_features = array_unique($features);
     
-    // Handle Business Document Upload
-    $target_dir = "uploads/vendors/";
-    if (!is_dir($target_dir)) {
-        mkdir($target_dir, 0777, true);
+    if (count($features) !== count($unique_features)) {
+        $error_message = "Invalid business features (no duplicates allowed).";
+    } else {
+        // Get data from session and current form
+        $reg_data = $_SESSION['reg_data'];
+        
+        // Handle Business Document Upload
+        $target_dir = "uploads/vendors/";
+        if (!is_dir($target_dir)) {
+            mkdir($target_dir, 0777, true);
+        }
+
+        $business_document = $target_dir . basename($_FILES["business_document"]["name"]);
+        move_uploaded_file($_FILES["business_document"]["tmp_name"], $business_document);
+
+        // Combine multiple business_description_short values into a single string
+        $business_description_short = implode(', ', $unique_features);
+        
+        // Store all data in session for database insertion
+        $_SESSION['complete_reg_data'] = [
+            'business_name' => $reg_data['business_name'],
+            'email' => $reg_data['email'],
+            'password' => $reg_data['password'],
+            'mobile_number' => $reg_data['mobile_number'],
+            'address' => $reg_data['address'],
+            'service_option' => $_POST['service_option'],
+            'business_description_short' => $business_description_short,
+            'business_description_long' => $_POST['business_description_long'],
+            'business_document' => $business_document
+        ];
+        
+        // Redirect to the confirmation page
+        header("Location: register_vendor3.php");
+        exit();
     }
-
-    $business_document = $target_dir . basename($_FILES["business_document"]["name"]);
-    move_uploaded_file($_FILES["business_document"]["tmp_name"], $business_document);
-
-    // Combine multiple business_description_short values into a single string
-    $business_description_short = implode(', ', $_POST['business_description_short']);
-    
-    // Store all data in session for database insertion
-    $_SESSION['complete_reg_data'] = [
-        'business_name' => $reg_data['business_name'],
-        'email' => $reg_data['email'],
-        'password' => $reg_data['password'],
-        'mobile_number' => $reg_data['mobile_number'],
-        'address' => $reg_data['address'],
-        'service_option' => $_POST['service_option'],
-        'business_description_short' => $business_description_short,
-        'business_description_long' => $_POST['business_description_long'],
-        'business_document' => $business_document
-    ];
-    
-    // Redirect to the confirmation page
-    header("Location: register_vendor3.php");
-    exit();
 }
 ?>
 
@@ -110,8 +118,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <option value="" disabled selected>Select Feature 1 <span id="REQUIRED">*</span></option>
                                     <option value="" disabled>&#128197; Event Type</option>
                                     <option value="Birthday">Birthday</option>
-                                    <option value="Corporate">Corporate</option>
+                                    <option value="Formal">Formal</option>
                                     <option value="Wedding">Wedding</option>
+                                    <option value="All Event">All Occassions</option>
                                     <option value="" disabled>&#127838; Food Options</option>
                                     <option value="Desserts">Desserts</option>
                                     <option value="Fast Food">Fast Food</option>
@@ -129,8 +138,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option value="" disabled selected>Select Feature 2 <span id="REQUIRED">*</span></option>
                     <option value="" disabled>&#128197; Event Type</option>
                                     <option value="Birthday">Birthday</option>
-                                    <option value="Corporate">Corporate</option>
+                                    <option value="Formal">Formal</option>
                                     <option value="Wedding">Wedding</option>
+                                    <option value="All Event">All Occassions</option>
                                     <option value="" disabled>&#127838; Food Options</option>
                                     <option value="Desserts">Desserts</option>
                                     <option value="Fast Food">Fast Food</option>
@@ -148,8 +158,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option value="" disabled selected>Select Feature 3 <span id="REQUIRED">*</span></option>
                     <option value="" disabled>&#128197; Event Type</option>
                                     <option value="Birthday">Birthday</option>
-                                    <option value="Corporate">Corporate</option>
+                                    <option value="Formal">Formal</option>
                                     <option value="Wedding">Wedding</option>
+                                    <option value="All Event">All Occassions</option>
                                     <option value="" disabled>&#127838; Food Options</option>
                                     <option value="Desserts">Desserts</option>
                                     <option value="Fast Food">Fast Food</option>
