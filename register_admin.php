@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Login | Vendi </title>
+    <title> Admin Sign Up | Vendi </title>
     <link rel="icon" href="assets/images/VendiEnhanced.png" type="image/icon type">
     <link rel="stylesheet" href="login.css?v=<?php echo date('his'); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="VECTOR_ART">
             <img src="assets/images/Meeting_Vector.png" alt="Vector_Art">
         </div>
-        <p>Manage and excel.</p>
+        <p>Manage and oversee.</p>
     </div>
 
     <!-- RIGHT SECTION -->

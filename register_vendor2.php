@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="RIGHT_SECTION">
         <div class="REGISTRATION_STEPS">
             <div class="STEP active">
-                <span>Account Information</span>
+                <span><i class="fas fa-check"></i> Account Information</span>
             </div>
             <div class="STEP active">
                 <span>Business Information</span>

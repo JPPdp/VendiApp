@@ -69,11 +69,11 @@ $conn->close();
 
     <div class="RIGHT_SECTION">
         <div class="REGISTRATION_STEPS">
-            <div class="STEP">
-                <span>Account Information</span>
+            <div class="STEP active">
+                <span> <i class="fas fa-check"></i> Account Information</span>
             </div>
-            <div class="STEP">
-                <span>Business Information</span>
+            <div class="STEP active">
+                <span> <i class="fas fa-check"></i> Business Information</span>
             </div>
             <div class="STEP active">
                 <span>Confirmation</span>
