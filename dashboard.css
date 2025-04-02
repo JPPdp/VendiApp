@@ -1071,10 +1071,17 @@ body{
     color: #e81212;
     border: 1px solid #FFCDD2;
 }
+
 .DIRECT{
     font-size: 0.75rem;
     color: var(--gryShade1);
     margin-left: 5px;
+}
+
+#DIRECT{
+    font-size: 0.75rem;
+    color: white;
+    margin-left: 0px;
 }
 
 /* Vendor Chart Styles */

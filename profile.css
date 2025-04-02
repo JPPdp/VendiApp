@@ -249,8 +249,10 @@
     font-family: 'Inter_SemiBoldItalic';
     font-size: 0.8rem;
     color: var(--gryShade1);
-    margin-top: -5px;
-    margin-bottom: -20px;
+    margin-top: auto; /* Pushes it to bottom */
+    padding-top: 20px; /* Space above */
+    margin-bottom: 0;
+    border-top: 1px solid var(--whtShade2); /* Optional separator */
 }
 
 

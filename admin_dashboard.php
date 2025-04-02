@@ -165,22 +165,22 @@ $top_vendors = $conn->query($sql);
             <!-- Stats Boxes -->
             <div class="CONTENT">
                 <div class="BOX PENDING">
-                    <h3><i class="fas fa-user-clock"></i> Pending Vendors</h3>
+                    <h3><i class="fas fa-user-clock"></i> Pending Vendors <a href="admin_vendors_approval.php"><i class="fas fa-angle-right" id="DIRECT"></i></a></h3>
                     <p><?php echo $stats['pending_vendors']; ?></p>
                     <i class="fas fa-user-clock"></i>
                 </div>
                 <div class="BOX SCHEDULED">
-                    <h3><i class="fas fa-user-tie"></i> Approved Vendors</h3>
+                    <h3><i class="fas fa-user-tie"></i> Approved Vendors <a href="admin_vendors_approval.php"><i class="fas fa-angle-right" id="DIRECT"></i></a></h3>
                     <p><?php echo $stats['active_vendors']; ?></p>
                     <i class="fas fa-user-tie"></i>
                 </div>
                 <div class="BOX COMPLETED">
-                    <h3><i class="fas fa-user-tie"></i> Total Vendors</h3>
+                    <h3><i class="fas fa-user-tie"></i> Total Vendors </h3>
                     <p><?php echo $stats['total_vendors']; ?></p>
                     <i class="fas fa-user-tie"></i>
                 </div>
                 <div class="BOX CANCELLED">
-                    <h3><i class="fas fa-users"></i> Total Clients</h3>
+                    <h3><i class="fas fa-users"></i> Total Clients <a href="admin_clients.php"><i class="fas fa-angle-right" id="DIRECT"></i></a></h3>
                     <p><?php echo $stats['total_clients']; ?></p>
                     <i class="fas fa-users"></i>
                 </div>

@@ -239,22 +239,22 @@ $vendor_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             <!-- Stats Boxes -->
             <div class="CONTENT">
                 <div class="BOX PENDING">
-                    <h3><i class="fas fa-calendar-alt"></i> Pending Bookings</h3>
+                    <h3><i class="fas fa-calendar-alt"></i> Pending Bookings <a href="vendor_bookings_approval.php"><i class="fas fa-angle-right" id="DIRECT"></i></a></h3>
                     <p><?php echo $stats['pending_bookings']; ?></p>
                     <i class="fas fa-calendar-alt"></i>
                 </div>
                 <div class="BOX SCHEDULED">
-                    <h3><i class="far fa-calendar-check"></i> Scheduled Bookings</h3>
+                    <h3><i class="far fa-calendar-check"></i> Scheduled Bookings <a href="vendor_bookings_active.php"><i class="fas fa-angle-right" id="DIRECT"></i></a></h3>
                     <p><?php echo $stats['scheduled_bookings']; ?></p>
                     <i class="far fa-calendar-check"></i>
                 </div>
                 <div class="BOX COMPLETED">
-                    <h3><i class="fas fa-calendar-check"></i> Completed Bookings</h3>
+                    <h3><i class="fas fa-calendar-check"></i> Completed Bookings <a href="vendor_bookings_completed.php"><i class="fas fa-angle-right" id="DIRECT"></i></a></h3>
                     <p><?php echo $stats['completed_bookings']; ?></p>
                     <i class="fas fa-calendar-check"></i>
                 </div>
                 <div class="BOX CANCELLED">
-                    <h3><i class="fas fa-calendar-times"></i> Total Bookings</h3>
+                    <h3><i class="fas fa-calendar-times"></i> Total Bookings <a href="vendor_bookings_cancelled.php"><i class="fas fa-angle-right" id="DIRECT"></i></a></h3>
                     <p><?php echo $stats['total_bookings']; ?></p>
                     <i class="fas fa-calendar-times"></i>
                 </div>
