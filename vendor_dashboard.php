@@ -204,17 +204,36 @@ $vendor_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             <!-- Dashboard Header -->
             <div class="UPPER">
                 <div class="LEFT_UPPER">
-                    <h1 class="DASHBOARD_TITLE">Vendor Dashboard</h1>
+                    <h1 class="DASHBOARD_TITLE">
+                        <i class="fas fa-store"></i> <?php echo htmlspecialchars($vendor['business_name']); ?>'s Dashboard
+                    </h1>
                 </div>
-                <div class="RIGHT_UPPER">
-                    <div class="ACCOUNT">
-                        <div class="GREETING"><?php echo $greeting; ?></div>
-                        <a href="vendor_profile.php">
-                            <img src="<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="" class="PROFILE_PIC">
-                        </a>    
-                        <span class="BUSINESS_NAME"><?php echo htmlspecialchars($vendor['business_name']); ?>!</span>             
+                    <div class="RIGHT_UPPER">
+                        <div class="ACCOUNT">
+                            <span class="GREETING"><?php echo $greeting; ?></span>
+                            <a href="vendor_profile.php">
+                                <img src="<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="" class="PROFILE_PIC">
+                            </a>    
+                            <span class="BUSINESS_NAME"><?php echo htmlspecialchars($vendor['business_name']); ?>!</span>             
+                        </div>
+                        <div class="NOTIFICATIONS_DROPDOWN">
+                                <a href="vendor_bookings_approval.php" class="NOTIFICATION_ICON">
+                                    <i class="fas fa-bell"></i>
+                                    <?php if ($stats['pending_bookings'] > 0): ?>
+                                        <span class="NOTIFICATION_BADGE"><?php echo $stats['pending_bookings']; ?></span>
+                                    <?php endif; ?>
+                                </a>
+                                <div class="NOTIFICATIONS_CONTENT">
+                                    <h3>Pending Bookings</h3>
+                                    <?php if ($stats['pending_bookings'] > 0): ?>
+                                        <p>You have <?php echo $stats['pending_bookings']; ?> booking(s) awaiting approval</p>
+                                        <a href="vendor_bookings_approval.php" class="VIEW_ALL">Review Now</a>
+                                    <?php else: ?>
+                                        <p>No pending bookings at this time</p>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                     </div>
-                </div>
             </div>
             
             <!-- Stats Boxes -->

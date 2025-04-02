@@ -144,7 +144,7 @@ $admin_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             <a href="admin_vendors_active.php"><i class="fas fa-user-tie"></i> Vendors <span id="ITALIC">(Active)</span></a>
             <a href="admin_vendors_approval.php"><i class="fas fa-user-check"></i> Vendors <span id="ITALIC">(Pending)</span></a>
             <a href="admin_vendors_denied.php"><i class="fas fa-user-times"></i> <span>Vendors <span id="ITALIC">(Denied)</span></span></a>
-            <a href="admin_clients.php"><i class="fas fa-users"></i> Clients</a>
+            <a href="admin_clients.php"><i class="fas fa-users"></i> Client Management</a>
             <a href="admin_feedback.php"><i class="fas fa-comment-dots"></i> Feedback</a>
             
             <div class="MENU_HEADER">SETTINGS</div>
@@ -159,17 +159,36 @@ $admin_todos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             <!-- Dashboard Header -->
             <div class="UPPER">
                 <div class="LEFT_UPPER">
-                    <h1 class="DASHBOARD_TITLE">Admin Dashboard</h1>
+                    <h1 class="DASHBOARD_TITLE"><i class="fas fa-home"></i> <?php echo htmlspecialchars($_SESSION['admin_name']); ?>'s Dashboard</h1>
                 </div>
-                <div class="RIGHT_UPPER">
-                    <div class="ACCOUNT">
-                        <span class="GREETING"><?php echo $greeting; ?></span>
-                        <a href="admin_profile.php">
-                            <img src="<?php echo htmlspecialchars($admin['profile_picture'] ?? 'assets/images/default_profile.jpg'); ?>" alt="Profile Picture" class="PROFILE_PIC">
-                        </a>    
-                        <span class="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['admin_name']); ?>!</span>             
+                    <div class="RIGHT_UPPER">
+                        <div class="ACCOUNT">
+
+                            
+                            <span class="GREETING"><?php echo $greeting; ?></span>
+                            <a href="admin_profile.php">
+                                <img src="<?php echo htmlspecialchars($admin['profile_picture'] ?? 'assets/images/default_profile.jpg'); ?>" alt="Profile Picture" class="PROFILE_PIC">
+                            </a>    
+                            <span class="BUSINESS_NAME"><?php echo htmlspecialchars($_SESSION['admin_name']); ?>!</span>             
+                        </div>
+                        <div class="NOTIFICATIONS_DROPDOWN">
+                                <a href="admin_vendors_approval.php" class="NOTIFICATION_ICON">
+                                    <i class="fas fa-bell"></i>
+                                    <?php if ($stats['pending_vendors'] > 0): ?>
+                                        <span class="NOTIFICATION_BADGE"><?php echo $stats['pending_vendors']; ?></span>
+                                    <?php endif; ?>
+                                </a>
+                                <div class="NOTIFICATIONS_CONTENT">
+                                    <h3>Pending Registrations</h3>
+                                    <?php if ($stats['pending_vendors'] > 0): ?>
+                                        <p>You have <?php echo $stats['pending_vendors']; ?> vendor(s) awaiting approval</p>
+                                        <a href="admin_vendors_approval.php" class="VIEW_ALL">Review Now</a>
+                                    <?php else: ?>
+                                        <p>No pending vendors at this time</p>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                     </div>
-                </div>
             </div>
             
             <!-- Stats Boxes -->

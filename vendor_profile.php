@@ -122,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['profile_pic']) && $_F
         <div class="DASHBOARD" id="DASHBOARD">
             <div class="UPPER">
                 <div class="LEFT_UPPER">
-                    <h1 class="DASHBOARD_TITLE">Vendor Profile</h1>
+                    <h1 class="DASHBOARD_TITLE"><i class="fas fa-user"></i> <?php echo htmlspecialchars($vendor['business_name']); ?>'s Profile</h1>
                 </div>
                 <div class="RIGHT_UPPER">
                     <div class="ACCOUNT">

@@ -136,7 +136,7 @@ $pending_bookings = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     <div class="DASHBOARD" id="DASHBOARD">
         <div class="UPPER">
             <div class="LEFT_UPPER">
-                <h1 class="DASHBOARD_TITLE">Pending Bookings</h1>
+                <h1 class="DASHBOARD_TITLE"><i class="fas fa-calendar-alt"></i> Pending Bookings</h1>
             </div>
             <div class="RIGHT_UPPER">
                 <div class="ACCOUNT">

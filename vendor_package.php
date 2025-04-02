@@ -95,7 +95,7 @@ if ($vendor['status'] == "Approved") {
         <div class="DASHBOARD2" id="DASHBOARD">
             <div class="UPPER">
                 <div class="LEFT_UPPER">
-                    <h1 class="DASHBOARD_TITLE">Packages</h1>
+                    <h1 class="DASHBOARD_TITLE"><i class="fas fa-box"></i> Packages</h1>
                 </div>
                 <div class="RIGHT_UPPER">
                     <div class="ACCOUNT">

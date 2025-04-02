@@ -304,6 +304,7 @@ body{
     flex: 1;
     padding: 20px;
 }
+
 .UPPER{
     display: flex;
     justify-content: space-between;
@@ -313,6 +314,8 @@ body{
     border-radius: 20px;
     top: 0;
     z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
+    padding: 10px;
 }
 
 .LEFT_UPPER .DASHBOARD_TITLE{
@@ -322,25 +325,18 @@ body{
     margin: 0;
 }
 
+.LEFT_UPPER .DASHBOARD_TITLE i {
+    margin-right: 5px;
+    background: -webkit-linear-gradient(left, #d0008b, #3b0053); /* Webkit gradient horizontal */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 /* Right Upper CONTAINER */
 .RIGHT_UPPER {
     display: flex;
     align-items: center;
-    justify-content: flex-end; /* Align right */
-    color: var(--blkShade1);
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01), 0 6px 20px rgba(0, 0, 0, 0.05);
-    padding: 10px 20px;
-    border-radius: 30px;
-    margin: 0;
-}
-
-.RIGHT_UPPER {
-    display: flex;
-    align-items: center;
     justify-content: flex-end;
-    color: var(--blkShade1);
-    background: var(--gradient_Horizontal);
     padding: 10px 20px;
     border-radius: 40px;
     margin: 0;
@@ -354,9 +350,10 @@ body{
 }
 
 .RIGHT_UPPER .GREETING{
-    color: black;
-    font-size: 0.8rem;
-    margin-right: -10px;
+    color: black !important;
+    font-size: 1rem !important;
+    font-family: 'Inter_SemiBold' !important;
+    margin-right: -5px !important;
 }
 
 /* ACCOUNT CONTAINER */
@@ -390,18 +387,106 @@ body{
 
 
 .BUSINESS_NAME{
-    font-size: 0.8rem;
+    font-size: 1rem;
     font-family: 'Inter_Bold';
-    color: white;
+    color: var(--blkShade1);
     margin-left: -10px;
 }
 
 .BUSINESS_NAME2{
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-family: 'Inter_Bold';
-    color: white;
+    color: var(--blkShade1);
     margin-left: -7.5px;
 }
+
+
+/* Notifications Dropdown Styles */
+.NOTIFICATIONS_DROPDOWN {
+    position: relative;
+    display: inline-block;
+}
+
+.NOTIFICATION_ICON {
+    position: relative;
+    color: var(--blkShade1);
+    font-size: 1.25rem;
+    padding: 10px;
+    border-radius: 50%;
+    transition: all 0.5s ease-out;
+    margin-left: 10px;
+}
+
+.NOTIFICATION_ICON:hover {
+    filter: brightness(120%);
+}
+
+.NOTIFICATION_BADGE {
+    position: absolute;
+    top: 3.5px;
+    right: 3.5px;
+    background: var(--gradient_Red);
+    color: white;
+    border-radius: 50%;
+    padding: 2.5px 5.5px;
+    font-size: 0.5rem;
+    font-family: 'Inter_Bold';
+}
+
+.NOTIFICATIONS_CONTENT {
+    display: none;
+    position: absolute;
+    right: 0;
+    background: white;
+    min-width: 250px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    z-index: 1000;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.NOTIFICATIONS_CONTENT h3 {
+    font-size: 1rem;
+    color: var(--blkShade1);
+    margin: 0 0 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--whtShade2);
+}
+
+.NOTIFICATIONS_CONTENT p {
+    font-size: 0.8rem;
+    color: var(--gryShade2);
+    margin: 0 0 10px 0;
+}
+
+.VIEW_ALL {
+    display: block;
+    text-align: center;
+    padding: 8px;
+    background: var(--gradient_Horizontal);
+    color: white;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    text-decoration: none;
+    transition: all 0.5s ease-out;
+}
+
+.VIEW_ALL:hover {
+    filter: brightness(120%);
+}
+
+.NOTIFICATIONS_DROPDOWN:hover .NOTIFICATIONS_CONTENT {
+    display: block;
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
 
 /* Booking Boxes */
 .CONTENT {
@@ -1151,20 +1236,6 @@ body{
 /* Smooth transition for the main nav items */
 .NAVIGATION_BAR > a:not(.NAV_DROPDOWN_TOGGLE) {
     transition: all 0.3s ease;
-}
-
-
-.GREETING {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    position: relative;
-}
-
-.RIGHT_UPPER .GREETING{
-    color: white;
-    font-size: 0.8rem;
-    margin-right: -10px;
 }
 
 .DASHBOARD_FOOTER {

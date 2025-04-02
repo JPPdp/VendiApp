@@ -100,7 +100,7 @@ $clients = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         <div class="DASHBOARD" id="DASHBOARD">
             <div class="UPPER">
                 <div class="LEFT_UPPER">
-                    <h1 class="DASHBOARD_TITLE">Clients</h1>
+                    <h1 class="DASHBOARD_TITLE"><i class="fas fa-users"></i> Clients</h1>
                 </div>
 
                 <div class="RIGHT_UPPER">

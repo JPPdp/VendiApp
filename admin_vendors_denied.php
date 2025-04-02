@@ -73,7 +73,7 @@ $result = $conn->query($sql);
                     <a href="admin_vendors_active.php"><i class="fas fa-user-tie"></i> Vendors <span id="ITALIC">(Active)</span></a>
                     <a href="admin_vendors_approval.php"><i class="fas fa-user-check"></i> Vendors <span id="ITALIC">(Pending)</span></a>
                     <a href="#" class="NAV_ACTIVE"><i class="fas fa-user-times"></i> <span>Vendors <span id="ITALIC">(Denied)</span></span></a>
-                    <a href="admin_clients.php"><i class="fas fa-users"></i> Clients</a>
+                    <a href="admin_clients.php"><i class="fas fa-users"></i> Client Management</a>
                     <a href="admin_feedback.php"><i class="fas fa-comment-dots"></i> Feedback</a>
             <div class="MENU_HEADER">SETTINGS</div>
                     <a href="admin_profile.php"><i class="fa fa-fw fa-user"></i> <span>Profile</span></a>            
@@ -86,7 +86,7 @@ $result = $conn->query($sql);
         <div class="DASHBOARD" id="DASHBOARD">
             <div class="UPPER">
                 <div class="LEFT_UPPER">
-                    <h1 class="DASHBOARD_TITLE">Denied Vendors</h1>
+                    <h1 class="DASHBOARD_TITLE"><i class="fas fa-user-times"></i> Denied Vendors</h1>
                 </div>
 
                     <?php if (isset($message)): ?>
