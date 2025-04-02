@@ -319,7 +319,7 @@ body{
 }
 
 .LEFT_UPPER .DASHBOARD_TITLE{
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-family: 'Inter_Bold';
     color: var(--blkShade1);
     margin: 0;

@@ -94,6 +94,11 @@ $conn->close();
                 <a href="login.php">Back to Login</a>
             </div>
         </div>
+        <footer class="DASHBOARD_FOOTER">
+            <div class="FOOTER_CONTENT">
+                <span class="COPYRIGHT">&copy; 2025 GitRat</span>
+            </div>
+        </footer>
     </div>
 </div>
 </body>

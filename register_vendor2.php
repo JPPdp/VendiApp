@@ -180,6 +180,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <a href="register_vendor1.php">Go Back</a>
             </div>
         </form>
+        <footer class="DASHBOARD_FOOTER">
+            <div class="FOOTER_CONTENT">
+                <span class="COPYRIGHT">&copy; 2025 GitRat</span>
+            </div>
+        </footer>
     </div>
 </div>
 </body>

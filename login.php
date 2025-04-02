@@ -115,11 +115,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <button type="submit">Log In</button>
 
-            <div class="LOGIN">Not registered yet?</div>
+            <div class="LOGIN">Not registered yet<a href="register_admin.php" id="SECRET">?</a></div>
             <div class="LOGIN_LINK">
                 <a href="register_vendor.php">Sign Up</a>
             </div>
         </form>
+        <footer class="DASHBOARD_FOOTER">
+            <div class="FOOTER_CONTENT">
+                <span class="COPYRIGHT">&copy; 2025 GitRat</span>
+            </div>
+        </footer>
     </div>
 </div>
 

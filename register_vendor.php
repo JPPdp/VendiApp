@@ -197,6 +197,11 @@ if ($check_business_name->num_rows > 0) {
                 <a href="login.php">Log In</a>
             </div>
         </form>
+            <footer class="DASHBOARD_FOOTER">
+                <div class="FOOTER_CONTENT">
+                    <span class="COPYRIGHT">&copy; 2025 GitRat</span>
+                </div>
+            </footer>
     </div>
 </div>
 
