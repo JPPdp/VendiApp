@@ -65,10 +65,9 @@ class LogInFragment : Fragment() {
                 .commit()
         }
 
+        sharedPreferences = requireActivity().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
         return view
     }
-
-
 
     private fun validateInputs(email: String, password: String): Boolean {
         return when {
@@ -85,14 +84,15 @@ class LogInFragment : Fragment() {
     }
 
     private fun loginUser(email: String, password: String) {
-        val loginRequest = LoginRequest(email, password) // Create a LoginRequest object
+        val loginRequest = LoginRequest(email, password)
 
         RetrofitClient.instance.loginUser(loginRequest).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful && response.body() != null) {
                     val loginResponse = response.body()!!
                     if (loginResponse.success) {
-                        saveUserSession(loginResponse.clientId, email, password) // FIXED
+                        Log.d("LogInFragment", "Client Name: ${loginResponse.client_name}")
+                        saveUserSession(loginResponse.clientId, loginResponse.client_name, email, password)
                         navigateToMainActivity()
                     } else {
                         showToast(loginResponse.message ?: "Login failed")
@@ -102,25 +102,21 @@ class LogInFragment : Fragment() {
                 }
             }
 
-
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 showToast("Network error: ${t.message}")
             }
         })
     }
 
-    private fun saveUserSession(clientId: String, email: String, password: String) {
+    private fun saveUserSession(clientId: String, client_name: String, email: String, password: String) {
         sharedPreferences.edit().apply {
             putBoolean("isLoggedIn", true)
             putString("clientId", clientId)
+            putString("client_name", client_name)
             putString("email", email)
             putString("password", password)
             apply()
         }
-    }
-
-    private fun isUserLoggedIn(): Boolean {
-        return sharedPreferences.getBoolean("isLoggedIn", false)
     }
 
     private fun navigateToMainActivity() {
