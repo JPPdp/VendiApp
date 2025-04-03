@@ -245,7 +245,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['profile_pic']) && $_F
                         <h3>Account Management</h3>
                             <div class="BESIDE_FIELDS">
                                 <div class="BESIDE_FIELD">
-                                    <button id="CHANGE_PASSWORD" class="ACCOUNT_MANAGE" onclick="window.location.href='forgot_password.php'">
+                                    <button id="CHANGE_PASSWORD" class="ACCOUNT_MANAGE" onclick="window.location.href='change_password.php'">
                                         <i class="fas fa-key"></i> Change Password
                                     </button>
                                 </div>
