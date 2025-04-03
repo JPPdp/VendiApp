@@ -143,7 +143,7 @@ $cancelled_bookings = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                     <tbody>
                     <?php foreach ($cancelled_bookings as $booking): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($booking['reference_id']); ?></td>
+                            <td>#<?php echo htmlspecialchars($booking['reference_id']); ?></td>
                             <td><?php echo htmlspecialchars($booking['client_name']); ?></td>
                             <td><?php echo htmlspecialchars($booking['mobile_number']); ?></td>
                             <td>

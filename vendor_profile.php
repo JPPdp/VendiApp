@@ -37,27 +37,34 @@ $stmt->execute();
 $result = $stmt->get_result();
 $vendor = $result->fetch_assoc();
 
-// Initialize session variables if not set
-if (!isset($_SESSION['profile_picture'])) {
-    $_SESSION['profile_picture'] = $vendor['profile_picture'] ?: 'assets/images/empty_profile_pic.png';
+if ($vendor) {
+    $_SESSION['vendor_id'] = $vendor['vendor_id'];
+    $_SESSION['profile_picture'] = $vendor['profile_picture'] ?? 'assets/images/vendor_profile.png';
+    $_SESSION['business_name'] = $vendor['business_name'];
+    $_SESSION['email'] = $vendor['email'];
+} else {
+    $_SESSION['profile_picture'] = 'assets/images/empty_profile.png';
+    $vendor = [
+        'business_name' => 'Unknown',
+        'email' => 'Unknown',
+        'mobile_number' => 'Unknown',
+        'address' => 'Unknown',
+        'service_option' => 'Unknown',
+        'business_description_short' => 'Unknown',
+        'business_description_long' => 'Unknown',
+        'business_document' => 'assets/images/placeholder_document.png',
+        'rating' => 0,
+        'vendor_id' => 'Unknown'
+    ];
 }
 
-// Fetch vendor packages if approved
-$packages = [];
-if ($vendor['status'] == "Approved") {
-    $sql = "SELECT * FROM vendor_packages WHERE vendor_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $vendor_id);
-    $stmt->execute();
-    $packages = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-}
-
+// Handle profile picture upload
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] == 0) {
     $profilePic = $_FILES['profile_pic'];
     $profilePicPath = 'uploads/' . basename($profilePic['name']);
     
     if (move_uploaded_file($profilePic['tmp_name'], $profilePicPath)) {
-        $sql = "UPDATE admins SET profile_picture = ? WHERE admin_id = ?";
+        $sql = "UPDATE vendors SET profile_picture = ? WHERE vendor_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("si", $profilePicPath, $_SESSION['user_id']);
         if ($stmt->execute()) {

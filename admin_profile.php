@@ -35,14 +35,14 @@ $admin = $result->fetch_assoc();
 
 if ($admin) {
     $_SESSION['admin_id'] = $admin['admin_id'];
-    $_SESSION['profile_picture'] = $admin['profile_picture'] ?: 'assets/images/default_profile.jpg';
+    $_SESSION['profile_picture'] = $admin['profile_picture'] ?: 'assets/images/empty_profile.png';
     $_SESSION['admin_name'] = $admin['name'];
     $_SESSION['admin_email'] = $admin['email'];
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == 0) {
     $profilePic = $_FILES['profile_picture'];
-    $profilePicPath = 'uploads/' . basename($profilePic['name']);
+    $profilePicPath = 'admins/' . basename($profilePic['name']);
     
     if (move_uploaded_file($profilePic['tmp_name'], $profilePicPath)) {
         $sql = "UPDATE admins SET profile_picture = ? WHERE admin_id = ?";
