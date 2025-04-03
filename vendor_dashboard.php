@@ -29,6 +29,12 @@ $stmt->execute();
 $result = $stmt->get_result();
 $vendor = $result->fetch_assoc();
 
+// Initialize session variables if not set
+if (!isset($_SESSION['profile_picture'])) {
+    $_SESSION['profile_picture'] = $vendor['profile_picture'] ?: 'assets/images/empty_profile_pic.png';
+}
+
+
 // Dashboard Statistics - Booking Statistics
 $stats = [];
 $sql = "SELECT COUNT(*) as count FROM bookings WHERE vendor_id = ? AND status = 'Pending'";

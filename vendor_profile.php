@@ -37,6 +37,11 @@ $stmt->execute();
 $result = $stmt->get_result();
 $vendor = $result->fetch_assoc();
 
+// Initialize session variables if not set
+if (!isset($_SESSION['profile_picture'])) {
+    $_SESSION['profile_picture'] = $vendor['profile_picture'] ?: 'assets/images/empty_profile_pic.png';
+}
+
 // Fetch vendor packages if approved
 $packages = [];
 if ($vendor['status'] == "Approved") {

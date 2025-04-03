@@ -146,9 +146,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['profile_picture']) &&
 
                                         <label>Email</label>
                                         <input type="email" value="<?php echo htmlspecialchars($_SESSION['admin_email']); ?>" id="admin_email" readonly>
-                                        
-                                        <label>Admin ID</label>
-                                        <input type="text" value="<?php echo htmlspecialchars($_SESSION['admin_id']); ?>" id="admin_id" readonly>
                         </div>
                 </div>
             </div>
