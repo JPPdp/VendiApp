@@ -9,6 +9,21 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != "admin") {
     exit;
 }
 
+// Fetch admin data
+$sql = "SELECT * FROM admins WHERE admin_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $_SESSION['user_id']);
+$stmt->execute();
+$result = $stmt->get_result();
+$admin = $result->fetch_assoc();
+
+if ($admin) {
+    $_SESSION['admin_id'] = $admin['admin_id'];
+    $_SESSION['profile_picture'] = $admin['profile_picture'] ?: 'assets/images/default_profile.jpg';
+    $_SESSION['admin_name'] = $admin['name'];
+    $_SESSION['admin_email'] = $admin['email'];
+}
+
 // Timezone and Greeting Setup
 date_default_timezone_set('Asia/Manila');
 $currentHour = date('H');

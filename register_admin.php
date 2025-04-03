@@ -25,6 +25,20 @@ function validatePassword($password) {
 
 $message = ""; // Variable to store messages
 
+$sql = "SELECT * FROM admins WHERE admin_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $_SESSION['user_id']);
+$stmt->execute();
+$result = $stmt->get_result();
+$admin = $result->fetch_assoc();
+
+if ($admin) {
+    $_SESSION['admin_id'] = $admin['admin_id'];
+    $_SESSION['profile_picture'] = $admin['profile_picture'] ?: 'assets/images/default_profile.jpg';
+    $_SESSION['admin_name'] = $admin['name'];
+    $_SESSION['admin_email'] = $admin['email'];
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $email = $_POST['email'];
